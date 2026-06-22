@@ -1,0 +1,459 @@
+{
+  "id": "nasnetmobile",
+  "name": "NASNetMobile",
+  "fullName": "Learning Transferable Architectures for Scalable Image Recognition (Mobile)",
+  "paperYear": 2017,
+  "authors": [
+    "Barret Zoph",
+    "Vijay Vasudevan",
+    "Jonathon Shlens",
+    "Quoc V. Le"
+  ],
+  "paperUrl": "https://arxiv.org/abs/1707.07012",
+  "depth": 81,
+  "totalParameters": 5326564,
+  "totalFLOPs": 470000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "top1Accuracy": 0.744,
+  "top5Accuracy": 0.919,
+  "memoryUsage": 20,
+  "description": "Mobile-optimized neural architecture found through automated architecture search. Achieves good accuracy-to-efficiency ratio for mobile deployment.",
+  "colorTheme": "#06B6D4",
+  "tags": [
+    "CNN",
+    "Classification",
+    "NAS",
+    "Mobile",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "input_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
+          "description": "224\u00d7224\u00d73 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
+          "description": "224\u00d7224\u00d73 RGB Image"
+        },
+        "config": {
+          "shape": [
+            224,
+            224,
+            3
+          ]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Input layer receiving normalized RGB matrices.",
+          "detailed": "Image dimensions of 224x224.",
+          "whyItMatters": "Sets image bounds.",
+          "keyTakeaway": "Sets bounds."
+        },
+        "position": {
+          "x": 250,
+          "y": 0
+        },
+        "color": "emerald",
+        "icon": "image"
+      },
+      {
+        "id": "stem_conv1",
+        "type": "conv2d",
+        "name": "stem_conv1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
+          "description": "224\u00d7224\u00d73"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 864,
+          "weights": 864,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Stem downsampling convolution.",
+          "detailed": "Reduces resolution spatially.",
+          "whyItMatters": "Reduces computing footprint.",
+          "keyTakeaway": "Downsamples stem features."
+        }
+      },
+      {
+        "id": "stem_bn1",
+        "type": "batch_norm",
+        "name": "stem_bn1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 128,
+          "weights": 64,
+          "biases": 64,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes stem.",
+          "detailed": "Keeps channel variables balanced.",
+          "whyItMatters": "Maintains gradient scales.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "cell_1_sep3x3",
+        "type": "conv2d",
+        "name": "cell/1/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 1312,
+          "weights": 1312,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_1_sep5x5",
+        "type": "conv2d",
+        "name": "cell/1/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 1824,
+          "weights": 1824,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_1_add",
+        "type": "add",
+        "name": "cell_1_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "32 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "32 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "global_average_pooling2d",
+        "type": "global_average_pooling2d",
+        "name": "global_average_pooling2d",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            192
+          ],
+          "description": "7\u00d77\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            192
+          ],
+          "description": "192"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "GAP averaging channels.",
+          "detailed": "Averages maps.",
+          "whyItMatters": "Saves parameter footprints.",
+          "keyTakeaway": "Spatially collapses maps."
+        }
+      },
+      {
+        "id": "predictions",
+        "type": "dense",
+        "name": "predictions",
+        "inputShape": {
+          "dimensions": [
+            null,
+            192
+          ],
+          "description": "192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            1000
+          ],
+          "description": "1000"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 193000,
+          "weights": 192000,
+          "biases": 1000,
+          "formula": "(input_features + 1) \u00d7 output_units",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Predictions.",
+          "detailed": "Outputs class probabilities.",
+          "whyItMatters": "Final decision head.",
+          "keyTakeaway": "Classification layer."
+        }
+      }
+    ],
+    "connections": [
+      {
+        "id": "c_in_stemconv",
+        "sourceId": "input_1",
+        "targetId": "stem_conv1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_stem_conv1_stem_bn1",
+        "sourceId": "stem_conv1",
+        "targetId": "stem_bn1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_stem_bn1_cell_1_sep3x3",
+        "sourceId": "stem_bn1",
+        "targetId": "cell_1_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_stem_bn1_cell_1_sep5x5",
+        "sourceId": "stem_bn1",
+        "targetId": "cell_1_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_1_add",
+        "sourceId": "cell_1_sep3x3",
+        "targetId": "cell_1_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_1_add",
+        "sourceId": "cell_1_sep5x5",
+        "targetId": "cell_1_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_last_gap",
+        "sourceId": "cell_1_add",
+        "targetId": "global_average_pooling2d",
+        "type": "sequential"
+      },
+      {
+        "id": "c_gap_pred",
+        "sourceId": "global_average_pooling2d",
+        "targetId": "predictions",
+        "type": "sequential"
+      }
+    ],
+    "groups": [
+      {
+        "id": "group_cell_1",
+        "name": "NASNet Normal Cell",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_1_sep3x3",
+          "cell_1_sep5x5",
+          "cell_1_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_classifier",
+        "name": "Global Pooling & Classification",
+        "description": "GAP followed by prediction layer.",
+        "layerIds": [
+          "global_average_pooling2d",
+          "predictions"
+        ],
+        "color": "#8B5CF6"
+      }
+    ]
+  }
+}

@@ -1,0 +1,729 @@
+{
+  "id": "alexnet",
+  "name": "AlexNet",
+  "fullName": "ImageNet Classification with Deep Convolutional Neural Networks",
+  "paperYear": 2012,
+  "authors": [
+    "Alex Krizhevsky",
+    "Ilya Sutskever",
+    "Geoffrey E. Hinton"
+  ],
+  "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+  "depth": 8,
+  "totalParameters": 62378344,
+  "totalFLOPs": 720000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "top1Accuracy": 0.571,
+  "top5Accuracy": 0.802,
+  "memoryUsage": 120,
+  "description": "AlexNet is the landmark architecture that won the ImageNet 2012 competition by a massive margin, establishing GPU-accelerated CNNs as the state-of-the-art approach in computer vision.",
+  "colorTheme": "#F59E0B",
+  "tags": [
+    "CNN",
+    "Classification",
+    "Foundational",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "Input Image",
+        "inputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3 RGB Image"
+        },
+        "config": {
+          "shape": [224, 224, 3]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Input layer for RGB ImageNet images.",
+          "detailed": "Accepts 3-channel (Red, Green, Blue) images of size 224x224. Normalization was applied across color channels to stabilize training gradients.",
+          "keyTakeaway": "Standard RGB input dimensions allow features like textures and color borders to be learned."
+        },
+        "position": {
+          "x": 250,
+          "y": 0
+        },
+        "color": "emerald",
+        "icon": "image"
+      },
+      {
+        "id": "conv2d_1",
+        "type": "conv2d",
+        "name": "Conv 1",
+        "inputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3"
+        },
+        "outputShape": {
+          "dimensions": [null, 55, 55, 96],
+          "description": "55x55x96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [11, 11],
+          "strides": [4, 4],
+          "padding": "valid",
+          "useBias": true,
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 34944,
+          "weights": 34848,
+          "biases": 96,
+          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "calculationSteps": [
+            {
+              "label": "Kernel Weights",
+              "expression": "11 × 11 × 3 × 96",
+              "result": 34848,
+              "explanation": "96 filters of size 11x11 operating over 3 color input channels."
+            },
+            {
+              "label": "Biases",
+              "expression": "96",
+              "result": 96,
+              "explanation": "One trainable bias per filter."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Extracts coarse edge and color representations.",
+          "detailed": "Uses large 11x11 kernels with a stride of 4. This downsamples the input image resolution rapidly while finding initial shape primitives.",
+          "keyTakeaway": "Large early kernels reduce spatial size quickly but can miss fine details."
+        },
+        "position": {
+          "x": 250,
+          "y": 150
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "max_pool_1",
+        "type": "max_pooling2d",
+        "name": "Max Pool 1",
+        "inputShape": {
+          "dimensions": [null, 55, 55, 96],
+          "description": "55x55x96"
+        },
+        "outputShape": {
+          "dimensions": [null, 27, 27, 96],
+          "description": "27x27x96"
+        },
+        "config": {
+          "poolSize": [3, 3],
+          "strides": [2, 2],
+          "padding": "valid"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Overlapping max pooling by 2x.",
+          "detailed": "Max pooling extracts the peak activation value over overlapping 3x3 windows with a stride of 2. Helps reduce spatial sensitivity.",
+          "keyTakeaway": "Overlapping pooling reduces spatial sensitivity and helps prevent overfitting."
+        },
+        "position": {
+          "x": 250,
+          "y": 300
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "conv2d_2",
+        "type": "conv2d",
+        "name": "Conv 2",
+        "inputShape": {
+          "dimensions": [null, 27, 27, 96],
+          "description": "27x27x96"
+        },
+        "outputShape": {
+          "dimensions": [null, 27, 27, 256],
+          "description": "27x27x256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [5, 5],
+          "strides": [1, 1],
+          "padding": "same",
+          "useBias": true,
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 614656,
+          "weights": 614400,
+          "biases": 256,
+          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "calculationSteps": [
+            {
+              "label": "Kernel Weights",
+              "expression": "5 × 5 × 96 × 256",
+              "result": 614400,
+              "explanation": "256 filters of size 5x5 operating over 96 input channels."
+            },
+            {
+              "label": "Biases",
+              "expression": "256",
+              "result": 256,
+              "explanation": "One trainable bias per filter."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Extracts 256 intermediate feature maps.",
+          "detailed": "Applies 5x5 kernels. In the original paper, this computation was split across 2 GPUs to fit inside hardware constraints.",
+          "keyTakeaway": "Multi-GPU splitting was historically necessary due to small GPU memory buffers."
+        },
+        "position": {
+          "x": 250,
+          "y": 450
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "max_pool_2",
+        "type": "max_pooling2d",
+        "name": "Max Pool 2",
+        "inputShape": {
+          "dimensions": [null, 27, 27, 256],
+          "description": "27x27x256"
+        },
+        "outputShape": {
+          "dimensions": [null, 13, 13, 256],
+          "description": "13x13x256"
+        },
+        "config": {
+          "poolSize": [3, 3],
+          "strides": [2, 2],
+          "padding": "valid"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Overlapping max pooling to 13x13.",
+          "detailed": "Extracts peak activations over 3x3 grids, halving the spatial height/width to 13.",
+          "keyTakeaway": "Overlapping pooling maintains gradient flow during training."
+        },
+        "position": {
+          "x": 250,
+          "y": 600
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "conv2d_3",
+        "type": "conv2d",
+        "name": "Conv 3",
+        "inputShape": {
+          "dimensions": [null, 13, 13, 256],
+          "description": "13x13x256"
+        },
+        "outputShape": {
+          "dimensions": [null, 13, 13, 384],
+          "description": "13x13x384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [3, 3],
+          "strides": [1, 1],
+          "padding": "same",
+          "useBias": true,
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 885120,
+          "weights": 884736,
+          "biases": 384,
+          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "calculationSteps": [
+            {
+              "label": "Kernel Weights",
+              "expression": "3 × 3 × 256 × 384",
+              "result": 884736,
+              "explanation": "384 filters of size 3x3 operating over 256 input channels."
+            },
+            {
+              "label": "Biases",
+              "expression": "384",
+              "result": 384,
+              "explanation": "One trainable bias per filter."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "First of three stacked convolutional layers.",
+          "detailed": "Uses 3x3 filters. Convolutions are stacked directly back-to-back without intermediate pooling, increasing depth.",
+          "keyTakeaway": "Back-to-back convolutions build non-linear capacity without losing spatial resolution."
+        },
+        "position": {
+          "x": 250,
+          "y": 750
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_4",
+        "type": "conv2d",
+        "name": "Conv 4",
+        "inputShape": {
+          "dimensions": [null, 13, 13, 384],
+          "description": "13x13x384"
+        },
+        "outputShape": {
+          "dimensions": [null, 13, 13, 384],
+          "description": "13x13x384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [3, 3],
+          "strides": [1, 1],
+          "padding": "same",
+          "useBias": true,
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 1327488,
+          "weights": 1327104,
+          "biases": 384,
+          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "calculationSteps": [
+            {
+              "label": "Kernel Weights",
+              "expression": "3 × 3 × 384 × 384",
+              "result": 1327104,
+              "explanation": "384 filters of size 3x3 operating over 384 input channels."
+            },
+            {
+              "label": "Biases",
+              "expression": "384",
+              "result": 384,
+              "explanation": "One trainable bias per filter."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Second stacked 3x3 convolution layer.",
+          "detailed": "Keeps spatial size at 13x13. Helps the network build complex relationships between multi-channel features.",
+          "keyTakeaway": "Uniform channel widths maintain rich structural representations."
+        },
+        "position": {
+          "x": 250,
+          "y": 900
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_5",
+        "type": "conv2d",
+        "name": "Conv 5",
+        "inputShape": {
+          "dimensions": [null, 13, 13, 384],
+          "description": "13x13x384"
+        },
+        "outputShape": {
+          "dimensions": [null, 13, 13, 256],
+          "description": "13x13x256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [3, 3],
+          "strides": [1, 1],
+          "padding": "same",
+          "useBias": true,
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 884992,
+          "weights": 884736,
+          "biases": 256,
+          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "calculationSteps": [
+            {
+              "label": "Kernel Weights",
+              "expression": "3 × 3 × 384 × 256",
+              "result": 884736,
+              "explanation": "256 filters of size 3x3 operating over 384 input channels."
+            },
+            {
+              "label": "Biases",
+              "expression": "256",
+              "result": 256,
+              "explanation": "One trainable bias per filter."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Third stacked 3x3 convolution layer.",
+          "detailed": "Compresses channels from 384 back to 256 before entering the final pooling downsample.",
+          "keyTakeaway": "Slight channel shrinkage prepares features for fully connected mapping."
+        },
+        "position": {
+          "x": 250,
+          "y": 1050
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "max_pool_3",
+        "type": "max_pooling2d",
+        "name": "Max Pool 3",
+        "inputShape": {
+          "dimensions": [null, 13, 13, 256],
+          "description": "13x13x256"
+        },
+        "outputShape": {
+          "dimensions": [null, 6, 6, 256],
+          "description": "6x6x256"
+        },
+        "config": {
+          "poolSize": [3, 3],
+          "strides": [2, 2],
+          "padding": "valid"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Final pooling downsampling to 6x6.",
+          "detailed": "Reduces spatial height/width to 6, resulting in a small 6x6 grid with 256 feature channels.",
+          "keyTakeaway": "Final pooling compresses high-level features into a standard spatial footprint."
+        },
+        "position": {
+          "x": 250,
+          "y": 1200
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "flatten_1",
+        "type": "flatten",
+        "name": "Flatten",
+        "inputShape": {
+          "dimensions": [null, 6, 6, 256],
+          "description": "6x6x256"
+        },
+        "outputShape": {
+          "dimensions": [null, 9216],
+          "description": "9216-d Vector"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Flattens 6x6x256 maps to a 9216 vector.",
+          "detailed": "Converts the spatial block into a single flat vector of length 9216, connecting it to the classification layers.",
+          "keyTakeaway": "Bridges multi-channel grid filters and classification neurons."
+        },
+        "position": {
+          "x": 250,
+          "y": 1350
+        },
+        "color": "gray",
+        "icon": "crop"
+      },
+      {
+        "id": "dense_1",
+        "type": "dense",
+        "name": "Fully Connected 1",
+        "inputShape": {
+          "dimensions": [null, 9216],
+          "description": "9216"
+        },
+        "outputShape": {
+          "dimensions": [null, 4096],
+          "description": "4096"
+        },
+        "config": {
+          "units": 4096,
+          "activation": "relu",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 37752832,
+          "weights": 37748736,
+          "biases": 4096,
+          "formula": "(input_units + 1) × output_units",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "9216 × 4096",
+              "result": 37748736,
+              "explanation": "Weight matrix connecting 9216 input features to 4096 units."
+            },
+            {
+              "label": "Biases",
+              "expression": "4096",
+              "result": 4096,
+              "explanation": "One trainable bias per unit."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "First massive dense layer.",
+          "detailed": "Uses 4096 units, accounting for over 60% of the model's total parameters. Dropout of 0.5 was applied here to prevent overfitting.",
+          "keyTakeaway": "Massive fully connected layers are prone to overfitting without dropout."
+        },
+        "position": {
+          "x": 250,
+          "y": 1500
+        },
+        "color": "blue",
+        "icon": "zap"
+      },
+      {
+        "id": "dense_2",
+        "type": "dense",
+        "name": "Fully Connected 2",
+        "inputShape": {
+          "dimensions": [null, 4096],
+          "description": "4096"
+        },
+        "outputShape": {
+          "dimensions": [null, 4096],
+          "description": "4096"
+        },
+        "config": {
+          "units": 4096,
+          "activation": "relu",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 16781312,
+          "weights": 16777216,
+          "biases": 4096,
+          "formula": "(input_units + 1) × output_units",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "4096 × 4096",
+              "result": 16777216,
+              "explanation": "Connections from 4096 features to 4096 units."
+            },
+            {
+              "label": "Biases",
+              "expression": "4096",
+              "result": 4096,
+              "explanation": "One trainable bias per unit."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Second dense layer.",
+          "detailed": "Reduces complexity and filters representational features. Dropout of 0.5 was applied to regularize training.",
+          "keyTakeaway": "Successive dense layers consolidate model decisions before final classification."
+        },
+        "position": {
+          "x": 250,
+          "y": 1650
+        },
+        "color": "blue",
+        "icon": "zap"
+      },
+      {
+        "id": "output",
+        "type": "output",
+        "name": "Output Classes",
+        "inputShape": {
+          "dimensions": [null, 4096],
+          "description": "4096"
+        },
+        "outputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 ImageNet classes"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 4097000,
+          "weights": 4096000,
+          "biases": 1000,
+          "formula": "(input_units + 1) × output_units",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "4096 × 1000",
+              "result": 4096000,
+              "explanation": "Connections from 4096 features to 1000 final classes."
+            },
+            {
+              "label": "Biases",
+              "expression": "1000",
+              "result": 1000,
+              "explanation": "One bias per class."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Softmax layer predicting 1000 ImageNet categories.",
+          "detailed": "Outputs class confidence scores. Softmax guarantees all 1000 probabilities sum to 1.0.",
+          "keyTakeaway": "Softmax converts raw outputs into interpretable confidence percentages."
+        },
+        "position": {
+          "x": 250,
+          "y": 1800
+        },
+        "color": "pink",
+        "icon": "award"
+      }
+    ],
+    "connections": [
+      {
+        "id": "c1",
+        "sourceId": "input_1",
+        "targetId": "conv2d_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c2",
+        "sourceId": "conv2d_1",
+        "targetId": "max_pool_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c3",
+        "sourceId": "max_pool_1",
+        "targetId": "conv2d_2",
+        "type": "sequential"
+      },
+      {
+        "id": "c4",
+        "sourceId": "conv2d_2",
+        "targetId": "max_pool_2",
+        "type": "sequential"
+      },
+      {
+        "id": "c5",
+        "sourceId": "max_pool_2",
+        "targetId": "conv2d_3",
+        "type": "sequential"
+      },
+      {
+        "id": "c6",
+        "sourceId": "conv2d_3",
+        "targetId": "conv2d_4",
+        "type": "sequential"
+      },
+      {
+        "id": "c7",
+        "sourceId": "conv2d_4",
+        "targetId": "conv2d_5",
+        "type": "sequential"
+      },
+      {
+        "id": "c8",
+        "sourceId": "conv2d_5",
+        "targetId": "max_pool_3",
+        "type": "sequential"
+      },
+      {
+        "id": "c9",
+        "sourceId": "max_pool_3",
+        "targetId": "flatten_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c10",
+        "sourceId": "flatten_1",
+        "targetId": "dense_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c11",
+        "sourceId": "dense_1",
+        "targetId": "dense_2",
+        "type": "sequential"
+      },
+      {
+        "id": "c12",
+        "sourceId": "dense_2",
+        "targetId": "output",
+        "type": "sequential"
+      }
+    ],
+    "groups": [
+      {
+        "id": "stem",
+        "name": "Input & Early Conv Stem",
+        "description": "Standard 11x11 stride 4 convolutional stem extracting early shapes and edges",
+        "layerIds": [
+          "input_1",
+          "conv2d_1",
+          "max_pool_1"
+        ],
+        "color": "#F59E0B"
+      },
+      {
+        "id": "blocks",
+        "name": "Feature Extraction Blocks",
+        "description": "Stacked 3x3 and 5x5 convolutional filters building intermediate capacities",
+        "layerIds": [
+          "conv2d_2",
+          "max_pool_2",
+          "conv2d_3",
+          "conv2d_4",
+          "conv2d_5",
+          "max_pool_3"
+        ],
+        "color": "#F59E0B"
+      },
+      {
+        "id": "classifier",
+        "name": "Classifier Head",
+        "description": "Massive fully connected weights and dropout zones mapping features to ImageNet classes",
+        "layerIds": [
+          "flatten_1",
+          "dense_1",
+          "dense_2",
+          "output"
+        ],
+        "color": "#F59E0B"
+      }
+    ]
+  }
+}

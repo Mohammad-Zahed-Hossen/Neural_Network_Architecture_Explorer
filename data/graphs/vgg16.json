@@ -1,0 +1,1429 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": null,
+      "outputShape": [
+        null,
+        224,
+        224,
+        3
+      ],
+      "config": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block1_conv1",
+      "label": "Conv 3x3, 64",
+      "type": "conv2d",
+      "groupId": "group_b1",
+      "outputShape": [
+        null,
+        null,
+        null,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 1792,
+        "weights": 1728,
+        "biases": 64,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 3 \u00d7 64",
+            "result": 1728,
+            "explanation": "64 kernels of size 3x3 convolving over 3 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "64",
+            "result": 64,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "1728 + 64",
+            "result": 1792,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "block1_conv2",
+      "label": "Conv 3x3, 64",
+      "type": "conv2d",
+      "groupId": "group_b1",
+      "outputShape": [
+        null,
+        null,
+        null,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 36928,
+        "weights": 36864,
+        "biases": 64,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
+            "result": 36864,
+            "explanation": "64 kernels of size 3x3 convolving over 64 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "64",
+            "result": 64,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "36864 + 64",
+            "result": 36928,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    },
+    {
+      "id": "block1_pool",
+      "label": "block1_pool",
+      "type": "max_pooling2d",
+      "groupId": "group_b1",
+      "outputShape": [
+        null,
+        null,
+        null,
+        64
+      ],
+      "config": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 450
+      }
+    },
+    {
+      "id": "block2_conv1",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_b2",
+      "outputShape": [
+        null,
+        null,
+        null,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 73856,
+        "weights": 73728,
+        "biases": 128,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 128",
+            "result": 73728,
+            "explanation": "128 kernels of size 3x3 convolving over 64 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "128",
+            "result": 128,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "73728 + 128",
+            "result": 73856,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 600
+      }
+    },
+    {
+      "id": "block2_conv2",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_b2",
+      "outputShape": [
+        null,
+        null,
+        null,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 147584,
+        "weights": 147456,
+        "biases": 128,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 128",
+            "result": 147456,
+            "explanation": "128 kernels of size 3x3 convolving over 128 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "128",
+            "result": 128,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "147456 + 128",
+            "result": 147584,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 750
+      }
+    },
+    {
+      "id": "block2_pool",
+      "label": "block2_pool",
+      "type": "max_pooling2d",
+      "groupId": "group_b2",
+      "outputShape": [
+        null,
+        null,
+        null,
+        128
+      ],
+      "config": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 900
+      }
+    },
+    {
+      "id": "block3_conv1",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_b3",
+      "outputShape": [
+        null,
+        null,
+        null,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 295168,
+        "weights": 294912,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 256",
+            "result": 294912,
+            "explanation": "256 kernels of size 3x3 convolving over 128 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "294912 + 256",
+            "result": 295168,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1050
+      }
+    },
+    {
+      "id": "block3_conv2",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_b3",
+      "outputShape": [
+        null,
+        null,
+        null,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 590080,
+        "weights": 589824,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "256 kernels of size 3x3 convolving over 256 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "589824 + 256",
+            "result": 590080,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1200
+      }
+    },
+    {
+      "id": "block3_conv3",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_b3",
+      "outputShape": [
+        null,
+        null,
+        null,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 590080,
+        "weights": 589824,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "256 kernels of size 3x3 convolving over 256 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "589824 + 256",
+            "result": 590080,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1350
+      }
+    },
+    {
+      "id": "block3_pool",
+      "label": "block3_pool",
+      "type": "max_pooling2d",
+      "groupId": "group_b3",
+      "outputShape": [
+        null,
+        null,
+        null,
+        256
+      ],
+      "config": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1500
+      }
+    },
+    {
+      "id": "block4_conv1",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_b4",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 1180160,
+        "weights": 1179648,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 512",
+            "result": 1179648,
+            "explanation": "512 kernels of size 3x3 convolving over 256 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "1179648 + 512",
+            "result": 1180160,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1650
+      }
+    },
+    {
+      "id": "block4_conv2",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_b4",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1800
+      }
+    },
+    {
+      "id": "block4_conv3",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_b4",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1950
+      }
+    },
+    {
+      "id": "block4_pool",
+      "label": "block4_pool",
+      "type": "max_pooling2d",
+      "groupId": "group_b4",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2100
+      }
+    },
+    {
+      "id": "block5_conv1",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_b5",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2250
+      }
+    },
+    {
+      "id": "block5_conv2",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_b5",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2400
+      }
+    },
+    {
+      "id": "block5_conv3",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_b5",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2550
+      }
+    },
+    {
+      "id": "block5_pool",
+      "label": "block5_pool",
+      "type": "max_pooling2d",
+      "groupId": "group_b5",
+      "outputShape": [
+        null,
+        null,
+        null,
+        512
+      ],
+      "config": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2700
+      }
+    },
+    {
+      "id": "flatten",
+      "label": "flatten",
+      "type": "flatten",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        25088
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2850
+      }
+    },
+    {
+      "id": "fc1",
+      "label": "fc1",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        4096
+      ],
+      "config": {
+        "units": 4096,
+        "activation": "relu",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 102764544,
+        "weights": 102760448,
+        "biases": 4096,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Fully Connected Weights",
+            "expression": "25088 \u00d7 4096",
+            "result": 102760448,
+            "explanation": "Every input element is connected to all 4096 output units via a learnable weight."
+          },
+          {
+            "label": "Biases",
+            "expression": "4096",
+            "result": 4096,
+            "explanation": "One bias term per output unit."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "102760448 + 4096",
+            "result": 102764544,
+            "explanation": "Combined weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3000
+      }
+    },
+    {
+      "id": "fc2",
+      "label": "fc2",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        4096
+      ],
+      "config": {
+        "units": 4096,
+        "activation": "relu",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 16781312,
+        "weights": 16777216,
+        "biases": 4096,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Fully Connected Weights",
+            "expression": "4096 \u00d7 4096",
+            "result": 16777216,
+            "explanation": "Every unit from FC1 is connected to all 4096 units of FC2."
+          },
+          {
+            "label": "Biases",
+            "expression": "4096",
+            "result": 4096,
+            "explanation": "One bias term per output unit."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "16777216 + 4096",
+            "result": 16781312,
+            "explanation": "Combined weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3150
+      }
+    },
+    {
+      "id": "predictions",
+      "label": "predictions",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 4097000,
+        "weights": 4096000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Fully Connected Weights",
+            "expression": "4096 \u00d7 1000",
+            "result": 4096000,
+            "explanation": "Every unit from FC2 is connected to the 1000 final output class units."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One bias term per classification class."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "4096000 + 1000",
+            "result": 4097000,
+            "explanation": "Combined weights and biases."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3300
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c_input_1_block1_conv1",
+      "source": "input_1",
+      "target": "block1_conv1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv1_block1_conv2",
+      "source": "block1_conv1",
+      "target": "block1_conv2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv2_block1_pool",
+      "source": "block1_conv2",
+      "target": "block1_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_pool_block2_conv1",
+      "source": "block1_pool",
+      "target": "block2_conv1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_conv1_block2_conv2",
+      "source": "block2_conv1",
+      "target": "block2_conv2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_conv2_block2_pool",
+      "source": "block2_conv2",
+      "target": "block2_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_pool_block3_conv1",
+      "source": "block2_pool",
+      "target": "block3_conv1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block3_conv1_block3_conv2",
+      "source": "block3_conv1",
+      "target": "block3_conv2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block3_conv2_block3_conv3",
+      "source": "block3_conv2",
+      "target": "block3_conv3",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block3_conv3_block3_pool",
+      "source": "block3_conv3",
+      "target": "block3_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block3_pool_block4_conv1",
+      "source": "block3_pool",
+      "target": "block4_conv1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block4_conv1_block4_conv2",
+      "source": "block4_conv1",
+      "target": "block4_conv2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block4_conv2_block4_conv3",
+      "source": "block4_conv2",
+      "target": "block4_conv3",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block4_conv3_block4_pool",
+      "source": "block4_conv3",
+      "target": "block4_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block4_pool_block5_conv1",
+      "source": "block4_pool",
+      "target": "block5_conv1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block5_conv1_block5_conv2",
+      "source": "block5_conv1",
+      "target": "block5_conv2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block5_conv2_block5_conv3",
+      "source": "block5_conv2",
+      "target": "block5_conv3",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block5_conv3_block5_pool",
+      "source": "block5_conv3",
+      "target": "block5_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block5_pool_flatten",
+      "source": "block5_pool",
+      "target": "flatten",
+      "type": "sequential"
+    },
+    {
+      "id": "c_flatten_fc1",
+      "source": "flatten",
+      "target": "fc1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_fc1_fc2",
+      "source": "fc1",
+      "target": "fc2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_fc2_predictions",
+      "source": "fc2",
+      "target": "predictions",
+      "type": "sequential"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group_b1",
+      "name": "Conv Block 1",
+      "description": "2x convolutions with 64 filters",
+      "layerIds": [
+        "block1_conv1",
+        "block1_conv2",
+        "block1_pool"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_b2",
+      "name": "Conv Block 2",
+      "description": "2x convolutions with 128 filters",
+      "layerIds": [
+        "block2_conv1",
+        "block2_conv2",
+        "block2_pool"
+      ],
+      "color": "#2563EB"
+    },
+    {
+      "id": "group_b3",
+      "name": "Conv Block 3",
+      "description": "3x convolutions with 256 filters",
+      "layerIds": [
+        "block3_conv1",
+        "block3_conv2",
+        "block3_conv3",
+        "block3_pool"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_b4",
+      "name": "Conv Block 4",
+      "description": "3x convolutions with 512 filters",
+      "layerIds": [
+        "block4_conv1",
+        "block4_conv2",
+        "block4_conv3",
+        "block4_pool"
+      ],
+      "color": "#2563EB"
+    },
+    {
+      "id": "group_b5",
+      "name": "Conv Block 5",
+      "description": "3x convolutions with 512 filters",
+      "layerIds": [
+        "block5_conv1",
+        "block5_conv2",
+        "block5_conv3",
+        "block5_pool"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "classifier",
+      "name": "Classifier",
+      "description": "Flatten and fully connected classification head",
+      "layerIds": [
+        "flatten",
+        "fc1",
+        "fc2",
+        "predictions"
+      ],
+      "color": "#1D4ED8"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "group_b1",
+      "label": "Conv Block 1",
+      "type": "group_node",
+      "description": "2x convolutions with 64 filters",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 300.0
+      },
+      "layerIds": [
+        "block1_conv1",
+        "block1_conv2",
+        "block1_pool"
+      ]
+    },
+    {
+      "id": "group_b2",
+      "label": "Conv Block 2",
+      "type": "group_node",
+      "description": "2x convolutions with 128 filters",
+      "color": "#2563EB",
+      "position": {
+        "x": 250.0,
+        "y": 750.0
+      },
+      "layerIds": [
+        "block2_conv1",
+        "block2_conv2",
+        "block2_pool"
+      ]
+    },
+    {
+      "id": "group_b3",
+      "label": "Conv Block 3",
+      "type": "group_node",
+      "description": "3x convolutions with 256 filters",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 1275.0
+      },
+      "layerIds": [
+        "block3_conv1",
+        "block3_conv2",
+        "block3_conv3",
+        "block3_pool"
+      ]
+    },
+    {
+      "id": "group_b4",
+      "label": "Conv Block 4",
+      "type": "group_node",
+      "description": "3x convolutions with 512 filters",
+      "color": "#2563EB",
+      "position": {
+        "x": 250.0,
+        "y": 1875.0
+      },
+      "layerIds": [
+        "block4_conv1",
+        "block4_conv2",
+        "block4_conv3",
+        "block4_pool"
+      ]
+    },
+    {
+      "id": "group_b5",
+      "label": "Conv Block 5",
+      "type": "group_node",
+      "description": "3x convolutions with 512 filters",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 2475.0
+      },
+      "layerIds": [
+        "block5_conv1",
+        "block5_conv2",
+        "block5_conv3",
+        "block5_pool"
+      ]
+    },
+    {
+      "id": "classifier",
+      "label": "Classifier",
+      "type": "group_node",
+      "description": "Flatten and fully connected classification head",
+      "color": "#1D4ED8",
+      "position": {
+        "x": 250.0,
+        "y": 3075.0
+      },
+      "layerIds": [
+        "flatten",
+        "fc1",
+        "fc2",
+        "predictions"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_group_b1_group_b2",
+      "source": "group_b1",
+      "target": "group_b2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_group_b2_group_b3",
+      "source": "group_b2",
+      "target": "group_b3",
+      "type": "sequential"
+    },
+    {
+      "id": "c_group_b3_group_b4",
+      "source": "group_b3",
+      "target": "group_b4",
+      "type": "sequential"
+    },
+    {
+      "id": "c_group_b4_group_b5",
+      "source": "group_b4",
+      "target": "group_b5",
+      "type": "sequential"
+    },
+    {
+      "id": "c_group_b5_classifier",
+      "source": "group_b5",
+      "target": "classifier",
+      "type": "sequential"
+    }
+  ]
+}

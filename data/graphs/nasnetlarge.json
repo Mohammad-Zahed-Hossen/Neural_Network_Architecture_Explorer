@@ -1,0 +1,359 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": null,
+      "outputShape": [
+        null,
+        331,
+        331,
+        3
+      ],
+      "config": {
+        "shape": [
+          331,
+          331,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "stem_conv1",
+      "label": "Conv 3x3, 96",
+      "type": "conv2d",
+      "groupId": null,
+      "outputShape": [
+        null,
+        165,
+        165,
+        96
+      ],
+      "config": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 2592,
+        "weights": 2592,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "stem_bn1",
+      "label": "stem_bn1",
+      "type": "batch_norm",
+      "groupId": null,
+      "outputShape": [
+        null,
+        165,
+        165,
+        96
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "cell_1_sep3x3",
+      "label": "Conv 3x3, 96",
+      "type": "conv2d",
+      "groupId": "group_cell_1",
+      "outputShape": [
+        null,
+        165,
+        165,
+        96
+      ],
+      "config": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 10080,
+        "weights": 10080,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "cell_1_sep5x5",
+      "label": "Conv 5x5, 96",
+      "type": "conv2d",
+      "groupId": "group_cell_1",
+      "outputShape": [
+        null,
+        165,
+        165,
+        96
+      ],
+      "config": {
+        "filters": 96,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 11616,
+        "weights": 11616,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "cell_1_add",
+      "label": "cell_1_add",
+      "type": "add",
+      "groupId": "group_cell_1",
+      "outputShape": [
+        null,
+        165,
+        165,
+        96
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "global_average_pooling2d",
+      "label": "global_average_pooling2d",
+      "type": "global_average_pooling2d",
+      "groupId": "group_classifier",
+      "outputShape": [
+        null,
+        576
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "predictions",
+      "label": "predictions",
+      "type": "dense",
+      "groupId": "group_classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 577000,
+        "weights": 576000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c_in_stemconv",
+      "source": "input_1",
+      "target": "stem_conv1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_stem_conv1_stem_bn1",
+      "source": "stem_conv1",
+      "target": "stem_bn1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_stem_bn1_cell_1_sep3x3",
+      "source": "stem_bn1",
+      "target": "cell_1_sep3x3",
+      "type": "skip"
+    },
+    {
+      "id": "c_stem_bn1_cell_1_sep5x5",
+      "source": "stem_bn1",
+      "target": "cell_1_sep5x5",
+      "type": "skip"
+    },
+    {
+      "id": "c_br1_cell_1_add",
+      "source": "cell_1_sep3x3",
+      "target": "cell_1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_br2_cell_1_add",
+      "source": "cell_1_sep5x5",
+      "target": "cell_1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_last_gap",
+      "source": "cell_1_add",
+      "target": "global_average_pooling2d",
+      "type": "sequential"
+    },
+    {
+      "id": "c_gap_pred",
+      "source": "global_average_pooling2d",
+      "target": "predictions",
+      "type": "sequential"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group_cell_1",
+      "name": "NASNet Normal Cell",
+      "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+      "layerIds": [
+        "cell_1_sep3x3",
+        "cell_1_sep5x5",
+        "cell_1_add"
+      ],
+      "color": "#06B6D4"
+    },
+    {
+      "id": "group_classifier",
+      "name": "Global Pooling & Classification",
+      "description": "GAP followed by prediction layer.",
+      "layerIds": [
+        "global_average_pooling2d",
+        "predictions"
+      ],
+      "color": "#8B5CF6"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "group_cell_1",
+      "label": "NASNet Normal Cell",
+      "type": "group_node",
+      "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+      "color": "#06B6D4",
+      "position": {
+        "x": 250,
+        "y": 0
+      },
+      "layerIds": [
+        "cell_1_sep3x3",
+        "cell_1_sep5x5",
+        "cell_1_add"
+      ]
+    },
+    {
+      "id": "group_classifier",
+      "label": "Global Pooling & Classification",
+      "type": "group_node",
+      "description": "GAP followed by prediction layer.",
+      "color": "#8B5CF6",
+      "position": {
+        "x": 250,
+        "y": 200
+      },
+      "layerIds": [
+        "global_average_pooling2d",
+        "predictions"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_group_cell_1_group_classifier",
+      "source": "group_cell_1",
+      "target": "group_classifier",
+      "type": "sequential"
+    }
+  ]
+}

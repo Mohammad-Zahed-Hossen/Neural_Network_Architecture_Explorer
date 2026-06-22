@@ -1,0 +1,897 @@
+{
+  "id": "vit",
+  "name": "ViT",
+  "fullName": "An Image is Worth 16x16 Words: Vision Transformer (Base/16)",
+  "paperYear": 2020,
+  "authors": [
+    "Alexey Dosovitskiy",
+    "Lucas Beyer",
+    "Alexander Kolesnikov",
+    "Dirk Weissenborn",
+    "Xiaohua Zhai",
+    "Thomas Unterthiner",
+    "Mostafa Dehghani",
+    "Matthias Minderer",
+    "Georg Heigold",
+    "Sylvain Gelly",
+    "Jakob Uszkoreit",
+    "Neil Houlsby"
+  ],
+  "paperUrl": "https://arxiv.org/abs/2010.11929",
+  "depth": 12,
+  "totalParameters": 86567656,
+  "totalFLOPs": 16800000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "top1Accuracy": 0.779,
+  "top5Accuracy": 0.943,
+  "memoryUsage": 330,
+  "description": "ViT (Vision Transformer) applies a pure standard Transformer encoder directly to image patches. It splits the image into a sequence of flat patches, projects them linearly, and updates global relationships using self-attention. Bypasses CNN convolution operations entirely.",
+  "colorTheme": "#D946EF",
+  "tags": [
+    "Transformer",
+    "Attention",
+    "Sequence",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "Input Image",
+        "inputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3 RGB Image"
+        },
+        "config": {
+          "shape": [224, 224, 3]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Input layer for color images.",
+          "detailed": "Accepts 224x224 pixels RGB images. Unlike CNNs, which process pixels directly, ViT will divide this image into 16x16 non-overlapping patches.",
+          "keyTakeaway": "Standard input size for ViT-Base is 224x224, matching standard CNN benchmarks."
+        },
+        "position": {
+          "x": 250,
+          "y": 0
+        },
+        "color": "emerald",
+        "icon": "image"
+      },
+      {
+        "id": "patch_proj",
+        "type": "conv2d",
+        "name": "Patch Projection",
+        "inputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3"
+        },
+        "outputShape": {
+          "dimensions": [null, 14, 14, 768],
+          "description": "14x14x768"
+        },
+        "config": {
+          "filters": 768,
+          "kernelSize": [16, 16],
+          "strides": [16, 16],
+          "padding": "valid",
+          "useBias": true,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 590592,
+          "weights": 589824,
+          "biases": 768,
+          "formula": "(patch_h × patch_w × in_channels + 1) × hidden_dim",
+          "calculationSteps": [
+            {
+              "label": "Projection Weights",
+              "expression": "16 × 16 × 3 × 768",
+              "result": 589824,
+              "explanation": "Linear projection maps 16x16 patch pixels to a 768-dimensional embedding space."
+            },
+            {
+              "label": "Biases",
+              "expression": "768",
+              "result": 768,
+              "explanation": "One bias term per projection dimension."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Transforms image patches into token vectors.",
+          "detailed": "Uses a 16x16 2D convolution with stride 16. This extracts 14x14 = 196 patches and projects each patch into a 768-dimensional embedding, acting as 'visual tokens'.",
+          "keyTakeaway": "Patch projection translates spatial pixels into sequence tokens for the Transformer."
+        },
+        "position": {
+          "x": 250,
+          "y": 150
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "flatten_patches",
+        "type": "flatten",
+        "name": "Flatten Tokens",
+        "inputShape": {
+          "dimensions": [null, 14, 14, 768],
+          "description": "14x14x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196 Tokens, 768-dim"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Flattens 2D token grid to 1D sequence.",
+          "detailed": "Flattens the 14x14 spatial grid of patches into a sequence of 196 patch tokens, making it compatible with standard sequence encoders.",
+          "keyTakeaway": "Sequence length is fixed at 196 (plus an optional CLS class token)."
+        },
+        "position": {
+          "x": 250,
+          "y": 300
+        },
+        "color": "gray",
+        "icon": "crop"
+      },
+      {
+        "id": "pos_embed",
+        "type": "add",
+        "name": "Add Position Embed",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {},
+        "parameters": {
+          "total": 150528,
+          "weights": 150528,
+          "biases": 0,
+          "formula": "seq_len × hidden_dim",
+          "calculationSteps": [
+            {
+              "label": "1D Position Embeddings",
+              "expression": "196 × 768",
+              "result": 150528,
+              "explanation": "Learnable 1D parameters added to each patch embedding to retain spatial location awareness."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Adds spatial coordinates to sequence tokens.",
+          "detailed": "Since Self-Attention is permutation invariant, it ignores sequence order. Learnable position embeddings are added to restore spatial layout awareness.",
+          "keyTakeaway": "Position embeddings are critical for retaining the spatial topology of the image."
+        },
+        "position": {
+          "x": 250,
+          "y": 450
+        },
+        "color": "red",
+        "icon": "plus"
+      },
+      {
+        "id": "block0_ln1",
+        "type": "layer_norm",
+        "name": "Block 0 LayerNorm 1",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {
+          "axis": -1,
+          "epsilon": 1e-6
+        },
+        "parameters": {
+          "total": 1536,
+          "weights": 768,
+          "biases": 768,
+          "formula": "2 × hidden_dim",
+          "calculationSteps": [
+            {
+              "label": "Scale & Shift Parameters",
+              "expression": "2 × 768",
+              "result": 1536,
+              "explanation": "Gamma (weights) and Beta (biases) learnable scaling parameters."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes embeddings along feature dimension.",
+          "detailed": "Layer Normalization stabilizes the hidden states by computing the mean and variance across the feature dimension (768) independently for each token.",
+          "keyTakeaway": "LayerNorm is applied before self-attention (pre-LN style) in modern ViTs to ensure training stability."
+        },
+        "position": {
+          "x": 250,
+          "y": 600
+        },
+        "color": "slate",
+        "icon": "activity"
+      },
+      {
+        "id": "block0_msa",
+        "type": "attention",
+        "name": "Block 0 Multi-Head Attention",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {
+          "numHeads": 12,
+          "headDim": 64,
+          "hiddenDim": 768
+        },
+        "parameters": {
+          "total": 2362368,
+          "weights": 2359296,
+          "biases": 3072,
+          "formula": "4 × (hidden_dim × hidden_dim + hidden_dim)",
+          "calculationSteps": [
+            {
+              "label": "Q, K, V & Out Weights",
+              "expression": "4 × 768 × 768",
+              "result": 2359296,
+              "explanation": "Four projection matrices mapping features for Query, Key, Value, and Multi-Head Output."
+            },
+            {
+              "label": "Biases",
+              "expression": "4 × 768",
+              "result": 3072,
+              "explanation": "Bias terms for Q, K, V, and Out linear layers."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Enables global context sharing between all tokens.",
+          "detailed": "Uses 12 attention heads. Computes Query-Key similarity dot-products, creating an attention matrix. Tokens weight and retrieve information from all other tokens globally, ignoring spatial distances.",
+          "keyTakeaway": "Self-attention replaces convolution's local receptive field with a global receptivity in every layer."
+        },
+        "position": {
+          "x": 250,
+          "y": 750
+        },
+        "color": "violet",
+        "icon": "eye"
+      },
+      {
+        "id": "block0_add1",
+        "type": "add",
+        "name": "Block 0 Skip 1",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Residual addition around Self-Attention block.",
+          "detailed": "Adds the input of the LN+Attention block to its output: x = x + Attention(LN(x)). Ensures gradients flow directly backward through the layers.",
+          "keyTakeaway": "Prevents vanishing gradients across deep stacks of transformer encoder layers."
+        },
+        "position": {
+          "x": 250,
+          "y": 900
+        },
+        "color": "red",
+        "icon": "plus"
+      },
+      {
+        "id": "block0_ln2",
+        "type": "layer_norm",
+        "name": "Block 0 LayerNorm 2",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {
+          "axis": -1,
+          "epsilon": 1e-6
+        },
+        "parameters": {
+          "total": 1536,
+          "weights": 768,
+          "biases": 768,
+          "formula": "2 × hidden_dim",
+          "calculationSteps": [
+            {
+              "label": "Scale & Shift Parameters",
+              "expression": "2 × 768",
+              "result": 1536,
+              "explanation": "Gamma and Beta scaling vectors."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes states before the MLP block.",
+          "detailed": "Normalizes states across the embedding dimension to prepare inputs for the high-dimensional non-linear projections of the MLP layer.",
+          "keyTakeaway": "LayerNorm ensures stable training dynamics before MLP expansion."
+        },
+        "position": {
+          "x": 250,
+          "y": 1050
+        },
+        "color": "slate",
+        "icon": "activity"
+      },
+      {
+        "id": "block0_mlp_dense1",
+        "type": "dense",
+        "name": "Block 0 MLP Expansion",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 3072],
+          "description": "196x3072"
+        },
+        "config": {
+          "units": 3072,
+          "activation": "linear",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 2362368,
+          "weights": 2359296,
+          "biases": 3072,
+          "formula": "(hidden_dim × mlp_dim) + mlp_dim",
+          "calculationSteps": [
+            {
+              "label": "Expansion Weights",
+              "expression": "768 × 3072",
+              "result": 2359296,
+              "explanation": "Projects token representations from 768 to 3072 dimensions."
+            },
+            {
+              "label": "Biases",
+              "expression": "3072",
+              "result": 3072,
+              "explanation": "One bias parameter per expansion unit."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Projects embeddings to higher dimensions.",
+          "detailed": "Projects embeddings to a 4x higher dimensional space (3072). This allows features to be linearly separated and combined through non-linear activations.",
+          "keyTakeaway": "MLP blocks operate on each token embedding independently (channel-wise mixing)."
+        },
+        "position": {
+          "x": 250,
+          "y": 1200
+        },
+        "color": "blue",
+        "icon": "zap"
+      },
+      {
+        "id": "block0_mlp_act",
+        "type": "activation",
+        "name": "Block 0 MLP GELU",
+        "inputShape": {
+          "dimensions": [null, 196, 3072],
+          "description": "196x3072"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 3072],
+          "description": "196x3072"
+        },
+        "config": {
+          "activation": "gelu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Non-linear activation function.",
+          "detailed": "GELU (Gaussian Error Linear Unit) scales inputs by their cumulative probability distribution, providing a smoother gradient flow than ReLU.",
+          "keyTakeaway": "GELU is the standard activation function in modern vision and text transformer blocks."
+        },
+        "position": {
+          "x": 250,
+          "y": 1350
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "block0_mlp_dense2",
+        "type": "dense",
+        "name": "Block 0 MLP Projection",
+        "inputShape": {
+          "dimensions": [null, 196, 3072],
+          "description": "196x3072"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {
+          "units": 768,
+          "activation": "linear",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 2360064,
+          "weights": 2359296,
+          "biases": 768,
+          "formula": "(mlp_dim × hidden_dim) + hidden_dim",
+          "calculationSteps": [
+            {
+              "label": "Projection Weights",
+              "expression": "3072 × 768",
+              "result": 2359296,
+              "explanation": "Projects token representations back from 3072 to 768 dimensions."
+            },
+            {
+              "label": "Biases",
+              "expression": "768",
+              "result": 768,
+              "explanation": "One bias parameter per hidden unit."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Compresses MLP representations back to core embedding size.",
+          "detailed": "Maps the expanded features back to the main sequence dimension (768), ensuring output token shapes match skip shortcut dimensions.",
+          "keyTakeaway": "Prepares MLP representations for residual summation."
+        },
+        "position": {
+          "x": 250,
+          "y": 1500
+        },
+        "color": "blue",
+        "icon": "zap"
+      },
+      {
+        "id": "block0_add2",
+        "type": "add",
+        "name": "Block 0 Skip 2",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Second residual skip connection around MLP block.",
+          "detailed": "Summates the attention representation (from skip 1) with the compressed MLP output: x = x + MLP(LN(x)).",
+          "keyTakeaway": "Bypasses MLP layers to maintain stable backprop flow."
+        },
+        "position": {
+          "x": 250,
+          "y": 1650
+        },
+        "color": "red",
+        "icon": "plus"
+      },
+      {
+        "id": "blocks_stack",
+        "type": "bottleneck",
+        "name": "Encoder Blocks 1–11",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {
+          "expansion": 11
+        },
+        "parameters": {
+          "total": 77966592,
+          "weights": 77932800,
+          "biases": 33792,
+          "formula": "11 × Block0_Params",
+          "calculationSteps": [
+            {
+              "label": "Stack Projection Weights",
+              "expression": "11 × 7084800",
+              "result": 77932800,
+              "explanation": "Calculates self-attention and MLP parameters across 11 identical stacked transformer encoder blocks."
+            },
+            {
+              "label": "Stack Biases",
+              "expression": "11 × 3072",
+              "result": 33792,
+              "explanation": "Total biases summed across 11 blocks."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "A stack of 11 identical encoder blocks.",
+          "detailed": "Repeatedly processes sequence relationships. Each block contains self-attention and MLP sub-layers. Deep layers refine semantic features of token interactions.",
+          "keyTakeaway": "ViT-Base stacks a total of 12 transformer encoder blocks for deep representation learning."
+        },
+        "position": {
+          "x": 250,
+          "y": 1800
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "norm_out",
+        "type": "layer_norm",
+        "name": "Output LayerNorm",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "config": {
+          "axis": -1,
+          "epsilon": 1e-6
+        },
+        "parameters": {
+          "total": 1536,
+          "weights": 768,
+          "biases": 768,
+          "formula": "2 × hidden_dim",
+          "calculationSteps": [
+            {
+              "label": "Scale & Shift Parameters",
+              "expression": "2 × 768",
+              "result": 1536,
+              "explanation": "Output Normalizer parameters."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Final normalization before classification head.",
+          "detailed": "Stabilizes the final output states of the Transformer encoder before mapping to categorical logits.",
+          "keyTakeaway": "Final LayerNorm ensures scale consistency before the classifier."
+        },
+        "position": {
+          "x": 250,
+          "y": 1950
+        },
+        "color": "slate",
+        "icon": "activity"
+      },
+      {
+        "id": "avg_pool",
+        "type": "global_average_pooling2d",
+        "name": "Global Token Pooling",
+        "inputShape": {
+          "dimensions": [null, 196, 768],
+          "description": "196x768"
+        },
+        "outputShape": {
+          "dimensions": [null, 768],
+          "description": "768-d Vector"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Collapses sequence dimensions to a single vector.",
+          "detailed": "Averages representations across all 196 sequence tokens to construct a unified image representation vector. (Note: Sourced from Keras ViT, which uses average pooling over sequence instead of the standard CLS token).",
+          "keyTakeaway": "Collapses spatial/sequence dimension to create a global class embedding."
+        },
+        "position": {
+          "x": 250,
+          "y": 2100
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "head",
+        "type": "dense",
+        "name": "MLP Classification Head",
+        "inputShape": {
+          "dimensions": [null, 768],
+          "description": "768"
+        },
+        "outputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 logits"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "linear",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 769000,
+          "weights": 768000,
+          "biases": 1000,
+          "formula": "(hidden_dim × num_classes) + num_classes",
+          "calculationSteps": [
+            {
+              "label": "Head Weights",
+              "expression": "768 × 1000",
+              "result": 768000,
+              "explanation": "Weights mapping pooled image embeddings to the 1000 ImageNet categories."
+            },
+            {
+              "label": "Head Biases",
+              "expression": "1000",
+              "result": 1000,
+              "explanation": "One bias term per ImageNet class."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Dense mapping to class index logits.",
+          "detailed": "Final fully connected classification layer predicting categorical scores.",
+          "keyTakeaway": "Predicts raw log-odds (logits) for the classifier."
+        },
+        "position": {
+          "x": 250,
+          "y": 2250
+        },
+        "color": "blue",
+        "icon": "zap"
+      },
+      {
+        "id": "output",
+        "type": "output",
+        "name": "Output Probabilities",
+        "inputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 logits"
+        },
+        "outputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 probabilities"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes predictions into probability values.",
+          "detailed": "Softmax maps logits to positive values summing to 1.0, representing the model's prediction confidence score for each class.",
+          "keyTakeaway": "Yields output confidence distribution over ImageNet classes."
+        },
+        "position": {
+          "x": 250,
+          "y": 2400
+        },
+        "color": "pink",
+        "icon": "award"
+      }
+    ],
+    "connections": [
+      {
+        "id": "c1",
+        "sourceId": "input_1",
+        "targetId": "patch_proj",
+        "type": "sequential"
+      },
+      {
+        "id": "c2",
+        "sourceId": "patch_proj",
+        "targetId": "flatten_patches",
+        "type": "sequential"
+      },
+      {
+        "id": "c3",
+        "sourceId": "flatten_patches",
+        "targetId": "pos_embed",
+        "type": "sequential"
+      },
+      {
+        "id": "c4",
+        "sourceId": "pos_embed",
+        "targetId": "block0_ln1",
+        "type": "sequential"
+      },
+      {
+        "id": "c5",
+        "sourceId": "block0_ln1",
+        "targetId": "block0_msa",
+        "type": "sequential"
+      },
+      {
+        "id": "c6",
+        "sourceId": "block0_msa",
+        "targetId": "block0_add1",
+        "type": "sequential"
+      },
+      {
+        "id": "c7",
+        "sourceId": "block0_add1",
+        "targetId": "block0_ln2",
+        "type": "sequential"
+      },
+      {
+        "id": "c8",
+        "sourceId": "block0_ln2",
+        "targetId": "block0_mlp_dense1",
+        "type": "sequential"
+      },
+      {
+        "id": "c9",
+        "sourceId": "block0_mlp_dense1",
+        "targetId": "block0_mlp_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c10",
+        "sourceId": "block0_mlp_act",
+        "targetId": "block0_mlp_dense2",
+        "type": "sequential"
+      },
+      {
+        "id": "c11",
+        "sourceId": "block0_mlp_dense2",
+        "targetId": "block0_add2",
+        "type": "sequential"
+      },
+      {
+        "id": "c12",
+        "sourceId": "block0_add2",
+        "targetId": "blocks_stack",
+        "type": "sequential"
+      },
+      {
+        "id": "c13",
+        "sourceId": "blocks_stack",
+        "targetId": "norm_out",
+        "type": "sequential"
+      },
+      {
+        "id": "c14",
+        "sourceId": "norm_out",
+        "targetId": "avg_pool",
+        "type": "sequential"
+      },
+      {
+        "id": "c15",
+        "sourceId": "avg_pool",
+        "targetId": "head",
+        "type": "sequential"
+      },
+      {
+        "id": "c16",
+        "sourceId": "head",
+        "targetId": "output",
+        "type": "sequential"
+      },
+      {
+        "id": "c_skip1",
+        "sourceId": "pos_embed",
+        "targetId": "block0_add1",
+        "type": "skip"
+      },
+      {
+        "id": "c_skip2",
+        "sourceId": "block0_add1",
+        "targetId": "block0_add2",
+        "type": "skip"
+      }
+    ],
+    "groups": [
+      {
+        "id": "patch_embed",
+        "name": "Patch Embedding Stem",
+        "description": "Image patch extraction, linear projection, and 1D position embeddings.",
+        "layerIds": [
+          "input_1",
+          "patch_proj",
+          "flatten_patches",
+          "pos_embed"
+        ],
+        "color": "#10B981"
+      },
+      {
+        "id": "transformer_block_0",
+        "name": "Transformer Block 0",
+        "description": "First complete Multi-Head Self-Attention and multi-layer perceptron (MLP) block.",
+        "layerIds": [
+          "block0_ln1",
+          "block0_msa",
+          "block0_add1",
+          "block0_ln2",
+          "block0_mlp_dense1",
+          "block0_mlp_act",
+          "block0_mlp_dense2",
+          "block0_add2"
+        ],
+        "color": "#D946EF"
+      },
+      {
+        "id": "encoder_stack",
+        "name": "Stacked Encoder Blocks",
+        "description": "Remaining 11 stacked encoder blocks doing attention and feature mixing.",
+        "layerIds": [
+          "blocks_stack"
+        ],
+        "color": "#8B5CF6"
+      },
+      {
+        "id": "classifier",
+        "name": "Classification Head",
+        "description": "Output norm, global average token pooling, and fully connected logits head.",
+        "layerIds": [
+          "norm_out",
+          "avg_pool",
+          "head",
+          "output"
+        ],
+        "color": "#F59E0B"
+      }
+    ]
+  }
+}

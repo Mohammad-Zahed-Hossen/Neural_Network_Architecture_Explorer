@@ -1,0 +1,804 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": "patch_embed",
+      "outputShape": [
+        null,
+        224,
+        224,
+        3
+      ],
+      "config": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "patch_proj",
+      "label": "Conv 16x16, 768",
+      "type": "conv2d",
+      "groupId": "patch_embed",
+      "outputShape": [
+        null,
+        14,
+        14,
+        768
+      ],
+      "config": {
+        "filters": 768,
+        "kernelSize": [
+          16,
+          16
+        ],
+        "strides": [
+          16,
+          16
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 590592,
+        "weights": 589824,
+        "biases": 768,
+        "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Projection Weights",
+            "expression": "16 \u00d7 16 \u00d7 3 \u00d7 768",
+            "result": 589824,
+            "explanation": "Linear projection maps 16x16 patch pixels to a 768-dimensional embedding space."
+          },
+          {
+            "label": "Biases",
+            "expression": "768",
+            "result": 768,
+            "explanation": "One bias term per projection dimension."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "flatten_patches",
+      "label": "Flatten Tokens",
+      "type": "flatten",
+      "groupId": "patch_embed",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    },
+    {
+      "id": "pos_embed",
+      "label": "Add Position Embed",
+      "type": "add",
+      "groupId": "patch_embed",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {},
+      "parameters": {
+        "total": 150528,
+        "weights": 150528,
+        "biases": 0,
+        "formula": "seq_len \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "1D Position Embeddings",
+            "expression": "196 \u00d7 768",
+            "result": 150528,
+            "explanation": "Learnable 1D parameters added to each patch embedding to retain spatial location awareness."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 450
+      }
+    },
+    {
+      "id": "block0_ln1",
+      "label": "Block 0 LayerNorm 1",
+      "type": "layer_norm",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Scale & Shift Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Gamma (weights) and Beta (biases) learnable scaling parameters."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 600
+      }
+    },
+    {
+      "id": "block0_msa",
+      "label": "Block 0 Multi-Head Attention",
+      "type": "attention",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {
+        "numHeads": 12,
+        "headDim": 64,
+        "hiddenDim": 768
+      },
+      "parameters": {
+        "total": 2362368,
+        "weights": 2359296,
+        "biases": 3072,
+        "formula": "4 \u00d7 (hidden_dim \u00d7 hidden_dim + hidden_dim)",
+        "calculationSteps": [
+          {
+            "label": "Q, K, V & Out Weights",
+            "expression": "4 \u00d7 768 \u00d7 768",
+            "result": 2359296,
+            "explanation": "Four projection matrices mapping features for Query, Key, Value, and Multi-Head Output."
+          },
+          {
+            "label": "Biases",
+            "expression": "4 \u00d7 768",
+            "result": 3072,
+            "explanation": "Bias terms for Q, K, V, and Out linear layers."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 750
+      }
+    },
+    {
+      "id": "block0_add1",
+      "label": "Block 0 Skip 1",
+      "type": "add",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 900
+      }
+    },
+    {
+      "id": "block0_ln2",
+      "label": "Block 0 LayerNorm 2",
+      "type": "layer_norm",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Scale & Shift Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Gamma and Beta scaling vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1050
+      }
+    },
+    {
+      "id": "block0_mlp_dense1",
+      "label": "Block 0 MLP Expansion",
+      "type": "dense",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        3072
+      ],
+      "config": {
+        "units": 3072,
+        "activation": "linear",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 2362368,
+        "weights": 2359296,
+        "biases": 3072,
+        "formula": "(hidden_dim \u00d7 mlp_dim) + mlp_dim",
+        "calculationSteps": [
+          {
+            "label": "Expansion Weights",
+            "expression": "768 \u00d7 3072",
+            "result": 2359296,
+            "explanation": "Projects token representations from 768 to 3072 dimensions."
+          },
+          {
+            "label": "Biases",
+            "expression": "3072",
+            "result": 3072,
+            "explanation": "One bias parameter per expansion unit."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1200
+      }
+    },
+    {
+      "id": "block0_mlp_act",
+      "label": "Block 0 MLP GELU",
+      "type": "activation",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        3072
+      ],
+      "config": {
+        "activation": "gelu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1350
+      }
+    },
+    {
+      "id": "block0_mlp_dense2",
+      "label": "Block 0 MLP Projection",
+      "type": "dense",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {
+        "units": 768,
+        "activation": "linear",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 2360064,
+        "weights": 2359296,
+        "biases": 768,
+        "formula": "(mlp_dim \u00d7 hidden_dim) + hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Projection Weights",
+            "expression": "3072 \u00d7 768",
+            "result": 2359296,
+            "explanation": "Projects token representations back from 3072 to 768 dimensions."
+          },
+          {
+            "label": "Biases",
+            "expression": "768",
+            "result": 768,
+            "explanation": "One bias parameter per hidden unit."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1500
+      }
+    },
+    {
+      "id": "block0_add2",
+      "label": "Block 0 Skip 2",
+      "type": "add",
+      "groupId": "transformer_block_0",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1650
+      }
+    },
+    {
+      "id": "blocks_stack",
+      "label": "Encoder Blocks 1\u201311",
+      "type": "bottleneck",
+      "groupId": "encoder_stack",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {
+        "expansion": 11
+      },
+      "parameters": {
+        "total": 77966592,
+        "weights": 77932800,
+        "biases": 33792,
+        "formula": "11 \u00d7 Block0_Params",
+        "calculationSteps": [
+          {
+            "label": "Stack Projection Weights",
+            "expression": "11 \u00d7 7084800",
+            "result": 77932800,
+            "explanation": "Calculates self-attention and MLP parameters across 11 identical stacked transformer encoder blocks."
+          },
+          {
+            "label": "Stack Biases",
+            "expression": "11 \u00d7 3072",
+            "result": 33792,
+            "explanation": "Total biases summed across 11 blocks."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1800
+      }
+    },
+    {
+      "id": "norm_out",
+      "label": "Output LayerNorm",
+      "type": "layer_norm",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        196,
+        768
+      ],
+      "config": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Scale & Shift Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Output Normalizer parameters."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1950
+      }
+    },
+    {
+      "id": "avg_pool",
+      "label": "Global Token Pooling",
+      "type": "global_average_pooling2d",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        768
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2100
+      }
+    },
+    {
+      "id": "head",
+      "label": "MLP Classification Head",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "linear",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 769000,
+        "weights": 768000,
+        "biases": 1000,
+        "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
+        "calculationSteps": [
+          {
+            "label": "Head Weights",
+            "expression": "768 \u00d7 1000",
+            "result": 768000,
+            "explanation": "Weights mapping pooled image embeddings to the 1000 ImageNet categories."
+          },
+          {
+            "label": "Head Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One bias term per ImageNet class."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2250
+      }
+    },
+    {
+      "id": "output",
+      "label": "Output Probabilities",
+      "type": "output",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2400
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c1",
+      "source": "input_1",
+      "target": "patch_proj",
+      "type": "sequential"
+    },
+    {
+      "id": "c2",
+      "source": "patch_proj",
+      "target": "flatten_patches",
+      "type": "sequential"
+    },
+    {
+      "id": "c3",
+      "source": "flatten_patches",
+      "target": "pos_embed",
+      "type": "sequential"
+    },
+    {
+      "id": "c4",
+      "source": "pos_embed",
+      "target": "block0_ln1",
+      "type": "sequential"
+    },
+    {
+      "id": "c5",
+      "source": "block0_ln1",
+      "target": "block0_msa",
+      "type": "sequential"
+    },
+    {
+      "id": "c6",
+      "source": "block0_msa",
+      "target": "block0_add1",
+      "type": "sequential"
+    },
+    {
+      "id": "c7",
+      "source": "block0_add1",
+      "target": "block0_ln2",
+      "type": "sequential"
+    },
+    {
+      "id": "c8",
+      "source": "block0_ln2",
+      "target": "block0_mlp_dense1",
+      "type": "sequential"
+    },
+    {
+      "id": "c9",
+      "source": "block0_mlp_dense1",
+      "target": "block0_mlp_act",
+      "type": "sequential"
+    },
+    {
+      "id": "c10",
+      "source": "block0_mlp_act",
+      "target": "block0_mlp_dense2",
+      "type": "sequential"
+    },
+    {
+      "id": "c11",
+      "source": "block0_mlp_dense2",
+      "target": "block0_add2",
+      "type": "sequential"
+    },
+    {
+      "id": "c12",
+      "source": "block0_add2",
+      "target": "blocks_stack",
+      "type": "sequential"
+    },
+    {
+      "id": "c13",
+      "source": "blocks_stack",
+      "target": "norm_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c14",
+      "source": "norm_out",
+      "target": "avg_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c15",
+      "source": "avg_pool",
+      "target": "head",
+      "type": "sequential"
+    },
+    {
+      "id": "c16",
+      "source": "head",
+      "target": "output",
+      "type": "sequential"
+    },
+    {
+      "id": "c_skip1",
+      "source": "pos_embed",
+      "target": "block0_add1",
+      "type": "skip"
+    },
+    {
+      "id": "c_skip2",
+      "source": "block0_add1",
+      "target": "block0_add2",
+      "type": "skip"
+    }
+  ],
+  "groups": [
+    {
+      "id": "patch_embed",
+      "name": "Patch Embedding Stem",
+      "description": "Image patch extraction, linear projection, and 1D position embeddings.",
+      "layerIds": [
+        "input_1",
+        "patch_proj",
+        "flatten_patches",
+        "pos_embed"
+      ],
+      "color": "#10B981"
+    },
+    {
+      "id": "transformer_block_0",
+      "name": "Transformer Block 0",
+      "description": "First complete Multi-Head Self-Attention and multi-layer perceptron (MLP) block.",
+      "layerIds": [
+        "block0_ln1",
+        "block0_msa",
+        "block0_add1",
+        "block0_ln2",
+        "block0_mlp_dense1",
+        "block0_mlp_act",
+        "block0_mlp_dense2",
+        "block0_add2"
+      ],
+      "color": "#D946EF"
+    },
+    {
+      "id": "encoder_stack",
+      "name": "Stacked Encoder Blocks",
+      "description": "Remaining 11 stacked encoder blocks doing attention and feature mixing.",
+      "layerIds": [
+        "blocks_stack"
+      ],
+      "color": "#8B5CF6"
+    },
+    {
+      "id": "classifier",
+      "name": "Classification Head",
+      "description": "Output norm, global average token pooling, and fully connected logits head.",
+      "layerIds": [
+        "norm_out",
+        "avg_pool",
+        "head",
+        "output"
+      ],
+      "color": "#F59E0B"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "patch_embed",
+      "label": "Patch Embedding Stem",
+      "type": "group_node",
+      "description": "Image patch extraction, linear projection, and 1D position embeddings.",
+      "color": "#10B981",
+      "position": {
+        "x": 250.0,
+        "y": 225.0
+      },
+      "layerIds": [
+        "input_1",
+        "patch_proj",
+        "flatten_patches",
+        "pos_embed"
+      ]
+    },
+    {
+      "id": "transformer_block_0",
+      "label": "Transformer Block 0",
+      "type": "group_node",
+      "description": "First complete Multi-Head Self-Attention and multi-layer perceptron (MLP) block.",
+      "color": "#D946EF",
+      "position": {
+        "x": 250.0,
+        "y": 1125.0
+      },
+      "layerIds": [
+        "block0_ln1",
+        "block0_msa",
+        "block0_add1",
+        "block0_ln2",
+        "block0_mlp_dense1",
+        "block0_mlp_act",
+        "block0_mlp_dense2",
+        "block0_add2"
+      ]
+    },
+    {
+      "id": "encoder_stack",
+      "label": "Stacked Encoder Blocks",
+      "type": "group_node",
+      "description": "Remaining 11 stacked encoder blocks doing attention and feature mixing.",
+      "color": "#8B5CF6",
+      "position": {
+        "x": 250.0,
+        "y": 1800.0
+      },
+      "layerIds": [
+        "blocks_stack"
+      ]
+    },
+    {
+      "id": "classifier",
+      "label": "Classification Head",
+      "type": "group_node",
+      "description": "Output norm, global average token pooling, and fully connected logits head.",
+      "color": "#F59E0B",
+      "position": {
+        "x": 250.0,
+        "y": 2175.0
+      },
+      "layerIds": [
+        "norm_out",
+        "avg_pool",
+        "head",
+        "output"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_patch_embed_transformer_block_0",
+      "source": "patch_embed",
+      "target": "transformer_block_0",
+      "type": "skip"
+    },
+    {
+      "id": "c_transformer_block_0_encoder_stack",
+      "source": "transformer_block_0",
+      "target": "encoder_stack",
+      "type": "sequential"
+    },
+    {
+      "id": "c_encoder_stack_classifier",
+      "source": "encoder_stack",
+      "target": "classifier",
+      "type": "sequential"
+    }
+  ]
+}

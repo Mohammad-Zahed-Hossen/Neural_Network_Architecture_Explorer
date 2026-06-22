@@ -1,0 +1,706 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": "stem",
+      "outputShape": [
+        null,
+        224,
+        224,
+        3
+      ],
+      "config": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "conv2d_1",
+      "label": "Conv 11x11, 96",
+      "type": "conv2d",
+      "groupId": "stem",
+      "outputShape": [
+        null,
+        55,
+        55,
+        96
+      ],
+      "config": {
+        "filters": 96,
+        "kernelSize": [
+          11,
+          11
+        ],
+        "strides": [
+          4,
+          4
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 34944,
+        "weights": 34848,
+        "biases": 96,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "11 \u00d7 11 \u00d7 3 \u00d7 96",
+            "result": 34848,
+            "explanation": "96 filters of size 11x11 operating over 3 color input channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "96",
+            "result": 96,
+            "explanation": "One trainable bias per filter."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "max_pool_1",
+      "label": "Max Pool 1",
+      "type": "max_pooling2d",
+      "groupId": "stem",
+      "outputShape": [
+        null,
+        27,
+        27,
+        96
+      ],
+      "config": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    },
+    {
+      "id": "conv2d_2",
+      "label": "Conv 5x5, 256",
+      "type": "conv2d",
+      "groupId": "blocks",
+      "outputShape": [
+        null,
+        27,
+        27,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 614656,
+        "weights": 614400,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "5 \u00d7 5 \u00d7 96 \u00d7 256",
+            "result": 614400,
+            "explanation": "256 filters of size 5x5 operating over 96 input channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One trainable bias per filter."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 450
+      }
+    },
+    {
+      "id": "max_pool_2",
+      "label": "Max Pool 2",
+      "type": "max_pooling2d",
+      "groupId": "blocks",
+      "outputShape": [
+        null,
+        13,
+        13,
+        256
+      ],
+      "config": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 600
+      }
+    },
+    {
+      "id": "conv2d_3",
+      "label": "Conv 3x3, 384",
+      "type": "conv2d",
+      "groupId": "blocks",
+      "outputShape": [
+        null,
+        13,
+        13,
+        384
+      ],
+      "config": {
+        "filters": 384,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 885120,
+        "weights": 884736,
+        "biases": 384,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 384",
+            "result": 884736,
+            "explanation": "384 filters of size 3x3 operating over 256 input channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "384",
+            "result": 384,
+            "explanation": "One trainable bias per filter."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 750
+      }
+    },
+    {
+      "id": "conv2d_4",
+      "label": "Conv 3x3, 384",
+      "type": "conv2d",
+      "groupId": "blocks",
+      "outputShape": [
+        null,
+        13,
+        13,
+        384
+      ],
+      "config": {
+        "filters": 384,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 1327488,
+        "weights": 1327104,
+        "biases": 384,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 384 \u00d7 384",
+            "result": 1327104,
+            "explanation": "384 filters of size 3x3 operating over 384 input channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "384",
+            "result": 384,
+            "explanation": "One trainable bias per filter."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 900
+      }
+    },
+    {
+      "id": "conv2d_5",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "blocks",
+      "outputShape": [
+        null,
+        13,
+        13,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 884992,
+        "weights": 884736,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 384 \u00d7 256",
+            "result": 884736,
+            "explanation": "256 filters of size 3x3 operating over 384 input channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One trainable bias per filter."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1050
+      }
+    },
+    {
+      "id": "max_pool_3",
+      "label": "Max Pool 3",
+      "type": "max_pooling2d",
+      "groupId": "blocks",
+      "outputShape": [
+        null,
+        6,
+        6,
+        256
+      ],
+      "config": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1200
+      }
+    },
+    {
+      "id": "flatten_1",
+      "label": "Flatten",
+      "type": "flatten",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        9216
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1350
+      }
+    },
+    {
+      "id": "dense_1",
+      "label": "Fully Connected 1",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        4096
+      ],
+      "config": {
+        "units": 4096,
+        "activation": "relu",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 37752832,
+        "weights": 37748736,
+        "biases": 4096,
+        "formula": "(input_units + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "9216 \u00d7 4096",
+            "result": 37748736,
+            "explanation": "Weight matrix connecting 9216 input features to 4096 units."
+          },
+          {
+            "label": "Biases",
+            "expression": "4096",
+            "result": 4096,
+            "explanation": "One trainable bias per unit."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1500
+      }
+    },
+    {
+      "id": "dense_2",
+      "label": "Fully Connected 2",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        4096
+      ],
+      "config": {
+        "units": 4096,
+        "activation": "relu",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 16781312,
+        "weights": 16777216,
+        "biases": 4096,
+        "formula": "(input_units + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "4096 \u00d7 4096",
+            "result": 16777216,
+            "explanation": "Connections from 4096 features to 4096 units."
+          },
+          {
+            "label": "Biases",
+            "expression": "4096",
+            "result": 4096,
+            "explanation": "One trainable bias per unit."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1650
+      }
+    },
+    {
+      "id": "output",
+      "label": "Output Classes",
+      "type": "output",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 4097000,
+        "weights": 4096000,
+        "biases": 1000,
+        "formula": "(input_units + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "4096 \u00d7 1000",
+            "result": 4096000,
+            "explanation": "Connections from 4096 features to 1000 final classes."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One bias per class."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1800
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c1",
+      "source": "input_1",
+      "target": "conv2d_1",
+      "type": "sequential"
+    },
+    {
+      "id": "c2",
+      "source": "conv2d_1",
+      "target": "max_pool_1",
+      "type": "sequential"
+    },
+    {
+      "id": "c3",
+      "source": "max_pool_1",
+      "target": "conv2d_2",
+      "type": "sequential"
+    },
+    {
+      "id": "c4",
+      "source": "conv2d_2",
+      "target": "max_pool_2",
+      "type": "sequential"
+    },
+    {
+      "id": "c5",
+      "source": "max_pool_2",
+      "target": "conv2d_3",
+      "type": "sequential"
+    },
+    {
+      "id": "c6",
+      "source": "conv2d_3",
+      "target": "conv2d_4",
+      "type": "sequential"
+    },
+    {
+      "id": "c7",
+      "source": "conv2d_4",
+      "target": "conv2d_5",
+      "type": "sequential"
+    },
+    {
+      "id": "c8",
+      "source": "conv2d_5",
+      "target": "max_pool_3",
+      "type": "sequential"
+    },
+    {
+      "id": "c9",
+      "source": "max_pool_3",
+      "target": "flatten_1",
+      "type": "sequential"
+    },
+    {
+      "id": "c10",
+      "source": "flatten_1",
+      "target": "dense_1",
+      "type": "sequential"
+    },
+    {
+      "id": "c11",
+      "source": "dense_1",
+      "target": "dense_2",
+      "type": "sequential"
+    },
+    {
+      "id": "c12",
+      "source": "dense_2",
+      "target": "output",
+      "type": "sequential"
+    }
+  ],
+  "groups": [
+    {
+      "id": "stem",
+      "name": "Input & Early Conv Stem",
+      "description": "Standard 11x11 stride 4 convolutional stem extracting early shapes and edges",
+      "layerIds": [
+        "input_1",
+        "conv2d_1",
+        "max_pool_1"
+      ],
+      "color": "#F59E0B"
+    },
+    {
+      "id": "blocks",
+      "name": "Feature Extraction Blocks",
+      "description": "Stacked 3x3 and 5x5 convolutional filters building intermediate capacities",
+      "layerIds": [
+        "conv2d_2",
+        "max_pool_2",
+        "conv2d_3",
+        "conv2d_4",
+        "conv2d_5",
+        "max_pool_3"
+      ],
+      "color": "#F59E0B"
+    },
+    {
+      "id": "classifier",
+      "name": "Classifier Head",
+      "description": "Massive fully connected weights and dropout zones mapping features to ImageNet classes",
+      "layerIds": [
+        "flatten_1",
+        "dense_1",
+        "dense_2",
+        "output"
+      ],
+      "color": "#F59E0B"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "stem",
+      "label": "Input & Early Conv Stem",
+      "type": "group_node",
+      "description": "Standard 11x11 stride 4 convolutional stem extracting early shapes and edges",
+      "color": "#F59E0B",
+      "position": {
+        "x": 250.0,
+        "y": 150.0
+      },
+      "layerIds": [
+        "input_1",
+        "conv2d_1",
+        "max_pool_1"
+      ]
+    },
+    {
+      "id": "blocks",
+      "label": "Feature Extraction Blocks",
+      "type": "group_node",
+      "description": "Stacked 3x3 and 5x5 convolutional filters building intermediate capacities",
+      "color": "#F59E0B",
+      "position": {
+        "x": 250.0,
+        "y": 825.0
+      },
+      "layerIds": [
+        "conv2d_2",
+        "max_pool_2",
+        "conv2d_3",
+        "conv2d_4",
+        "conv2d_5",
+        "max_pool_3"
+      ]
+    },
+    {
+      "id": "classifier",
+      "label": "Classifier Head",
+      "type": "group_node",
+      "description": "Massive fully connected weights and dropout zones mapping features to ImageNet classes",
+      "color": "#F59E0B",
+      "position": {
+        "x": 250.0,
+        "y": 1575.0
+      },
+      "layerIds": [
+        "flatten_1",
+        "dense_1",
+        "dense_2",
+        "output"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_stem_blocks",
+      "source": "stem",
+      "target": "blocks",
+      "type": "sequential"
+    },
+    {
+      "id": "c_blocks_classifier",
+      "source": "blocks",
+      "target": "classifier",
+      "type": "sequential"
+    }
+  ]
+}

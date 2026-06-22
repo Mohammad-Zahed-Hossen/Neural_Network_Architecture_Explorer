@@ -1,0 +1,612 @@
+{
+  "id": "maxvit",
+  "name": "MaxViT",
+  "fullName": "MaxViT: Multi-Axis Vision Transformer (Tiny)",
+  "paperYear": 2022,
+  "authors": [
+    "Zhengsu Chen",
+    "Jianchao Tan",
+    "Jianwan Xu",
+    "Liangxiao Liang",
+    "Yanxi Li",
+    "Zheng Zhang",
+    "Stephen Lin",
+    "Baining Guo"
+  ],
+  "paperUrl": "https://arxiv.org/abs/2204.01697",
+  "depth": 32,
+  "totalParameters": 30919420,
+  "totalFLOPs": 5600000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "top1Accuracy": 0.836,
+  "top5Accuracy": 0.966,
+  "memoryUsage": 120,
+  "description": "MaxViT (Multi-Axis Vision Transformer) is a hybrid backbone combining CNN MBConv blocks with two attention mechanisms: Block Attention (self-attention inside local windows) and Grid Attention (self-attention across a sparse dilated grid). This dual-attention approach achieves global interactions in linear time relative to image size.",
+  "colorTheme": "#A855F7",
+  "tags": [
+    "Transformer",
+    "Attention",
+    "Hybrid",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "Input Image",
+        "inputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3 RGB Image"
+        },
+        "config": {
+          "shape": [224, 224, 3]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "RGB image inputs for the MaxViT network.",
+          "detailed": "Accepts standard 224x224 pixels RGB color images. Sourced from the tf.keras.applications.MaxViT API.",
+          "keyTakeaway": "Processes standard color images."
+        },
+        "position": {
+          "x": 250,
+          "y": 0
+        },
+        "color": "emerald",
+        "icon": "image"
+      },
+      {
+        "id": "stem_conv1",
+        "type": "conv2d",
+        "name": "Stem Conv 1",
+        "inputShape": {
+          "dimensions": [null, 224, 224, 3],
+          "description": "224x224x3"
+        },
+        "outputShape": {
+          "dimensions": [null, 112, 112, 64],
+          "description": "112x112x64"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [3, 3],
+          "strides": [2, 2],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 1728,
+          "weights": 1728,
+          "biases": 0,
+          "formula": "kernel_h × kernel_w × in_channels × filters",
+          "calculationSteps": [
+            {
+              "label": "Conv Weights",
+              "expression": "3 × 3 × 3 × 64",
+              "result": 1728,
+              "explanation": "Standard 3x3 stride-2 conv downsampling the image to half size (112x112)."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "First stem convolution downsampling by 2x.",
+          "detailed": "Uses 3x3 conv with stride 2 to quickly reduce spatial dimensions, lowering overall compute complexity.",
+          "keyTakeaway": "Quick spatial reduction keeps downstream compute loads small."
+        },
+        "position": {
+          "x": 250,
+          "y": 150
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "stem_conv2",
+        "type": "conv2d",
+        "name": "Stem Conv 2",
+        "inputShape": {
+          "dimensions": [null, 112, 112, 64],
+          "description": "112x112x64"
+        },
+        "outputShape": {
+          "dimensions": [null, 112, 112, 64],
+          "description": "112x112x64"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [3, 3],
+          "strides": [1, 1],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 36864,
+          "weights": 36864,
+          "biases": 0,
+          "formula": "kernel_h × kernel_w × in_channels × filters",
+          "calculationSteps": [
+            {
+              "label": "Conv Weights",
+              "expression": "3 × 3 × 64 × 64",
+              "result": 36864,
+              "explanation": "Processes features at 112x112 scale, capturing fine local structures."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Second stem convolution.",
+          "detailed": "Captures fine local edge and texture groupings before downsampling to Stage 1.",
+          "keyTakeaway": "Extracts initial low-level features."
+        },
+        "position": {
+          "x": 250,
+          "y": 300
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "stage1_blocks",
+        "type": "bottleneck",
+        "name": "Stage 1 (2x MaxViT Blocks)",
+        "inputShape": {
+          "dimensions": [null, 112, 112, 64],
+          "description": "112x112x64"
+        },
+        "outputShape": {
+          "dimensions": [null, 56, 56, 64],
+          "description": "56x56x64"
+        },
+        "config": {
+          "expansion": 2
+        },
+        "parameters": {
+          "total": 500000,
+          "weights": 498000,
+          "biases": 2000,
+          "formula": "2 × MaxViTBlock_Params",
+          "calculationSteps": [
+            {
+              "label": "Stage 1 Weights Stack",
+              "expression": "2 × 249000",
+              "result": 498000,
+              "explanation": "Weights of MBConv, Block Attention, and Grid Attention layers across two MaxViT blocks."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "First hybrid stage combining conv and dual attention.",
+          "detailed": "Downsamples maps to 56x56. Applies Block Attention (W-MSA inside 7x7 windows) followed by Grid Attention (G-MSA across sparse 7x7 grids). Together, they capture both local details and global relationships.",
+          "keyTakeaway": "Multi-axis attention (Block + Grid) provides global attention coverage in linear compute time."
+        },
+        "position": {
+          "x": 250,
+          "y": 450
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "stage2_blocks",
+        "type": "bottleneck",
+        "name": "Stage 2 (2x MaxViT Blocks)",
+        "inputShape": {
+          "dimensions": [null, 56, 56, 64],
+          "description": "56x56x64"
+        },
+        "outputShape": {
+          "dimensions": [null, 28, 28, 128],
+          "description": "28x28x128"
+        },
+        "config": {
+          "expansion": 2
+        },
+        "parameters": {
+          "total": 2000000,
+          "weights": 1996000,
+          "biases": 4000,
+          "formula": "2 × Stage2Block_Params",
+          "calculationSteps": [
+            {
+              "label": "Stage 2 weights",
+              "expression": "2 × 998000",
+              "result": 1996000,
+              "explanation": "Dual-attention and convolution parameters mapping 64 channels to 128 channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Stage 2 at 28x28 resolution.",
+          "detailed": "Constructs multi-scale representations. The MBConv downsamples inputs, while the dual attention blocks process channel relationships at 28x28 scale.",
+          "keyTakeaway": "Constructs mid-level hierarchical features."
+        },
+        "position": {
+          "x": 250,
+          "y": 600
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "stage3_blocks",
+        "type": "bottleneck",
+        "name": "Stage 3 (6x MaxViT Blocks)",
+        "inputShape": {
+          "dimensions": [null, 28, 28, 128],
+          "description": "28x28x128"
+        },
+        "outputShape": {
+          "dimensions": [null, 14, 14, 256],
+          "description": "14x14x256"
+        },
+        "config": {
+          "expansion": 6
+        },
+        "parameters": {
+          "total": 14000000,
+          "weights": 13988000,
+          "biases": 12000,
+          "formula": "6 × Stage3Block_Params",
+          "calculationSteps": [
+            {
+              "label": "Stage 3 Weights Stack",
+              "expression": "6 × 2331333",
+              "result": 13988000,
+              "explanation": "Parameters of 6 sequential blocks at 256 dimensions, doing deep hybrid visual extraction."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Deepest extraction stage with 6 blocks.",
+          "detailed": "The core representative bottleneck stage. Combines convolution and attention, processing semantic structures at 14x14 resolution.",
+          "keyTakeaway": "Extracts complex object parts and textures, matching standard deep block structures."
+        },
+        "position": {
+          "x": 250,
+          "y": 750
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "stage4_blocks",
+        "type": "bottleneck",
+        "name": "Stage 4 (2x MaxViT Blocks)",
+        "inputShape": {
+          "dimensions": [null, 14, 14, 256],
+          "description": "14x14x256"
+        },
+        "outputShape": {
+          "dimensions": [null, 7, 7, 512],
+          "description": "7x7x512"
+        },
+        "config": {
+          "expansion": 2
+        },
+        "parameters": {
+          "total": 13500000,
+          "weights": 13494000,
+          "biases": 6000,
+          "formula": "2 × Stage4Block_Params",
+          "calculationSteps": [
+            {
+              "label": "Stage 4 weights",
+              "expression": "2 × 6747000",
+              "result": 13494000,
+              "explanation": "Parameters of the final 2 blocks operating at 512 hidden channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Final extraction stage at 7x7 resolution.",
+          "detailed": "Processes high-level semantic representation at final 7x7 grid size before classification.",
+          "keyTakeaway": "Processes high-level class features."
+        },
+        "position": {
+          "x": 250,
+          "y": 900
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "norm_out",
+        "type": "layer_norm",
+        "name": "Output LayerNorm",
+        "inputShape": {
+          "dimensions": [null, 7, 7, 512],
+          "description": "7x7x512"
+        },
+        "outputShape": {
+          "dimensions": [null, 7, 7, 512],
+          "description": "7x7x512"
+        },
+        "config": {
+          "axis": -1,
+          "epsilon": 1e-6
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "formula": "2 × channels",
+          "calculationSteps": [
+            {
+              "label": "LN parameters",
+              "expression": "2 × 512",
+              "result": 1024,
+              "explanation": "Gamma scaling and Beta bias vectors."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Final normalization before pooling.",
+          "detailed": "Stabilizes embeddings across the 512 channel dimensions.",
+          "keyTakeaway": "Final normalization step."
+        },
+        "position": {
+          "x": 250,
+          "y": 1050
+        },
+        "color": "slate",
+        "icon": "activity"
+      },
+      {
+        "id": "avg_pool",
+        "type": "global_average_pooling2d",
+        "name": "Global Average Pooling",
+        "inputShape": {
+          "dimensions": [null, 7, 7, 512],
+          "description": "7x7x512"
+        },
+        "outputShape": {
+          "dimensions": [null, 512],
+          "description": "512-d Vector"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Collapses spatial dimensions to 1D vector.",
+          "detailed": "Averages final activations across the 7x7 grid to compile a 512-dimensional vector.",
+          "keyTakeaway": "Aggregates final visual features globally."
+        },
+        "position": {
+          "x": 250,
+          "y": 1200
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "head",
+        "type": "dense",
+        "name": "Classification Head",
+        "inputShape": {
+          "dimensions": [null, 512],
+          "description": "512"
+        },
+        "outputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 logits"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "linear",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 513000,
+          "weights": 512000,
+          "biases": 1000,
+          "formula": "(channels × classes) + classes",
+          "calculationSteps": [
+            {
+              "label": "Head Weights",
+              "expression": "512 × 1000",
+              "result": 512000,
+              "explanation": "Dense mapping weights predicting class categories."
+            },
+            {
+              "label": "Biases",
+              "expression": "1000",
+              "result": 1000,
+              "explanation": "Class logits biases."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Dense logits prediction head.",
+          "detailed": "Linear layer predicting visual logits.",
+          "keyTakeaway": "Final category mapping."
+        },
+        "position": {
+          "x": 250,
+          "y": 1350
+        },
+        "color": "blue",
+        "icon": "zap"
+      },
+      {
+        "id": "output",
+        "type": "output",
+        "name": "Output Logits",
+        "inputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 logits"
+        },
+        "outputShape": {
+          "dimensions": [null, 1000],
+          "description": "1000 probabilities"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Softmax conversion mapping logits to probabilities.",
+          "detailed": "Converts visual category logits into probability distributions.",
+          "keyTakeaway": "Generates output categorical confidence levels."
+        },
+        "position": {
+          "x": 250,
+          "y": 1500
+        },
+        "color": "pink",
+        "icon": "award"
+      }
+    ],
+    "connections": [
+      {
+        "id": "c1",
+        "sourceId": "input_1",
+        "targetId": "stem_conv1",
+        "type": "sequential"
+      },
+      {
+        "id": "c2",
+        "sourceId": "stem_conv1",
+        "targetId": "stem_conv2",
+        "type": "sequential"
+      },
+      {
+        "id": "c3",
+        "sourceId": "stem_conv2",
+        "targetId": "stage1_blocks",
+        "type": "sequential"
+      },
+      {
+        "id": "c4",
+        "sourceId": "stage1_blocks",
+        "targetId": "stage2_blocks",
+        "type": "sequential"
+      },
+      {
+        "id": "c5",
+        "sourceId": "stage2_blocks",
+        "targetId": "stage3_blocks",
+        "type": "sequential"
+      },
+      {
+        "id": "c6",
+        "sourceId": "stage3_blocks",
+        "targetId": "stage4_blocks",
+        "type": "sequential"
+      },
+      {
+        "id": "c7",
+        "sourceId": "stage4_blocks",
+        "targetId": "norm_out",
+        "type": "sequential"
+      },
+      {
+        "id": "c8",
+        "sourceId": "norm_out",
+        "targetId": "avg_pool",
+        "type": "sequential"
+      },
+      {
+        "id": "c9",
+        "sourceId": "avg_pool",
+        "targetId": "head",
+        "type": "sequential"
+      },
+      {
+        "id": "c10",
+        "sourceId": "head",
+        "targetId": "output",
+        "type": "sequential"
+      }
+    ],
+    "groups": [
+      {
+        "id": "stem",
+        "name": "Stem Blocks",
+        "description": "Standard 3x3 convolutions mapping images to 112x112 resolution.",
+        "layerIds": [
+          "input_1",
+          "stem_conv1",
+          "stem_conv2"
+        ],
+        "color": "#10B981"
+      },
+      {
+        "id": "stage_1",
+        "name": "Stage 1",
+        "description": "Applies MBConv, Block Attention, and Grid Attention at 56x56 resolution.",
+        "layerIds": [
+          "stage1_blocks"
+        ],
+        "color": "#A855F7"
+      },
+      {
+        "id": "stage_2",
+        "name": "Stage 2",
+        "description": "Constructs mid-level hybrid representations at 28x28 resolution.",
+        "layerIds": [
+          "stage2_blocks"
+        ],
+        "color": "#A855F7"
+      },
+      {
+        "id": "stage_3",
+        "name": "Stage 3",
+        "description": "Deepest hybrid block stage (6 blocks) at 14x14 resolution.",
+        "layerIds": [
+          "stage3_blocks"
+        ],
+        "color": "#A855F7"
+      },
+      {
+        "id": "stage_4",
+        "name": "Stage 4",
+        "description": "Final hybrid blocks operating at 7x7 grid resolution.",
+        "layerIds": [
+          "stage4_blocks"
+        ],
+        "color": "#A855F7"
+      },
+      {
+        "id": "classifier",
+        "name": "Classifier",
+        "description": "LayerNorm normalizer, global average grid pooling, and logits mapping head.",
+        "layerIds": [
+          "norm_out",
+          "avg_pool",
+          "head",
+          "output"
+        ],
+        "color": "#F59E0B"
+      }
+    ]
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NeuralNetworkModel",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "fullName": { "type": "string" },
+    "paperYear": { "type": "integer" },
+    "authors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "paperUrl": { "type": "string", "format": "uri" },
+    "depth": { "type": "integer" },
+    "totalParameters": { "type": "integer" },
+    "totalFLOPs": { "type": "number" },
+    "inputShape": {
+      "type": "object",
+      "properties": {
+        "channels": { "type": "integer" },
+        "height": { "type": "integer" },
+        "width": { "type": "integer" }
+      },
+      "required": ["channels", "height", "width"]
+    },
+    "top1Accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+    "top5Accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+    "memoryUsage": { "type": "number" },
+    "description": { "type": "string" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "colorTheme": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+    "architecture": {
+      "type": "object",
+      "properties": {
+        "layers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Layer" }
+        },
+        "connections": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Connection" }
+        },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LayerGroup" }
+        }
+      },
+      "required": ["layers", "connections", "groups"]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "fullName",
+    "paperYear",
+    "authors",
+    "paperUrl",
+    "depth",
+    "totalParameters",
+    "totalFLOPs",
+    "inputShape",
+    "top1Accuracy",
+    "top5Accuracy",
+    "memoryUsage",
+    "description",
+    "tags",
+    "colorTheme",
+    "architecture"
+  ],
+  "definitions": {
+    "Layer": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "input",
+            "conv2d",
+            "batch_norm",
+            "layer_norm",
+            "attention",
+            "activation",
+            "max_pooling2d",
+            "average_pooling2d",
+            "global_average_pooling2d",
+            "flatten",
+            "dense",
+            "dropout",
+            "add",
+            "concatenate",
+            "bottleneck",
+            "dense_block",
+            "transition_block",
+            "output"
+          ]
+        },
+        "name": { "type": "string" },
+        "inputShape": { "$ref": "#/definitions/TensorShape" },
+        "outputShape": { "$ref": "#/definitions/TensorShape" },
+        "config": { "type": "object" },
+        "parameters": { "$ref": "#/definitions/ParameterBreakdown" },
+        "educationalNote": { "$ref": "#/definitions/EducationalNote" },
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          },
+          "required": ["x", "y"]
+        },
+        "color": { "type": "string" },
+        "icon": { "type": "string" }
+      },
+      "required": [
+        "id",
+        "type",
+        "name",
+        "inputShape",
+        "outputShape",
+        "config",
+        "parameters",
+        "educationalNote"
+      ]
+    },
+    "TensorShape": {
+      "type": "object",
+      "properties": {
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": ["integer", "null"]
+          }
+        },
+        "description": { "type": "string" }
+      },
+      "required": ["dimensions", "description"]
+    },
+    "ParameterBreakdown": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer" },
+        "weights": { "type": "integer" },
+        "biases": { "type": "integer" },
+        "formula": { "type": "string" },
+        "calculationSteps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/CalculationStep" }
+        }
+      },
+      "required": ["total", "weights", "biases", "formula", "calculationSteps"]
+    },
+    "CalculationStep": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "expression": { "type": "string" },
+        "result": { "type": "integer" },
+        "explanation": { "type": "string" }
+      },
+      "required": ["label", "expression", "result", "explanation"]
+    },
+    "EducationalNote": {
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" },
+        "detailed": { "type": "string" },
+        "analogy": { "type": "string" },
+        "whyItMatters": { "type": "string" },
+        "keyTakeaway": { "type": "string" }
+      },
+      "required": ["summary", "detailed", "whyItMatters", "keyTakeaway"]
+    },
+    "Connection": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sourceId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["sequential", "skip", "concatenate", "add"]
+        },
+        "label": { "type": "string" }
+      },
+      "required": ["id", "sourceId", "targetId", "type"]
+    },
+    "LayerGroup": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "layerIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "color": { "type": "string" }
+      },
+      "required": ["id", "name", "description", "layerIds", "color"]
+    }
+  }
+}

@@ -1,0 +1,5084 @@
+{
+  "id": "mobilenet",
+  "name": "MobileNet",
+  "fullName": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+  "paperYear": 2017,
+  "authors": [
+    "Andrew G. Howard",
+    "Menglong Zhu",
+    "Bo Chen",
+    "Dmitry Kalenichenko",
+    "Weijun Wang",
+    "Tobias Weyand",
+    "Marco Andreetto",
+    "Hartwig Adam"
+  ],
+  "paperUrl": "https://arxiv.org/abs/1704.04861",
+  "depth": 28,
+  "totalParameters": 4253864,
+  "totalFLOPs": 569000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "top1Accuracy": 0.704,
+  "top5Accuracy": 0.895,
+  "memoryUsage": 16,
+  "description": "Introduces depthwise separable convolutions to create lightweight models. Designed for mobile and embedded vision applications with minimal computational overhead.",
+  "colorTheme": "#0EA5E9",
+  "tags": [
+    "CNN",
+    "Classification",
+    "Mobile",
+    "Lightweight",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "input_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
+          "description": "224\u00d7224\u00d73 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
+          "description": "224\u00d7224\u00d73 RGB Image"
+        },
+        "config": {
+          "shape": [
+            224,
+            224,
+            3
+          ]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Retinal layer receiving raw RGB pixel matrices.",
+          "detailed": "Accepts normalized three-channel RGB images of size 224x224. This spatial standardization ensures weight compatibility in subsequent layers.",
+          "whyItMatters": "Establishes spatial dimensions for the network.",
+          "keyTakeaway": "Fixed input sizes are critical to prevent spatial alignment errors."
+        },
+        "position": {
+          "x": 250,
+          "y": 0
+        },
+        "color": "emerald",
+        "icon": "image"
+      },
+      {
+        "id": "conv1",
+        "type": "conv2d",
+        "name": "conv1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
+          "description": "224\u00d7224\u00d73"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 864,
+          "weights": 864,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Kernel Weights",
+              "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
+              "result": 864,
+              "explanation": "32 convolutional filters of size 3x3 convolving over 3 RGB channels. Stride 2 downsamples output to 112x112."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard early 3x3 convolution to downsample inputs.",
+          "detailed": "Captures initial visual patterns like lines and edges. Stride of 2 halves resolution to reduce downstream processing.",
+          "whyItMatters": "Early spatial reduction saves computation in deeper stages.",
+          "keyTakeaway": "Early layers capture general visual contours."
+        },
+        "position": {
+          "x": 250,
+          "y": 150
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv1_bn",
+        "type": "batch_norm",
+        "name": "conv1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 128,
+          "weights": 64,
+          "biases": 64,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Parameters",
+              "expression": "4 \u00d7 32",
+              "result": 128,
+              "explanation": "Moving mean/variance + trainable scale/shift parameters."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes conv1 outputs.",
+          "detailed": "Normalizes activations to stabilize learning.",
+          "whyItMatters": "Prevents vanishing gradients.",
+          "keyTakeaway": "Stabilizes initial features."
+        },
+        "position": {
+          "x": 250,
+          "y": 300
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv1_relu",
+        "type": "activation",
+        "name": "conv1_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "ReLU6 activation capping outputs to 6.",
+          "detailed": "Capping values to 6 prevents numerical overflow and is optimal for fixed-point integer quantization on edge hardware.",
+          "whyItMatters": "Essential for deployment on low-precision microcontrollers and mobile processors.",
+          "keyTakeaway": "Capped activations prevent precision loss during quantization."
+        },
+        "position": {
+          "x": 250,
+          "y": 450
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_1",
+        "type": "conv2d",
+        "name": "conv_dw_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 288,
+          "weights": 288,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 32",
+              "result": 288,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 32 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 600
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_1_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 128,
+          "weights": 64,
+          "biases": 64,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 750
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_1_relu",
+        "type": "activation",
+        "name": "conv_dw_1_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 900
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_1",
+        "type": "conv2d",
+        "name": "conv_pw_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            32
+          ],
+          "description": "112\u00d7112\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
+          "description": "112\u00d7112\u00d764"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 2048,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "32 \u00d7 64",
+              "result": 2048,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 32 to 64.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 1050
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_1_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
+          "description": "112\u00d7112\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
+          "description": "112\u00d7112\u00d764"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 256,
+          "weights": 128,
+          "biases": 128,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 1200
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_1_relu",
+        "type": "activation",
+        "name": "conv_pw_1_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
+          "description": "112\u00d7112\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
+          "description": "112\u00d7112\u00d764"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 1350
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_2",
+        "type": "conv2d",
+        "name": "conv_dw_2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
+          "description": "112\u00d7112\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
+          "description": "56\u00d756\u00d764"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 576,
+          "weights": 576,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 64",
+              "result": 576,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 64 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 1500
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_2_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
+          "description": "56\u00d756\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
+          "description": "56\u00d756\u00d764"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 256,
+          "weights": 128,
+          "biases": 128,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 1650
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_2_relu",
+        "type": "activation",
+        "name": "conv_dw_2_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
+          "description": "56\u00d756\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
+          "description": "56\u00d756\u00d764"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 1800
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_2",
+        "type": "conv2d",
+        "name": "conv_pw_2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
+          "description": "56\u00d756\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "filters": 128,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 8192,
+          "weights": 8192,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "64 \u00d7 128",
+              "result": 8192,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 64 to 128.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 1950
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_2_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 512,
+          "weights": 256,
+          "biases": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 2100
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_2_relu",
+        "type": "activation",
+        "name": "conv_pw_2_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 2250
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_3",
+        "type": "conv2d",
+        "name": "conv_dw_3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "filters": 128,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 1152,
+          "weights": 1152,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 128",
+              "result": 1152,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 128 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 2400
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_3_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 512,
+          "weights": 256,
+          "biases": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 2550
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_3_relu",
+        "type": "activation",
+        "name": "conv_dw_3_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 2700
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_3",
+        "type": "conv2d",
+        "name": "conv_pw_3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "filters": 128,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 16384,
+          "weights": 16384,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "128 \u00d7 128",
+              "result": 16384,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 128 to 128.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 2850
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_3_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 512,
+          "weights": 256,
+          "biases": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 3000
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_3_relu",
+        "type": "activation",
+        "name": "conv_pw_3_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 3150
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_4",
+        "type": "conv2d",
+        "name": "conv_dw_4",
+        "inputShape": {
+          "dimensions": [
+            null,
+            56,
+            56,
+            128
+          ],
+          "description": "56\u00d756\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
+          "description": "28\u00d728\u00d7128"
+        },
+        "config": {
+          "filters": 128,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 1152,
+          "weights": 1152,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 128",
+              "result": 1152,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 128 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 3300
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_4_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_4_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
+          "description": "28\u00d728\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
+          "description": "28\u00d728\u00d7128"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 512,
+          "weights": 256,
+          "biases": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 3450
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_4_relu",
+        "type": "activation",
+        "name": "conv_dw_4_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
+          "description": "28\u00d728\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
+          "description": "28\u00d728\u00d7128"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 3600
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_4",
+        "type": "conv2d",
+        "name": "conv_pw_4",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
+          "description": "28\u00d728\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 32768,
+          "weights": 32768,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "128 \u00d7 256",
+              "result": 32768,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 128 to 256.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 3750
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_4_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_4_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 3900
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_4_relu",
+        "type": "activation",
+        "name": "conv_pw_4_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 4050
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_5",
+        "type": "conv2d",
+        "name": "conv_dw_5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 2304,
+          "weights": 2304,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 256",
+              "result": 2304,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 256 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 4200
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_5_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_5_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 4350
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_5_relu",
+        "type": "activation",
+        "name": "conv_dw_5_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 4500
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_5",
+        "type": "conv2d",
+        "name": "conv_pw_5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 65536,
+          "weights": 65536,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "256 \u00d7 256",
+              "result": 65536,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 256 to 256.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 4650
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_5_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_5_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 4800
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_5_relu",
+        "type": "activation",
+        "name": "conv_pw_5_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 4950
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_6",
+        "type": "conv2d",
+        "name": "conv_dw_6",
+        "inputShape": {
+          "dimensions": [
+            null,
+            28,
+            28,
+            256
+          ],
+          "description": "28\u00d728\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
+          "description": "14\u00d714\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 2304,
+          "weights": 2304,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 256",
+              "result": 2304,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 256 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 5100
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_6_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_6_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
+          "description": "14\u00d714\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
+          "description": "14\u00d714\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 5250
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_6_relu",
+        "type": "activation",
+        "name": "conv_dw_6_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
+          "description": "14\u00d714\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
+          "description": "14\u00d714\u00d7256"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 5400
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_6",
+        "type": "conv2d",
+        "name": "conv_pw_6",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
+          "description": "14\u00d714\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 131072,
+          "weights": 131072,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "256 \u00d7 512",
+              "result": 131072,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 256 to 512.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 5550
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_6_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_6_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 5700
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_6_relu",
+        "type": "activation",
+        "name": "conv_pw_6_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 5850
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_7",
+        "type": "conv2d",
+        "name": "conv_dw_7",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 4608,
+          "weights": 4608,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 512",
+              "result": 4608,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 6000
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_7_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_7_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 6150
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_7_relu",
+        "type": "activation",
+        "name": "conv_dw_7_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 6300
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_7",
+        "type": "conv2d",
+        "name": "conv_pw_7",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 262144,
+          "weights": 262144,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "512 \u00d7 512",
+              "result": 262144,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 6450
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_7_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_7_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 6600
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_7_relu",
+        "type": "activation",
+        "name": "conv_pw_7_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 6750
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_8",
+        "type": "conv2d",
+        "name": "conv_dw_8",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 4608,
+          "weights": 4608,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 512",
+              "result": 4608,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 6900
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_8_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_8_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 7050
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_8_relu",
+        "type": "activation",
+        "name": "conv_dw_8_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 7200
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_8",
+        "type": "conv2d",
+        "name": "conv_pw_8",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 262144,
+          "weights": 262144,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "512 \u00d7 512",
+              "result": 262144,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 7350
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_8_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_8_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 7500
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_8_relu",
+        "type": "activation",
+        "name": "conv_pw_8_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 7650
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_9",
+        "type": "conv2d",
+        "name": "conv_dw_9",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 4608,
+          "weights": 4608,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 512",
+              "result": 4608,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 7800
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_9_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_9_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 7950
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_9_relu",
+        "type": "activation",
+        "name": "conv_dw_9_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 8100
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_9",
+        "type": "conv2d",
+        "name": "conv_pw_9",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 262144,
+          "weights": 262144,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "512 \u00d7 512",
+              "result": 262144,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 8250
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_9_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_9_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 8400
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_9_relu",
+        "type": "activation",
+        "name": "conv_pw_9_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 8550
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_10",
+        "type": "conv2d",
+        "name": "conv_dw_10",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 4608,
+          "weights": 4608,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 512",
+              "result": 4608,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 8700
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_10_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_10_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 8850
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_10_relu",
+        "type": "activation",
+        "name": "conv_dw_10_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 9000
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_10",
+        "type": "conv2d",
+        "name": "conv_pw_10",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 262144,
+          "weights": 262144,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "512 \u00d7 512",
+              "result": 262144,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 9150
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_10_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_10_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 9300
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_10_relu",
+        "type": "activation",
+        "name": "conv_pw_10_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 9450
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_11",
+        "type": "conv2d",
+        "name": "conv_dw_11",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 4608,
+          "weights": 4608,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 512",
+              "result": 4608,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 9600
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_11_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_11_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 9750
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_11_relu",
+        "type": "activation",
+        "name": "conv_dw_11_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 9900
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_11",
+        "type": "conv2d",
+        "name": "conv_pw_11",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 262144,
+          "weights": 262144,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "512 \u00d7 512",
+              "result": 262144,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 10050
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_11_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_11_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 10200
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_11_relu",
+        "type": "activation",
+        "name": "conv_pw_11_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            14,
+            14,
+            512
+          ],
+          "description": "14\u00d714\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 10350
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_12",
+        "type": "conv2d",
+        "name": "conv_dw_12",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            512
+          ],
+          "description": "7\u00d77\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            512
+          ],
+          "description": "3\u00d73\u00d7512"
+        },
+        "config": {
+          "filters": 512,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 4608,
+          "weights": 4608,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 512",
+              "result": 4608,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 10500
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_12_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_12_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            512
+          ],
+          "description": "3\u00d73\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            512
+          ],
+          "description": "3\u00d73\u00d7512"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2048,
+          "weights": 1024,
+          "biases": 1024,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 10650
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_12_relu",
+        "type": "activation",
+        "name": "conv_dw_12_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            512
+          ],
+          "description": "3\u00d73\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            512
+          ],
+          "description": "3\u00d73\u00d7512"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 10800
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_12",
+        "type": "conv2d",
+        "name": "conv_pw_12",
+        "inputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            512
+          ],
+          "description": "3\u00d73\u00d7512"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            1024
+          ],
+          "description": "3\u00d73\u00d71024"
+        },
+        "config": {
+          "filters": 1024,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 524288,
+          "weights": 524288,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "512 \u00d7 1024",
+              "result": 524288,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 1024.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 10950
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_12_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_12_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            1024
+          ],
+          "description": "3\u00d73\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            1024
+          ],
+          "description": "3\u00d73\u00d71024"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 4096,
+          "weights": 2048,
+          "biases": 2048,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 11100
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_12_relu",
+        "type": "activation",
+        "name": "conv_pw_12_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            1024
+          ],
+          "description": "3\u00d73\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            3,
+            3,
+            1024
+          ],
+          "description": "3\u00d73\u00d71024"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 11250
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_dw_13",
+        "type": "conv2d",
+        "name": "conv_dw_13",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "config": {
+          "filters": 1024,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 9216,
+          "weights": 9216,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Depthwise weights",
+              "expression": "3 \u00d7 3 \u00d7 1024",
+              "result": 9216,
+              "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Depthwise convolution performing spatial filtering.",
+          "detailed": "Operates spatial convolving over each of the 1024 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+          "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+          "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 11400
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_dw_13_bn",
+        "type": "batch_norm",
+        "name": "conv_dw_13_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 4096,
+          "weights": 2048,
+          "biases": 2048,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes depthwise outputs.",
+          "detailed": "Stabilizes the activation scale before non-linear gating.",
+          "whyItMatters": "Enables faster and more robust gradient updates.",
+          "keyTakeaway": "Keeps spatial distributions stable."
+        },
+        "position": {
+          "x": 250,
+          "y": 11550
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_dw_13_relu",
+        "type": "activation",
+        "name": "conv_dw_13_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to depthwise outputs.",
+          "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+          "whyItMatters": "Controls numerical ranges for embedded hardware.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 11700
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv_pw_13",
+        "type": "conv2d",
+        "name": "conv_pw_13",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "config": {
+          "filters": 1024,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 1048576,
+          "weights": 1048576,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Pointwise weights",
+              "expression": "1024 \u00d7 1024",
+              "result": 1048576,
+              "explanation": "Combines spatial activations across channels."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Pointwise 1x1 convolution mapping features.",
+          "detailed": "Performs linear combinations over the spatial outputs to project channels from 1024 to 1024.",
+          "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+          "keyTakeaway": "Mixes channels using 1x1 filter maps."
+        },
+        "position": {
+          "x": 250,
+          "y": 11850
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv_pw_13_bn",
+        "type": "batch_norm",
+        "name": "conv_pw_13_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 4096,
+          "weights": 2048,
+          "biases": 2048,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Normalizes pointwise outputs.",
+          "detailed": "Normalizes the mixed representation before activation.",
+          "whyItMatters": "Prepares activations for representation matching.",
+          "keyTakeaway": "Maintains normal variance across channels."
+        },
+        "position": {
+          "x": 250,
+          "y": 12000
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv_pw_13_relu",
+        "type": "activation",
+        "name": "conv_pw_13_relu",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies ReLU6 activation to pointwise outputs.",
+          "detailed": "Computes rectified output limited to 6.",
+          "whyItMatters": "Final non-linear gating of block output.",
+          "keyTakeaway": "Capped non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 12150
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "global_average_pooling2d",
+        "type": "global_average_pooling2d",
+        "name": "global_average_pooling2d",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            1024
+          ],
+          "description": "7\u00d77\u00d71024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            1024
+          ],
+          "description": "1024"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Global average pooling.",
+          "detailed": "Averages spatial dimensions (7x7) to form a global feature vector.",
+          "whyItMatters": "Avoids parameter bloat associated with flattening.",
+          "keyTakeaway": "Replaces heavy fully connected layers with zero parameters."
+        },
+        "position": {
+          "x": 250,
+          "y": 12300
+        },
+        "color": "amber",
+        "icon": "activity"
+      },
+      {
+        "id": "predictions",
+        "type": "dense",
+        "name": "predictions",
+        "inputShape": {
+          "dimensions": [
+            null,
+            1024
+          ],
+          "description": "1024"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            1000
+          ],
+          "description": "1000"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 1025000,
+          "weights": 1024000,
+          "biases": 1000,
+          "formula": "(input_features + 1) \u00d7 output_units",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "1024 \u00d7 1000",
+              "result": 1024000,
+              "explanation": "Fully connected mapping weights."
+            },
+            {
+              "label": "Biases",
+              "expression": "1000",
+              "result": 1000,
+              "explanation": "One learnable bias parameter per output class."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Computes probabilities for the 1,000 target classes.",
+          "detailed": "Uses softmax activation function to compute class probabilities.",
+          "whyItMatters": "Converts numerical logits into values that sum to 1.",
+          "keyTakeaway": "Classification decision layer."
+        },
+        "position": {
+          "x": 250,
+          "y": 12450
+        },
+        "color": "violet",
+        "icon": "award"
+      }
+    ],
+    "connections": [
+      {
+        "id": "c_input_conv1",
+        "sourceId": "input_1",
+        "targetId": "conv1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv1_bn",
+        "sourceId": "conv1",
+        "targetId": "conv1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_bn_relu",
+        "sourceId": "conv1_bn",
+        "targetId": "conv1_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv1_relu_conv_dw_1",
+        "sourceId": "conv1_relu",
+        "targetId": "conv_dw_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_1_conv_dw_1_bn",
+        "sourceId": "conv_dw_1",
+        "targetId": "conv_dw_1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_1_bn_conv_dw_1_relu",
+        "sourceId": "conv_dw_1_bn",
+        "targetId": "conv_dw_1_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_1_relu_conv_pw_1",
+        "sourceId": "conv_dw_1_relu",
+        "targetId": "conv_pw_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_1_conv_pw_1_bn",
+        "sourceId": "conv_pw_1",
+        "targetId": "conv_pw_1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_1_bn_conv_pw_1_relu",
+        "sourceId": "conv_pw_1_bn",
+        "targetId": "conv_pw_1_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_1_relu_conv_dw_2",
+        "sourceId": "conv_pw_1_relu",
+        "targetId": "conv_dw_2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_2_conv_dw_2_bn",
+        "sourceId": "conv_dw_2",
+        "targetId": "conv_dw_2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_2_bn_conv_dw_2_relu",
+        "sourceId": "conv_dw_2_bn",
+        "targetId": "conv_dw_2_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_2_relu_conv_pw_2",
+        "sourceId": "conv_dw_2_relu",
+        "targetId": "conv_pw_2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_2_conv_pw_2_bn",
+        "sourceId": "conv_pw_2",
+        "targetId": "conv_pw_2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_2_bn_conv_pw_2_relu",
+        "sourceId": "conv_pw_2_bn",
+        "targetId": "conv_pw_2_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_2_relu_conv_dw_3",
+        "sourceId": "conv_pw_2_relu",
+        "targetId": "conv_dw_3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_3_conv_dw_3_bn",
+        "sourceId": "conv_dw_3",
+        "targetId": "conv_dw_3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_3_bn_conv_dw_3_relu",
+        "sourceId": "conv_dw_3_bn",
+        "targetId": "conv_dw_3_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_3_relu_conv_pw_3",
+        "sourceId": "conv_dw_3_relu",
+        "targetId": "conv_pw_3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_3_conv_pw_3_bn",
+        "sourceId": "conv_pw_3",
+        "targetId": "conv_pw_3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_3_bn_conv_pw_3_relu",
+        "sourceId": "conv_pw_3_bn",
+        "targetId": "conv_pw_3_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_3_relu_conv_dw_4",
+        "sourceId": "conv_pw_3_relu",
+        "targetId": "conv_dw_4",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_4_conv_dw_4_bn",
+        "sourceId": "conv_dw_4",
+        "targetId": "conv_dw_4_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_4_bn_conv_dw_4_relu",
+        "sourceId": "conv_dw_4_bn",
+        "targetId": "conv_dw_4_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_4_relu_conv_pw_4",
+        "sourceId": "conv_dw_4_relu",
+        "targetId": "conv_pw_4",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_4_conv_pw_4_bn",
+        "sourceId": "conv_pw_4",
+        "targetId": "conv_pw_4_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_4_bn_conv_pw_4_relu",
+        "sourceId": "conv_pw_4_bn",
+        "targetId": "conv_pw_4_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_4_relu_conv_dw_5",
+        "sourceId": "conv_pw_4_relu",
+        "targetId": "conv_dw_5",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_5_conv_dw_5_bn",
+        "sourceId": "conv_dw_5",
+        "targetId": "conv_dw_5_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_5_bn_conv_dw_5_relu",
+        "sourceId": "conv_dw_5_bn",
+        "targetId": "conv_dw_5_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_5_relu_conv_pw_5",
+        "sourceId": "conv_dw_5_relu",
+        "targetId": "conv_pw_5",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_5_conv_pw_5_bn",
+        "sourceId": "conv_pw_5",
+        "targetId": "conv_pw_5_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_5_bn_conv_pw_5_relu",
+        "sourceId": "conv_pw_5_bn",
+        "targetId": "conv_pw_5_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_5_relu_conv_dw_6",
+        "sourceId": "conv_pw_5_relu",
+        "targetId": "conv_dw_6",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_6_conv_dw_6_bn",
+        "sourceId": "conv_dw_6",
+        "targetId": "conv_dw_6_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_6_bn_conv_dw_6_relu",
+        "sourceId": "conv_dw_6_bn",
+        "targetId": "conv_dw_6_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_6_relu_conv_pw_6",
+        "sourceId": "conv_dw_6_relu",
+        "targetId": "conv_pw_6",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_6_conv_pw_6_bn",
+        "sourceId": "conv_pw_6",
+        "targetId": "conv_pw_6_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_6_bn_conv_pw_6_relu",
+        "sourceId": "conv_pw_6_bn",
+        "targetId": "conv_pw_6_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_6_relu_conv_dw_7",
+        "sourceId": "conv_pw_6_relu",
+        "targetId": "conv_dw_7",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_7_conv_dw_7_bn",
+        "sourceId": "conv_dw_7",
+        "targetId": "conv_dw_7_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_7_bn_conv_dw_7_relu",
+        "sourceId": "conv_dw_7_bn",
+        "targetId": "conv_dw_7_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_7_relu_conv_pw_7",
+        "sourceId": "conv_dw_7_relu",
+        "targetId": "conv_pw_7",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_7_conv_pw_7_bn",
+        "sourceId": "conv_pw_7",
+        "targetId": "conv_pw_7_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_7_bn_conv_pw_7_relu",
+        "sourceId": "conv_pw_7_bn",
+        "targetId": "conv_pw_7_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_7_relu_conv_dw_8",
+        "sourceId": "conv_pw_7_relu",
+        "targetId": "conv_dw_8",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_8_conv_dw_8_bn",
+        "sourceId": "conv_dw_8",
+        "targetId": "conv_dw_8_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_8_bn_conv_dw_8_relu",
+        "sourceId": "conv_dw_8_bn",
+        "targetId": "conv_dw_8_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_8_relu_conv_pw_8",
+        "sourceId": "conv_dw_8_relu",
+        "targetId": "conv_pw_8",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_8_conv_pw_8_bn",
+        "sourceId": "conv_pw_8",
+        "targetId": "conv_pw_8_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_8_bn_conv_pw_8_relu",
+        "sourceId": "conv_pw_8_bn",
+        "targetId": "conv_pw_8_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_8_relu_conv_dw_9",
+        "sourceId": "conv_pw_8_relu",
+        "targetId": "conv_dw_9",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_9_conv_dw_9_bn",
+        "sourceId": "conv_dw_9",
+        "targetId": "conv_dw_9_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_9_bn_conv_dw_9_relu",
+        "sourceId": "conv_dw_9_bn",
+        "targetId": "conv_dw_9_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_9_relu_conv_pw_9",
+        "sourceId": "conv_dw_9_relu",
+        "targetId": "conv_pw_9",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_9_conv_pw_9_bn",
+        "sourceId": "conv_pw_9",
+        "targetId": "conv_pw_9_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_9_bn_conv_pw_9_relu",
+        "sourceId": "conv_pw_9_bn",
+        "targetId": "conv_pw_9_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_9_relu_conv_dw_10",
+        "sourceId": "conv_pw_9_relu",
+        "targetId": "conv_dw_10",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_10_conv_dw_10_bn",
+        "sourceId": "conv_dw_10",
+        "targetId": "conv_dw_10_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_10_bn_conv_dw_10_relu",
+        "sourceId": "conv_dw_10_bn",
+        "targetId": "conv_dw_10_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_10_relu_conv_pw_10",
+        "sourceId": "conv_dw_10_relu",
+        "targetId": "conv_pw_10",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_10_conv_pw_10_bn",
+        "sourceId": "conv_pw_10",
+        "targetId": "conv_pw_10_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_10_bn_conv_pw_10_relu",
+        "sourceId": "conv_pw_10_bn",
+        "targetId": "conv_pw_10_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_10_relu_conv_dw_11",
+        "sourceId": "conv_pw_10_relu",
+        "targetId": "conv_dw_11",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_11_conv_dw_11_bn",
+        "sourceId": "conv_dw_11",
+        "targetId": "conv_dw_11_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_11_bn_conv_dw_11_relu",
+        "sourceId": "conv_dw_11_bn",
+        "targetId": "conv_dw_11_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_11_relu_conv_pw_11",
+        "sourceId": "conv_dw_11_relu",
+        "targetId": "conv_pw_11",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_11_conv_pw_11_bn",
+        "sourceId": "conv_pw_11",
+        "targetId": "conv_pw_11_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_11_bn_conv_pw_11_relu",
+        "sourceId": "conv_pw_11_bn",
+        "targetId": "conv_pw_11_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_11_relu_conv_dw_12",
+        "sourceId": "conv_pw_11_relu",
+        "targetId": "conv_dw_12",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_12_conv_dw_12_bn",
+        "sourceId": "conv_dw_12",
+        "targetId": "conv_dw_12_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_12_bn_conv_dw_12_relu",
+        "sourceId": "conv_dw_12_bn",
+        "targetId": "conv_dw_12_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_12_relu_conv_pw_12",
+        "sourceId": "conv_dw_12_relu",
+        "targetId": "conv_pw_12",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_12_conv_pw_12_bn",
+        "sourceId": "conv_pw_12",
+        "targetId": "conv_pw_12_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_12_bn_conv_pw_12_relu",
+        "sourceId": "conv_pw_12_bn",
+        "targetId": "conv_pw_12_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_12_relu_conv_dw_13",
+        "sourceId": "conv_pw_12_relu",
+        "targetId": "conv_dw_13",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_13_conv_dw_13_bn",
+        "sourceId": "conv_dw_13",
+        "targetId": "conv_dw_13_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_13_bn_conv_dw_13_relu",
+        "sourceId": "conv_dw_13_bn",
+        "targetId": "conv_dw_13_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_dw_13_relu_conv_pw_13",
+        "sourceId": "conv_dw_13_relu",
+        "targetId": "conv_pw_13",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_13_conv_pw_13_bn",
+        "sourceId": "conv_pw_13",
+        "targetId": "conv_pw_13_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv_pw_13_bn_conv_pw_13_relu",
+        "sourceId": "conv_pw_13_bn",
+        "targetId": "conv_pw_13_relu",
+        "type": "sequential"
+      },
+      {
+        "id": "c_last_gap",
+        "sourceId": "conv_pw_13_relu",
+        "targetId": "global_average_pooling2d",
+        "type": "sequential"
+      },
+      {
+        "id": "c_gap_predictions",
+        "sourceId": "global_average_pooling2d",
+        "targetId": "predictions",
+        "type": "sequential"
+      }
+    ],
+    "groups": [
+      {
+        "id": "group_stem",
+        "name": "Input Stem",
+        "description": "Standard early downsampling block.",
+        "layerIds": [
+          "conv1",
+          "conv1_bn",
+          "conv1_relu"
+        ],
+        "color": "#0EA5E9"
+      },
+      {
+        "id": "group_block_1",
+        "name": "Depthwise Separable Block 1",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (32 ch) -> 1x1 pwconv (64 ch).",
+        "layerIds": [
+          "conv_dw_1",
+          "conv_dw_1_bn",
+          "conv_dw_1_relu",
+          "conv_pw_1",
+          "conv_pw_1_bn",
+          "conv_pw_1_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_2",
+        "name": "Depthwise Separable Block 2",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (64 ch) -> 1x1 pwconv (128 ch).",
+        "layerIds": [
+          "conv_dw_2",
+          "conv_dw_2_bn",
+          "conv_dw_2_relu",
+          "conv_pw_2",
+          "conv_pw_2_bn",
+          "conv_pw_2_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_3",
+        "name": "Depthwise Separable Block 3",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (128 ch) -> 1x1 pwconv (128 ch).",
+        "layerIds": [
+          "conv_dw_3",
+          "conv_dw_3_bn",
+          "conv_dw_3_relu",
+          "conv_pw_3",
+          "conv_pw_3_bn",
+          "conv_pw_3_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_4",
+        "name": "Depthwise Separable Block 4",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (128 ch) -> 1x1 pwconv (256 ch).",
+        "layerIds": [
+          "conv_dw_4",
+          "conv_dw_4_bn",
+          "conv_dw_4_relu",
+          "conv_pw_4",
+          "conv_pw_4_bn",
+          "conv_pw_4_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_5",
+        "name": "Depthwise Separable Block 5",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (256 ch) -> 1x1 pwconv (256 ch).",
+        "layerIds": [
+          "conv_dw_5",
+          "conv_dw_5_bn",
+          "conv_dw_5_relu",
+          "conv_pw_5",
+          "conv_pw_5_bn",
+          "conv_pw_5_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_6",
+        "name": "Depthwise Separable Block 6",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (256 ch) -> 1x1 pwconv (512 ch).",
+        "layerIds": [
+          "conv_dw_6",
+          "conv_dw_6_bn",
+          "conv_dw_6_relu",
+          "conv_pw_6",
+          "conv_pw_6_bn",
+          "conv_pw_6_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_7",
+        "name": "Depthwise Separable Block 7",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (512 ch) -> 1x1 pwconv (512 ch).",
+        "layerIds": [
+          "conv_dw_7",
+          "conv_dw_7_bn",
+          "conv_dw_7_relu",
+          "conv_pw_7",
+          "conv_pw_7_bn",
+          "conv_pw_7_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_8",
+        "name": "Depthwise Separable Block 8",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (512 ch) -> 1x1 pwconv (512 ch).",
+        "layerIds": [
+          "conv_dw_8",
+          "conv_dw_8_bn",
+          "conv_dw_8_relu",
+          "conv_pw_8",
+          "conv_pw_8_bn",
+          "conv_pw_8_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_9",
+        "name": "Depthwise Separable Block 9",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (512 ch) -> 1x1 pwconv (512 ch).",
+        "layerIds": [
+          "conv_dw_9",
+          "conv_dw_9_bn",
+          "conv_dw_9_relu",
+          "conv_pw_9",
+          "conv_pw_9_bn",
+          "conv_pw_9_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_10",
+        "name": "Depthwise Separable Block 10",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (512 ch) -> 1x1 pwconv (512 ch).",
+        "layerIds": [
+          "conv_dw_10",
+          "conv_dw_10_bn",
+          "conv_dw_10_relu",
+          "conv_pw_10",
+          "conv_pw_10_bn",
+          "conv_pw_10_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_11",
+        "name": "Depthwise Separable Block 11",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (512 ch) -> 1x1 pwconv (512 ch).",
+        "layerIds": [
+          "conv_dw_11",
+          "conv_dw_11_bn",
+          "conv_dw_11_relu",
+          "conv_pw_11",
+          "conv_pw_11_bn",
+          "conv_pw_11_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_12",
+        "name": "Depthwise Separable Block 12",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (512 ch) -> 1x1 pwconv (1024 ch).",
+        "layerIds": [
+          "conv_dw_12",
+          "conv_dw_12_bn",
+          "conv_dw_12_relu",
+          "conv_pw_12",
+          "conv_pw_12_bn",
+          "conv_pw_12_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_13",
+        "name": "Depthwise Separable Block 13",
+        "description": "Separates spatial filtering from channel mixing: 3x3 dwconv (1024 ch) -> 1x1 pwconv (1024 ch).",
+        "layerIds": [
+          "conv_dw_13",
+          "conv_dw_13_bn",
+          "conv_dw_13_relu",
+          "conv_pw_13",
+          "conv_pw_13_bn",
+          "conv_pw_13_relu"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_classifier",
+        "name": "Global Pooling & Classification",
+        "description": "GAP followed by the dense prediction head.",
+        "layerIds": [
+          "global_average_pooling2d",
+          "predictions"
+        ],
+        "color": "#8B5CF6"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7999 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": null,
+      "outputShape": [
+        null,
+        224,
+        224,
+        3
+      ],
+      "config": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "conv1_conv",
+      "label": "Conv 7x7, 64",
+      "type": "conv2d",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        112,
+        112,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          7,
+          7
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 9408,
+        "weights": 9408,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "7 \u00d7 7 \u00d7 3 \u00d7 64",
+            "result": 9408,
+            "explanation": "64 independent filters of size 7x7 operating over 3 input channels. No bias is used because it is immediately followed by Batch Normalization."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "conv1_bn",
+      "label": "conv1_bn",
+      "type": "batch_norm",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        112,
+        112,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable parameters (gamma & beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for each channel."
+          },
+          {
+            "label": "Non-trainable parameters (mean & variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Moving mean and moving variance tracked during training."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    },
+    {
+      "id": "conv1_relu",
+      "label": "conv1_relu",
+      "type": "activation",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        112,
+        112,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 450
+      }
+    },
+    {
+      "id": "pool1_pad",
+      "label": "pool1_pad",
+      "type": "activation",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        114,
+        114,
+        64
+      ],
+      "config": {
+        "padding": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 600
+      }
+    },
+    {
+      "id": "pool1_pool",
+      "label": "pool1_pool",
+      "type": "max_pooling2d",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 750
+      }
+    },
+    {
+      "id": "conv2_block1_1_conv",
+      "label": "Conv 1x1, 64",
+      "type": "conv2d",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 4096,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "64 \u00d7 64",
+            "result": 4096,
+            "explanation": "1x1 convolution mapping 64 channels to 64 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 900
+      }
+    },
+    {
+      "id": "conv2_block1_1_bn",
+      "label": "conv2_block1_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 64",
+            "result": 256,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1050
+      }
+    },
+    {
+      "id": "conv2_block1_1_relu",
+      "label": "conv2_block1_1_relu",
+      "type": "activation",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1200
+      }
+    },
+    {
+      "id": "conv2_block1_2_conv",
+      "label": "Conv 3x3, 64",
+      "type": "conv2d",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 36864,
+        "weights": 36864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
+            "result": 36864,
+            "explanation": "3x3 spatial filter operating on 64 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1350
+      }
+    },
+    {
+      "id": "conv2_block1_2_bn",
+      "label": "conv2_block1_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 64",
+            "result": 256,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1500
+      }
+    },
+    {
+      "id": "conv2_block1_2_relu",
+      "label": "conv2_block1_2_relu",
+      "type": "activation",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1650
+      }
+    },
+    {
+      "id": "conv2_block1_3_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "64 \u00d7 256",
+            "result": 16384,
+            "explanation": "1x1 convolution projecting channels from 64 back to 256 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1800
+      }
+    },
+    {
+      "id": "conv2_block1_3_bn",
+      "label": "conv2_block1_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1950
+      }
+    },
+    {
+      "id": "conv2_block1_0_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "64 \u00d7 256",
+            "result": 16384,
+            "explanation": "Projects shortcut channels from 64 to 256 to match spatial sizes."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 1650
+      }
+    },
+    {
+      "id": "conv2_block1_0_bn",
+      "label": "conv2_block1_0_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "BatchNorm tracking variables."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 1800
+      }
+    },
+    {
+      "id": "conv2_block1_add",
+      "label": "conv2_block1_add",
+      "type": "add",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2100
+      }
+    },
+    {
+      "id": "conv2_block1_out",
+      "label": "conv2_block1_out",
+      "type": "activation",
+      "groupId": "group_s2_b1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2250
+      }
+    },
+    {
+      "id": "conv2_block2_1_conv",
+      "label": "Conv 1x1, 64",
+      "type": "conv2d",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 64",
+            "result": 16384,
+            "explanation": "1x1 convolution mapping 256 channels to 64 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2400
+      }
+    },
+    {
+      "id": "conv2_block2_1_bn",
+      "label": "conv2_block2_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 64",
+            "result": 256,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2550
+      }
+    },
+    {
+      "id": "conv2_block2_1_relu",
+      "label": "conv2_block2_1_relu",
+      "type": "activation",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 2700
+      }
+    },
+    {
+      "id": "conv2_block2_2_conv",
+      "label": "Conv 3x3, 64",
+      "type": "conv2d",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 36864,
+        "weights": 36864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
+            "result": 36864,
+            "explanation": "3x3 spatial filter operating on 64 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 2850
+      }
+    },
+    {
+      "id": "conv2_block2_2_bn",
+      "label": "conv2_block2_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 64",
+            "result": 256,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3000
+      }
+    },
+    {
+      "id": "conv2_block2_2_relu",
+      "label": "conv2_block2_2_relu",
+      "type": "activation",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 3150
+      }
+    },
+    {
+      "id": "conv2_block2_3_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "64 \u00d7 256",
+            "result": 16384,
+            "explanation": "1x1 convolution projecting channels from 64 back to 256 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3300
+      }
+    },
+    {
+      "id": "conv2_block2_3_bn",
+      "label": "conv2_block2_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3450
+      }
+    },
+    {
+      "id": "conv2_block2_add",
+      "label": "conv2_block2_add",
+      "type": "add",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 3600
+      }
+    },
+    {
+      "id": "conv2_block2_out",
+      "label": "conv2_block2_out",
+      "type": "activation",
+      "groupId": "group_s2_b2",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 3750
+      }
+    },
+    {
+      "id": "conv2_block3_1_conv",
+      "label": "Conv 1x1, 64",
+      "type": "conv2d",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 64",
+            "result": 16384,
+            "explanation": "1x1 convolution mapping 256 channels to 64 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 3900
+      }
+    },
+    {
+      "id": "conv2_block3_1_bn",
+      "label": "conv2_block3_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 64",
+            "result": 256,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 4050
+      }
+    },
+    {
+      "id": "conv2_block3_1_relu",
+      "label": "conv2_block3_1_relu",
+      "type": "activation",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 4200
+      }
+    },
+    {
+      "id": "conv2_block3_2_conv",
+      "label": "Conv 3x3, 64",
+      "type": "conv2d",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 36864,
+        "weights": 36864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
+            "result": 36864,
+            "explanation": "3x3 spatial filter operating on 64 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 4350
+      }
+    },
+    {
+      "id": "conv2_block3_2_bn",
+      "label": "conv2_block3_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 64",
+            "result": 256,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 4500
+      }
+    },
+    {
+      "id": "conv2_block3_2_relu",
+      "label": "conv2_block3_2_relu",
+      "type": "activation",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 4650
+      }
+    },
+    {
+      "id": "conv2_block3_3_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "64 \u00d7 256",
+            "result": 16384,
+            "explanation": "1x1 convolution projecting channels from 64 back to 256 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 4800
+      }
+    },
+    {
+      "id": "conv2_block3_3_bn",
+      "label": "conv2_block3_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 4950
+      }
+    },
+    {
+      "id": "conv2_block3_add",
+      "label": "conv2_block3_add",
+      "type": "add",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 5100
+      }
+    },
+    {
+      "id": "conv2_block3_out",
+      "label": "conv2_block3_out",
+      "type": "activation",
+      "groupId": "group_s2_b3",
+      "outputShape": [
+        null,
+        56,
+        56,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 5250
+      }
+    },
+    {
+      "id": "conv3_block1_1_conv",
+      "label": "Conv 1x1, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 32768,
+        "weights": 32768,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 128",
+            "result": 32768,
+            "explanation": "1x1 convolution mapping 256 channels to 128 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 5400
+      }
+    },
+    {
+      "id": "conv3_block1_1_bn",
+      "label": "conv3_block1_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 5550
+      }
+    },
+    {
+      "id": "conv3_block1_1_relu",
+      "label": "conv3_block1_1_relu",
+      "type": "activation",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 5700
+      }
+    },
+    {
+      "id": "conv3_block1_2_conv",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 147456,
+        "weights": 147456,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 128",
+            "result": 147456,
+            "explanation": "3x3 spatial filter operating on 128 channels. Stride of 2 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 5850
+      }
+    },
+    {
+      "id": "conv3_block1_2_bn",
+      "label": "conv3_block1_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 6000
+      }
+    },
+    {
+      "id": "conv3_block1_2_relu",
+      "label": "conv3_block1_2_relu",
+      "type": "activation",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 6150
+      }
+    },
+    {
+      "id": "conv3_block1_3_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "128 \u00d7 512",
+            "result": 65536,
+            "explanation": "1x1 convolution projecting channels from 128 back to 512 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 6300
+      }
+    },
+    {
+      "id": "conv3_block1_3_bn",
+      "label": "conv3_block1_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 6450
+      }
+    },
+    {
+      "id": "conv3_block1_0_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 131072,
+        "weights": 131072,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 512",
+            "result": 131072,
+            "explanation": "Projects shortcut channels from 256 to 512 to match spatial sizes."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 6150
+      }
+    },
+    {
+      "id": "conv3_block1_0_bn",
+      "label": "conv3_block1_0_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "BatchNorm tracking variables."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 6300
+      }
+    },
+    {
+      "id": "conv3_block1_add",
+      "label": "conv3_block1_add",
+      "type": "add",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        512
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 6600
+      }
+    },
+    {
+      "id": "conv3_block1_out",
+      "label": "conv3_block1_out",
+      "type": "activation",
+      "groupId": "group_s3_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 6750
+      }
+    },
+    {
+      "id": "conv3_block2_1_conv",
+      "label": "Conv 1x1, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 128",
+            "result": 65536,
+            "explanation": "1x1 convolution mapping 512 channels to 128 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 6900
+      }
+    },
+    {
+      "id": "conv3_block2_1_bn",
+      "label": "conv3_block2_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 7050
+      }
+    },
+    {
+      "id": "conv3_block2_1_relu",
+      "label": "conv3_block2_1_relu",
+      "type": "activation",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 7200
+      }
+    },
+    {
+      "id": "conv3_block2_2_conv",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 147456,
+        "weights": 147456,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 128",
+            "result": 147456,
+            "explanation": "3x3 spatial filter operating on 128 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 7350
+      }
+    },
+    {
+      "id": "conv3_block2_2_bn",
+      "label": "conv3_block2_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 7500
+      }
+    },
+    {
+      "id": "conv3_block2_2_relu",
+      "label": "conv3_block2_2_relu",
+      "type": "activation",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 7650
+      }
+    },
+    {
+      "id": "conv3_block2_3_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "128 \u00d7 512",
+            "result": 65536,
+            "explanation": "1x1 convolution projecting channels from 128 back to 512 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 7800
+      }
+    },
+    {
+      "id": "conv3_block2_3_bn",
+      "label": "conv3_block2_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 7950
+      }
+    },
+    {
+      "id": "conv3_block2_add",
+      "label": "conv3_block2_add",
+      "type": "add",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 8100
+      }
+    },
+    {
+      "id": "conv3_block2_out",
+      "label": "conv3_block2_out",
+      "type": "activation",
+      "groupId": "group_s3_b2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 8250
+      }
+    },
+    {
+      "id": "conv3_block3_1_conv",
+      "label": "Conv 1x1, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 128",
+            "result": 65536,
+            "explanation": "1x1 convolution mapping 512 channels to 128 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 8400
+      }
+    },
+    {
+      "id": "conv3_block3_1_bn",
+      "label": "conv3_block3_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 8550
+      }
+    },
+    {
+      "id": "conv3_block3_1_relu",
+      "label": "conv3_block3_1_relu",
+      "type": "activation",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 8700
+      }
+    },
+    {
+      "id": "conv3_block3_2_conv",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 147456,
+        "weights": 147456,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 128",
+            "result": 147456,
+            "explanation": "3x3 spatial filter operating on 128 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 8850
+      }
+    },
+    {
+      "id": "conv3_block3_2_bn",
+      "label": "conv3_block3_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 9000
+      }
+    },
+    {
+      "id": "conv3_block3_2_relu",
+      "label": "conv3_block3_2_relu",
+      "type": "activation",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 9150
+      }
+    },
+    {
+      "id": "conv3_block3_3_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "128 \u00d7 512",
+            "result": 65536,
+            "explanation": "1x1 convolution projecting channels from 128 back to 512 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 9300
+      }
+    },
+    {
+      "id": "conv3_block3_3_bn",
+      "label": "conv3_block3_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 9450
+      }
+    },
+    {
+      "id": "conv3_block3_add",
+      "label": "conv3_block3_add",
+      "type": "add",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 9600
+      }
+    },
+    {
+      "id": "conv3_block3_out",
+      "label": "conv3_block3_out",
+      "type": "activation",
+      "groupId": "group_s3_b3",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 9750
+      }
+    },
+    {
+      "id": "conv3_block4_1_conv",
+      "label": "Conv 1x1, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 128",
+            "result": 65536,
+            "explanation": "1x1 convolution mapping 512 channels to 128 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 9900
+      }
+    },
+    {
+      "id": "conv3_block4_1_bn",
+      "label": "conv3_block4_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 10050
+      }
+    },
+    {
+      "id": "conv3_block4_1_relu",
+      "label": "conv3_block4_1_relu",
+      "type": "activation",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 10200
+      }
+    },
+    {
+      "id": "conv3_block4_2_conv",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 147456,
+        "weights": 147456,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 128",
+            "result": 147456,
+            "explanation": "3x3 spatial filter operating on 128 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 10350
+      }
+    },
+    {
+      "id": "conv3_block4_2_bn",
+      "label": "conv3_block4_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 128",
+            "result": 512,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 10500
+      }
+    },
+    {
+      "id": "conv3_block4_2_relu",
+      "label": "conv3_block4_2_relu",
+      "type": "activation",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 10650
+      }
+    },
+    {
+      "id": "conv3_block4_3_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "128 \u00d7 512",
+            "result": 65536,
+            "explanation": "1x1 convolution projecting channels from 128 back to 512 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 10800
+      }
+    },
+    {
+      "id": "conv3_block4_3_bn",
+      "label": "conv3_block4_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 10950
+      }
+    },
+    {
+      "id": "conv3_block4_add",
+      "label": "conv3_block4_add",
+      "type": "add",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 11100
+      }
+    },
+    {
+      "id": "conv3_block4_out",
+      "label": "conv3_block4_out",
+      "type": "activation",
+      "groupId": "group_s3_b4",
+      "outputShape": [
+        null,
+        28,
+        28,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 11250
+      }
+    },
+    {
+      "id": "conv4_block1_1_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 131072,
+        "weights": 131072,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 256",
+            "result": 131072,
+            "explanation": "1x1 convolution mapping 512 channels to 256 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 11400
+      }
+    },
+    {
+      "id": "conv4_block1_1_bn",
+      "label": "conv4_block1_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 11550
+      }
+    },
+    {
+      "id": "conv4_block1_1_relu",
+      "label": "conv4_block1_1_relu",
+      "type": "activation",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 11700
+      }
+    },
+    {
+      "id": "conv4_block1_2_conv",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 589824,
+        "weights": 589824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "3x3 spatial filter operating on 256 channels. Stride of 2 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 11850
+      }
+    },
+    {
+      "id": "conv4_block1_2_bn",
+      "label": "conv4_block1_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 12000
+      }
+    },
+    {
+      "id": "conv4_block1_2_relu",
+      "label": "conv4_block1_2_relu",
+      "type": "activation",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 12150
+      }
+    },
+    {
+      "id": "conv4_block1_3_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 1024",
+            "result": 262144,
+            "explanation": "1x1 convolution projecting channels from 256 back to 1024 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 12300
+      }
+    },
+    {
+      "id": "conv4_block1_3_bn",
+      "label": "conv4_block1_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 12450
+      }
+    },
+    {
+      "id": "conv4_block1_0_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 524288,
+        "weights": 524288,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 1024",
+            "result": 524288,
+            "explanation": "Projects shortcut channels from 512 to 1024 to match spatial sizes."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 12150
+      }
+    },
+    {
+      "id": "conv4_block1_0_bn",
+      "label": "conv4_block1_0_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm tracking variables."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 12300
+      }
+    },
+    {
+      "id": "conv4_block1_add",
+      "label": "conv4_block1_add",
+      "type": "add",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        1024
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 12600
+      }
+    },
+    {
+      "id": "conv4_block1_out",
+      "label": "conv4_block1_out",
+      "type": "activation",
+      "groupId": "group_s4_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        1024
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 12750
+      }
+    },
+    {
+      "id": "conv4_block2_1_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 256",
+            "result": 262144,
+            "explanation": "1x1 convolution mapping 1024 channels to 256 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 12900
+      }
+    },
+    {
+      "id": "conv4_block2_1_bn",
+      "label": "conv4_block2_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 13050
+      }
+    },
+    {
+      "id": "conv4_block2_1_relu",
+      "label": "conv4_block2_1_relu",
+      "type": "activation",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 13200
+      }
+    },
+    {
+      "id": "conv4_block2_2_conv",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 589824,
+        "weights": 589824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "3x3 spatial filter operating on 256 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 13350
+      }
+    },
+    {
+      "id": "conv4_block2_2_bn",
+      "label": "conv4_block2_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 13500
+      }
+    },
+    {
+      "id": "conv4_block2_2_relu",
+      "label": "conv4_block2_2_relu",
+      "type": "activation",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 13650
+      }
+    },
+    {
+      "id": "conv4_block2_3_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 1024",
+            "result": 262144,
+            "explanation": "1x1 convolution projecting channels from 256 back to 1024 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 13800
+      }
+    },
+    {
+      "id": "conv4_block2_3_bn",
+      "label": "conv4_block2_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 13950
+      }
+    },
+    {
+      "id": "conv4_block2_add",
+      "label": "conv4_block2_add",
+      "type": "add",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 14100
+      }
+    },
+    {
+      "id": "conv4_block2_out",
+      "label": "conv4_block2_out",
+      "type": "activation",
+      "groupId": "group_s4_b2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 14250
+      }
+    },
+    {
+      "id": "conv4_block3_1_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 256",
+            "result": 262144,
+            "explanation": "1x1 convolution mapping 1024 channels to 256 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 14400
+      }
+    },
+    {
+      "id": "conv4_block3_1_bn",
+      "label": "conv4_block3_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 14550
+      }
+    },
+    {
+      "id": "conv4_block3_1_relu",
+      "label": "conv4_block3_1_relu",
+      "type": "activation",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 14700
+      }
+    },
+    {
+      "id": "conv4_block3_2_conv",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 589824,
+        "weights": 589824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "3x3 spatial filter operating on 256 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 14850
+      }
+    },
+    {
+      "id": "conv4_block3_2_bn",
+      "label": "conv4_block3_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 15000
+      }
+    },
+    {
+      "id": "conv4_block3_2_relu",
+      "label": "conv4_block3_2_relu",
+      "type": "activation",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 15150
+      }
+    },
+    {
+      "id": "conv4_block3_3_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 1024",
+            "result": 262144,
+            "explanation": "1x1 convolution projecting channels from 256 back to 1024 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 15300
+      }
+    },
+    {
+      "id": "conv4_block3_3_bn",
+      "label": "conv4_block3_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 15450
+      }
+    },
+    {
+      "id": "conv4_block3_add",
+      "label": "conv4_block3_add",
+      "type": "add",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 15600
+      }
+    },
+    {
+      "id": "conv4_block3_out",
+      "label": "conv4_block3_out",
+      "type": "activation",
+      "groupId": "group_s4_b3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 15750
+      }
+    },
+    {
+      "id": "conv4_block4_1_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 256",
+            "result": 262144,
+            "explanation": "1x1 convolution mapping 1024 channels to 256 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 15900
+      }
+    },
+    {
+      "id": "conv4_block4_1_bn",
+      "label": "conv4_block4_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 16050
+      }
+    },
+    {
+      "id": "conv4_block4_1_relu",
+      "label": "conv4_block4_1_relu",
+      "type": "activation",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 16200
+      }
+    },
+    {
+      "id": "conv4_block4_2_conv",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 589824,
+        "weights": 589824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "3x3 spatial filter operating on 256 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 16350
+      }
+    },
+    {
+      "id": "conv4_block4_2_bn",
+      "label": "conv4_block4_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 16500
+      }
+    },
+    {
+      "id": "conv4_block4_2_relu",
+      "label": "conv4_block4_2_relu",
+      "type": "activation",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 16650
+      }
+    },
+    {
+      "id": "conv4_block4_3_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 1024",
+            "result": 262144,
+            "explanation": "1x1 convolution projecting channels from 256 back to 1024 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 16800
+      }
+    },
+    {
+      "id": "conv4_block4_3_bn",
+      "label": "conv4_block4_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 16950
+      }
+    },
+    {
+      "id": "conv4_block4_add",
+      "label": "conv4_block4_add",
+      "type": "add",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 17100
+      }
+    },
+    {
+      "id": "conv4_block4_out",
+      "label": "conv4_block4_out",
+      "type": "activation",
+      "groupId": "group_s4_b4",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 17250
+      }
+    },
+    {
+      "id": "conv4_block5_1_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 256",
+            "result": 262144,
+            "explanation": "1x1 convolution mapping 1024 channels to 256 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 17400
+      }
+    },
+    {
+      "id": "conv4_block5_1_bn",
+      "label": "conv4_block5_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 17550
+      }
+    },
+    {
+      "id": "conv4_block5_1_relu",
+      "label": "conv4_block5_1_relu",
+      "type": "activation",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 17700
+      }
+    },
+    {
+      "id": "conv4_block5_2_conv",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 589824,
+        "weights": 589824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "3x3 spatial filter operating on 256 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 17850
+      }
+    },
+    {
+      "id": "conv4_block5_2_bn",
+      "label": "conv4_block5_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 18000
+      }
+    },
+    {
+      "id": "conv4_block5_2_relu",
+      "label": "conv4_block5_2_relu",
+      "type": "activation",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 18150
+      }
+    },
+    {
+      "id": "conv4_block5_3_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 1024",
+            "result": 262144,
+            "explanation": "1x1 convolution projecting channels from 256 back to 1024 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 18300
+      }
+    },
+    {
+      "id": "conv4_block5_3_bn",
+      "label": "conv4_block5_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 18450
+      }
+    },
+    {
+      "id": "conv4_block5_add",
+      "label": "conv4_block5_add",
+      "type": "add",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 18600
+      }
+    },
+    {
+      "id": "conv4_block5_out",
+      "label": "conv4_block5_out",
+      "type": "activation",
+      "groupId": "group_s4_b5",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 18750
+      }
+    },
+    {
+      "id": "conv4_block6_1_conv",
+      "label": "Conv 1x1, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 256",
+            "result": 262144,
+            "explanation": "1x1 convolution mapping 1024 channels to 256 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 18900
+      }
+    },
+    {
+      "id": "conv4_block6_1_bn",
+      "label": "conv4_block6_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 19050
+      }
+    },
+    {
+      "id": "conv4_block6_1_relu",
+      "label": "conv4_block6_1_relu",
+      "type": "activation",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 19200
+      }
+    },
+    {
+      "id": "conv4_block6_2_conv",
+      "label": "Conv 3x3, 256",
+      "type": "conv2d",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 589824,
+        "weights": 589824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "3x3 spatial filter operating on 256 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 19350
+      }
+    },
+    {
+      "id": "conv4_block6_2_bn",
+      "label": "conv4_block6_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 256",
+            "result": 1024,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 19500
+      }
+    },
+    {
+      "id": "conv4_block6_2_relu",
+      "label": "conv4_block6_2_relu",
+      "type": "activation",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        256
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 19650
+      }
+    },
+    {
+      "id": "conv4_block6_3_conv",
+      "label": "Conv 1x1, 1024",
+      "type": "conv2d",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "256 \u00d7 1024",
+            "result": 262144,
+            "explanation": "1x1 convolution projecting channels from 256 back to 1024 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 19800
+      }
+    },
+    {
+      "id": "conv4_block6_3_bn",
+      "label": "conv4_block6_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 1024",
+            "result": 4096,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 19950
+      }
+    },
+    {
+      "id": "conv4_block6_add",
+      "label": "conv4_block6_add",
+      "type": "add",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 20100
+      }
+    },
+    {
+      "id": "conv4_block6_out",
+      "label": "conv4_block6_out",
+      "type": "activation",
+      "groupId": "group_s4_b6",
+      "outputShape": [
+        null,
+        14,
+        14,
+        1024
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 20250
+      }
+    },
+    {
+      "id": "conv5_block1_1_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 524288,
+        "weights": 524288,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 512",
+            "result": 524288,
+            "explanation": "1x1 convolution mapping 1024 channels to 512 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 20400
+      }
+    },
+    {
+      "id": "conv5_block1_1_bn",
+      "label": "conv5_block1_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 20550
+      }
+    },
+    {
+      "id": "conv5_block1_1_relu",
+      "label": "conv5_block1_1_relu",
+      "type": "activation",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 20700
+      }
+    },
+    {
+      "id": "conv5_block1_2_conv",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 2359296,
+        "weights": 2359296,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "3x3 spatial filter operating on 512 channels. Stride of 2 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 20850
+      }
+    },
+    {
+      "id": "conv5_block1_2_bn",
+      "label": "conv5_block1_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 21000
+      }
+    },
+    {
+      "id": "conv5_block1_2_relu",
+      "label": "conv5_block1_2_relu",
+      "type": "activation",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 21150
+      }
+    },
+    {
+      "id": "conv5_block1_3_conv",
+      "label": "Conv 1x1, 2048",
+      "type": "conv2d",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        2048
+      ],
+      "config": {
+        "filters": 2048,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 1048576,
+        "weights": 1048576,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 2048",
+            "result": 1048576,
+            "explanation": "1x1 convolution projecting channels from 512 back to 2048 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 21300
+      }
+    },
+    {
+      "id": "conv5_block1_3_bn",
+      "label": "conv5_block1_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        2048
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 8192,
+        "weights": 4096,
+        "biases": 4096,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 2048",
+            "result": 8192,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 21450
+      }
+    },
+    {
+      "id": "conv5_block1_0_conv",
+      "label": "Conv 1x1, 2048",
+      "type": "conv2d",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        2048
+      ],
+      "config": {
+        "filters": 2048,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 2097152,
+        "weights": 2097152,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 2048",
+            "result": 2097152,
+            "explanation": "Projects shortcut channels from 1024 to 2048 to match spatial sizes."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 21150
+      }
+    },
+    {
+      "id": "conv5_block1_0_bn",
+      "label": "conv5_block1_0_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        2048
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 8192,
+        "weights": 4096,
+        "biases": 4096,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 2048",
+            "result": 8192,
+            "explanation": "BatchNorm tracking variables."
+          }
+        ]
+      },
+      "position": {
+        "x": 100,
+        "y": 21300
+      }
+    },
+    {
+      "id": "conv5_block1_add",
+      "label": "conv5_block1_add",
+      "type": "add",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        2048
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 21600
+      }
+    },
+    {
+      "id": "conv5_block1_out",
+      "label": "conv5_block1_out",
+      "type": "activation",
+      "groupId": "group_s5_b1",
+      "outputShape": [
+        null,
+        3,
+        3,
+        2048
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 21750
+      }
+    },
+    {
+      "id": "conv5_block2_1_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 1048576,
+        "weights": 1048576,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "2048 \u00d7 512",
+            "result": 1048576,
+            "explanation": "1x1 convolution mapping 2048 channels to 512 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 21900
+      }
+    },
+    {
+      "id": "conv5_block2_1_bn",
+      "label": "conv5_block2_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 22050
+      }
+    },
+    {
+      "id": "conv5_block2_1_relu",
+      "label": "conv5_block2_1_relu",
+      "type": "activation",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 22200
+      }
+    },
+    {
+      "id": "conv5_block2_2_conv",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 2359296,
+        "weights": 2359296,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "3x3 spatial filter operating on 512 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 22350
+      }
+    },
+    {
+      "id": "conv5_block2_2_bn",
+      "label": "conv5_block2_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 22500
+      }
+    },
+    {
+      "id": "conv5_block2_2_relu",
+      "label": "conv5_block2_2_relu",
+      "type": "activation",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 22650
+      }
+    },
+    {
+      "id": "conv5_block2_3_conv",
+      "label": "Conv 1x1, 2048",
+      "type": "conv2d",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {
+        "filters": 2048,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 1048576,
+        "weights": 1048576,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 2048",
+            "result": 1048576,
+            "explanation": "1x1 convolution projecting channels from 512 back to 2048 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 22800
+      }
+    },
+    {
+      "id": "conv5_block2_3_bn",
+      "label": "conv5_block2_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 8192,
+        "weights": 4096,
+        "biases": 4096,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 2048",
+            "result": 8192,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 22950
+      }
+    },
+    {
+      "id": "conv5_block2_add",
+      "label": "conv5_block2_add",
+      "type": "add",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 23100
+      }
+    },
+    {
+      "id": "conv5_block2_out",
+      "label": "conv5_block2_out",
+      "type": "activation",
+      "groupId": "group_s5_b2",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 23250
+      }
+    },
+    {
+      "id": "conv5_block3_1_conv",
+      "label": "Conv 1x1, 512",
+      "type": "conv2d",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 1048576,
+        "weights": 1048576,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "2048 \u00d7 512",
+            "result": 1048576,
+            "explanation": "1x1 convolution mapping 2048 channels to 512 bottleneck channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 23400
+      }
+    },
+    {
+      "id": "conv5_block3_1_bn",
+      "label": "conv5_block3_1_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "Moving variables (mean, variance) + trainable scales (gamma, beta) per channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 23550
+      }
+    },
+    {
+      "id": "conv5_block3_1_relu",
+      "label": "conv5_block3_1_relu",
+      "type": "activation",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 23700
+      }
+    },
+    {
+      "id": "conv5_block3_2_conv",
+      "label": "Conv 3x3, 512",
+      "type": "conv2d",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 2359296,
+        "weights": 2359296,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "3x3 spatial filter operating on 512 channels. Stride of 1 handles spatial downsampling."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 23850
+      }
+    },
+    {
+      "id": "conv5_block3_2_bn",
+      "label": "conv5_block3_2_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 512",
+            "result": 2048,
+            "explanation": "Batch norm tracking vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 24000
+      }
+    },
+    {
+      "id": "conv5_block3_2_relu",
+      "label": "conv5_block3_2_relu",
+      "type": "activation",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        512
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 24150
+      }
+    },
+    {
+      "id": "conv5_block3_3_conv",
+      "label": "Conv 1x1, 2048",
+      "type": "conv2d",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {
+        "filters": 2048,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 1048576,
+        "weights": 1048576,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "512 \u00d7 2048",
+            "result": 1048576,
+            "explanation": "1x1 convolution projecting channels from 512 back to 2048 dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 24300
+      }
+    },
+    {
+      "id": "conv5_block3_3_bn",
+      "label": "conv5_block3_3_bn",
+      "type": "batch_norm",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 8192,
+        "weights": 4096,
+        "biases": 4096,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Parameters",
+            "expression": "4 \u00d7 2048",
+            "result": 8192,
+            "explanation": "BatchNorm vectors."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 24450
+      }
+    },
+    {
+      "id": "conv5_block3_add",
+      "label": "conv5_block3_add",
+      "type": "add",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 24600
+      }
+    },
+    {
+      "id": "conv5_block3_out",
+      "label": "conv5_block3_out",
+      "type": "activation",
+      "groupId": "group_s5_b3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        2048
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 24750
+      }
+    },
+    {
+      "id": "avg_pool",
+      "label": "avg_pool",
+      "type": "global_average_pooling2d",
+      "groupId": "group_classifier",
+      "outputShape": [
+        null,
+        2048
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 24900
+      }
+    },
+    {
+      "id": "predictions",
+      "label": "predictions",
+      "type": "dense",
+      "groupId": "group_classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 2049000,
+        "weights": 2048000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "2048 \u00d7 1000",
+            "result": 2048000,
+            "explanation": "Maps the 2048 pooled features to 1000 ImageNet classifications."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One learnable bias parameter per output category."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 25050
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c_input_conv1",
+      "source": "input_1",
+      "target": "conv1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv1_bn",
+      "source": "conv1_conv",
+      "target": "conv1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv1_relu",
+      "source": "conv1_bn",
+      "target": "conv1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_pool1_pad",
+      "source": "conv1_relu",
+      "target": "pool1_pad",
+      "type": "sequential"
+    },
+    {
+      "id": "c_pool1_pool",
+      "source": "pool1_pad",
+      "target": "pool1_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_pool1_pool_conv2_block1_1_conv",
+      "source": "pool1_pool",
+      "target": "conv2_block1_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_1_conv_conv2_block1_1_bn",
+      "source": "conv2_block1_1_conv",
+      "target": "conv2_block1_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_1_bn_conv2_block1_1_relu",
+      "source": "conv2_block1_1_bn",
+      "target": "conv2_block1_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_1_relu_conv2_block1_2_conv",
+      "source": "conv2_block1_1_relu",
+      "target": "conv2_block1_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_2_conv_conv2_block1_2_bn",
+      "source": "conv2_block1_2_conv",
+      "target": "conv2_block1_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_2_bn_conv2_block1_2_relu",
+      "source": "conv2_block1_2_bn",
+      "target": "conv2_block1_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_2_relu_conv2_block1_3_conv",
+      "source": "conv2_block1_2_relu",
+      "target": "conv2_block1_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_3_conv_conv2_block1_3_bn",
+      "source": "conv2_block1_3_conv",
+      "target": "conv2_block1_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_pool1_pool_conv2_block1_0_conv",
+      "source": "pool1_pool",
+      "target": "conv2_block1_0_conv",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv2_block1_0_conv_conv2_block1_0_bn",
+      "source": "conv2_block1_0_conv",
+      "target": "conv2_block1_0_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_3_bn_conv2_block1_add",
+      "source": "conv2_block1_3_bn",
+      "target": "conv2_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_0_bn_conv2_block1_add",
+      "source": "conv2_block1_0_bn",
+      "target": "conv2_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_add_conv2_block1_out",
+      "source": "conv2_block1_add",
+      "target": "conv2_block1_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_out_conv2_block2_1_conv",
+      "source": "conv2_block1_out",
+      "target": "conv2_block2_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_1_conv_conv2_block2_1_bn",
+      "source": "conv2_block2_1_conv",
+      "target": "conv2_block2_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_1_bn_conv2_block2_1_relu",
+      "source": "conv2_block2_1_bn",
+      "target": "conv2_block2_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_1_relu_conv2_block2_2_conv",
+      "source": "conv2_block2_1_relu",
+      "target": "conv2_block2_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_2_conv_conv2_block2_2_bn",
+      "source": "conv2_block2_2_conv",
+      "target": "conv2_block2_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_2_bn_conv2_block2_2_relu",
+      "source": "conv2_block2_2_bn",
+      "target": "conv2_block2_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_2_relu_conv2_block2_3_conv",
+      "source": "conv2_block2_2_relu",
+      "target": "conv2_block2_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_3_conv_conv2_block2_3_bn",
+      "source": "conv2_block2_3_conv",
+      "target": "conv2_block2_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_3_bn_conv2_block2_add",
+      "source": "conv2_block2_3_bn",
+      "target": "conv2_block2_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block1_out_conv2_block2_add",
+      "source": "conv2_block1_out",
+      "target": "conv2_block2_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv2_block2_add_conv2_block2_out",
+      "source": "conv2_block2_add",
+      "target": "conv2_block2_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_out_conv2_block3_1_conv",
+      "source": "conv2_block2_out",
+      "target": "conv2_block3_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_1_conv_conv2_block3_1_bn",
+      "source": "conv2_block3_1_conv",
+      "target": "conv2_block3_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_1_bn_conv2_block3_1_relu",
+      "source": "conv2_block3_1_bn",
+      "target": "conv2_block3_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_1_relu_conv2_block3_2_conv",
+      "source": "conv2_block3_1_relu",
+      "target": "conv2_block3_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_2_conv_conv2_block3_2_bn",
+      "source": "conv2_block3_2_conv",
+      "target": "conv2_block3_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_2_bn_conv2_block3_2_relu",
+      "source": "conv2_block3_2_bn",
+      "target": "conv2_block3_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_2_relu_conv2_block3_3_conv",
+      "source": "conv2_block3_2_relu",
+      "target": "conv2_block3_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_3_conv_conv2_block3_3_bn",
+      "source": "conv2_block3_3_conv",
+      "target": "conv2_block3_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_3_bn_conv2_block3_add",
+      "source": "conv2_block3_3_bn",
+      "target": "conv2_block3_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block2_out_conv2_block3_add",
+      "source": "conv2_block2_out",
+      "target": "conv2_block3_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv2_block3_add_conv2_block3_out",
+      "source": "conv2_block3_add",
+      "target": "conv2_block3_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_out_conv3_block1_1_conv",
+      "source": "conv2_block3_out",
+      "target": "conv3_block1_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_1_conv_conv3_block1_1_bn",
+      "source": "conv3_block1_1_conv",
+      "target": "conv3_block1_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_1_bn_conv3_block1_1_relu",
+      "source": "conv3_block1_1_bn",
+      "target": "conv3_block1_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_1_relu_conv3_block1_2_conv",
+      "source": "conv3_block1_1_relu",
+      "target": "conv3_block1_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_2_conv_conv3_block1_2_bn",
+      "source": "conv3_block1_2_conv",
+      "target": "conv3_block1_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_2_bn_conv3_block1_2_relu",
+      "source": "conv3_block1_2_bn",
+      "target": "conv3_block1_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_2_relu_conv3_block1_3_conv",
+      "source": "conv3_block1_2_relu",
+      "target": "conv3_block1_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_3_conv_conv3_block1_3_bn",
+      "source": "conv3_block1_3_conv",
+      "target": "conv3_block1_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv2_block3_out_conv3_block1_0_conv",
+      "source": "conv2_block3_out",
+      "target": "conv3_block1_0_conv",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv3_block1_0_conv_conv3_block1_0_bn",
+      "source": "conv3_block1_0_conv",
+      "target": "conv3_block1_0_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_3_bn_conv3_block1_add",
+      "source": "conv3_block1_3_bn",
+      "target": "conv3_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_0_bn_conv3_block1_add",
+      "source": "conv3_block1_0_bn",
+      "target": "conv3_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_add_conv3_block1_out",
+      "source": "conv3_block1_add",
+      "target": "conv3_block1_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_out_conv3_block2_1_conv",
+      "source": "conv3_block1_out",
+      "target": "conv3_block2_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_1_conv_conv3_block2_1_bn",
+      "source": "conv3_block2_1_conv",
+      "target": "conv3_block2_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_1_bn_conv3_block2_1_relu",
+      "source": "conv3_block2_1_bn",
+      "target": "conv3_block2_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_1_relu_conv3_block2_2_conv",
+      "source": "conv3_block2_1_relu",
+      "target": "conv3_block2_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_2_conv_conv3_block2_2_bn",
+      "source": "conv3_block2_2_conv",
+      "target": "conv3_block2_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_2_bn_conv3_block2_2_relu",
+      "source": "conv3_block2_2_bn",
+      "target": "conv3_block2_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_2_relu_conv3_block2_3_conv",
+      "source": "conv3_block2_2_relu",
+      "target": "conv3_block2_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_3_conv_conv3_block2_3_bn",
+      "source": "conv3_block2_3_conv",
+      "target": "conv3_block2_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_3_bn_conv3_block2_add",
+      "source": "conv3_block2_3_bn",
+      "target": "conv3_block2_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block1_out_conv3_block2_add",
+      "source": "conv3_block1_out",
+      "target": "conv3_block2_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv3_block2_add_conv3_block2_out",
+      "source": "conv3_block2_add",
+      "target": "conv3_block2_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_out_conv3_block3_1_conv",
+      "source": "conv3_block2_out",
+      "target": "conv3_block3_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_1_conv_conv3_block3_1_bn",
+      "source": "conv3_block3_1_conv",
+      "target": "conv3_block3_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_1_bn_conv3_block3_1_relu",
+      "source": "conv3_block3_1_bn",
+      "target": "conv3_block3_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_1_relu_conv3_block3_2_conv",
+      "source": "conv3_block3_1_relu",
+      "target": "conv3_block3_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_2_conv_conv3_block3_2_bn",
+      "source": "conv3_block3_2_conv",
+      "target": "conv3_block3_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_2_bn_conv3_block3_2_relu",
+      "source": "conv3_block3_2_bn",
+      "target": "conv3_block3_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_2_relu_conv3_block3_3_conv",
+      "source": "conv3_block3_2_relu",
+      "target": "conv3_block3_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_3_conv_conv3_block3_3_bn",
+      "source": "conv3_block3_3_conv",
+      "target": "conv3_block3_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_3_bn_conv3_block3_add",
+      "source": "conv3_block3_3_bn",
+      "target": "conv3_block3_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block2_out_conv3_block3_add",
+      "source": "conv3_block2_out",
+      "target": "conv3_block3_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv3_block3_add_conv3_block3_out",
+      "source": "conv3_block3_add",
+      "target": "conv3_block3_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_out_conv3_block4_1_conv",
+      "source": "conv3_block3_out",
+      "target": "conv3_block4_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_1_conv_conv3_block4_1_bn",
+      "source": "conv3_block4_1_conv",
+      "target": "conv3_block4_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_1_bn_conv3_block4_1_relu",
+      "source": "conv3_block4_1_bn",
+      "target": "conv3_block4_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_1_relu_conv3_block4_2_conv",
+      "source": "conv3_block4_1_relu",
+      "target": "conv3_block4_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_2_conv_conv3_block4_2_bn",
+      "source": "conv3_block4_2_conv",
+      "target": "conv3_block4_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_2_bn_conv3_block4_2_relu",
+      "source": "conv3_block4_2_bn",
+      "target": "conv3_block4_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_2_relu_conv3_block4_3_conv",
+      "source": "conv3_block4_2_relu",
+      "target": "conv3_block4_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_3_conv_conv3_block4_3_bn",
+      "source": "conv3_block4_3_conv",
+      "target": "conv3_block4_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_3_bn_conv3_block4_add",
+      "source": "conv3_block4_3_bn",
+      "target": "conv3_block4_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block3_out_conv3_block4_add",
+      "source": "conv3_block3_out",
+      "target": "conv3_block4_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv3_block4_add_conv3_block4_out",
+      "source": "conv3_block4_add",
+      "target": "conv3_block4_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_out_conv4_block1_1_conv",
+      "source": "conv3_block4_out",
+      "target": "conv4_block1_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_1_conv_conv4_block1_1_bn",
+      "source": "conv4_block1_1_conv",
+      "target": "conv4_block1_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_1_bn_conv4_block1_1_relu",
+      "source": "conv4_block1_1_bn",
+      "target": "conv4_block1_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_1_relu_conv4_block1_2_conv",
+      "source": "conv4_block1_1_relu",
+      "target": "conv4_block1_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_2_conv_conv4_block1_2_bn",
+      "source": "conv4_block1_2_conv",
+      "target": "conv4_block1_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_2_bn_conv4_block1_2_relu",
+      "source": "conv4_block1_2_bn",
+      "target": "conv4_block1_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_2_relu_conv4_block1_3_conv",
+      "source": "conv4_block1_2_relu",
+      "target": "conv4_block1_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_3_conv_conv4_block1_3_bn",
+      "source": "conv4_block1_3_conv",
+      "target": "conv4_block1_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv3_block4_out_conv4_block1_0_conv",
+      "source": "conv3_block4_out",
+      "target": "conv4_block1_0_conv",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv4_block1_0_conv_conv4_block1_0_bn",
+      "source": "conv4_block1_0_conv",
+      "target": "conv4_block1_0_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_3_bn_conv4_block1_add",
+      "source": "conv4_block1_3_bn",
+      "target": "conv4_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_0_bn_conv4_block1_add",
+      "source": "conv4_block1_0_bn",
+      "target": "conv4_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_add_conv4_block1_out",
+      "source": "conv4_block1_add",
+      "target": "conv4_block1_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_out_conv4_block2_1_conv",
+      "source": "conv4_block1_out",
+      "target": "conv4_block2_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_1_conv_conv4_block2_1_bn",
+      "source": "conv4_block2_1_conv",
+      "target": "conv4_block2_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_1_bn_conv4_block2_1_relu",
+      "source": "conv4_block2_1_bn",
+      "target": "conv4_block2_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_1_relu_conv4_block2_2_conv",
+      "source": "conv4_block2_1_relu",
+      "target": "conv4_block2_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_2_conv_conv4_block2_2_bn",
+      "source": "conv4_block2_2_conv",
+      "target": "conv4_block2_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_2_bn_conv4_block2_2_relu",
+      "source": "conv4_block2_2_bn",
+      "target": "conv4_block2_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_2_relu_conv4_block2_3_conv",
+      "source": "conv4_block2_2_relu",
+      "target": "conv4_block2_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_3_conv_conv4_block2_3_bn",
+      "source": "conv4_block2_3_conv",
+      "target": "conv4_block2_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_3_bn_conv4_block2_add",
+      "source": "conv4_block2_3_bn",
+      "target": "conv4_block2_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block1_out_conv4_block2_add",
+      "source": "conv4_block1_out",
+      "target": "conv4_block2_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv4_block2_add_conv4_block2_out",
+      "source": "conv4_block2_add",
+      "target": "conv4_block2_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_out_conv4_block3_1_conv",
+      "source": "conv4_block2_out",
+      "target": "conv4_block3_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_1_conv_conv4_block3_1_bn",
+      "source": "conv4_block3_1_conv",
+      "target": "conv4_block3_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_1_bn_conv4_block3_1_relu",
+      "source": "conv4_block3_1_bn",
+      "target": "conv4_block3_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_1_relu_conv4_block3_2_conv",
+      "source": "conv4_block3_1_relu",
+      "target": "conv4_block3_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_2_conv_conv4_block3_2_bn",
+      "source": "conv4_block3_2_conv",
+      "target": "conv4_block3_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_2_bn_conv4_block3_2_relu",
+      "source": "conv4_block3_2_bn",
+      "target": "conv4_block3_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_2_relu_conv4_block3_3_conv",
+      "source": "conv4_block3_2_relu",
+      "target": "conv4_block3_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_3_conv_conv4_block3_3_bn",
+      "source": "conv4_block3_3_conv",
+      "target": "conv4_block3_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_3_bn_conv4_block3_add",
+      "source": "conv4_block3_3_bn",
+      "target": "conv4_block3_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block2_out_conv4_block3_add",
+      "source": "conv4_block2_out",
+      "target": "conv4_block3_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv4_block3_add_conv4_block3_out",
+      "source": "conv4_block3_add",
+      "target": "conv4_block3_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_out_conv4_block4_1_conv",
+      "source": "conv4_block3_out",
+      "target": "conv4_block4_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_1_conv_conv4_block4_1_bn",
+      "source": "conv4_block4_1_conv",
+      "target": "conv4_block4_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_1_bn_conv4_block4_1_relu",
+      "source": "conv4_block4_1_bn",
+      "target": "conv4_block4_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_1_relu_conv4_block4_2_conv",
+      "source": "conv4_block4_1_relu",
+      "target": "conv4_block4_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_2_conv_conv4_block4_2_bn",
+      "source": "conv4_block4_2_conv",
+      "target": "conv4_block4_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_2_bn_conv4_block4_2_relu",
+      "source": "conv4_block4_2_bn",
+      "target": "conv4_block4_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_2_relu_conv4_block4_3_conv",
+      "source": "conv4_block4_2_relu",
+      "target": "conv4_block4_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_3_conv_conv4_block4_3_bn",
+      "source": "conv4_block4_3_conv",
+      "target": "conv4_block4_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_3_bn_conv4_block4_add",
+      "source": "conv4_block4_3_bn",
+      "target": "conv4_block4_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block3_out_conv4_block4_add",
+      "source": "conv4_block3_out",
+      "target": "conv4_block4_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv4_block4_add_conv4_block4_out",
+      "source": "conv4_block4_add",
+      "target": "conv4_block4_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_out_conv4_block5_1_conv",
+      "source": "conv4_block4_out",
+      "target": "conv4_block5_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_1_conv_conv4_block5_1_bn",
+      "source": "conv4_block5_1_conv",
+      "target": "conv4_block5_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_1_bn_conv4_block5_1_relu",
+      "source": "conv4_block5_1_bn",
+      "target": "conv4_block5_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_1_relu_conv4_block5_2_conv",
+      "source": "conv4_block5_1_relu",
+      "target": "conv4_block5_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_2_conv_conv4_block5_2_bn",
+      "source": "conv4_block5_2_conv",
+      "target": "conv4_block5_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_2_bn_conv4_block5_2_relu",
+      "source": "conv4_block5_2_bn",
+      "target": "conv4_block5_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_2_relu_conv4_block5_3_conv",
+      "source": "conv4_block5_2_relu",
+      "target": "conv4_block5_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_3_conv_conv4_block5_3_bn",
+      "source": "conv4_block5_3_conv",
+      "target": "conv4_block5_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_3_bn_conv4_block5_add",
+      "source": "conv4_block5_3_bn",
+      "target": "conv4_block5_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block4_out_conv4_block5_add",
+      "source": "conv4_block4_out",
+      "target": "conv4_block5_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv4_block5_add_conv4_block5_out",
+      "source": "conv4_block5_add",
+      "target": "conv4_block5_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_out_conv4_block6_1_conv",
+      "source": "conv4_block5_out",
+      "target": "conv4_block6_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_1_conv_conv4_block6_1_bn",
+      "source": "conv4_block6_1_conv",
+      "target": "conv4_block6_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_1_bn_conv4_block6_1_relu",
+      "source": "conv4_block6_1_bn",
+      "target": "conv4_block6_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_1_relu_conv4_block6_2_conv",
+      "source": "conv4_block6_1_relu",
+      "target": "conv4_block6_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_2_conv_conv4_block6_2_bn",
+      "source": "conv4_block6_2_conv",
+      "target": "conv4_block6_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_2_bn_conv4_block6_2_relu",
+      "source": "conv4_block6_2_bn",
+      "target": "conv4_block6_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_2_relu_conv4_block6_3_conv",
+      "source": "conv4_block6_2_relu",
+      "target": "conv4_block6_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_3_conv_conv4_block6_3_bn",
+      "source": "conv4_block6_3_conv",
+      "target": "conv4_block6_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_3_bn_conv4_block6_add",
+      "source": "conv4_block6_3_bn",
+      "target": "conv4_block6_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block5_out_conv4_block6_add",
+      "source": "conv4_block5_out",
+      "target": "conv4_block6_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv4_block6_add_conv4_block6_out",
+      "source": "conv4_block6_add",
+      "target": "conv4_block6_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_out_conv5_block1_1_conv",
+      "source": "conv4_block6_out",
+      "target": "conv5_block1_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_1_conv_conv5_block1_1_bn",
+      "source": "conv5_block1_1_conv",
+      "target": "conv5_block1_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_1_bn_conv5_block1_1_relu",
+      "source": "conv5_block1_1_bn",
+      "target": "conv5_block1_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_1_relu_conv5_block1_2_conv",
+      "source": "conv5_block1_1_relu",
+      "target": "conv5_block1_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_2_conv_conv5_block1_2_bn",
+      "source": "conv5_block1_2_conv",
+      "target": "conv5_block1_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_2_bn_conv5_block1_2_relu",
+      "source": "conv5_block1_2_bn",
+      "target": "conv5_block1_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_2_relu_conv5_block1_3_conv",
+      "source": "conv5_block1_2_relu",
+      "target": "conv5_block1_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_3_conv_conv5_block1_3_bn",
+      "source": "conv5_block1_3_conv",
+      "target": "conv5_block1_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv4_block6_out_conv5_block1_0_conv",
+      "source": "conv4_block6_out",
+      "target": "conv5_block1_0_conv",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv5_block1_0_conv_conv5_block1_0_bn",
+      "source": "conv5_block1_0_conv",
+      "target": "conv5_block1_0_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_3_bn_conv5_block1_add",
+      "source": "conv5_block1_3_bn",
+      "target": "conv5_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_0_bn_conv5_block1_add",
+      "source": "conv5_block1_0_bn",
+      "target": "conv5_block1_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_add_conv5_block1_out",
+      "source": "conv5_block1_add",
+      "target": "conv5_block1_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_out_conv5_block2_1_conv",
+      "source": "conv5_block1_out",
+      "target": "conv5_block2_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_1_conv_conv5_block2_1_bn",
+      "source": "conv5_block2_1_conv",
+      "target": "conv5_block2_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_1_bn_conv5_block2_1_relu",
+      "source": "conv5_block2_1_bn",
+      "target": "conv5_block2_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_1_relu_conv5_block2_2_conv",
+      "source": "conv5_block2_1_relu",
+      "target": "conv5_block2_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_2_conv_conv5_block2_2_bn",
+      "source": "conv5_block2_2_conv",
+      "target": "conv5_block2_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_2_bn_conv5_block2_2_relu",
+      "source": "conv5_block2_2_bn",
+      "target": "conv5_block2_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_2_relu_conv5_block2_3_conv",
+      "source": "conv5_block2_2_relu",
+      "target": "conv5_block2_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_3_conv_conv5_block2_3_bn",
+      "source": "conv5_block2_3_conv",
+      "target": "conv5_block2_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_3_bn_conv5_block2_add",
+      "source": "conv5_block2_3_bn",
+      "target": "conv5_block2_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block1_out_conv5_block2_add",
+      "source": "conv5_block1_out",
+      "target": "conv5_block2_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv5_block2_add_conv5_block2_out",
+      "source": "conv5_block2_add",
+      "target": "conv5_block2_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_out_conv5_block3_1_conv",
+      "source": "conv5_block2_out",
+      "target": "conv5_block3_1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_1_conv_conv5_block3_1_bn",
+      "source": "conv5_block3_1_conv",
+      "target": "conv5_block3_1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_1_bn_conv5_block3_1_relu",
+      "source": "conv5_block3_1_bn",
+      "target": "conv5_block3_1_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_1_relu_conv5_block3_2_conv",
+      "source": "conv5_block3_1_relu",
+      "target": "conv5_block3_2_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_2_conv_conv5_block3_2_bn",
+      "source": "conv5_block3_2_conv",
+      "target": "conv5_block3_2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_2_bn_conv5_block3_2_relu",
+      "source": "conv5_block3_2_bn",
+      "target": "conv5_block3_2_relu",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_2_relu_conv5_block3_3_conv",
+      "source": "conv5_block3_2_relu",
+      "target": "conv5_block3_3_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_3_conv_conv5_block3_3_bn",
+      "source": "conv5_block3_3_conv",
+      "target": "conv5_block3_3_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_3_bn_conv5_block3_add",
+      "source": "conv5_block3_3_bn",
+      "target": "conv5_block3_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block2_out_conv5_block3_add",
+      "source": "conv5_block2_out",
+      "target": "conv5_block3_add",
+      "type": "skip"
+    },
+    {
+      "id": "c_conv5_block3_add_conv5_block3_out",
+      "source": "conv5_block3_add",
+      "target": "conv5_block3_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c_conv5_block3_out_avg_pool",
+      "source": "conv5_block3_out",
+      "target": "avg_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_avg_pool_predictions",
+      "source": "avg_pool",
+      "target": "predictions",
+      "type": "sequential"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group_stem",
+      "name": "Input Stem",
+      "description": "Stem layers downsampling the high-res input image to 56x56 prior to deep stage routing.",
+      "layerIds": [
+        "conv1_conv",
+        "conv1_bn",
+        "conv1_relu",
+        "pool1_pad",
+        "pool1_pool"
+      ],
+      "color": "#10B981"
+    },
+    {
+      "id": "group_s2_b1",
+      "name": "Stage 2 Block 1",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "layerIds": [
+        "conv2_block1_1_conv",
+        "conv2_block1_1_bn",
+        "conv2_block1_1_relu",
+        "conv2_block1_2_conv",
+        "conv2_block1_2_bn",
+        "conv2_block1_2_relu",
+        "conv2_block1_3_conv",
+        "conv2_block1_3_bn",
+        "conv2_block1_0_conv",
+        "conv2_block1_0_bn",
+        "conv2_block1_add",
+        "conv2_block1_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s2_b2",
+      "name": "Stage 2 Block 2",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv2_block2_1_conv",
+        "conv2_block2_1_bn",
+        "conv2_block2_1_relu",
+        "conv2_block2_2_conv",
+        "conv2_block2_2_bn",
+        "conv2_block2_2_relu",
+        "conv2_block2_3_conv",
+        "conv2_block2_3_bn",
+        "conv2_block2_add",
+        "conv2_block2_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s2_b3",
+      "name": "Stage 2 Block 3",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv2_block3_1_conv",
+        "conv2_block3_1_bn",
+        "conv2_block3_1_relu",
+        "conv2_block3_2_conv",
+        "conv2_block3_2_bn",
+        "conv2_block3_2_relu",
+        "conv2_block3_3_conv",
+        "conv2_block3_3_bn",
+        "conv2_block3_add",
+        "conv2_block3_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s3_b1",
+      "name": "Stage 3 Block 1",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "layerIds": [
+        "conv3_block1_1_conv",
+        "conv3_block1_1_bn",
+        "conv3_block1_1_relu",
+        "conv3_block1_2_conv",
+        "conv3_block1_2_bn",
+        "conv3_block1_2_relu",
+        "conv3_block1_3_conv",
+        "conv3_block1_3_bn",
+        "conv3_block1_0_conv",
+        "conv3_block1_0_bn",
+        "conv3_block1_add",
+        "conv3_block1_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s3_b2",
+      "name": "Stage 3 Block 2",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv3_block2_1_conv",
+        "conv3_block2_1_bn",
+        "conv3_block2_1_relu",
+        "conv3_block2_2_conv",
+        "conv3_block2_2_bn",
+        "conv3_block2_2_relu",
+        "conv3_block2_3_conv",
+        "conv3_block2_3_bn",
+        "conv3_block2_add",
+        "conv3_block2_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s3_b3",
+      "name": "Stage 3 Block 3",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv3_block3_1_conv",
+        "conv3_block3_1_bn",
+        "conv3_block3_1_relu",
+        "conv3_block3_2_conv",
+        "conv3_block3_2_bn",
+        "conv3_block3_2_relu",
+        "conv3_block3_3_conv",
+        "conv3_block3_3_bn",
+        "conv3_block3_add",
+        "conv3_block3_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s3_b4",
+      "name": "Stage 3 Block 4",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv3_block4_1_conv",
+        "conv3_block4_1_bn",
+        "conv3_block4_1_relu",
+        "conv3_block4_2_conv",
+        "conv3_block4_2_bn",
+        "conv3_block4_2_relu",
+        "conv3_block4_3_conv",
+        "conv3_block4_3_bn",
+        "conv3_block4_add",
+        "conv3_block4_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s4_b1",
+      "name": "Stage 4 Block 1",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "layerIds": [
+        "conv4_block1_1_conv",
+        "conv4_block1_1_bn",
+        "conv4_block1_1_relu",
+        "conv4_block1_2_conv",
+        "conv4_block1_2_bn",
+        "conv4_block1_2_relu",
+        "conv4_block1_3_conv",
+        "conv4_block1_3_bn",
+        "conv4_block1_0_conv",
+        "conv4_block1_0_bn",
+        "conv4_block1_add",
+        "conv4_block1_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s4_b2",
+      "name": "Stage 4 Block 2",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv4_block2_1_conv",
+        "conv4_block2_1_bn",
+        "conv4_block2_1_relu",
+        "conv4_block2_2_conv",
+        "conv4_block2_2_bn",
+        "conv4_block2_2_relu",
+        "conv4_block2_3_conv",
+        "conv4_block2_3_bn",
+        "conv4_block2_add",
+        "conv4_block2_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s4_b3",
+      "name": "Stage 4 Block 3",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv4_block3_1_conv",
+        "conv4_block3_1_bn",
+        "conv4_block3_1_relu",
+        "conv4_block3_2_conv",
+        "conv4_block3_2_bn",
+        "conv4_block3_2_relu",
+        "conv4_block3_3_conv",
+        "conv4_block3_3_bn",
+        "conv4_block3_add",
+        "conv4_block3_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s4_b4",
+      "name": "Stage 4 Block 4",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv4_block4_1_conv",
+        "conv4_block4_1_bn",
+        "conv4_block4_1_relu",
+        "conv4_block4_2_conv",
+        "conv4_block4_2_bn",
+        "conv4_block4_2_relu",
+        "conv4_block4_3_conv",
+        "conv4_block4_3_bn",
+        "conv4_block4_add",
+        "conv4_block4_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s4_b5",
+      "name": "Stage 4 Block 5",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv4_block5_1_conv",
+        "conv4_block5_1_bn",
+        "conv4_block5_1_relu",
+        "conv4_block5_2_conv",
+        "conv4_block5_2_bn",
+        "conv4_block5_2_relu",
+        "conv4_block5_3_conv",
+        "conv4_block5_3_bn",
+        "conv4_block5_add",
+        "conv4_block5_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s4_b6",
+      "name": "Stage 4 Block 6",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv4_block6_1_conv",
+        "conv4_block6_1_bn",
+        "conv4_block6_1_relu",
+        "conv4_block6_2_conv",
+        "conv4_block6_2_bn",
+        "conv4_block6_2_relu",
+        "conv4_block6_3_conv",
+        "conv4_block6_3_bn",
+        "conv4_block6_add",
+        "conv4_block6_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s5_b1",
+      "name": "Stage 5 Block 1",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "layerIds": [
+        "conv5_block1_1_conv",
+        "conv5_block1_1_bn",
+        "conv5_block1_1_relu",
+        "conv5_block1_2_conv",
+        "conv5_block1_2_bn",
+        "conv5_block1_2_relu",
+        "conv5_block1_3_conv",
+        "conv5_block1_3_bn",
+        "conv5_block1_0_conv",
+        "conv5_block1_0_bn",
+        "conv5_block1_add",
+        "conv5_block1_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s5_b2",
+      "name": "Stage 5 Block 2",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv5_block2_1_conv",
+        "conv5_block2_1_bn",
+        "conv5_block2_1_relu",
+        "conv5_block2_2_conv",
+        "conv5_block2_2_bn",
+        "conv5_block2_2_relu",
+        "conv5_block2_3_conv",
+        "conv5_block2_3_bn",
+        "conv5_block2_add",
+        "conv5_block2_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_s5_b3",
+      "name": "Stage 5 Block 3",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "layerIds": [
+        "conv5_block3_1_conv",
+        "conv5_block3_1_bn",
+        "conv5_block3_1_relu",
+        "conv5_block3_2_conv",
+        "conv5_block3_2_bn",
+        "conv5_block3_2_relu",
+        "conv5_block3_3_conv",
+        "conv5_block3_3_bn",
+        "conv5_block3_add",
+        "conv5_block3_out"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "group_classifier",
+      "name": "Global Pooling & Classification",
+      "description": "Global average pooling averaging spatial channels to a 2048 feature vector, followed by predictions.",
+      "layerIds": [
+        "avg_pool",
+        "predictions"
+      ],
+      "color": "#8B5CF6"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "group_stem",
+      "label": "Input Stem",
+      "type": "group_node",
+      "description": "Stem layers downsampling the high-res input image to 56x56 prior to deep stage routing.",
+      "color": "#10B981",
+      "position": {
+        "x": 250.0,
+        "y": 450.0
+      },
+      "layerIds": [
+        "conv1_conv",
+        "conv1_bn",
+        "conv1_relu",
+        "pool1_pad",
+        "pool1_pool"
+      ]
+    },
+    {
+      "id": "group_s2_b1",
+      "label": "Stage 2 Block 1",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 225.0,
+        "y": 1600.0
+      },
+      "layerIds": [
+        "conv2_block1_1_conv",
+        "conv2_block1_1_bn",
+        "conv2_block1_1_relu",
+        "conv2_block1_2_conv",
+        "conv2_block1_2_bn",
+        "conv2_block1_2_relu",
+        "conv2_block1_3_conv",
+        "conv2_block1_3_bn",
+        "conv2_block1_0_conv",
+        "conv2_block1_0_bn",
+        "conv2_block1_add",
+        "conv2_block1_out"
+      ]
+    },
+    {
+      "id": "group_s2_b2",
+      "label": "Stage 2 Block 2",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 3075.0
+      },
+      "layerIds": [
+        "conv2_block2_1_conv",
+        "conv2_block2_1_bn",
+        "conv2_block2_1_relu",
+        "conv2_block2_2_conv",
+        "conv2_block2_2_bn",
+        "conv2_block2_2_relu",
+        "conv2_block2_3_conv",
+        "conv2_block2_3_bn",
+        "conv2_block2_add",
+        "conv2_block2_out"
+      ]
+    },
+    {
+      "id": "group_s2_b3",
+      "label": "Stage 2 Block 3",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 4575.0
+      },
+      "layerIds": [
+        "conv2_block3_1_conv",
+        "conv2_block3_1_bn",
+        "conv2_block3_1_relu",
+        "conv2_block3_2_conv",
+        "conv2_block3_2_bn",
+        "conv2_block3_2_relu",
+        "conv2_block3_3_conv",
+        "conv2_block3_3_bn",
+        "conv2_block3_add",
+        "conv2_block3_out"
+      ]
+    },
+    {
+      "id": "group_s3_b1",
+      "label": "Stage 3 Block 1",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 225.0,
+        "y": 6100.0
+      },
+      "layerIds": [
+        "conv3_block1_1_conv",
+        "conv3_block1_1_bn",
+        "conv3_block1_1_relu",
+        "conv3_block1_2_conv",
+        "conv3_block1_2_bn",
+        "conv3_block1_2_relu",
+        "conv3_block1_3_conv",
+        "conv3_block1_3_bn",
+        "conv3_block1_0_conv",
+        "conv3_block1_0_bn",
+        "conv3_block1_add",
+        "conv3_block1_out"
+      ]
+    },
+    {
+      "id": "group_s3_b2",
+      "label": "Stage 3 Block 2",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 7575.0
+      },
+      "layerIds": [
+        "conv3_block2_1_conv",
+        "conv3_block2_1_bn",
+        "conv3_block2_1_relu",
+        "conv3_block2_2_conv",
+        "conv3_block2_2_bn",
+        "conv3_block2_2_relu",
+        "conv3_block2_3_conv",
+        "conv3_block2_3_bn",
+        "conv3_block2_add",
+        "conv3_block2_out"
+      ]
+    },
+    {
+      "id": "group_s3_b3",
+      "label": "Stage 3 Block 3",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 9075.0
+      },
+      "layerIds": [
+        "conv3_block3_1_conv",
+        "conv3_block3_1_bn",
+        "conv3_block3_1_relu",
+        "conv3_block3_2_conv",
+        "conv3_block3_2_bn",
+        "conv3_block3_2_relu",
+        "conv3_block3_3_conv",
+        "conv3_block3_3_bn",
+        "conv3_block3_add",
+        "conv3_block3_out"
+      ]
+    },
+    {
+      "id": "group_s3_b4",
+      "label": "Stage 3 Block 4",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 10575.0
+      },
+      "layerIds": [
+        "conv3_block4_1_conv",
+        "conv3_block4_1_bn",
+        "conv3_block4_1_relu",
+        "conv3_block4_2_conv",
+        "conv3_block4_2_bn",
+        "conv3_block4_2_relu",
+        "conv3_block4_3_conv",
+        "conv3_block4_3_bn",
+        "conv3_block4_add",
+        "conv3_block4_out"
+      ]
+    },
+    {
+      "id": "group_s4_b1",
+      "label": "Stage 4 Block 1",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 225.0,
+        "y": 12100.0
+      },
+      "layerIds": [
+        "conv4_block1_1_conv",
+        "conv4_block1_1_bn",
+        "conv4_block1_1_relu",
+        "conv4_block1_2_conv",
+        "conv4_block1_2_bn",
+        "conv4_block1_2_relu",
+        "conv4_block1_3_conv",
+        "conv4_block1_3_bn",
+        "conv4_block1_0_conv",
+        "conv4_block1_0_bn",
+        "conv4_block1_add",
+        "conv4_block1_out"
+      ]
+    },
+    {
+      "id": "group_s4_b2",
+      "label": "Stage 4 Block 2",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 13575.0
+      },
+      "layerIds": [
+        "conv4_block2_1_conv",
+        "conv4_block2_1_bn",
+        "conv4_block2_1_relu",
+        "conv4_block2_2_conv",
+        "conv4_block2_2_bn",
+        "conv4_block2_2_relu",
+        "conv4_block2_3_conv",
+        "conv4_block2_3_bn",
+        "conv4_block2_add",
+        "conv4_block2_out"
+      ]
+    },
+    {
+      "id": "group_s4_b3",
+      "label": "Stage 4 Block 3",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 15075.0
+      },
+      "layerIds": [
+        "conv4_block3_1_conv",
+        "conv4_block3_1_bn",
+        "conv4_block3_1_relu",
+        "conv4_block3_2_conv",
+        "conv4_block3_2_bn",
+        "conv4_block3_2_relu",
+        "conv4_block3_3_conv",
+        "conv4_block3_3_bn",
+        "conv4_block3_add",
+        "conv4_block3_out"
+      ]
+    },
+    {
+      "id": "group_s4_b4",
+      "label": "Stage 4 Block 4",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 16575.0
+      },
+      "layerIds": [
+        "conv4_block4_1_conv",
+        "conv4_block4_1_bn",
+        "conv4_block4_1_relu",
+        "conv4_block4_2_conv",
+        "conv4_block4_2_bn",
+        "conv4_block4_2_relu",
+        "conv4_block4_3_conv",
+        "conv4_block4_3_bn",
+        "conv4_block4_add",
+        "conv4_block4_out"
+      ]
+    },
+    {
+      "id": "group_s4_b5",
+      "label": "Stage 4 Block 5",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 18075.0
+      },
+      "layerIds": [
+        "conv4_block5_1_conv",
+        "conv4_block5_1_bn",
+        "conv4_block5_1_relu",
+        "conv4_block5_2_conv",
+        "conv4_block5_2_bn",
+        "conv4_block5_2_relu",
+        "conv4_block5_3_conv",
+        "conv4_block5_3_bn",
+        "conv4_block5_add",
+        "conv4_block5_out"
+      ]
+    },
+    {
+      "id": "group_s4_b6",
+      "label": "Stage 4 Block 6",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 19575.0
+      },
+      "layerIds": [
+        "conv4_block6_1_conv",
+        "conv4_block6_1_bn",
+        "conv4_block6_1_relu",
+        "conv4_block6_2_conv",
+        "conv4_block6_2_bn",
+        "conv4_block6_2_relu",
+        "conv4_block6_3_conv",
+        "conv4_block6_3_bn",
+        "conv4_block6_add",
+        "conv4_block6_out"
+      ]
+    },
+    {
+      "id": "group_s5_b1",
+      "label": "Stage 5 Block 1",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with projection skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 225.0,
+        "y": 21100.0
+      },
+      "layerIds": [
+        "conv5_block1_1_conv",
+        "conv5_block1_1_bn",
+        "conv5_block1_1_relu",
+        "conv5_block1_2_conv",
+        "conv5_block1_2_bn",
+        "conv5_block1_2_relu",
+        "conv5_block1_3_conv",
+        "conv5_block1_3_bn",
+        "conv5_block1_0_conv",
+        "conv5_block1_0_bn",
+        "conv5_block1_add",
+        "conv5_block1_out"
+      ]
+    },
+    {
+      "id": "group_s5_b2",
+      "label": "Stage 5 Block 2",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 22575.0
+      },
+      "layerIds": [
+        "conv5_block2_1_conv",
+        "conv5_block2_1_bn",
+        "conv5_block2_1_relu",
+        "conv5_block2_2_conv",
+        "conv5_block2_2_bn",
+        "conv5_block2_2_relu",
+        "conv5_block2_3_conv",
+        "conv5_block2_3_bn",
+        "conv5_block2_add",
+        "conv5_block2_out"
+      ]
+    },
+    {
+      "id": "group_s5_b3",
+      "label": "Stage 5 Block 3",
+      "type": "group_node",
+      "description": "Bottleneck residual block: Conv 1x1 \u2192 3x3 \u2192 1x1 with identity skip connection.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 24075.0
+      },
+      "layerIds": [
+        "conv5_block3_1_conv",
+        "conv5_block3_1_bn",
+        "conv5_block3_1_relu",
+        "conv5_block3_2_conv",
+        "conv5_block3_2_bn",
+        "conv5_block3_2_relu",
+        "conv5_block3_3_conv",
+        "conv5_block3_3_bn",
+        "conv5_block3_add",
+        "conv5_block3_out"
+      ]
+    },
+    {
+      "id": "group_classifier",
+      "label": "Global Pooling & Classification",
+      "type": "group_node",
+      "description": "Global average pooling averaging spatial channels to a 2048 feature vector, followed by predictions.",
+      "color": "#8B5CF6",
+      "position": {
+        "x": 250.0,
+        "y": 24975.0
+      },
+      "layerIds": [
+        "avg_pool",
+        "predictions"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_group_stem_group_s2_b1",
+      "source": "group_stem",
+      "target": "group_s2_b1",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s2_b1_group_s2_b2",
+      "source": "group_s2_b1",
+      "target": "group_s2_b2",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s2_b2_group_s2_b3",
+      "source": "group_s2_b2",
+      "target": "group_s2_b3",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s2_b3_group_s3_b1",
+      "source": "group_s2_b3",
+      "target": "group_s3_b1",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s3_b1_group_s3_b2",
+      "source": "group_s3_b1",
+      "target": "group_s3_b2",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s3_b2_group_s3_b3",
+      "source": "group_s3_b2",
+      "target": "group_s3_b3",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s3_b3_group_s3_b4",
+      "source": "group_s3_b3",
+      "target": "group_s3_b4",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s3_b4_group_s4_b1",
+      "source": "group_s3_b4",
+      "target": "group_s4_b1",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s4_b1_group_s4_b2",
+      "source": "group_s4_b1",
+      "target": "group_s4_b2",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s4_b2_group_s4_b3",
+      "source": "group_s4_b2",
+      "target": "group_s4_b3",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s4_b3_group_s4_b4",
+      "source": "group_s4_b3",
+      "target": "group_s4_b4",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s4_b4_group_s4_b5",
+      "source": "group_s4_b4",
+      "target": "group_s4_b5",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s4_b5_group_s4_b6",
+      "source": "group_s4_b5",
+      "target": "group_s4_b6",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s4_b6_group_s5_b1",
+      "source": "group_s4_b6",
+      "target": "group_s5_b1",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s5_b1_group_s5_b2",
+      "source": "group_s5_b1",
+      "target": "group_s5_b2",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s5_b2_group_s5_b3",
+      "source": "group_s5_b2",
+      "target": "group_s5_b3",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_s5_b3_group_classifier",
+      "source": "group_s5_b3",
+      "target": "group_classifier",
+      "type": "sequential"
+    }
+  ]
+}

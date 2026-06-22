@@ -1,0 +1,2520 @@
+{
+  "id": "inceptionv3",
+  "name": "InceptionV3",
+  "fullName": "Rethinking the Inception Architecture for Computer Vision",
+  "paperYear": 2015,
+  "authors": [
+    "Christian Szegedy",
+    "Vincent Vanhoucke",
+    "Sergey Ioffe",
+    "Jonathon Shlens",
+    "Zbigniew Wojna"
+  ],
+  "paperUrl": "https://arxiv.org/abs/1512.00567",
+  "depth": 48,
+  "totalParameters": 23834568,
+  "totalFLOPs": 5600000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 299,
+    "width": 299
+  },
+  "top1Accuracy": 0.779,
+  "top5Accuracy": 0.937,
+  "memoryUsage": 91,
+  "description": "InceptionV3 is a multi-branch convolutional neural network utilizing factorized and parallel convolution blocks to process visual features at multiple spatial receptive fields simultaneously.",
+  "colorTheme": "#F59E0B",
+  "tags": [
+    "CNN",
+    "Classification",
+    "Multi-branch",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "input_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            299,
+            299,
+            3
+          ],
+          "description": "299\u00d7299\u00d73 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            299,
+            299,
+            3
+          ],
+          "description": "299\u00d7299\u00d73 RGB Image"
+        },
+        "config": {
+          "shape": [
+            299,
+            299,
+            3
+          ]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Sensory input receiving normalized RGB pixel matrices.",
+          "detailed": "Accepts normalized images of size 299x299. Larger dimensions preserve features across parallel Inception branches.",
+          "whyItMatters": "Establishes spatial sizes for the multi-branch network.",
+          "keyTakeaway": "Larger inputs preserve high resolution visual details."
+        },
+        "position": {
+          "x": 250,
+          "y": 0
+        },
+        "color": "emerald",
+        "icon": "image"
+      },
+      {
+        "id": "conv2d_1_conv",
+        "type": "conv2d",
+        "name": "conv2d_1_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            3
+          ],
+          "description": "\u00d73"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 864,
+          "weights": 864,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
+              "result": 864,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 32 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 250,
+          "y": 150
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_1_bn",
+        "type": "batch_norm",
+        "name": "conv2d_1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 128,
+          "weights": 64,
+          "biases": 64,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 250,
+          "y": 200
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv2d_1_act",
+        "type": "activation",
+        "name": "conv2d_1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 250
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv2d_2_conv",
+        "type": "conv2d",
+        "name": "conv2d_2_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 9216,
+          "weights": 9216,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 32 \u00d7 32",
+              "result": 9216,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 32 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 250,
+          "y": 350
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_2_bn",
+        "type": "batch_norm",
+        "name": "conv2d_2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 128,
+          "weights": 64,
+          "biases": 64,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 250,
+          "y": 400
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv2d_2_act",
+        "type": "activation",
+        "name": "conv2d_2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 450
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv2d_3_conv",
+        "type": "conv2d",
+        "name": "conv2d_3_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 18432,
+          "weights": 18432,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 32 \u00d7 64",
+              "result": 18432,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 64 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 250,
+          "y": 550
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_3_bn",
+        "type": "batch_norm",
+        "name": "conv2d_3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 256,
+          "weights": 128,
+          "biases": 128,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 250,
+          "y": 600
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv2d_3_act",
+        "type": "activation",
+        "name": "conv2d_3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 650
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "max_pooling2d_1",
+        "type": "max_pooling2d",
+        "name": "max_pooling2d_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            147,
+            147,
+            64
+          ],
+          "description": "147\u00d7147\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            73,
+            73,
+            64
+          ],
+          "description": "73\u00d773\u00d764"
+        },
+        "config": {
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "valid"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "MaxPooling downsamples resolution to 73x73.",
+          "detailed": "Halves feature resolutions.",
+          "whyItMatters": "Drops memory footprints early.",
+          "keyTakeaway": "Downsamples features."
+        },
+        "position": {
+          "x": 250,
+          "y": 750
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "conv2d_4_conv",
+        "type": "conv2d",
+        "name": "conv2d_4_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            80
+          ],
+          "description": "\u00d780"
+        },
+        "config": {
+          "filters": 80,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 5120,
+          "weights": 5120,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "1 \u00d7 1 \u00d7 64 \u00d7 80",
+              "result": 5120,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 1x1 convolution.",
+          "detailed": "Slides 80 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 250,
+          "y": 900
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_4_bn",
+        "type": "batch_norm",
+        "name": "conv2d_4_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            80
+          ],
+          "description": "\u00d780"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            80
+          ],
+          "description": "\u00d780"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 320,
+          "weights": 160,
+          "biases": 160,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 250,
+          "y": 950
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv2d_4_act",
+        "type": "activation",
+        "name": "conv2d_4_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            80
+          ],
+          "description": "\u00d780"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            80
+          ],
+          "description": "\u00d780"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 1000
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "conv2d_5_conv",
+        "type": "conv2d",
+        "name": "conv2d_5_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            80
+          ],
+          "description": "\u00d780"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "valid",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 138240,
+          "weights": 138240,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 80 \u00d7 192",
+              "result": 138240,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 192 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 250,
+          "y": 1100
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "conv2d_5_bn",
+        "type": "batch_norm",
+        "name": "conv2d_5_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 768,
+          "weights": 384,
+          "biases": 384,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 250,
+          "y": 1150
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "conv2d_5_act",
+        "type": "activation",
+        "name": "conv2d_5_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 250,
+          "y": 1200
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "max_pooling2d_2",
+        "type": "max_pooling2d",
+        "name": "max_pooling2d_2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            71,
+            71,
+            192
+          ],
+          "description": "71\u00d771\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            35,
+            35,
+            192
+          ],
+          "description": "35\u00d735\u00d7192"
+        },
+        "config": {
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "valid"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Second max pooling stage.",
+          "detailed": "Downsamples to 35x35.",
+          "whyItMatters": "Reduces dimensions before the multi-branch stages.",
+          "keyTakeaway": "Reduces dimensions."
+        },
+        "position": {
+          "x": 250,
+          "y": 1300
+        },
+        "color": "amber",
+        "icon": "shrink"
+      },
+      {
+        "id": "mixed_0_br1_conv1_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br1_conv1_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 12288,
+          "weights": 12288,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "1 \u00d7 1 \u00d7 192 \u00d7 64",
+              "result": 12288,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 1x1 convolution.",
+          "detailed": "Slides 64 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 100,
+          "y": 1450
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br1_conv1_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br1_conv1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 256,
+          "weights": 128,
+          "biases": 128,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 100,
+          "y": 1500
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br1_conv1_act",
+        "type": "activation",
+        "name": "mixed/0/br1_conv1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 100,
+          "y": 1550
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_br2_conv1_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br2_conv1_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            48
+          ],
+          "description": "\u00d748"
+        },
+        "config": {
+          "filters": 48,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 9216,
+          "weights": 9216,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "1 \u00d7 1 \u00d7 192 \u00d7 48",
+              "result": 9216,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 1x1 convolution.",
+          "detailed": "Slides 48 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 200,
+          "y": 1450
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br2_conv1_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br2_conv1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            48
+          ],
+          "description": "\u00d748"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            48
+          ],
+          "description": "\u00d748"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 192,
+          "weights": 96,
+          "biases": 96,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 200,
+          "y": 1500
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br2_conv1_act",
+        "type": "activation",
+        "name": "mixed/0/br2_conv1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            48
+          ],
+          "description": "\u00d748"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            48
+          ],
+          "description": "\u00d748"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 200,
+          "y": 1550
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_br2_conv2_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br2_conv2_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            48
+          ],
+          "description": "\u00d748"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 27648,
+          "weights": 27648,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 48 \u00d7 64",
+              "result": 27648,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 64 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 200,
+          "y": 1650
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br2_conv2_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br2_conv2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 256,
+          "weights": 128,
+          "biases": 128,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 200,
+          "y": 1700
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br2_conv2_act",
+        "type": "activation",
+        "name": "mixed/0/br2_conv2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 200,
+          "y": 1750
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_br3_conv1_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br3_conv1_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "filters": 64,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 12288,
+          "weights": 12288,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "1 \u00d7 1 \u00d7 192 \u00d7 64",
+              "result": 12288,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 1x1 convolution.",
+          "detailed": "Slides 64 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 300,
+          "y": 1450
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br3_conv1_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br3_conv1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 256,
+          "weights": 128,
+          "biases": 128,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 300,
+          "y": 1500
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br3_conv1_act",
+        "type": "activation",
+        "name": "mixed/0/br3_conv1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 300,
+          "y": 1550
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_br3_conv2_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br3_conv2_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            64
+          ],
+          "description": "\u00d764"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 55296,
+          "weights": 55296,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 64 \u00d7 96",
+              "result": 55296,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 96 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 300,
+          "y": 1650
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br3_conv2_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br3_conv2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 384,
+          "weights": 192,
+          "biases": 192,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 300,
+          "y": 1700
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br3_conv2_act",
+        "type": "activation",
+        "name": "mixed/0/br3_conv2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 300,
+          "y": 1750
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_br3_conv3_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br3_conv3_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 82944,
+          "weights": 82944,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "3 \u00d7 3 \u00d7 96 \u00d7 96",
+              "result": 82944,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 3x3 convolution.",
+          "detailed": "Slides 96 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 300,
+          "y": 1850
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br3_conv3_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br3_conv3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 384,
+          "weights": 192,
+          "biases": 192,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 300,
+          "y": 1900
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br3_conv3_act",
+        "type": "activation",
+        "name": "mixed/0/br3_conv3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "\u00d796"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 300,
+          "y": 1950
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_br4_pool",
+        "type": "average_pooling2d",
+        "name": "mixed/0/br4_pool",
+        "inputShape": {
+          "dimensions": [
+            null,
+            35,
+            35,
+            192
+          ],
+          "description": "35\u00d735\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            35,
+            35,
+            192
+          ],
+          "description": "35\u00d735\u00d7192"
+        },
+        "config": {
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Averages activations spatially.",
+          "detailed": "Retains spatial details while pooling representations.",
+          "whyItMatters": "Adds scale robustness.",
+          "keyTakeaway": "Spatially smooths maps."
+        }
+      },
+      {
+        "id": "mixed_0_br4_conv1_conv",
+        "type": "conv2d",
+        "name": "mixed/0/br4_conv1_conv",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "\u00d7192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "filters": 32,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 6144,
+          "weights": 6144,
+          "biases": 0,
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+          "calculationSteps": [
+            {
+              "label": "Weights",
+              "expression": "1 \u00d7 1 \u00d7 192 \u00d7 32",
+              "result": 6144,
+              "explanation": "Kernel weights."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Standard 1x1 convolution.",
+          "detailed": "Slides 32 filters across input features.",
+          "whyItMatters": "Key feature extraction layer.",
+          "keyTakeaway": "Extracts features."
+        },
+        "position": {
+          "x": 400,
+          "y": 1650
+        },
+        "color": "blue",
+        "icon": "layers"
+      },
+      {
+        "id": "mixed_0_br4_conv1_bn",
+        "type": "batch_norm",
+        "name": "mixed/0/br4_conv1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 128,
+          "weights": 64,
+          "biases": 64,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Batch Normalization.",
+          "detailed": "Normalizes features.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Keeps channels balanced."
+        },
+        "position": {
+          "x": 400,
+          "y": 1700
+        },
+        "color": "gray",
+        "icon": "activity"
+      },
+      {
+        "id": "mixed_0_br4_conv1_act",
+        "type": "activation",
+        "name": "mixed/0/br4_conv1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            32
+          ],
+          "description": "\u00d732"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Applies relu activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Permits learning complex representations.",
+          "keyTakeaway": "Introduces non-linearity."
+        },
+        "position": {
+          "x": 400,
+          "y": 1750
+        },
+        "color": "pink",
+        "icon": "zap"
+      },
+      {
+        "id": "mixed_0_concat",
+        "type": "concatenate",
+        "name": "mixed_0_concat",
+        "inputShape": {
+          "dimensions": [
+            null,
+            35,
+            35,
+            256
+          ],
+          "description": "64 + 64 + 96 + 32 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            35,
+            35,
+            256
+          ],
+          "description": "256 channels"
+        },
+        "config": {
+          "axis": 3
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Concatenates features from all parallel Inception branches.",
+          "detailed": "Combines 1x1, 3x3, and 5x5 spatial features along the channel axis.",
+          "whyItMatters": "Aggregates multi-scale visual details in a single representation tensor.",
+          "keyTakeaway": "Combines multi-scale filters."
+        },
+        "position": {
+          "x": 250,
+          "y": 2050
+        },
+        "color": "cyan",
+        "icon": "git-merge"
+      },
+      {
+        "id": "global_average_pooling2d",
+        "type": "global_average_pooling2d",
+        "name": "global_average_pooling2d",
+        "inputShape": {
+          "dimensions": [
+            null,
+            8,
+            8,
+            2048
+          ],
+          "description": "8\u00d78\u00d72048"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            2048
+          ],
+          "description": "2048"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Global average pooling.",
+          "detailed": "Averages visual representations to a single vector.",
+          "whyItMatters": "Saves computing sizes.",
+          "keyTakeaway": "Replaces fully connected layers."
+        },
+        "position": {
+          "x": 250,
+          "y": 2200
+        },
+        "color": "amber",
+        "icon": "activity"
+      },
+      {
+        "id": "predictions",
+        "type": "dense",
+        "name": "predictions",
+        "inputShape": {
+          "dimensions": [
+            null,
+            2048
+          ],
+          "description": "2048"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            1000
+          ],
+          "description": "1000"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 2049000,
+          "weights": 2048000,
+          "biases": 1000,
+          "formula": "(input_features + 1) \u00d7 output_units",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Dense predictions.",
+          "detailed": "Outputs category probabilities.",
+          "whyItMatters": "Final decision head.",
+          "keyTakeaway": "Classification layer."
+        }
+      }
+    ],
+    "connections": [
+      {
+        "id": "c_conv2d_1_conv_conv2d_1_bn",
+        "sourceId": "conv2d_1_conv",
+        "targetId": "conv2d_1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_1_bn_conv2d_1_act",
+        "sourceId": "conv2d_1_bn",
+        "targetId": "conv2d_1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_in_conv1",
+        "sourceId": "input_1",
+        "targetId": "conv2d_1_conv",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_2_conv_conv2d_2_bn",
+        "sourceId": "conv2d_2_conv",
+        "targetId": "conv2d_2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_2_bn_conv2d_2_act",
+        "sourceId": "conv2d_2_bn",
+        "targetId": "conv2d_2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_3_conv_conv2d_3_bn",
+        "sourceId": "conv2d_3_conv",
+        "targetId": "conv2d_3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_3_bn_conv2d_3_act",
+        "sourceId": "conv2d_3_bn",
+        "targetId": "conv2d_3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_act_pool1",
+        "sourceId": "conv2d_3_act",
+        "targetId": "max_pooling2d_1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_4_conv_conv2d_4_bn",
+        "sourceId": "conv2d_4_conv",
+        "targetId": "conv2d_4_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_4_bn_conv2d_4_act",
+        "sourceId": "conv2d_4_bn",
+        "targetId": "conv2d_4_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_5_conv_conv2d_5_bn",
+        "sourceId": "conv2d_5_conv",
+        "targetId": "conv2d_5_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_conv2d_5_bn_conv2d_5_act",
+        "sourceId": "conv2d_5_bn",
+        "targetId": "conv2d_5_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_act_pool2",
+        "sourceId": "conv2d_5_act",
+        "targetId": "max_pooling2d_2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br1_conv1_conv_mixed_0_br1_conv1_bn",
+        "sourceId": "mixed_0_br1_conv1_conv",
+        "targetId": "mixed_0_br1_conv1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br1_conv1_bn_mixed_0_br1_conv1_act",
+        "sourceId": "mixed_0_br1_conv1_bn",
+        "targetId": "mixed_0_br1_conv1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_max_pooling2d_2_mixed_0_br1_conv1_conv",
+        "sourceId": "max_pooling2d_2",
+        "targetId": "mixed_0_br1_conv1_conv",
+        "type": "skip"
+      },
+      {
+        "id": "c_mixed_0_br2_conv1_conv_mixed_0_br2_conv1_bn",
+        "sourceId": "mixed_0_br2_conv1_conv",
+        "targetId": "mixed_0_br2_conv1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br2_conv1_bn_mixed_0_br2_conv1_act",
+        "sourceId": "mixed_0_br2_conv1_bn",
+        "targetId": "mixed_0_br2_conv1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br2_conv2_conv_mixed_0_br2_conv2_bn",
+        "sourceId": "mixed_0_br2_conv2_conv",
+        "targetId": "mixed_0_br2_conv2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br2_conv2_bn_mixed_0_br2_conv2_act",
+        "sourceId": "mixed_0_br2_conv2_bn",
+        "targetId": "mixed_0_br2_conv2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_max_pooling2d_2_mixed_0_br2_conv1_conv",
+        "sourceId": "max_pooling2d_2",
+        "targetId": "mixed_0_br2_conv1_conv",
+        "type": "skip"
+      },
+      {
+        "id": "c_mixed_0_br3_conv1_conv_mixed_0_br3_conv1_bn",
+        "sourceId": "mixed_0_br3_conv1_conv",
+        "targetId": "mixed_0_br3_conv1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br3_conv1_bn_mixed_0_br3_conv1_act",
+        "sourceId": "mixed_0_br3_conv1_bn",
+        "targetId": "mixed_0_br3_conv1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br3_conv2_conv_mixed_0_br3_conv2_bn",
+        "sourceId": "mixed_0_br3_conv2_conv",
+        "targetId": "mixed_0_br3_conv2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br3_conv2_bn_mixed_0_br3_conv2_act",
+        "sourceId": "mixed_0_br3_conv2_bn",
+        "targetId": "mixed_0_br3_conv2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br3_conv3_conv_mixed_0_br3_conv3_bn",
+        "sourceId": "mixed_0_br3_conv3_conv",
+        "targetId": "mixed_0_br3_conv3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br3_conv3_bn_mixed_0_br3_conv3_act",
+        "sourceId": "mixed_0_br3_conv3_bn",
+        "targetId": "mixed_0_br3_conv3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_max_pooling2d_2_mixed_0_br3_conv1_conv",
+        "sourceId": "max_pooling2d_2",
+        "targetId": "mixed_0_br3_conv1_conv",
+        "type": "skip"
+      },
+      {
+        "id": "c_max_pooling2d_2_mixed_0_br4_pool",
+        "sourceId": "max_pooling2d_2",
+        "targetId": "mixed_0_br4_pool",
+        "type": "skip"
+      },
+      {
+        "id": "c_mixed_0_br4_conv1_conv_mixed_0_br4_conv1_bn",
+        "sourceId": "mixed_0_br4_conv1_conv",
+        "targetId": "mixed_0_br4_conv1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_mixed_0_br4_conv1_bn_mixed_0_br4_conv1_act",
+        "sourceId": "mixed_0_br4_conv1_bn",
+        "targetId": "mixed_0_br4_conv1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_pool_conv",
+        "sourceId": "mixed_0_br4_pool",
+        "targetId": "mixed_0_br4_conv1_conv",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br1_mixed_0_concat",
+        "sourceId": "mixed_0_br1_conv1_act",
+        "targetId": "mixed_0_concat",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_mixed_0_concat",
+        "sourceId": "mixed_0_br2_conv2_act",
+        "targetId": "mixed_0_concat",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br3_mixed_0_concat",
+        "sourceId": "mixed_0_br3_conv3_act",
+        "targetId": "mixed_0_concat",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br4_mixed_0_concat",
+        "sourceId": "mixed_0_br4_conv1_act",
+        "targetId": "mixed_0_concat",
+        "type": "sequential"
+      },
+      {
+        "id": "c_last_gap",
+        "sourceId": "mixed_0_concat",
+        "targetId": "global_average_pooling2d",
+        "type": "sequential"
+      },
+      {
+        "id": "c_gap_pred",
+        "sourceId": "global_average_pooling2d",
+        "targetId": "predictions",
+        "type": "sequential"
+      }
+    ],
+    "groups": [
+      {
+        "id": "group_stem",
+        "name": "Input Stem",
+        "description": "Stem convolutions downsampling input image prior to multi-branch Inception blocks.",
+        "layerIds": [
+          "conv2d_1_conv",
+          "conv2d_1_bn",
+          "conv2d_1_act",
+          "conv2d_2_conv",
+          "conv2d_2_bn",
+          "conv2d_2_act",
+          "conv2d_3_conv",
+          "conv2d_3_bn",
+          "conv2d_3_act",
+          "max_pooling2d_1",
+          "conv2d_4_conv",
+          "conv2d_4_bn",
+          "conv2d_4_act",
+          "conv2d_5_conv",
+          "conv2d_5_bn",
+          "conv2d_5_act",
+          "max_pooling2d_2"
+        ],
+        "color": "#F59E0B"
+      },
+      {
+        "id": "group_inception_a",
+        "name": "Inception Module A",
+        "description": "Applies parallel multi-scale convolutions (1x1, 3x3, 5x5) and combines features.",
+        "layerIds": [
+          "mixed_0_br1_conv1_conv",
+          "mixed_0_br1_conv1_bn",
+          "mixed_0_br1_conv1_act",
+          "mixed_0_br2_conv1_conv",
+          "mixed_0_br2_conv1_bn",
+          "mixed_0_br2_conv1_act",
+          "mixed_0_br2_conv2_conv",
+          "mixed_0_br2_conv2_bn",
+          "mixed_0_br2_conv2_act",
+          "mixed_0_br3_conv1_conv",
+          "mixed_0_br3_conv1_bn",
+          "mixed_0_br3_conv1_act",
+          "mixed_0_br3_conv2_conv",
+          "mixed_0_br3_conv2_bn",
+          "mixed_0_br3_conv2_act",
+          "mixed_0_br3_conv3_conv",
+          "mixed_0_br3_conv3_bn",
+          "mixed_0_br3_conv3_act",
+          "mixed_0_br4_pool",
+          "mixed_0_br4_conv1_conv",
+          "mixed_0_br4_conv1_bn",
+          "mixed_0_br4_conv1_act",
+          "mixed_0_concat"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_classifier",
+        "name": "Global Pooling & Classification",
+        "description": "GAP followed by the dense classifier.",
+        "layerIds": [
+          "global_average_pooling2d",
+          "predictions"
+        ],
+        "color": "#8B5CF6"
+      }
+    ]
+  }
+}

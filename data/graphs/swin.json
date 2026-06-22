@@ -1,0 +1,731 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": "stem",
+      "outputShape": [
+        null,
+        224,
+        224,
+        3
+      ],
+      "config": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "patch_partition",
+      "label": "Conv 4x4, 96",
+      "type": "conv2d",
+      "groupId": "stem",
+      "outputShape": [
+        null,
+        56,
+        56,
+        96
+      ],
+      "config": {
+        "filters": 96,
+        "kernelSize": [
+          4,
+          4
+        ],
+        "strides": [
+          4,
+          4
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 4704,
+        "weights": 4608,
+        "biases": 96,
+        "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 embedding_dim",
+        "calculationSteps": [
+          {
+            "label": "Stem Weights",
+            "expression": "4 \u00d7 4 \u00d7 3 \u00d7 96",
+            "result": 4608,
+            "explanation": "Convolutes 4x4 non-overlapping patches, mapping each patch's RGB pixels to 96 feature dimensions."
+          },
+          {
+            "label": "Biases",
+            "expression": "96",
+            "result": 96,
+            "explanation": "One bias term per output channel."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "stage1_blocks",
+      "label": "Stage 1 (2x Swin Blocks)",
+      "type": "bottleneck",
+      "groupId": "stage_1",
+      "outputShape": [
+        null,
+        56,
+        56,
+        96
+      ],
+      "config": {
+        "expansion": 2
+      },
+      "parameters": {
+        "total": 170000,
+        "weights": 169600,
+        "biases": 400,
+        "formula": "2 \u00d7 SwinBlock_Params",
+        "calculationSteps": [
+          {
+            "label": "Attention & MLP weights",
+            "expression": "2 \u00d7 84800",
+            "result": 169600,
+            "explanation": "Parameters for MSA Query-Key-Value projections and MLP channels across two local window blocks."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    },
+    {
+      "id": "patch_merging1",
+      "label": "Conv 2x2, 192",
+      "type": "conv2d",
+      "groupId": "stage_1",
+      "outputShape": [
+        null,
+        28,
+        28,
+        192
+      ],
+      "config": {
+        "filters": 192,
+        "kernelSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 73920,
+        "weights": 73728,
+        "biases": 192,
+        "formula": "(2 \u00d7 2 \u00d7 in_channels + 1) \u00d7 out_channels",
+        "calculationSteps": [
+          {
+            "label": "Linear Reduction Weights",
+            "expression": "384 \u00d7 192",
+            "result": 73728,
+            "explanation": "Concatenates 2x2 adjacent patch embeddings (96 x 4 = 384 channels), then projects them back to 192 channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 450
+      }
+    },
+    {
+      "id": "stage2_blocks",
+      "label": "Stage 2 (2x Swin Blocks)",
+      "type": "bottleneck",
+      "groupId": "stage_2",
+      "outputShape": [
+        null,
+        28,
+        28,
+        192
+      ],
+      "config": {
+        "expansion": 2
+      },
+      "parameters": {
+        "total": 580000,
+        "weights": 579200,
+        "biases": 800,
+        "formula": "2 \u00d7 Stage2Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 2 Attention Weights",
+            "expression": "2 \u00d7 289600",
+            "result": 579200,
+            "explanation": "Self-attention QKV projections and MLP weight parameters for 192 channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 600
+      }
+    },
+    {
+      "id": "patch_merging2",
+      "label": "Conv 2x2, 384",
+      "type": "conv2d",
+      "groupId": "stage_2",
+      "outputShape": [
+        null,
+        14,
+        14,
+        384
+      ],
+      "config": {
+        "filters": 384,
+        "kernelSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 295296,
+        "weights": 294912,
+        "biases": 384,
+        "formula": "in_channels \u00d7 4 \u00d7 out_channels",
+        "calculationSteps": [
+          {
+            "label": "Linear Reduction Weights",
+            "expression": "768 \u00d7 384",
+            "result": 294912,
+            "explanation": "Concatenates 2x2 spatial patch tokens (192 x 4 = 768 channels) and maps them to a 384-dimensional space."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 750
+      }
+    },
+    {
+      "id": "stage3_blocks",
+      "label": "Stage 3 (6x Swin Blocks)",
+      "type": "bottleneck",
+      "groupId": "stage_3",
+      "outputShape": [
+        null,
+        14,
+        14,
+        384
+      ],
+      "config": {
+        "expansion": 6
+      },
+      "parameters": {
+        "total": 13800000,
+        "weights": 13790000,
+        "biases": 10000,
+        "formula": "6 \u00d7 Stage3Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 3 Weights Stack",
+            "expression": "6 \u00d7 2298333",
+            "result": 13790000,
+            "explanation": "Accumulated parameters of the 6 sequential transformer encoder blocks at 384 hidden dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 900
+      }
+    },
+    {
+      "id": "patch_merging3",
+      "label": "Conv 2x2, 768",
+      "type": "conv2d",
+      "groupId": "stage_3",
+      "outputShape": [
+        null,
+        7,
+        7,
+        768
+      ],
+      "config": {
+        "filters": 768,
+        "kernelSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 1180416,
+        "weights": 1179648,
+        "biases": 768,
+        "formula": "in_channels \u00d7 4 \u00d7 out_channels",
+        "calculationSteps": [
+          {
+            "label": "Reduction Weights",
+            "expression": "1536 \u00d7 768",
+            "result": 1179648,
+            "explanation": "Maps 2x2 merged tokens (1536 channels) to 768 output channels."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1050
+      }
+    },
+    {
+      "id": "stage4_blocks",
+      "label": "Stage 4 (2x Swin Blocks)",
+      "type": "bottleneck",
+      "groupId": "stage_4",
+      "outputShape": [
+        null,
+        7,
+        7,
+        768
+      ],
+      "config": {
+        "expansion": 2
+      },
+      "parameters": {
+        "total": 11600000,
+        "weights": 11596000,
+        "biases": 4000,
+        "formula": "2 \u00d7 Stage4Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 4 Blocks Weights",
+            "expression": "2 \u00d7 5798000",
+            "result": 11596000,
+            "explanation": "Self-attention and MLP parameters for the final 2 transformer blocks operating on 768 hidden dimensions."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1200
+      }
+    },
+    {
+      "id": "norm_out",
+      "label": "Output LayerNorm",
+      "type": "layer_norm",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        7,
+        7,
+        768
+      ],
+      "config": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Normalization Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Gamma scaling and beta bias parameters."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1350
+      }
+    },
+    {
+      "id": "avg_pool",
+      "label": "Global Average Pooling",
+      "type": "global_average_pooling2d",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        768
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1500
+      }
+    },
+    {
+      "id": "head",
+      "label": "Classification Head",
+      "type": "dense",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "linear",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 769000,
+        "weights": 768000,
+        "biases": 1000,
+        "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
+        "calculationSteps": [
+          {
+            "label": "Logits Weights",
+            "expression": "768 \u00d7 1000",
+            "result": 768000,
+            "explanation": "Weights mapping final 768 features to the 1000 class indexes."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "Logits bias parameters."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 1650
+      }
+    },
+    {
+      "id": "output",
+      "label": "Output Logits",
+      "type": "output",
+      "groupId": "classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 1800
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c1",
+      "source": "input_1",
+      "target": "patch_partition",
+      "type": "sequential"
+    },
+    {
+      "id": "c2",
+      "source": "patch_partition",
+      "target": "stage1_blocks",
+      "type": "sequential"
+    },
+    {
+      "id": "c3",
+      "source": "stage1_blocks",
+      "target": "patch_merging1",
+      "type": "sequential"
+    },
+    {
+      "id": "c4",
+      "source": "patch_merging1",
+      "target": "stage2_blocks",
+      "type": "sequential"
+    },
+    {
+      "id": "c5",
+      "source": "stage2_blocks",
+      "target": "patch_merging2",
+      "type": "sequential"
+    },
+    {
+      "id": "c6",
+      "source": "patch_merging2",
+      "target": "stage3_blocks",
+      "type": "sequential"
+    },
+    {
+      "id": "c7",
+      "source": "stage3_blocks",
+      "target": "patch_merging3",
+      "type": "sequential"
+    },
+    {
+      "id": "c8",
+      "source": "patch_merging3",
+      "target": "stage4_blocks",
+      "type": "sequential"
+    },
+    {
+      "id": "c9",
+      "source": "stage4_blocks",
+      "target": "norm_out",
+      "type": "sequential"
+    },
+    {
+      "id": "c10",
+      "source": "norm_out",
+      "target": "avg_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c11",
+      "source": "avg_pool",
+      "target": "head",
+      "type": "sequential"
+    },
+    {
+      "id": "c12",
+      "source": "head",
+      "target": "output",
+      "type": "sequential"
+    }
+  ],
+  "groups": [
+    {
+      "id": "stem",
+      "name": "Patchify Stem",
+      "description": "Partitions input to 4x4 non-overlapping patches projected into 96 channels.",
+      "layerIds": [
+        "input_1",
+        "patch_partition"
+      ],
+      "color": "#10B981"
+    },
+    {
+      "id": "stage_1",
+      "name": "Stage 1",
+      "description": "Applies Local Window (W-MSA) and Shifted Window (SW-MSA) attention at 56x56 resolution.",
+      "layerIds": [
+        "stage1_blocks",
+        "patch_merging1"
+      ],
+      "color": "#F43F5E"
+    },
+    {
+      "id": "stage_2",
+      "name": "Stage 2",
+      "description": "Applies Swin blocks and patch merging downsampling at 28x28 resolution.",
+      "layerIds": [
+        "stage2_blocks",
+        "patch_merging2"
+      ],
+      "color": "#D946EF"
+    },
+    {
+      "id": "stage_3",
+      "name": "Stage 3",
+      "description": "Deepest layer sequence with 6 Swin blocks at 14x14 resolution.",
+      "layerIds": [
+        "stage3_blocks",
+        "patch_merging3"
+      ],
+      "color": "#8B5CF6"
+    },
+    {
+      "id": "stage_4",
+      "name": "Stage 4",
+      "description": "Final semantic Swin blocks operating on 7x7 tokens.",
+      "layerIds": [
+        "stage4_blocks"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "id": "classifier",
+      "name": "Classifier",
+      "description": "Output normalization, global pooling, and logits mapping head.",
+      "layerIds": [
+        "norm_out",
+        "avg_pool",
+        "head",
+        "output"
+      ],
+      "color": "#F59E0B"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "stem",
+      "label": "Patchify Stem",
+      "type": "group_node",
+      "description": "Partitions input to 4x4 non-overlapping patches projected into 96 channels.",
+      "color": "#10B981",
+      "position": {
+        "x": 250.0,
+        "y": 75.0
+      },
+      "layerIds": [
+        "input_1",
+        "patch_partition"
+      ]
+    },
+    {
+      "id": "stage_1",
+      "label": "Stage 1",
+      "type": "group_node",
+      "description": "Applies Local Window (W-MSA) and Shifted Window (SW-MSA) attention at 56x56 resolution.",
+      "color": "#F43F5E",
+      "position": {
+        "x": 250.0,
+        "y": 375.0
+      },
+      "layerIds": [
+        "stage1_blocks",
+        "patch_merging1"
+      ]
+    },
+    {
+      "id": "stage_2",
+      "label": "Stage 2",
+      "type": "group_node",
+      "description": "Applies Swin blocks and patch merging downsampling at 28x28 resolution.",
+      "color": "#D946EF",
+      "position": {
+        "x": 250.0,
+        "y": 675.0
+      },
+      "layerIds": [
+        "stage2_blocks",
+        "patch_merging2"
+      ]
+    },
+    {
+      "id": "stage_3",
+      "label": "Stage 3",
+      "type": "group_node",
+      "description": "Deepest layer sequence with 6 Swin blocks at 14x14 resolution.",
+      "color": "#8B5CF6",
+      "position": {
+        "x": 250.0,
+        "y": 975.0
+      },
+      "layerIds": [
+        "stage3_blocks",
+        "patch_merging3"
+      ]
+    },
+    {
+      "id": "stage_4",
+      "label": "Stage 4",
+      "type": "group_node",
+      "description": "Final semantic Swin blocks operating on 7x7 tokens.",
+      "color": "#3B82F6",
+      "position": {
+        "x": 250.0,
+        "y": 1200.0
+      },
+      "layerIds": [
+        "stage4_blocks"
+      ]
+    },
+    {
+      "id": "classifier",
+      "label": "Classifier",
+      "type": "group_node",
+      "description": "Output normalization, global pooling, and logits mapping head.",
+      "color": "#F59E0B",
+      "position": {
+        "x": 250.0,
+        "y": 1575.0
+      },
+      "layerIds": [
+        "norm_out",
+        "avg_pool",
+        "head",
+        "output"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_stem_stage_1",
+      "source": "stem",
+      "target": "stage_1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_stage_1_stage_2",
+      "source": "stage_1",
+      "target": "stage_2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_stage_2_stage_3",
+      "source": "stage_2",
+      "target": "stage_3",
+      "type": "sequential"
+    },
+    {
+      "id": "c_stage_3_stage_4",
+      "source": "stage_3",
+      "target": "stage_4",
+      "type": "sequential"
+    },
+    {
+      "id": "c_stage_4_classifier",
+      "source": "stage_4",
+      "target": "classifier",
+      "type": "sequential"
+    }
+  ]
+}

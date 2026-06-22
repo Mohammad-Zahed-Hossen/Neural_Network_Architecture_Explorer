@@ -1,0 +1,776 @@
+{
+  "nodes": [
+    {
+      "id": "input_1",
+      "label": "Input (224x224x3)",
+      "type": "input",
+      "groupId": null,
+      "outputShape": [
+        null,
+        299,
+        299,
+        3
+      ],
+      "config": {
+        "shape": [
+          299,
+          299,
+          3
+        ]
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block1_conv1_conv",
+      "label": "Conv 3x3, 32",
+      "type": "conv2d",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        null,
+        null,
+        32
+      ],
+      "config": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 864,
+        "weights": 864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
+            "result": 864,
+            "explanation": "Kernel weights."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "block1_conv1_bn",
+      "label": "block1_conv1_bn",
+      "type": "batch_norm",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        null,
+        null,
+        32
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 200
+      }
+    },
+    {
+      "id": "block1_conv1_act",
+      "label": "block1_conv1_act",
+      "type": "activation",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        null,
+        null,
+        32
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 250
+      }
+    },
+    {
+      "id": "block1_conv2_conv",
+      "label": "Conv 3x3, 64",
+      "type": "conv2d",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        null,
+        null,
+        64
+      ],
+      "config": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 18432,
+        "weights": 18432,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 32 \u00d7 64",
+            "result": 18432,
+            "explanation": "Kernel weights."
+          }
+        ]
+      },
+      "position": {
+        "x": 250,
+        "y": 350
+      }
+    },
+    {
+      "id": "block1_conv2_bn",
+      "label": "block1_conv2_bn",
+      "type": "batch_norm",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        null,
+        null,
+        64
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 400
+      }
+    },
+    {
+      "id": "block1_conv2_act",
+      "label": "block1_conv2_act",
+      "type": "activation",
+      "groupId": "group_stem",
+      "outputShape": [
+        null,
+        null,
+        null,
+        64
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 450
+      }
+    },
+    {
+      "id": "block2_sep1",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        147,
+        147,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 8768,
+        "weights": 8768,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels + input_channels \u00d7 output_filters",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 550
+      }
+    },
+    {
+      "id": "block2_sep1_bn",
+      "label": "block2/sep1_bn",
+      "type": "batch_norm",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        147,
+        147,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_sep1_act",
+      "label": "block2/sep1_act",
+      "type": "activation",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        147,
+        147,
+        128
+      ],
+      "config": {
+        "activation": "relu"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_sep2",
+      "label": "Conv 3x3, 128",
+      "type": "conv2d",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        147,
+        147,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 17536,
+        "weights": 17536,
+        "biases": 0,
+        "formula": "Decomposed weights",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_sep2_bn",
+      "label": "block2/sep2_bn",
+      "type": "batch_norm",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        147,
+        147,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_pool",
+      "label": "block2/pool",
+      "type": "max_pooling2d",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        74,
+        74,
+        128
+      ],
+      "config": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_shortcut",
+      "label": "Conv 1x1, 128",
+      "type": "conv2d",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        74,
+        74,
+        128
+      ],
+      "config": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "parameters": {
+        "total": 8192,
+        "weights": 8192,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_shortcut_bn",
+      "label": "block2/shortcut_bn",
+      "type": "batch_norm",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        74,
+        74,
+        128
+      ],
+      "config": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "block2_add",
+      "label": "block2_add",
+      "type": "add",
+      "groupId": "group_block2",
+      "outputShape": [
+        null,
+        74,
+        74,
+        128
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "global_average_pooling2d",
+      "label": "global_average_pooling2d",
+      "type": "global_average_pooling2d",
+      "groupId": "group_classifier",
+      "outputShape": [
+        null,
+        2048
+      ],
+      "config": {},
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "predictions",
+      "label": "predictions",
+      "type": "dense",
+      "groupId": "group_classifier",
+      "outputShape": [
+        null,
+        1000
+      ],
+      "config": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "parameters": {
+        "total": 2049000,
+        "weights": 2048000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": []
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c_block1_conv1_conv_block1_conv1_bn",
+      "source": "block1_conv1_conv",
+      "target": "block1_conv1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv1_bn_block1_conv1_act",
+      "source": "block1_conv1_bn",
+      "target": "block1_conv1_act",
+      "type": "sequential"
+    },
+    {
+      "id": "c_in_conv1",
+      "source": "input_1",
+      "target": "block1_conv1_conv",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv2_conv_block1_conv2_bn",
+      "source": "block1_conv2_conv",
+      "target": "block1_conv2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv2_bn_block1_conv2_act",
+      "source": "block1_conv2_bn",
+      "target": "block1_conv2_act",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv2_act_block2_sep1",
+      "source": "block1_conv2_act",
+      "target": "block2_sep1",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_sep1_block2_sep1_bn",
+      "source": "block2_sep1",
+      "target": "block2_sep1_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_sep1_bn_block2_sep1_act",
+      "source": "block2_sep1_bn",
+      "target": "block2_sep1_act",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_sep1_act_block2_sep2",
+      "source": "block2_sep1_act",
+      "target": "block2_sep2",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_sep2_block2_sep2_bn",
+      "source": "block2_sep2",
+      "target": "block2_sep2_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_sep2_bn_block2_pool",
+      "source": "block2_sep2_bn",
+      "target": "block2_pool",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block1_conv2_act_block2_shortcut",
+      "source": "block1_conv2_act",
+      "target": "block2_shortcut",
+      "type": "skip"
+    },
+    {
+      "id": "c_block2_shortcut_block2_shortcut_bn",
+      "source": "block2_shortcut",
+      "target": "block2_shortcut_bn",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_pool_block2_add",
+      "source": "block2_pool",
+      "target": "block2_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_block2_shortcut_bn_block2_add",
+      "source": "block2_shortcut_bn",
+      "target": "block2_add",
+      "type": "sequential"
+    },
+    {
+      "id": "c_last_gap",
+      "source": "block2_add",
+      "target": "global_average_pooling2d",
+      "type": "sequential"
+    },
+    {
+      "id": "c_gap_pred",
+      "source": "global_average_pooling2d",
+      "target": "predictions",
+      "type": "sequential"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group_stem",
+      "name": "Entry Flow Stem",
+      "description": "Standard convolutions for early representations.",
+      "layerIds": [
+        "block1_conv1_conv",
+        "block1_conv1_bn",
+        "block1_conv1_act",
+        "block1_conv2_conv",
+        "block1_conv2_bn",
+        "block1_conv2_act"
+      ],
+      "color": "#EC4899"
+    },
+    {
+      "id": "group_block2",
+      "name": "Entry Flow Block 1",
+      "description": "Applies stacked Separable Convolutions and projection skip connection.",
+      "layerIds": [
+        "block2_sep1",
+        "block2_sep1_bn",
+        "block2_sep1_act",
+        "block2_sep2",
+        "block2_sep2_bn",
+        "block2_pool",
+        "block2_add",
+        "block2_shortcut",
+        "block2_shortcut_bn"
+      ],
+      "color": "#F472B6"
+    },
+    {
+      "id": "group_classifier",
+      "name": "Global Pooling & Classification",
+      "description": "GAP followed by the dense predictions.",
+      "layerIds": [
+        "global_average_pooling2d",
+        "predictions"
+      ],
+      "color": "#8B5CF6"
+    }
+  ],
+  "groupedNodes": [
+    {
+      "id": "group_stem",
+      "label": "Entry Flow Stem",
+      "type": "group_node",
+      "description": "Standard convolutions for early representations.",
+      "color": "#EC4899",
+      "position": {
+        "x": 250.0,
+        "y": 300.0
+      },
+      "layerIds": [
+        "block1_conv1_conv",
+        "block1_conv1_bn",
+        "block1_conv1_act",
+        "block1_conv2_conv",
+        "block1_conv2_bn",
+        "block1_conv2_act"
+      ]
+    },
+    {
+      "id": "group_block2",
+      "label": "Entry Flow Block 1",
+      "type": "group_node",
+      "description": "Applies stacked Separable Convolutions and projection skip connection.",
+      "color": "#F472B6",
+      "position": {
+        "x": 250.0,
+        "y": 550.0
+      },
+      "layerIds": [
+        "block2_sep1",
+        "block2_sep1_bn",
+        "block2_sep1_act",
+        "block2_sep2",
+        "block2_sep2_bn",
+        "block2_pool",
+        "block2_add",
+        "block2_shortcut",
+        "block2_shortcut_bn"
+      ]
+    },
+    {
+      "id": "group_classifier",
+      "label": "Global Pooling & Classification",
+      "type": "group_node",
+      "description": "GAP followed by the dense predictions.",
+      "color": "#8B5CF6",
+      "position": {
+        "x": 250,
+        "y": 400
+      },
+      "layerIds": [
+        "global_average_pooling2d",
+        "predictions"
+      ]
+    }
+  ],
+  "groupedEdges": [
+    {
+      "id": "c_group_stem_group_block2",
+      "source": "group_stem",
+      "target": "group_block2",
+      "type": "skip"
+    },
+    {
+      "id": "c_group_block2_group_classifier",
+      "source": "group_block2",
+      "target": "group_classifier",
+      "type": "sequential"
+    }
+  ]
+}
