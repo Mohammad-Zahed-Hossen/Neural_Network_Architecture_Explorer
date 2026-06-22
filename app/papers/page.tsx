@@ -94,14 +94,14 @@ export default function PaperKnowledgeCenter() {
           />
         </div>
 
-        {/* Papers List Stack */}
-        <div className="space-y-6">
-          {filteredPapers.length === 0 ? (
-            <div className="text-center py-20 bg-slate-950/20 border border-border/20 rounded-2xl">
-              <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">No matching papers found</span>
-            </div>
-          ) : (
-            filteredPapers.map((paper) => {
+        {/* Papers List Grid/Stack */}
+        {filteredPapers.length === 0 ? (
+          <div className="text-center py-20 bg-slate-950/20 border border-border/20 rounded-2xl w-full">
+            <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">No matching papers found</span>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            {filteredPapers.map((paper) => {
               const isSelected = activePaperId === paper.id;
               
               // Get model names from our catalog summary
@@ -128,12 +128,12 @@ export default function PaperKnowledgeCenter() {
                           <Calendar className="h-3 w-3 text-primary" />
                           {paper.year}
                         </span>
-                        <span className="flex items-center gap-1 bg-slate-900 border border-border/20 px-2 py-0.5 rounded-full uppercase tracking-wider max-w-[200px] truncate" title={paper.authors.join(', ')}>
+                        <span className="flex items-center gap-1 bg-slate-900 border border-border/20 px-2 py-0.5 rounded-full uppercase tracking-wider max-w-[120px] sm:max-w-[200px] truncate" title={paper.authors.join(', ')}>
                           <Users className="h-3 w-3 text-primary" />
                           {paper.authors[0]} et al.
                         </span>
                       </div>
-                      <h2 className="text-lg md:text-xl font-black text-white tracking-tight leading-snug group-hover:text-primary transition-colors">
+                      <h2 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug group-hover:text-primary transition-colors">
                         {paper.title}
                       </h2>
                       <p className="text-xs text-slate-400 font-medium line-clamp-2 md:line-clamp-1 leading-relaxed">
@@ -267,9 +267,9 @@ export default function PaperKnowledgeCenter() {
 
                 </div>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
 
       </section>
     </div>

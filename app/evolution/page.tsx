@@ -69,10 +69,10 @@ export default function EvolutionTimeline() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative pl-6 md:pl-0"
+          className="relative pl-0"
         >
           {/* Vertical timeline spine */}
-          <div className="absolute left-[9px] md:left-1/2 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary via-indigo-500 to-purple-500/20 transform -translate-x-[1px] z-0" />
+          <div className="hidden md:block absolute left-[9px] md:left-1/2 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary via-indigo-500 to-purple-500/20 transform -translate-x-[1px] z-0" />
 
           {/* Timeline Nodes */}
           <div className="space-y-12 relative z-10">
@@ -92,7 +92,7 @@ export default function EvolutionTimeline() {
                   }`}
                 >
                   {/* Spine Dot Indicator */}
-                  <div className="absolute left-[-23px] md:left-1/2 top-4 w-4 h-4 rounded-full border-2 border-primary bg-background transform -translate-x-1/2 z-25 flex items-center justify-center shadow-lg shadow-primary/20">
+                  <div className="hidden md:flex absolute left-[-15px] md:left-1/2 top-4 w-4 h-4 rounded-full border-2 border-primary bg-background transform -translate-x-1/2 z-25 items-center justify-center shadow-lg shadow-primary/20">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
                   </div>
 
@@ -123,12 +123,12 @@ export default function EvolutionTimeline() {
                         </button>
                       </div>
 
-                      <h2 className="text-xl font-black text-white tracking-tight mb-4 flex items-center justify-between">
-                        {node.name}
+                      <h2 className="text-xl font-black text-white tracking-tight mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span>{node.name}</span>
                         {node.id !== 'vit' && node.id !== 'convnext' && (
                           <Link 
                             href={`/models/${node.id === 'vgg' ? 'vgg16' : node.id === 'resnet' ? 'resnet50' : node.id === 'densenet' ? 'densenet121' : node.id === 'mobilenet' ? 'mobilenet' : node.id === 'efficientnet' ? 'efficientnetb0' : node.id}`}
-                            className="inline-flex items-center gap-1 text-[10px] font-bold text-primary/80 hover:text-primary hover:underline transition-all"
+                            className="inline-flex items-center gap-1 text-[10px] font-bold text-primary/80 hover:text-primary hover:underline transition-all shrink-0 self-start sm:self-auto"
                           >
                             Interactive Explorer <ArrowUpRight className="h-3 w-3" />
                           </Link>

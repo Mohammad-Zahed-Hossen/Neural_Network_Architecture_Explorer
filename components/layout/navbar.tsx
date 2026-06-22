@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Menu, X } from 'lucide-react';
+import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Compass, GitCommit } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -36,6 +37,18 @@ export default function Navbar() {
       active: pathname === '/evolution',
     },
     {
+      href: '/research-map',
+      label: 'Research Map',
+      icon: Compass,
+      active: pathname === '/research-map',
+    },
+    {
+      href: '/architecture-patterns',
+      label: 'Patterns',
+      icon: GitCommit,
+      active: pathname === '/architecture-patterns',
+    },
+    {
       href: '/papers',
       label: 'Papers',
       icon: GraduationCap,
@@ -63,7 +76,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
@@ -71,7 +84,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-300",
+                  "relative flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-medium transition-all duration-300",
                   link.active
                     ? "text-[#020617] bg-[#22d3ee] border border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.2)]"
                     : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617] border border-transparent"
@@ -87,39 +100,66 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex md:hidden items-center justify-center h-10 w-10 rounded-xl border border-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-slate-900 transition-colors cursor-pointer"
+          className="flex lg:hidden items-center justify-center h-10 w-10 rounded-xl border border-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-slate-900 focus:outline-none transition-colors cursor-pointer"
           aria-label="Toggle Menu"
         >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          <div className="flex flex-col gap-1.5 justify-center items-center w-5 h-5">
+            <span
+              className={cn(
+                "block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out origin-center",
+                isOpen ? "rotate-45 translate-y-[8px]" : ""
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-5 rounded-full bg-current transition-all duration-200 ease-out",
+                isOpen ? "opacity-0 scale-x-0" : ""
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out origin-center",
+                isOpen ? "-rotate-45 -translate-y-[8px]" : ""
+              )}
+            />
+          </div>
         </button>
       </div>
 
       {/* Mobile Navigation Drawer */}
-      {isOpen && (
-        <div className="md:hidden border-b border-[#1f2937] bg-[#020617] px-4 py-3">
-          <nav className="flex flex-col gap-2">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={cn(
-                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300",
-                    link.active
-                      ? "text-[#020617] bg-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.15)]"
-                      : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617]/50"
-                  )}
-                >
-                  <Icon className="h-4.5 w-4.5" />
-                  <span>{link.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="lg:hidden overflow-hidden border-b border-[#1f2937] bg-[#020617]/95 backdrop-blur-lg px-4 py-3"
+          >
+            <nav className="grid grid-cols-2 gap-2">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-300 border border-slate-900/60 bg-slate-950/20",
+                      link.active
+                        ? "text-[#020617] bg-[#22d3ee] border-[#22d3ee] shadow-[0_0_10px_rgba(34,211,238,0.15)]"
+                        : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617]/50 hover:border-slate-800"
+                    )}
+                  >
+                    <Icon className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{link.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

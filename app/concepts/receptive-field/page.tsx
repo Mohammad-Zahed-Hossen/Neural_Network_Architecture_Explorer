@@ -43,7 +43,7 @@ const modelLoaders: Record<string, () => Promise<any>> = {
   nasnetmobile: () => import('@/lib/data/nasnetmobile.json'),
   nasnetlarge: () => import('@/lib/data/nasnetlarge.json'),
   vit: () => import('@/lib/data/vit.json'),
-  swin: () => import('@/lib/data/swintransformer.json'),
+  swin: () => import('@/lib/data/swin.json'),
   convnext: () => import('@/lib/data/convnext.json'),
   maxvit: () => import('@/lib/data/maxvit.json'),
 };

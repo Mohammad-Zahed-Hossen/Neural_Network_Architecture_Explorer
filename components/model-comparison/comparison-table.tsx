@@ -96,7 +96,7 @@ interface SectionHeaderProps {
 
 const SectionHeader = ({ icon: Icon, label, colSpan, children }: SectionHeaderProps) => (
   <tr className="bg-slate-900/40 border-y border-border/10">
-    <td colSpan={colSpan} className="px-6 py-3">
+    <td colSpan={colSpan} className="sticky left-0 px-6 py-3 bg-[#0c142d] border-r border-border/20 z-10">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-800/60 border border-border/20">
@@ -308,7 +308,7 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
             {/* Sticky Header */}
             <thead className="sticky top-0 z-10">
               <tr className="border-b border-border/20 bg-slate-950/80 backdrop-blur-md">
-                <th className="p-4 sm:p-5 font-extrabold text-slate-500 uppercase tracking-wider w-[24%] text-[10px]">
+                <th className="sticky left-0 z-30 p-4 sm:p-5 font-extrabold text-slate-500 uppercase tracking-wider w-[24%] text-[10px] bg-[#020612] border-r border-border/20">
                   Metrics / Features
                 </th>
                 {models.map((model) => {
@@ -352,9 +352,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               <SectionHeader icon={Info} label="General Information" colSpan={1 + models.length} />
               
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Calendar className="h-3.5 w-3.5 text-slate-500" />
-                  Publication Year
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Calendar className="h-3.5 w-3.5 text-slate-500" />
+                    Publication Year
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px]">
@@ -367,9 +369,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               </tr>
               
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5 text-slate-500" />
-                  Authors
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Users className="h-3.5 w-3.5 text-slate-500" />
+                    Authors
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
@@ -379,9 +383,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               </tr>
               
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Tag className="h-3.5 w-3.5 text-slate-500" />
-                  Tags
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Tag className="h-3.5 w-3.5 text-slate-500" />
+                    Tags
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4">
@@ -397,9 +403,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               </tr>
 
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <ExternalLink className="h-3.5 w-3.5 text-slate-500" />
-                  Research Paper
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <ExternalLink className="h-3.5 w-3.5 text-slate-500" />
+                    Research Paper
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4">
@@ -424,12 +432,14 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                 const Icon = metric.icon;
                 return (
                   <tr key={metric.key} className="hover:bg-slate-900/10 transition-colors group/row">
-                    <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                      <Icon className="h-3.5 w-3.5 text-slate-500" />
-                      {metric.label}
-                      {metric.direction === 'higher' && (
-                        <span className="text-[9px] text-emerald-500/60 font-semibold ml-1">↑ higher is better</span>
-                      )}
+                    <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                      <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                        <Icon className="h-3.5 w-3.5 text-slate-500" />
+                        <span>{metric.label}</span>
+                        {metric.direction === 'higher' && (
+                          <span className="text-[9px] text-emerald-500/60 font-semibold ml-1">↑ higher is better</span>
+                        )}
+                      </div>
                     </td>
                     {models.map((model) => {
                       const isWinner = model.id === winnerId;
@@ -482,12 +492,14 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                 const Icon = metric.icon;
                 return (
                   <tr key={metric.key} className="hover:bg-slate-900/10 transition-colors group/row">
-                    <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                      <Icon className="h-3.5 w-3.5 text-slate-500" />
-                      {metric.label}
-                      {metric.direction === 'lower' && (
-                        <span className="text-[9px] text-amber-500/60 font-semibold ml-1">↓ lower is better</span>
-                      )}
+                    <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                      <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                        <Icon className="h-3.5 w-3.5 text-slate-500" />
+                        <span>{metric.label}</span>
+                        {metric.direction === 'lower' && (
+                          <span className="text-[9px] text-amber-500/60 font-semibold ml-1">↓ lower is better</span>
+                        )}
+                      </div>
                     </td>
                     {models.map((model) => {
                       const isWinner = model.id === winnerId;
@@ -539,9 +551,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               <SectionHeader icon={Lightbulb} label="Architecture Design Characteristics" colSpan={1 + models.length} />
               
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Cpu className="h-3.5 w-3.5 text-slate-500" />
-                  Architectural Paradigm
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Cpu className="h-3.5 w-3.5 text-slate-500" />
+                    Architectural Paradigm
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
@@ -551,9 +565,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               </tr>
 
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Layers className="h-3.5 w-3.5 text-slate-500" />
-                  Primary Block Primitive
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Layers className="h-3.5 w-3.5 text-slate-500" />
+                    Primary Block Primitive
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
@@ -563,9 +579,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               </tr>
 
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Lightbulb className="h-3.5 w-3.5 text-slate-500" />
-                  Key Breakthrough
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Lightbulb className="h-3.5 w-3.5 text-slate-500" />
+                    Key Breakthrough
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed italic">
@@ -575,9 +593,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               </tr>
 
               <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="p-4 pl-5 font-bold text-slate-400 text-[11px] flex items-center gap-2">
-                  <Info className="h-3.5 w-3.5 text-slate-500" />
-                  Description
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                    <Info className="h-3.5 w-3.5 text-slate-500" />
+                    Description
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4 font-medium text-slate-300 text-[11px] leading-relaxed">
@@ -588,9 +608,11 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
 
               {/* Quick Actions Row */}
               <tr className="bg-slate-950/40 divide-y divide-border/5">
-                <td className="p-4 pl-5 font-bold text-slate-500 uppercase tracking-wider text-[10px] flex items-center gap-2">
-                  <ChevronRight className="h-3.5 w-3.5" />
-                  Topology Explorer
+                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                    <ChevronRight className="h-3.5 w-3.5" />
+                    Topology Explorer
+                  </div>
                 </td>
                 {models.map((model) => (
                   <td key={model.id} className="p-4">

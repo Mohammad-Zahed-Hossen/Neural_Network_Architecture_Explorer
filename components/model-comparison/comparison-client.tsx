@@ -283,7 +283,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
                       </div>
 
                       {/* Models List */}
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                      <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
                         {list.map(model => {
                           const isSelected = selectedIds.includes(model.id);
                           return (
@@ -369,7 +369,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
             {/* 2. Interactive Charts & Toggle Workspace */}
             <div className="flex flex-col gap-5 mt-3">
               {/* Tab Metric Selectors */}
-              <div className="flex flex-wrap gap-2.5 bg-slate-900/35 border border-border/20 rounded-2xl p-2 backdrop-blur-md">
+              <div className="flex md:grid md:grid-cols-5 overflow-x-auto md:overflow-x-visible gap-2 bg-slate-900/35 border border-border/20 rounded-2xl p-2 backdrop-blur-md scrollbar-none">
                 {metricTabs.map((tab) => {
                   const TabIcon = tab.icon;
                   const isActive = activeMetric === tab.id;
@@ -378,7 +378,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
                       key={tab.id}
                       onClick={() => setActiveMetric(tab.id)}
                       className={cn(
-                        "flex-1 min-w-[130px] flex items-center gap-2.5 rounded-xl p-3.5 border transition-all duration-300 text-left cursor-pointer focus:outline-none",
+                        "flex-1 flex-shrink-0 min-w-[140px] md:min-w-0 flex items-center gap-2.5 rounded-xl p-3.5 border transition-all duration-300 text-left cursor-pointer focus:outline-none",
                         isActive 
                           ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]" 
                           : "bg-transparent border-[#1f2937] text-[#9ca3af] hover:text-[#e5e7eb] hover:border-[#22d3ee]/30"

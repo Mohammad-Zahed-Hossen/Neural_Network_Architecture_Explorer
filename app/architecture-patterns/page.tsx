@@ -186,7 +186,7 @@ export default function ArchitecturePatterns() {
         
         {/* Header */}
         <div className="flex flex-col gap-2 border-b border-border/10 pb-6">
-          <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
             <Network className="h-8 w-8 text-[#22d3ee]" />
             Architecture Design Patterns Library
           </h1>
@@ -204,7 +204,7 @@ export default function ArchitecturePatterns() {
               Select Design Pattern
             </span>
 
-            <div className="flex flex-col gap-2.5 bg-slate-950/40 border border-border/25 rounded-2xl p-2 backdrop-blur-md">
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-2.5 pb-2 lg:pb-0 scrollbar-none w-full bg-slate-950/40 border border-border/25 rounded-2xl p-2 backdrop-blur-md">
               {PATTERNS.map((p) => {
                 const isActive = selectedPattern === p.id;
                 const PIcon = p.icon;
@@ -212,15 +212,15 @@ export default function ArchitecturePatterns() {
                   <button
                     key={p.id}
                     onClick={() => setSelectedPattern(p.id)}
-                    className={`w-full text-left px-4 py-4 rounded-xl text-xs transition-all duration-300 flex items-center justify-between cursor-pointer border ${
+                    className={`flex-shrink-0 lg:flex-shrink-1 w-[200px] lg:w-full text-left px-4 py-4 rounded-xl text-xs transition-all duration-300 flex items-center justify-between cursor-pointer border ${
                       isActive 
                         ? 'bg-slate-900 border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.15)] text-[#22d3ee]' 
                         : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-900/30'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 truncate">
                       <div 
-                        className="flex h-8 w-8 items-center justify-center rounded-lg border bg-slate-950/50"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-slate-950/50"
                         style={{ 
                           borderColor: isActive ? '#22d3ee' : p.borderColor,
                           color: isActive ? '#22d3ee' : p.color
@@ -228,9 +228,9 @@ export default function ArchitecturePatterns() {
                       >
                         <PIcon className="h-4 w-4" />
                       </div>
-                      <span className="font-bold text-sm tracking-tight">{p.name.split(' (')[0]}</span>
+                      <span className="font-bold text-sm tracking-tight truncate">{p.name.split(' (')[0]}</span>
                     </div>
-                    <ChevronRight className={`h-4 w-4 transition-transform ${isActive ? 'rotate-90 text-[#22d3ee]' : 'text-slate-600'}`} />
+                    <ChevronRight className={`h-4 w-4 shrink-0 transition-transform ${isActive ? 'rotate-90 text-[#22d3ee]' : 'text-slate-600'} hidden lg:block`} />
                   </button>
                 );
               })}
@@ -262,7 +262,7 @@ export default function ArchitecturePatterns() {
               </div>
 
               {/* Mathematical Equation Box */}
-              <div className="bg-slate-950 border border-border/40 rounded-xl p-4 font-mono text-center text-sm font-black text-primary select-all shadow-inner relative overflow-hidden group">
+              <div className="bg-slate-950 border border-border/40 rounded-xl p-4 font-mono text-center text-xs sm:text-sm font-black text-primary select-all shadow-inner relative overflow-hidden group overflow-x-auto scrollbar-none">
                 <div className="absolute top-1 left-2 text-[8px] text-slate-500 font-extrabold uppercase tracking-widest">Formal Equation</div>
                 <div className="py-2.5 tracking-wide text-[#22d3ee]">{activePattern.math}</div>
               </div>
@@ -399,8 +399,139 @@ export default function ArchitecturePatterns() {
                   </svg>
                 )}
 
+                {/* Compound Scaling Diagram */}
+                {activePattern.id === 'compound' && (
+                  <svg className="w-full max-w-[480px] h-[120px]" viewBox="0 0 480 120">
+                    <g transform="translate(10, 15)" stroke="#64748b" strokeWidth="1.5" fill="none">
+                      {/* 1. Baseline */}
+                      <g transform="translate(10, 10)">
+                        <rect x="0" y="20" width="40" height="30" rx="3" fill="#0f172a" stroke="#475569" strokeWidth="1.5"/>
+                        <text x="20" y="38" fill="#94a3b8" fontSize="8" textAnchor="middle" stroke="none">B0 Base</text>
+                        <text x="20" y="65" fill="#64748b" fontSize="7" textAnchor="middle" stroke="none" fontWeight="bold">w, d, r = 1.0</text>
+                      </g>
+
+                      {/* Plus operators and arrows */}
+                      <line x1="75" y1="45" x2="95" y2="45" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+                      {/* 2. Width Scaling */}
+                      <g transform="translate(115, 10)">
+                        <rect x="0" y="20" width="70" height="30" rx="3" fill="#0f172a" stroke="#f97316" strokeWidth="1.5"/>
+                        <text x="35" y="38" fill="#f97316" fontSize="8" textAnchor="middle" stroke="none">Width-Scaled</text>
+                        <text x="35" y="65" fill="#64748b" fontSize="7" textAnchor="middle" stroke="none" fontWeight="bold">w = 2.0 (Channels)</text>
+                      </g>
+
+                      <line x1="205" y1="45" x2="225" y2="45" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+                      {/* 3. Depth Scaling */}
+                      <g transform="translate(245, 10)">
+                        <rect x="0" y="5" width="40" height="60" rx="3" fill="#0f172a" stroke="#f97316" strokeWidth="1.5"/>
+                        <text x="20" y="38" fill="#f97316" fontSize="8" textAnchor="middle" stroke="none">Depth</text>
+                        <text x="20" y="80" fill="#64748b" fontSize="7" textAnchor="middle" stroke="none" fontWeight="bold">d = 2.0 (Layers)</text>
+                      </g>
+
+                      <line x1="305" y1="45" x2="325" y2="45" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+                      {/* 4. Compound Scaling */}
+                      <g transform="translate(345, 5)">
+                        <rect x="0" y="10" width="60" height="50" rx="4" fill="#0f172a" stroke="#10b981" strokeWidth="2.5"/>
+                        <text x="30" y="38" fill="#10b981" fontSize="9" fontWeight="black" textAnchor="middle" stroke="none">Compound</text>
+                        <text x="30" y="75" fill="#10b981" fontSize="7" textAnchor="middle" stroke="none" fontWeight="bold">w, d, r = 1.5 (Balanced)</text>
+                      </g>
+                    </g>
+                    <defs>
+                      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                )}
+
+                {/* Neural Architecture Search Diagram */}
+                {activePattern.id === 'nas' && (
+                  <svg className="w-full max-w-[400px] h-[120px]" viewBox="0 0 400 120">
+                    <g transform="translate(20, 10)" stroke="#64748b" strokeWidth="2" fill="none">
+                      {/* Controller */}
+                      <rect x="10" y="35" width="85" height="40" rx="6" fill="#0f172a" stroke="#00d9ff" strokeWidth="2"/>
+                      <text x="52.5" y="55" fill="#00d9ff" fontSize="9" fontWeight="bold" textAnchor="middle" stroke="none">Controller RNN</text>
+                      <text x="52.5" y="67" fill="#475569" fontSize="7" fontWeight="bold" textAnchor="middle" stroke="none">Policy θ</text>
+
+                      {/* Sample path */}
+                      <path d="M 95,45 C 130,25 180,25 215,45" stroke="#00d9ff" strokeWidth="2" markerEnd="url(#arrow-cyan)"/>
+                      <text x="155" y="24" fill="#00d9ff" fontSize="7" fontWeight="bold" textAnchor="middle" stroke="none">Samples Cell Arch</text>
+
+                      {/* Child Network / Evaluator */}
+                      <rect x="225" y="35" width="85" height="40" rx="6" fill="#0f172a" stroke="#3b82f6" strokeWidth="2"/>
+                      <text x="267.5" y="55" fill="#3b82f6" fontSize="9" fontWeight="bold" textAnchor="middle" stroke="none">Child Network</text>
+                      <text x="267.5" y="67" fill="#475569" fontSize="7" fontWeight="bold" textAnchor="middle" stroke="none">Train & Eval</text>
+
+                      {/* Feedback reward path */}
+                      <path d="M 225,65 C 190,85 140,85 105,65" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-green)"/>
+                      <text x="155" y="93" fill="#10b981" fontSize="7" fontWeight="bold" textAnchor="middle" stroke="none">Reward: Validation Acc</text>
+                    </g>
+                    <defs>
+                      <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00d9ff"/>
+                      </marker>
+                      <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                )}
+
+                {/* Self-Attention Diagram */}
+                {activePattern.id === 'attention' && (
+                  <svg className="w-full max-w-[400px] h-[120px]" viewBox="0 0 400 120">
+                    <g transform="translate(10, 10)" stroke="#64748b" strokeWidth="1.5" fill="none">
+                      {/* Input Tokens */}
+                      <rect x="10" y="45" width="55" height="30" rx="4" fill="#0f172a" stroke="#d946ef" strokeWidth="1.5"/>
+                      <text x="37.5" y="63" fill="#d946ef" fontSize="9" fontWeight="bold" textAnchor="middle" stroke="none">Tokens X</text>
+
+                      {/* Projections Q, K, V */}
+                      <path d="M 65,55 L 105,25" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+                      <path d="M 65,60 L 105,60" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+                      <path d="M 65,65 L 105,95" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+                      <text x="120" y="28" fill="#a855f7" fontSize="9" fontWeight="black" stroke="none">Q</text>
+                      <text x="120" y="63" fill="#a855f7" fontSize="9" fontWeight="black" stroke="none">K</text>
+                      <text x="120" y="98" fill="#a855f7" fontSize="9" fontWeight="black" stroke="none">V</text>
+
+                      {/* Similarity Node QK^T */}
+                      <circle cx="170" cy="40" r="10" fill="#0f172a" stroke="#a855f7" strokeWidth="1.5"/>
+                      <text x="170" y="43" fill="#a855f7" fontSize="10" fontWeight="bold" textAnchor="middle" stroke="none">×</text>
+                      <text x="170" y="24" fill="#64748b" fontSize="7" textAnchor="middle" stroke="none" fontWeight="bold">Similarity</text>
+
+                      {/* Lines to similarity */}
+                      <line x1="130" y1="25" x2="160" y2="35" markerEnd="url(#arrow)"/>
+                      <line x1="130" y1="60" x2="160" y2="45" markerEnd="url(#arrow)"/>
+
+                      {/* Softmax */}
+                      <line x1="180" y1="40" x2="215" y2="40" markerEnd="url(#arrow)"/>
+                      <rect x="220" y="28" width="55" height="24" rx="4" fill="#0f172a" stroke="#d946ef" strokeWidth="1.5"/>
+                      <text x="247.5" y="43" fill="#d946ef" fontSize="8" fontWeight="bold" textAnchor="middle" stroke="none">Softmax</text>
+
+                      {/* Attention multiplication with V */}
+                      <circle cx="310" cy="55" r="10" fill="#0f172a" stroke="#d946ef" strokeWidth="1.5"/>
+                      <text x="310" y="58" fill="#d946ef" fontSize="10" fontWeight="bold" textAnchor="middle" stroke="none">×</text>
+
+                      <line x1="275" y1="40" x2="302" y2="50" markerEnd="url(#arrow)"/>
+                      <path d="M 130,95 L 300,60" markerEnd="url(#arrow)"/>
+                      <text x="215" y="85" fill="#a855f7" fontSize="7" textAnchor="middle" stroke="none" fontWeight="bold">Value Path</text>
+
+                      {/* Output */}
+                      <line x1="320" y1="55" x2="355" y2="55" markerEnd="url(#arrow)"/>
+                      <text x="365" y="58" fill="#94a3b8" fontSize="9" fontWeight="bold" stroke="none">Outputs</text>
+                    </g>
+                    <defs>
+                      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                )}
+
                 {/* Placeholders for others */}
-                {!['residual', 'dense', 'depthwise'].includes(activePattern.id) && (
+                {!['residual', 'dense', 'depthwise', 'compound', 'nas', 'attention'].includes(activePattern.id) && (
                   <div className="flex flex-col items-center justify-center text-slate-550 select-none">
                     <Scaling className="h-10 w-10 text-slate-600 mb-2 animate-pulse" />
                     <span className="text-xs font-bold uppercase tracking-wider">{activePattern.name.split(' (')[0]} Schema Map</span>

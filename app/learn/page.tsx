@@ -78,34 +78,36 @@ export default function Learn() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 bg-[#020617] border border-[#1f2937] rounded-2xl p-1 select-none max-w-md mb-10 shadow-lg">
+        <div className="flex items-center gap-1.5 sm:gap-2 bg-[#020617] border border-[#1f2937] rounded-2xl p-1 select-none max-w-md mb-10 shadow-lg w-full">
           <button
             onClick={() => setActiveTab('paths')}
-            className={`flex-1 flex items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-wider py-3 px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
+            className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
               activeTab === 'paths'
                 ? "bg-primary text-slate-950 border-primary font-black shadow-md shadow-primary/10"
                 : "bg-transparent text-slate-400 border-transparent hover:text-white"
             }`}
           >
-            <BookOpen className="h-4 w-4" />
-            Learning Roadmaps
+            <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+            <span className="inline min-[380px]:hidden">Roadmaps</span>
+            <span className="hidden min-[380px]:inline">Learning Roadmaps</span>
           </button>
           <button
             onClick={() => setActiveTab('advisor')}
-            className={`flex-1 flex items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-wider py-3 px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
+            className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
               activeTab === 'advisor'
                 ? "bg-primary text-slate-950 border-primary font-black shadow-md shadow-primary/10"
                 : "bg-transparent text-slate-400 border-transparent hover:text-white"
             }`}
           >
-            <Award className="h-4 w-4" />
-            Model Advisor
+            <Award className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+            <span className="inline min-[380px]:hidden">Advisor</span>
+            <span className="hidden min-[380px]:inline">Model Advisor</span>
           </button>
         </div>
 
         {/* Tab Content */}
         {activeTab === 'paths' ? (
-          <div className="space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {learningPaths.map((path, idx) => {
               const PathIcon = path.icon;
               return (
@@ -115,14 +117,14 @@ export default function Learn() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="bg-slate-950/20 border border-border/30 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-border/50 transition-all duration-300"
+                  className="bg-slate-950/20 border border-border/30 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-border/50 transition-all duration-300 h-full flex flex-col"
                 >
                   <div 
-                    className="absolute top-0 left-0 w-1.5 h-full transition-all duration-300" 
+                    className="absolute top-0 left-0 w-full h-1.5 transition-all duration-300" 
                     style={{ backgroundColor: path.themeColor }}
                   />
 
-                  <div className="flex flex-col md:flex-row gap-6">
+                  <div className="flex flex-col h-full justify-between gap-6 pt-2 flex-1">
                     {/* Left Column: Path Info */}
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-3">
@@ -139,8 +141,8 @@ export default function Learn() {
                       </p>
                     </div>
 
-                    {/* Right Column: Model cards */}
-                    <div className="w-full md:w-[320px] bg-slate-900/10 border border-border/20 rounded-xl p-4 flex flex-col gap-2 shrink-0">
+                    {/* Recommended Models */}
+                    <div className="w-full bg-slate-900/10 border border-border/20 rounded-xl p-4 flex flex-col gap-2 mt-auto">
                       <span className="text-[10px] text-slate-500 uppercase tracking-widest font-extrabold block mb-1">
                         Recommended Models:
                       </span>

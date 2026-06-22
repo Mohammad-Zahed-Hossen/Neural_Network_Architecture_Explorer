@@ -15,11 +15,16 @@ interface ComparisonChartProps {
 
 export default function ComparisonCharts({ models, activeMetric }: ComparisonChartProps) {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Avoid hydration mismatch for SVGs rendered by Recharts
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+    setIsMobile(window.innerWidth < 640);
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   if (!mounted) {
@@ -186,7 +191,7 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
 
         <div className="w-full h-[285px] mt-6 select-none font-sans text-[10px] sm:text-xs">
           <ResponsiveContainer width="99%" height={285}>
-            <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarChartData}>
+            <RadarChart cx="50%" cy="50%" outerRadius={isMobile ? "52%" : "75%"} data={radarChartData}>
               <PolarGrid stroke="rgba(255,255,255,0.06)" />
               <PolarAngleAxis 
                 dataKey="subject" 

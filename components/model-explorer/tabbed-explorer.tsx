@@ -193,7 +193,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
             )}
           >
             <BookOpen className="h-4 w-4 shrink-0" />
-            <span>Overview</span>
+            <span className="hidden min-[380px]:inline">Overview</span>
           </button>
           <button
             onClick={() => setActiveTab('layers')}
@@ -205,7 +205,8 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
             )}
           >
             <ListFilter className="h-4 w-4 shrink-0" />
-            <span>Layers List</span>
+            <span className="hidden sm:inline">Layers List</span>
+            <span className="hidden min-[380px]:inline sm:hidden">Layers</span>
           </button>
           <button
             onClick={() => setActiveTab('topology')}
@@ -217,7 +218,8 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
             )}
           >
             <Network className="h-4 w-4 shrink-0" />
-            <span>Topology Graph</span>
+            <span className="hidden sm:inline">Topology Graph</span>
+            <span className="hidden min-[380px]:inline sm:hidden">Topology</span>
           </button>
         </div>
 
