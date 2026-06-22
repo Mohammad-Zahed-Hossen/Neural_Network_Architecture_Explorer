@@ -83,6 +83,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
                 className={cn(
                   "relative flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-medium transition-all duration-300",
                   link.active
@@ -130,11 +131,11 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="lg:hidden overflow-hidden border-b border-[#1f2937] bg-[#020617]/95 backdrop-blur-lg px-4 py-3"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="absolute top-16 left-0 w-full lg:hidden overflow-hidden border-b border-[#1f2937] bg-[#020617]/95 backdrop-blur-lg px-4 py-3 shadow-xl z-50"
           >
             <nav className="grid grid-cols-2 gap-2">
               {navLinks.map((link) => {
@@ -143,6 +144,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    prefetch={false}
                     onClick={() => setIsOpen(false)}
                     className={cn(
                       "flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-300 border border-slate-900/60 bg-slate-950/20",
