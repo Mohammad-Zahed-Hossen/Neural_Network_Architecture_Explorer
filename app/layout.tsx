@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import PageTransition from "@/components/layout/page-transition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,9 @@ export default function RootLayout({
         </div>
         
         <Navbar />
-        <main className="flex flex-1 flex-col overflow-x-hidden">{children}</main>
+        <main className="flex flex-1 flex-col overflow-x-hidden">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
       </body>
     </html>
