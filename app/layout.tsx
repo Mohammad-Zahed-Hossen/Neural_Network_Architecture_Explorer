@@ -30,9 +30,14 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      style={{ backgroundColor: '#020612' }}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground relative" suppressHydrationWarning>
+      <body 
+        className="min-h-full flex flex-col bg-background text-foreground relative" 
+        style={{ backgroundColor: '#020612' }}
+        suppressHydrationWarning
+      >
         {/* Global Mesh Background Glow */}
         <div className="absolute top-0 left-0 w-full h-[600px] pointer-events-none overflow-hidden z-[-1] opacity-50">
           <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[120px] animate-glow-pulse" />
