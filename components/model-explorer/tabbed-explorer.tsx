@@ -42,6 +42,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
   const [activeTab, setActiveTab] = useState<'overview' | 'layers' | 'topology'>('overview');
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
   const [showDetailedLayers, setShowDetailedLayers] = useState(false);
+  const [hasVisitedTopology, setHasVisitedTopology] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('nn_showDetailedLayers');
@@ -49,6 +50,12 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
       setShowDetailedLayers(saved === 'true');
     }
   }, []);
+
+  useEffect(() => {
+    if (activeTab === 'topology') {
+      setHasVisitedTopology(true);
+    }
+  }, [activeTab]);
 
   const layers = model.architecture.layers;
   const totalParams = model.totalParameters;
@@ -224,11 +231,12 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
         </div>
 
         {/* Workspace Panels */}
-        <div className="flex-1 min-h-[450px]">
-          {activeTab === 'overview' && (
+        <div className="relative flex-1 min-h-[450px]">
+          {/* Overview Panel */}
+          <div className={activeTab === 'overview' ? "block" : "hidden"}>
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={activeTab === 'overview' ? { opacity: 1, y: 0 } : {}}
               className="grid grid-cols-1 lg:grid-cols-3 gap-6"
             >
               {/* Key Concept card */}
@@ -314,12 +322,13 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                 </div>
               </div>
             </motion.div>
-          )}
+          </div>
 
-          {activeTab === 'layers' && (
+          {/* Layers Panel */}
+          <div className={activeTab === 'layers' ? "block" : "hidden"}>
             <motion.div 
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={activeTab === 'layers' ? { opacity: 1 } : {}}
               className="flex flex-col lg:flex-row gap-6 items-stretch"
             >
               {/* Layers List */}
@@ -344,67 +353,70 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                 />
               </div>
             </motion.div>
-          )}
+          </div>
 
-          {activeTab === 'topology' && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col gap-4"
-            >
-              {/* Controls bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-0 bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-                <div className="flex items-center gap-2">
-                  <Network className="h-4.5 w-4.5 text-primary" />
-                  <span className="text-xs font-bold text-white tracking-tight">Interactive Topology Layout</span>
-                </div>
-                
-                {/* Node Level toggle switch */}
-                <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
-                  <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
-                  <button
-                    onClick={() => {
-                      const nextVal = !showDetailedLayers;
-                      setShowDetailedLayers(nextVal);
-                      localStorage.setItem('nn_showDetailedLayers', String(nextVal));
-                      setSelectedLayerId(null);
-                    }}
-                    className={cn(
-                      "relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
-                      showDetailedLayers ? "bg-primary" : "bg-slate-700"
-                    )}
-                  >
-                    <span
+          {/* Topology Panel */}
+          <div className={activeTab === 'topology' ? "block" : "hidden"}>
+            {hasVisitedTopology && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={activeTab === 'topology' ? { opacity: 1 } : {}}
+                className="flex flex-col gap-4"
+              >
+                {/* Controls bar */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-0 bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+                  <div className="flex items-center gap-2">
+                    <Network className="h-4.5 w-4.5 text-primary" />
+                    <span className="text-xs font-bold text-white tracking-tight">Interactive Topology Layout</span>
+                  </div>
+                  
+                  {/* Node Level toggle switch */}
+                  <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+                    <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
+                    <button
+                      onClick={() => {
+                        const nextVal = !showDetailedLayers;
+                        setShowDetailedLayers(nextVal);
+                        localStorage.setItem('nn_showDetailedLayers', String(nextVal));
+                        setSelectedLayerId(null);
+                      }}
                       className={cn(
-                        "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out",
-                        showDetailedLayers ? "translate-x-4" : "translate-x-0"
+                        "relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
+                        showDetailedLayers ? "bg-primary" : "bg-slate-700"
                       )}
+                    >
+                      <span
+                        className={cn(
+                          "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out",
+                          showDetailedLayers ? "translate-x-4" : "translate-x-0"
+                        )}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex flex-col lg:flex-row gap-6 items-stretch h-auto lg:h-[600px]">
+                  {/* Flow Graph container */}
+                  <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
+                    <FlowCanvas
+                      model={topologyModel}
+                      selectedLayerId={selectedLayerId}
+                      onSelectLayer={setSelectedLayerId}
                     />
-                  </button>
-                </div>
-              </div>
+                  </div>
 
-              <div className="flex flex-col lg:flex-row gap-6 items-stretch h-auto lg:h-[600px]">
-                {/* Flow Graph container */}
-                <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
-                  <FlowCanvas
-                    model={topologyModel}
-                    selectedLayerId={selectedLayerId}
-                    onSelectLayer={setSelectedLayerId}
-                  />
+                  {/* Side inspector panel */}
+                  <div className="w-full lg:w-[420px] lg:h-full lg:shrink-0">
+                    <InspectorPanel
+                      layer={selectedLayer}
+                      onClose={() => setSelectedLayerId(null)}
+                      totalModelParameters={totalParams}
+                    />
+                  </div>
                 </div>
-
-                {/* Side inspector panel */}
-                <div className="w-full lg:w-[420px] lg:h-full lg:shrink-0">
-                  <InspectorPanel
-                    layer={selectedLayer}
-                    onClose={() => setSelectedLayerId(null)}
-                    totalModelParameters={totalParams}
-                  />
-                </div>
-              </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
+          </div>
         </div>
       </div>
     </div>

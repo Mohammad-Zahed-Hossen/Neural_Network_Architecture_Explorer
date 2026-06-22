@@ -84,7 +84,8 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
           },
         };
       });
-  }, [selectedLayerId, model.architecture.layers, hiddenTypes]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model.id, hiddenTypes]);
 
   // 2. Dynamic Edges compilation
   const initialEdges: Edge[] = useMemo(() => {
@@ -121,7 +122,8 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
           },
         };
       });
-  }, [selectedLayerId, model.colorTheme, model.architecture.connections, hiddenTypes]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model.id, model.colorTheme, hiddenTypes]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -133,6 +135,76 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
   useEffect(() => {
     setEdges(initialEdges);
   }, [initialEdges, setEdges]);
+
+  // Update selection status for nodes in-place without rebuilding the array
+  useEffect(() => {
+    setNodes(prevNodes => {
+      let changed = false;
+      const nextNodes = prevNodes.map(node => {
+        const layer = model.architecture.layers.find(l => l.id === node.id);
+        const isSelected = node.id === selectedLayerId || 
+          (layer?.layerIds && layer.layerIds.includes(selectedLayerId || ''));
+        if (node.data.isSelected !== isSelected) {
+          changed = true;
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              isSelected,
+            },
+          };
+        }
+        return node;
+      });
+      return changed ? nextNodes : prevNodes;
+    });
+  }, [selectedLayerId, model.architecture.layers, setNodes]);
+
+  // Update selection status for edges in-place without rebuilding the array
+  useEffect(() => {
+    setEdges(prevEdges => {
+      let changed = false;
+      const nextEdges = prevEdges.map(edge => {
+        const isSkip = model.architecture.connections?.find(c => c.id === edge.id)?.type === 'skip';
+        const srcNode = model.architecture.layers.find(l => l.id === edge.source);
+        const tgtNode = model.architecture.layers.find(l => l.id === edge.target);
+        
+        const isSourceSelected = edge.source === selectedLayerId ||
+          (srcNode?.layerIds && srcNode.layerIds.includes(selectedLayerId || ''));
+        const isTargetSelected = edge.target === selectedLayerId ||
+          (tgtNode?.layerIds && tgtNode.layerIds.includes(selectedLayerId || ''));
+          
+        const isRelevant = isSourceSelected || isTargetSelected;
+        const newAnimated = isSkip || (selectedLayerId !== null && isRelevant);
+        const newStroke = isRelevant 
+          ? model.colorTheme 
+          : (isSkip ? '#c084fc' : 'rgba(100, 116, 139, 0.4)');
+        const newStrokeWidth = isRelevant ? 2.5 : (isSkip ? 1.5 : 1.2);
+
+        const currentStroke = edge.style?.stroke;
+        const currentStrokeWidth = edge.style?.strokeWidth;
+
+        if (
+          edge.animated !== newAnimated ||
+          currentStroke !== newStroke ||
+          currentStrokeWidth !== newStrokeWidth
+        ) {
+          changed = true;
+          return {
+            ...edge,
+            animated: newAnimated,
+            style: {
+              ...edge.style,
+              stroke: newStroke,
+              strokeWidth: newStrokeWidth,
+            },
+          };
+        }
+        return edge;
+      });
+      return changed ? nextEdges : prevEdges;
+    });
+  }, [selectedLayerId, model.colorTheme, model.architecture.connections, model.architecture.layers, setEdges]);
 
   const onInit = (instance: ReactFlowInstance) => {
     reactFlowRef.current = instance;
