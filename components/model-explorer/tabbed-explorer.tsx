@@ -186,38 +186,38 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
           <button
             onClick={() => setActiveTab('overview')}
             className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'overview'
                 ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
             )}
           >
-            <BookOpen className="h-4 w-4" />
-            Overview
+            <BookOpen className="h-4 w-4 shrink-0" />
+            <span>Overview</span>
           </button>
           <button
             onClick={() => setActiveTab('layers')}
             className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'layers'
                 ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
             )}
           >
-            <ListFilter className="h-4 w-4" />
-            Layers List
+            <ListFilter className="h-4 w-4 shrink-0" />
+            <span>Layers List</span>
           </button>
           <button
             onClick={() => setActiveTab('topology')}
             className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'topology'
                 ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
             )}
           >
-            <Network className="h-4 w-4" />
-            Topology Graph
+            <Network className="h-4 w-4 shrink-0" />
+            <span>Topology Graph</span>
           </button>
         </div>
 
@@ -351,14 +351,14 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
               className="flex flex-col gap-4"
             >
               {/* Controls bar */}
-              <div className="flex items-center justify-between bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-0 bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2">
                   <Network className="h-4.5 w-4.5 text-primary" />
                   <span className="text-xs font-bold text-white tracking-tight">Interactive Topology Layout</span>
                 </div>
                 
                 {/* Node Level toggle switch */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
                   <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
                   <button
                     onClick={() => {
@@ -382,9 +382,9 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                 </div>
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-6 items-stretch h-[550px]">
+              <div className="flex flex-col lg:flex-row gap-6 items-stretch h-auto lg:h-[600px]">
                 {/* Flow Graph container */}
-                <div className="flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative h-full">
+                <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
                   <FlowCanvas
                     model={topologyModel}
                     selectedLayerId={selectedLayerId}
@@ -393,7 +393,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                 </div>
 
                 {/* Side inspector panel */}
-                <div className="w-full lg:w-[420px] shrink-0 h-full">
+                <div className="w-full lg:w-[420px] lg:h-full lg:shrink-0">
                   <InspectorPanel
                     layer={selectedLayer}
                     onClose={() => setSelectedLayerId(null)}

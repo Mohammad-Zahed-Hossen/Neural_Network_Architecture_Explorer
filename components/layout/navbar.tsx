@@ -1,12 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Network, BarChart3, Home, BookOpen, History, Award, GraduationCap } from 'lucide-react';
+import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
     {
@@ -48,7 +50,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#1f2937] bg-[#020617]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-[#1f2937] bg-[#020617]/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -60,8 +62,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Navigation Links */}
-        <nav className="flex items-center gap-1 sm:gap-2">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
@@ -76,12 +78,48 @@ export default function Navbar() {
                 )}
               >
                 <Icon className="h-4 w-4" />
-                <span className="hidden sm:inline">{link.label}</span>
+                <span>{link.label}</span>
               </Link>
             );
           })}
         </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex md:hidden items-center justify-center h-10 w-10 rounded-xl border border-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-slate-900 transition-colors cursor-pointer"
+          aria-label="Toggle Menu"
+        >
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
+
+      {/* Mobile Navigation Drawer */}
+      {isOpen && (
+        <div className="md:hidden border-b border-[#1f2937] bg-[#020617] px-4 py-3">
+          <nav className="flex flex-col gap-2">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300",
+                    link.active
+                      ? "text-[#020617] bg-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.15)]"
+                      : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617]/50"
+                  )}
+                >
+                  <Icon className="h-4.5 w-4.5" />
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
