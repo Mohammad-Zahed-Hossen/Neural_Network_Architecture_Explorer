@@ -47,7 +47,7 @@ export default function EvolutionTimeline() {
   };
 
   return (
-    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24">
+    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
       {/* Dynamic ambient background glow */}
       <div className="absolute top-10 left-1/4 w-[600px] h-[600px] rounded-full bg-cyan-500/5 filter blur-[150px] pointer-events-none z-0" />
       <div className="absolute bottom-20 right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/5 filter blur-[150px] pointer-events-none z-0" />

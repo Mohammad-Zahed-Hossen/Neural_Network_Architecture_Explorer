@@ -104,7 +104,7 @@ export default function ReceptiveFieldExplorer() {
   }, [activeLayer]);
 
   return (
-    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24">
+    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
       {/* Glow backgrounds */}
       <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-cyan-500 z-0" />
       <div className="absolute bottom-0 left-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-indigo-500 z-0" />

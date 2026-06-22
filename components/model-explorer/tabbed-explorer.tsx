@@ -106,7 +106,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
   }, [model, graphData, showDetailedLayers, layers]);
 
   return (
-    <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative pb-12">
+    <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative pb-12 overflow-x-hidden">
       {/* Dynamic Background Glow Overlay matching model theme */}
       <div 
         className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full filter blur-[150px] pointer-events-none opacity-10 z-0"

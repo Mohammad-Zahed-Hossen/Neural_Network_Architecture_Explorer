@@ -108,7 +108,7 @@ export default function ExplorerClient({ model }: ExplorerClientProps) {
   }, [isPlaying]);
 
   return (
-    <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative">
+    <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative overflow-x-hidden">
       {/* Top Background Glow Overlay matching model theme */}
       <div 
         className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full filter blur-[150px] pointer-events-none opacity-20 z-0"

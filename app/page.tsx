@@ -62,7 +62,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-12">
+    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-12 overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-10 text-center lg:pt-24 lg:pb-14">
         <motion.div

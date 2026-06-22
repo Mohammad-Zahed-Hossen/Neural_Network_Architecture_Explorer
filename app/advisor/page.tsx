@@ -5,7 +5,7 @@ import { Award } from 'lucide-react';
 
 export default function AdvisorPage() {
   return (
-    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24">
+    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
       {/* Background radial glows */}
       <div className="absolute top-10 left-1/3 w-[500px] h-[500px] rounded-full bg-cyan-500/5 filter blur-[150px] pointer-events-none z-0" />
       <div className="absolute bottom-20 right-1/3 w-[500px] h-[500px] rounded-full bg-purple-500/5 filter blur-[150px] pointer-events-none z-0" />

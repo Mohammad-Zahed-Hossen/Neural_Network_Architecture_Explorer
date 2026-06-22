@@ -133,7 +133,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
   ];
 
   return (
-    <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative pb-16">
+    <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative pb-16 overflow-x-hidden">
       {/* Decorative ambient glowing overlay in center */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.06] bg-primary z-0" />
 

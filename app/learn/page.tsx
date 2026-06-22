@@ -60,7 +60,7 @@ export default function Learn() {
   ];
 
   return (
-    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-16">
+    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-16 overflow-x-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-10 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/5 filter blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[500px] h-[500px] rounded-full bg-purple-500/5 filter blur-[150px] pointer-events-none" />

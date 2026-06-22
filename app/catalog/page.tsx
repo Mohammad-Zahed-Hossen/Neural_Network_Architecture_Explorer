@@ -47,7 +47,7 @@ export default function Catalog() {
   }, [selectedCategory, searchQuery, selectedEfficiency, selectedEras]);
 
   return (
-    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-12">
+    <div className="relative flex flex-col flex-1 bg-background grid-bg pb-12 overflow-x-hidden">
       {/* Background glow */}
       <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-primary z-0" />
 
