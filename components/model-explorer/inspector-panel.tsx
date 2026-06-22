@@ -5,7 +5,7 @@ import {
   X, Layers, HelpCircle, Activity, Info, 
   Lightbulb, Calculator, Settings, ChevronDown, ChevronUp,
   ArrowRight, Image, Zap, Shrink, AlignJustify, Key, 
-  PlusCircle, GitMerge, Award, BarChart3
+  PlusCircle, GitMerge, Award, BarChart3, Eye
 } from 'lucide-react';
 import { Layer, LayerType, Conv2DConfig, PoolingConfig, DenseConfig, BatchNormConfig, DropoutConfig, ConcatenateConfig, BottleneckConfig, LayerConfig, InputConfig, ActivationConfig } from '@/lib/types/layer';
 import { cn } from '@/lib/utils/cn';
@@ -23,6 +23,8 @@ const iconMap: Record<LayerType, ComponentType<{ className?: string }>> = {
   input: Image,
   conv2d: Layers,
   batch_norm: Activity,
+  layer_norm: Activity,
+  attention: Eye,
   activation: Zap,
   max_pooling2d: Shrink,
   average_pooling2d: Shrink,
@@ -46,6 +48,20 @@ const typeStylesMap: Record<string, { border: string; text: string; bg: string; 
     bg: 'bg-emerald-500/[0.02]',
     badge: 'success',
     accentBg: 'bg-emerald-500/10'
+  },
+  layer_norm: {
+    border: 'border-slate-500/20',
+    text: 'text-slate-400',
+    bg: 'bg-slate-500/[0.02]',
+    badge: 'secondary',
+    accentBg: 'bg-slate-500/10'
+  },
+  attention: {
+    border: 'border-fuchsia-500/20',
+    text: 'text-fuchsia-400',
+    bg: 'bg-fuchsia-500/[0.02]',
+    badge: 'indigo',
+    accentBg: 'bg-fuchsia-500/10'
   },
   conv2d: {
     border: 'border-blue-500/20',

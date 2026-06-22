@@ -4,7 +4,7 @@ import { ComponentType, useState, useEffect } from 'react';
 import { 
   Layers, Image, Activity, Zap, Shrink, 
   AlignJustify, Key, PlusCircle, GitMerge, 
-  HelpCircle, ArrowDown, ChevronDown, ChevronRight 
+  HelpCircle, ArrowDown, ChevronDown, ChevronRight, Eye
 } from 'lucide-react';
 import { Layer, LayerType } from '@/lib/types/layer';
 import { cn } from '@/lib/utils/cn';
@@ -31,6 +31,8 @@ const iconMap: Record<LayerType, ComponentType<{ className?: string }>> = {
   input: Image,
   conv2d: Layers,
   batch_norm: Activity,
+  layer_norm: Activity,
+  attention: Eye,
   activation: Zap,
   max_pooling2d: Shrink,
   average_pooling2d: Shrink,
@@ -49,6 +51,8 @@ const iconMap: Record<LayerType, ComponentType<{ className?: string }>> = {
 // Styling profiles based on LayerType
 const typeStylesMap: Record<string, { border: string; text: string; bg: string; badge: 'default' | 'secondary' | 'outline' | 'success' | 'indigo' | 'primary'; shadow: string }> = {
   input: { border: 'border-emerald-500/20 hover:border-emerald-500/40', text: 'text-emerald-450', bg: 'bg-emerald-500/[0.02]', badge: 'success', shadow: 'shadow-emerald-500/5' },
+  layer_norm: { border: 'border-slate-500/20 hover:border-slate-500/40', text: 'text-slate-400', bg: 'bg-slate-500/[0.02]', badge: 'secondary', shadow: 'shadow-slate-500/5' },
+  attention: { border: 'border-fuchsia-500/20 hover:border-fuchsia-500/40', text: 'text-fuchsia-400', bg: 'bg-fuchsia-500/[0.02]', badge: 'indigo', shadow: 'shadow-fuchsia-500/5' },
   conv2d: { border: 'border-cyan-500/20 hover:border-cyan-500/40', text: 'text-cyan-400', bg: 'bg-cyan-500/[0.02]', badge: 'primary', shadow: 'shadow-cyan-500/5' },
   bottleneck: { border: 'border-blue-500/20 hover:border-blue-500/40', text: 'text-blue-400', bg: 'bg-blue-500/[0.02]', badge: 'primary', shadow: 'shadow-blue-500/5' },
   dense_block: { border: 'border-blue-500/20 hover:border-blue-500/40', text: 'text-blue-400', bg: 'bg-blue-500/[0.02]', badge: 'primary', shadow: 'shadow-blue-500/5' },
