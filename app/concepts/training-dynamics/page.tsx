@@ -80,6 +80,17 @@ export default function TrainingDynamicsVisualizer() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const handleResize = () => {
+      const rect = canvas.getBoundingClientRect();
+      if (canvas.width !== rect.width || canvas.height !== rect.height) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
     let animationId: number;
     let particles: Array<{
       x: number;
@@ -95,7 +106,7 @@ export default function TrainingDynamicsVisualizer() {
     // Calculate node coordinates on canvas
     const getNodesCoords = (depth: number, width: number, height: number) => {
       const coords = [];
-      const paddingX = 80;
+      const paddingX = width < 450 ? 35 : 80;
       const stepX = (width - paddingX * 2) / (depth - 1);
       const centerY = height / 2;
 
@@ -103,7 +114,7 @@ export default function TrainingDynamicsVisualizer() {
         coords.push({
           x: paddingX + i * stepX,
           y: centerY,
-          radius: 12
+          radius: width < 450 ? 9 : 12
         });
       }
       return coords;
@@ -445,7 +456,7 @@ export default function TrainingDynamicsVisualizer() {
 
         // Node Label index numbers
         ctx.fillStyle = '#94A3B8';
-        ctx.font = 'bold 9px monospace';
+        ctx.font = canvas.width < 450 ? 'bold 8px monospace' : 'bold 9px monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.shadowBlur = 0; // disable glow on text
@@ -461,6 +472,7 @@ export default function TrainingDynamicsVisualizer() {
 
     return () => {
       cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
     };
   }, [networkDepth, activeTab, isSimulating, backpropTrigger]);
 

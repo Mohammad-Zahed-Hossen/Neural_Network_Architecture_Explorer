@@ -233,7 +233,7 @@ export default function ReceptiveFieldExplorer() {
               </div>
 
               {/* Table Body - Scrollable */}
-              <div className="flex-1 overflow-y-auto pr-1 scrollbar-thin">
+              <div className="flex-1 overflow-y-auto overflow-x-auto pr-1 scrollbar-thin">
                 {isLoading ? (
                   <div className="h-full flex items-center justify-center py-20">
                     <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest animate-pulse">Loading model layer details...</span>
