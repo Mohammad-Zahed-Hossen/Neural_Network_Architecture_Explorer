@@ -30,24 +30,30 @@ export default function PaperKnowledgeCenter() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activePaperId, setActivePaperId] = useState<string | null>(null);
 
-  // Parse location hash on mount to support direct deep-linking
+  // Parse location hash on mount and listen to hashchange for robust linking
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
-      const hash = window.location.hash.substring(1); // remove '#'
-      // Find which paper contains this modelId or matches the paper id
-      const matched = papersData.find(p => p.id === hash || p.modelIds.includes(hash));
-      if (matched) {
-        setActivePaperId(matched.id);
-        
-        // Delay scroll slightly to allow rendering
-        setTimeout(() => {
-          const element = document.getElementById(matched.id);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 150);
+    const handleHash = () => {
+      if (typeof window !== 'undefined' && window.location.hash) {
+        const hash = window.location.hash.substring(1); // remove '#'
+        // Find which paper contains this modelId or matches the paper id
+        const matched = papersData.find(p => p.id === hash || p.modelIds.includes(hash));
+        if (matched) {
+          setActivePaperId(matched.id);
+          
+          // Delay scroll until card is fully expanded (matching the 300ms transition duration)
+          setTimeout(() => {
+            const element = document.getElementById(matched.id);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 350);
+        }
       }
-    }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
   // Filter papers based on search queries
