@@ -14,7 +14,7 @@ The **Neural Network Architecture Explorer** is a production-ready interactive e
 **Key Stats:**
 - **34 complete model architectures** with full layer-by-layer JSON definitions
 - **8,388 individual layers** documented across all models
-- **14 research papers** with structured analysis (problem, strengths, weaknesses, legacy, relevance)
+- **18 research papers** with structured analysis (problem, strengths, weaknesses, legacy, relevance)
 - **9 evolution timeline nodes** tracing architecture history from LeNet (1998) to ConvNeXt (2022)
 - **3-question rule-based advisor** with client-side scoring engine
 - **48 static pages** generated at build time for instant loading
@@ -87,7 +87,7 @@ components/
 data/                         # Root data directory (new architecture)
 ├── models.json               # 34 model summaries (used by catalog, advisor, comparison)
 ├── models_raw.json           # Raw scraped model data
-├── papers.json               # 14 research papers with structured analysis
+├── papers.json               # 18 research papers with structured analysis
 ├── evolution.json            # 9 timeline nodes (problem, innovation, legacy)
 ├── advisor.json              # 3 advisor questions with options
 └── graphs/                   # 34 topology graph files (nodes + edges for React Flow)
@@ -287,8 +287,8 @@ Every layer contains:
 - Gradient spine with animated ping dots
 
 ### 6.7 Paper Knowledge Center (`/papers`) ⭐ NEW
-- **14 research papers** with full structured analysis:
-  - VGG (2014), ResNet (2015), Inception (2015), ResNet V2 (2016), DenseNet (2016), Xception (2016), MobileNet (2017), NASNet (2017), MobileNetV3 (2019), EfficientNet (2019), ViT (2020), Swin (2021), ConvNeXt (2022), MaxViT (2022)
+- **18 research papers** with full structured analysis:
+  - LeNet (1998), AlexNet (2012), VGG (2014), Inception (2015), ResNet (2015), Inception-ResNet-v2 (2016), ResNet V2 (2016), DenseNet (2016), Xception (2016), MobileNet (2017), NASNet (2017), MobileNetV2 (2018), MobileNetV3 (2019), EfficientNet (2019), ViT (2020), Swin (2021), ConvNeXt (2022), MaxViT (2022)
 - **Searchable** by title, author, or contribution
 - **Expandable cards** with: problem statement, key strengths, trade-offs/weaknesses, legacy impact, modern relevance
 - **Linked models**: Each paper shows associated models in the catalog with direct links to their explorers
@@ -494,7 +494,7 @@ Below is the final quality scorecard summarizing the project's data integrity fo
 | **Parameter Accuracy** | **100%** | EXCELLENT | BN trainable/non-trainable splits match Keras specs; model totals match layer sums. |
 | **Hyperparameter Accuracy** | **100%** | EXCELLENT | Kernel sizes, strides, filter counts, activations, and projection dimensions match papers. |
 | **Educational Accuracy** | **100%** | EXCELLENT | Mathematical formulas, step-by-step ledgers, and paradigms verified. |
-| **Paper Accuracy** | **100%** | EXCELLENT | All 14 paper summaries, contributions, legacy, and arXiv URLs verified. |
+| **Paper Accuracy** | **100%** | EXCELLENT | All 18 paper summaries, contributions, legacy, and arXiv URLs verified. |
 | **Link Health Score** | **100%** | EXCELLENT | Static registry mapping resolves all documentation and source code links without 404s. |
 | **Overall Project Accuracy** | **99.7%** | PASSED (EXCELLENT) | High-fidelity, mathematically consistent dataset ready for multi-agent educational usage. |
 

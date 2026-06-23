@@ -4,6 +4,46 @@ Detailed indexing of the papers behind neural network breakthroughs represented 
 
 ## 1. Chronological Breakthrough Timeline
 
+### 1998 — Gradient-Based Learning Applied to Document Recognition
+
+- **Authors**: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner
+- **Key Contribution**: Demonstrated that gradient-based learning can be applied to document recognition systems and introduced the classic convolutional network architecture (LeNet-5) utilizing weight sharing and subsampling.
+- **Linked models**: `lenet`
+- **URL**: [http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf](http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf)
+
+**Strengths & Innovations**:
+- Pioneered the core components of modern CNNs: convolutions, weight sharing, pooling, and fully connected layers.
+- Significant reduction in parameter footprint compared to fully connected networks.
+
+**Weaknesses & Constraints**:
+- Limited to low-resolution grayscale images (e.g. 32x32) due to computation bounds of 1998.
+- Gradient degradation and vanishing gradients when attempting to stack deeper layers.
+
+**Historical Legacy**:
+Established the blueprint for all future deep learning convolutional architectures.
+
+---
+
+### 2012 — ImageNet Classification with Deep Convolutional Neural Networks
+
+- **Authors**: Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton
+- **Key Contribution**: Won the ImageNet LSVRC-2012 competition by a huge margin, demonstrating that large CNNs can be trained on massive datasets using GPUs.
+- **Linked models**: `alexnet`
+- **URL**: [https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf)
+
+**Strengths & Innovations**:
+- Pioneered GPU acceleration for training deep CNNs.
+- Introduced ReLU non-linearities for faster convergence and Dropout regularization to prevent overfitting.
+
+**Weaknesses & Constraints**:
+- Extremely heavy parameter count (over 60 million parameters).
+- Coarse early convolutions (11x11, stride 4) that miss fine-grained local textures.
+
+**Historical Legacy**:
+Ignited the modern deep learning revolution and established the GPU as the default hardware for training neural networks.
+
+---
+
 ### 2014 — Very Deep Convolutional Networks for Large-Scale Image Recognition
 
 - **Authors**: Karen Simonyan, Andrew Zisserman
@@ -48,7 +88,7 @@ Skip connections are now a standard architectural element in almost all modern v
 
 - **Authors**: Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, Zbigniew Wojna
 - **Key Contribution**: Introduced multi-branch Inception blocks with factorized convolutions (e.g. splitting 7x7 convs into 1x7 and 7x1) to reduce parameters.
-- **Linked models**: `inceptionv3`, `inceptionresnetv2`
+- **Linked models**: `inceptionv3`
 - **URL**: [https://arxiv.org/abs/1512.00567](https://arxiv.org/abs/1512.00567)
 
 **Strengths & Innovations**:
@@ -124,11 +164,31 @@ Bridged the gap between high-capacity inception designs and lightweight depthwis
 
 ---
 
+### 2016 — Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning
+
+- **Authors**: Christian Szegedy, Sergey Ioffe, Vincent Vanhoucke, Alex A. Alemi
+- **Key Contribution**: Combined the multi-branch Inception module with residual skip connections, demonstrating that residual links dramatically accelerate Inception network training.
+- **Linked models**: `inceptionresnetv2`
+- **URL**: [https://arxiv.org/abs/1602.07261](https://arxiv.org/abs/1602.07261)
+
+**Strengths & Innovations**:
+- Dramatically speeds up training convergence compared to pure Inception networks.
+- Maintains multi-scale receptive fields while gaining residual gradient flow stability.
+
+**Weaknesses & Constraints**:
+- Highly complex, heterogeneous block configurations that are hard to optimize for custom hardware.
+- Significant GPU memory overhead due to multiple parallel feature branches.
+
+**Historical Legacy**:
+Demonstrated that the combination of residual learning and multi-branch feature extraction is highly synergetic.
+
+---
+
 ### 2017 — MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications
 
 - **Authors**: Andrew G. Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, Hartwig Adam
 - **Key Contribution**: Introduced depthwise separable convolutions to build lightweight, low-latency visual models.
-- **Linked models**: `mobilenet`, `mobilenetv2`
+- **Linked models**: `mobilenet`
 - **URL**: [https://arxiv.org/abs/1704.04861](https://arxiv.org/abs/1704.04861)
 
 **Strengths & Innovations**:
@@ -161,6 +221,26 @@ Pioneered mobile-first computer vision and popularized hardware-conscious CNN de
 
 **Historical Legacy**:
 Pioneered Neural Architecture Search (NAS), accelerating the automated design of AI models.
+
+---
+
+### 2018 — MobileNetV2: Inverted Residuals and Linear Bottlenecks
+
+- **Authors**: Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, Liang-Chieh Chen
+- **Key Contribution**: Introduced the Inverted Residual Block with linear bottlenecks, allowing highly efficient information flow and feature reuse for mobile computer vision models.
+- **Linked models**: `mobilenetv2`
+- **URL**: [https://arxiv.org/abs/1801.04381](https://arxiv.org/abs/1801.04381)
+
+**Strengths & Innovations**:
+- Inverted residual structure maintains high capacity in narrow layers.
+- Linear bottlenecks prevent ReLU activation from destroying useful manifold features in thin layers.
+
+**Weaknesses & Constraints**:
+- Depthwise convolutions can be memory-bandwidth bottlenecked on standard server GPUs.
+- Slightly more complex block configuration compared to MobileNetV1.
+
+**Historical Legacy**:
+Established the inverted residual block as a primary design motif for efficient, lightweight CNN models.
 
 ---
 

@@ -1,5 +1,28 @@
 [
   {
+    "paperId": "lenet",
+    "title": "Gradient-Based Learning Applied to Document Recognition",
+    "year": 1998,
+    "authors": [
+      "Yann LeCun",
+      "L\u00e9on Bottou",
+      "Yoshua Bengio",
+      "Patrick Haffner"
+    ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "alexnet",
+    "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+    "year": 2012,
+    "authors": [
+      "Alex Krizhevsky",
+      "Ilya Sutskever",
+      "Geoffrey E. Hinton"
+    ],
+    "modelCount": 1
+  },
+  {
     "paperId": "vgg",
     "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
     "year": 2014,
@@ -20,6 +43,19 @@
       "Jian Sun"
     ],
     "modelCount": 3
+  },
+  {
+    "paperId": "inception",
+    "title": "Rethinking the Inception Architecture for Computer Vision",
+    "year": 2015,
+    "authors": [
+      "Christian Szegedy",
+      "Vincent Vanhoucke",
+      "Sergey Ioffe",
+      "Jonathon Shlens",
+      "Zbigniew Wojna"
+    ],
+    "modelCount": 1
   },
   {
     "paperId": "resnetv2",
@@ -46,6 +82,27 @@
     "modelCount": 3
   },
   {
+    "paperId": "xception",
+    "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
+    "year": 2016,
+    "authors": [
+      "Fran\u00e7ois Chollet"
+    ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "inceptionresnetv2",
+    "title": "Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning",
+    "year": 2016,
+    "authors": [
+      "Christian Szegedy",
+      "Sergey Ioffe",
+      "Vincent Vanhoucke",
+      "Alex A. Alemi"
+    ],
+    "modelCount": 1
+  },
+  {
     "paperId": "mobilenet",
     "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
     "year": 2017,
@@ -59,7 +116,32 @@
       "Marco Andreetto",
       "Hartwig Adam"
     ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "nasnet",
+    "title": "Learning Transferable Architectures for Scalable Image Recognition",
+    "year": 2017,
+    "authors": [
+      "Barret Zoph",
+      "Vijay Vasudevan",
+      "Jonathon Shlens",
+      "Quoc V. Le"
+    ],
     "modelCount": 2
+  },
+  {
+    "paperId": "mobilenetv2",
+    "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+    "year": 2018,
+    "authors": [
+      "Mark Sandler",
+      "Andrew Howard",
+      "Menglong Zhu",
+      "Andrey Zhmoginov",
+      "Liang-Chieh Chen"
+    ],
+    "modelCount": 1
   },
   {
     "paperId": "mobilenetv3",
@@ -81,28 +163,6 @@
     "modelCount": 2
   },
   {
-    "paperId": "inception",
-    "title": "Rethinking the Inception Architecture for Computer Vision",
-    "year": 2015,
-    "authors": [
-      "Christian Szegedy",
-      "Vincent Vanhoucke",
-      "Sergey Ioffe",
-      "Jonathon Shlens",
-      "Zbigniew Wojna"
-    ],
-    "modelCount": 2
-  },
-  {
-    "paperId": "xception",
-    "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
-    "year": 2016,
-    "authors": [
-      "Fran\u00e7ois Chollet"
-    ],
-    "modelCount": 1
-  },
-  {
     "paperId": "efficientnet",
     "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
     "year": 2019,
@@ -111,18 +171,6 @@
       "Quoc V. Le"
     ],
     "modelCount": 8
-  },
-  {
-    "paperId": "nasnet",
-    "title": "Learning Transferable Architectures for Scalable Image Recognition",
-    "year": 2017,
-    "authors": [
-      "Barret Zoph",
-      "Vijay Vasudevan",
-      "Jonathon Shlens",
-      "Quoc V. Le"
-    ],
-    "modelCount": 2
   },
   {
     "paperId": "vit",

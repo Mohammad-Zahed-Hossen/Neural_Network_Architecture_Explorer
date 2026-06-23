@@ -1,9 +1,68 @@
 [
   {
+    "id": "lenet",
+    "modelIds": [
+      "lenet"
+    ],
+    "title": "Gradient-Based Learning Applied to Document Recognition",
+    "authors": [
+      "Yann LeCun",
+      "Léon Bottou",
+      "Yoshua Bengio",
+      "Patrick Haffner"
+    ],
+    "year": 1998,
+    "contribution": "Demonstrated that gradient-based learning can be applied to document recognition systems and introduced the classic convolutional network architecture (LeNet-5) utilizing weight sharing and subsampling.",
+    "problem": "Handwritten digit recognition and character recognition were dominated by manually engineered feature extractors combined with separate classifiers, which were not robust to geometric variations.",
+    "strengths": [
+      "Pioneered the core components of modern CNNs: convolutions, weight sharing, pooling, and fully connected layers.",
+      "Significant reduction in parameter footprint compared to fully connected networks."
+    ],
+    "weaknesses": [
+      "Limited to low-resolution grayscale images (e.g. 32x32) due to computation bounds of 1998.",
+      "Gradient degradation and vanishing gradients when attempting to stack deeper layers."
+    ],
+    "legacy": "Established the blueprint for all future deep learning convolutional architectures.",
+    "relevance": "Historically important baseline model for teaching deep learning concepts.",
+    "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf"
+  },
+  {
+    "id": "alexnet",
+    "modelIds": [
+      "alexnet"
+    ],
+    "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+    "authors": [
+      "Alex Krizhevsky",
+      "Ilya Sutskever",
+      "Geoffrey E. Hinton"
+    ],
+    "year": 2012,
+    "contribution": "Won the ImageNet LSVRC-2012 competition by a huge margin, demonstrating that large CNNs can be trained on massive datasets using GPUs.",
+    "problem": "Computer vision was stuck in a local minimum favoring handcrafted descriptors (SIFT, HOG). Deep architectures were considered untrainable and computationally prohibitive on large datasets.",
+    "strengths": [
+      "Pioneered GPU acceleration for training deep CNNs.",
+      "Introduced ReLU non-linearities for faster convergence and Dropout regularization to prevent overfitting."
+    ],
+    "weaknesses": [
+      "Extremely heavy parameter count (over 60 million parameters).",
+      "Coarse early convolutions (11x11, stride 4) that miss fine-grained local textures."
+    ],
+    "legacy": "Ignited the modern deep learning revolution and established the GPU as the default hardware for training neural networks.",
+    "relevance": "Historically critical milestone; serves as an entry-level architecture for studying standard CNN designs.",
+    "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf"
+  },
+  {
     "id": "vgg",
-    "modelIds": ["vgg16", "vgg19"],
+    "modelIds": [
+      "vgg16",
+      "vgg19"
+    ],
     "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
-    "authors": ["Karen Simonyan", "Andrew Zisserman"],
+    "authors": [
+      "Karen Simonyan",
+      "Andrew Zisserman"
+    ],
     "year": 2014,
     "contribution": "Demonstrated that stacking multiple small 3x3 convolutions standardizes visual design and enables much deeper networks.",
     "problem": "Early networks (e.g. AlexNet) relied on large, heterogeneous kernel grids (11x11, 5x5) which increased parameters and constrained structural depth.",
@@ -21,9 +80,18 @@
   },
   {
     "id": "resnet",
-    "modelIds": ["resnet50", "resnet101", "resnet152"],
+    "modelIds": [
+      "resnet50",
+      "resnet101",
+      "resnet152"
+    ],
     "title": "Deep Residual Learning for Image Recognition",
-    "authors": ["Kaiming He", "Xiangyu Zhang", "Shaoqing Ren", "Jian Sun"],
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
     "year": 2015,
     "contribution": "Introduced identity shortcut skip connections to bypass layer parameters, enabling deep models to compile and train without optimization saturation.",
     "problem": "As feedforward networks exceeded 20 layers, training errors rose sharply (degradation problem) because backpropagated gradients saturated or vanished.",
@@ -40,10 +108,47 @@
     "paperUrl": "https://arxiv.org/abs/1512.03385"
   },
   {
+    "id": "inception",
+    "modelIds": [
+      "inceptionv3"
+    ],
+    "title": "Rethinking the Inception Architecture for Computer Vision",
+    "authors": [
+      "Christian Szegedy",
+      "Vincent Vanhoucke",
+      "Sergey Ioffe",
+      "Jonathon Shlens",
+      "Zbigniew Wojna"
+    ],
+    "year": 2015,
+    "contribution": "Introduced multi-branch Inception blocks with factorized convolutions (e.g. splitting 7x7 convs into 1x7 and 7x1) to reduce parameters.",
+    "problem": "Earlier architectures forced a uniform choice of kernel size, missing multi-scale spatial features and incurring high compute costs.",
+    "strengths": [
+      "Extracts multi-scale features (1x1, 3x3, 5x5) simultaneously in parallel branches",
+      "Highly parameter-efficient for its accuracy class"
+    ],
+    "weaknesses": [
+      "Complex branch structure can cause bottlenecks in memory access and slow execution",
+      "Difficult to scale and adapt for custom segmentation/detection heads"
+    ],
+    "legacy": "Popularized parallel multi-branch architectures and auxiliary training loss heads.",
+    "relevance": "Used frequently in image generation algorithms (e.g. calculating Frechet Inception Distance - FID) and classic vision systems.",
+    "paperUrl": "https://arxiv.org/abs/1512.00567"
+  },
+  {
     "id": "resnetv2",
-    "modelIds": ["resnet50v2", "resnet101v2", "resnet152v2"],
+    "modelIds": [
+      "resnet50v2",
+      "resnet101v2",
+      "resnet152v2"
+    ],
     "title": "Identity Mappings in Deep Residual Networks",
-    "authors": ["Kaiming He", "Xiangyu Zhang", "Shaoqing Ren", "Jian Sun"],
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
     "year": 2016,
     "contribution": "Redesigned the residual block to place Batch Normalization and ReLU activations *before* the convolution (Pre-activation).",
     "problem": "In the original ResNet, activations passed through additions and ReLUs, modifying clean identity shortcuts and slightly hindering gradient flow in extreme depths.",
@@ -61,9 +166,18 @@
   },
   {
     "id": "densenet",
-    "modelIds": ["densenet121", "densenet169", "densenet201"],
+    "modelIds": [
+      "densenet121",
+      "densenet169",
+      "densenet201"
+    ],
     "title": "Densely Connected Convolutional Networks",
-    "authors": ["Gao Huang", "Zhuang Liu", "Laurens van der Maaten", "Kilian Q. Weinberger"],
+    "authors": [
+      "Gao Huang",
+      "Zhuang Liu",
+      "Laurens van der Maaten",
+      "Kilian Q. Weinberger"
+    ],
     "year": 2016,
     "contribution": "Connected each layer to every other layer in a feedforward block, concatenating feature maps instead of adding them.",
     "problem": "Information and gradients can dilute or wash out when passed through deep layers, and ResNet's identity additions can blend features redundantly.",
@@ -80,70 +194,14 @@
     "paperUrl": "https://arxiv.org/abs/1608.06993"
   },
   {
-    "id": "mobilenet",
-    "modelIds": ["mobilenet", "mobilenetv2"],
-    "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
-    "authors": ["Andrew G. Howard", "Menglong Zhu", "Bo Chen", "Dmitry Kalenichenko", "Weijun Wang", "Tobias Weyand", "Marco Andreetto", "Hartwig Adam"],
-    "year": 2017,
-    "contribution": "Introduced depthwise separable convolutions to build lightweight, low-latency visual models.",
-    "problem": "Standard convolutional layers are too computationally expensive and parameter-heavy for real-time mobile app and edge deployment.",
-    "strengths": [
-      "Reduces computation (FLOPs) and parameters by up to 9x with minimal accuracy drops",
-      "Extremely small file size (e.g. ~16MB), ideal for mobile app bundles"
-    ],
-    "weaknesses": [
-      "Reduced capacity leads to lower classification accuracy on highly complex datasets",
-      "Depthwise layers can be memory bandwidth bound on server GPUs"
-    ],
-    "legacy": "Pioneered mobile-first computer vision and popularized hardware-conscious CNN design.",
-    "relevance": "Highly popular for mobile applications, real-time object detection, and background blur filters.",
-    "paperUrl": "https://arxiv.org/abs/1704.04861"
-  },
-  {
-    "id": "mobilenetv3",
-    "modelIds": ["mobilenetv3small", "mobilenetv3large"],
-    "title": "Searching for MobileNetV3",
-    "authors": ["Andrew Howard", "Mark Sandler", "Grace Chu", "Liang-Chieh Chen", "Bo Chen", "Mingxing Tan", "Weijun Wang", "Yukun Zhu", "Ruoming Peng", "Vijay Vasudevan", "Hartwig Adam"],
-    "year": 2019,
-    "contribution": "Combined hardware-aware Neural Architecture Search (NAS) and NetAdapt algorithms with the hard-swish activation function.",
-    "problem": "Manually tuning lightweight convolutional networks is slow and misses optimal micro-architectural block selections.",
-    "strengths": [
-      "State-of-the-art speed-accuracy tradeoff on mobile CPUs",
-      "Introduces squeeze-and-excitation attention blocks to prioritize channels"
-    ],
-    "weaknesses": [
-      "Inference speed benefits are CPU-centric and may not show on high-end desktop GPUs",
-      "High design complexity makes custom modifications difficult"
-    ],
-    "legacy": "Demonstrated that automated reinforcement learning search yields better edge networks than human designers.",
-    "relevance": "Default choice for edge AI classifiers, on-device face detectors, and smart camera vision.",
-    "paperUrl": "https://arxiv.org/abs/1905.02175"
-  },
-  {
-    "id": "inception",
-    "modelIds": ["inceptionv3", "inceptionresnetv2"],
-    "title": "Rethinking the Inception Architecture for Computer Vision",
-    "authors": ["Christian Szegedy", "Vincent Vanhoucke", "Sergey Ioffe", "Jonathon Shlens", "Zbigniew Wojna"],
-    "year": 2015,
-    "contribution": "Introduced multi-branch Inception blocks with factorized convolutions (e.g. splitting 7x7 convs into 1x7 and 7x1) to reduce parameters.",
-    "problem": "Earlier architectures forced a uniform choice of kernel size, missing multi-scale spatial features and incurring high compute costs.",
-    "strengths": [
-      "Extracts multi-scale features (1x1, 3x3, 5x5) simultaneously in parallel branches",
-      "Highly parameter-efficient for its accuracy class"
-    ],
-    "weaknesses": [
-      "Complex branch structure can cause bottlenecks in memory access and slow execution",
-      "Difficult to scale and adapt for custom segmentation/detection heads"
-    ],
-    "legacy": "Popularized parallel multi-branch architectures and auxiliary training loss heads.",
-    "relevance": "Used frequently in image generation algorithms (e.g. calculating Frechet Inception Distance - FID) and classic vision systems.",
-    "paperUrl": "https://arxiv.org/abs/1512.00567"
-  },
-  {
     "id": "xception",
-    "modelIds": ["xception"],
+    "modelIds": [
+      "xception"
+    ],
     "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
-    "authors": ["François Chollet"],
+    "authors": [
+      "François Chollet"
+    ],
     "year": 2016,
     "contribution": "Replaced standard Inception modules with depthwise separable convolutions, adding residual skip connections.",
     "problem": "The original Inception architecture assumed spatial and cross-channel correlations should be mapped jointly, wasting representation capacity.",
@@ -160,33 +218,76 @@
     "paperUrl": "https://arxiv.org/abs/1610.02357"
   },
   {
-    "id": "efficientnet",
+    "id": "inceptionresnetv2",
     "modelIds": [
-      "efficientnetb0", "efficientnetb1", "efficientnetb2", "efficientnetb3",
-      "efficientnetb4", "efficientnetb5", "efficientnetb6", "efficientnetb7"
+      "inceptionresnetv2"
     ],
-    "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
-    "authors": ["Mingxing Tan", "Quoc V. Le"],
-    "year": 2019,
-    "contribution": "Formulated a compound scaling method to scale network depth, width, and input resolution using a fixed mathematical coefficient.",
-    "problem": "CNNs were scaled up arbitrarily (e.g. only adding depth, or only adding width), wasting compute and missing optimal representations.",
+    "title": "Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning",
+    "authors": [
+      "Christian Szegedy",
+      "Sergey Ioffe",
+      "Vincent Vanhoucke",
+      "Alex A. Alemi"
+    ],
+    "year": 2016,
+    "contribution": "Combined the multi-branch Inception module with residual skip connections, demonstrating that residual links dramatically accelerate Inception network training.",
+    "problem": "Deep Inception networks were extremely slow and complex to train, and scaling them to larger depths led to severe training degradation.",
     "strengths": [
-      "Exceptional accuracy-to-parameter ratio (8x parameter reduction for similar accuracy)",
-      "Modular, mathematically coherent family scaling (from B0 up to B7)"
+      "Dramatically speeds up training convergence compared to pure Inception networks.",
+      "Maintains multi-scale receptive fields while gaining residual gradient flow stability."
     ],
     "weaknesses": [
-      "Very deep variants (B6/B7) are slow to train due to deep sequential dependencies",
-      "Requires advanced training recipes (like AutoAugment) to achieve target benchmarks"
+      "Highly complex, heterogeneous block configurations that are hard to optimize for custom hardware.",
+      "Significant GPU memory overhead due to multiple parallel feature branches."
     ],
-    "legacy": "Established scientific scaling frameworks for deep architectures, displacing ad-hoc scaling guesswork.",
-    "relevance": "One of the most popular and robust CNN backbones for image classification, transfer learning, and feature extraction.",
-    "paperUrl": "https://arxiv.org/abs/1905.11946"
+    "legacy": "Demonstrated that the combination of residual learning and multi-branch feature extraction is highly synergetic.",
+    "relevance": "Popular in research settings requiring high feature diversity and multi-scale context aggregation.",
+    "paperUrl": "https://arxiv.org/abs/1602.07261"
+  },
+  {
+    "id": "mobilenet",
+    "modelIds": [
+      "mobilenet"
+    ],
+    "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+    "authors": [
+      "Andrew G. Howard",
+      "Menglong Zhu",
+      "Bo Chen",
+      "Dmitry Kalenichenko",
+      "Weijun Wang",
+      "Tobias Weyand",
+      "Marco Andreetto",
+      "Hartwig Adam"
+    ],
+    "year": 2017,
+    "contribution": "Introduced depthwise separable convolutions to build lightweight, low-latency visual models.",
+    "problem": "Standard convolutional layers are too computationally expensive and parameter-heavy for real-time mobile app and edge deployment.",
+    "strengths": [
+      "Reduces computation (FLOPs) and parameters by up to 9x with minimal accuracy drops",
+      "Extremely small file size (e.g. ~16MB), ideal for mobile app bundles"
+    ],
+    "weaknesses": [
+      "Reduced capacity leads to lower classification accuracy on highly complex datasets",
+      "Depthwise layers can be memory bandwidth bound on server GPUs"
+    ],
+    "legacy": "Pioneered mobile-first computer vision and popularized hardware-conscious CNN design.",
+    "relevance": "Highly popular for mobile applications, real-time object detection, and background blur filters.",
+    "paperUrl": "https://arxiv.org/abs/1704.04861"
   },
   {
     "id": "nasnet",
-    "modelIds": ["nasnetmobile", "nasnetlarge"],
+    "modelIds": [
+      "nasnetmobile",
+      "nasnetlarge"
+    ],
     "title": "Learning Transferable Architectures for Scalable Image Recognition",
-    "authors": ["Barret Zoph", "Vijay Vasudevan", "Jonathon Shlens", "Quoc V. Le"],
+    "authors": [
+      "Barret Zoph",
+      "Vijay Vasudevan",
+      "Jonathon Shlens",
+      "Quoc V. Le"
+    ],
     "year": 2017,
     "contribution": "Designed cell-based neural search spaces (Normal Cells and Reduction Cells) optimized by reinforcement learning.",
     "problem": "Manual architectural engineering is bounded by human intuition, which misses optimal, non-intuitive layer combinations.",
@@ -203,10 +304,111 @@
     "paperUrl": "https://arxiv.org/abs/1707.07012"
   },
   {
+    "id": "mobilenetv2",
+    "modelIds": [
+      "mobilenetv2"
+    ],
+    "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+    "authors": [
+      "Mark Sandler",
+      "Andrew Howard",
+      "Menglong Zhu",
+      "Andrey Zhmoginov",
+      "Liang-Chieh Chen"
+    ],
+    "year": 2018,
+    "contribution": "Introduced the Inverted Residual Block with linear bottlenecks, allowing highly efficient information flow and feature reuse for mobile computer vision models.",
+    "problem": "Standard residual blocks were designed for high-compute regimes and suffered from information loss when compressed to thin, low-channel mobile layouts.",
+    "strengths": [
+      "Inverted residual structure maintains high capacity in narrow layers.",
+      "Linear bottlenecks prevent ReLU activation from destroying useful manifold features in thin layers."
+    ],
+    "weaknesses": [
+      "Depthwise convolutions can be memory-bandwidth bottlenecked on standard server GPUs.",
+      "Slightly more complex block configuration compared to MobileNetV1."
+    ],
+    "legacy": "Established the inverted residual block as a primary design motif for efficient, lightweight CNN models.",
+    "relevance": "Widely used as a highly efficient feature extractor for edge devices, embedded hardware, and real-time detection/segmentation tasks.",
+    "paperUrl": "https://arxiv.org/abs/1801.04381"
+  },
+  {
+    "id": "mobilenetv3",
+    "modelIds": [
+      "mobilenetv3small",
+      "mobilenetv3large"
+    ],
+    "title": "Searching for MobileNetV3",
+    "authors": [
+      "Andrew Howard",
+      "Mark Sandler",
+      "Grace Chu",
+      "Liang-Chieh Chen",
+      "Bo Chen",
+      "Mingxing Tan",
+      "Weijun Wang",
+      "Yukun Zhu",
+      "Ruoming Peng",
+      "Vijay Vasudevan",
+      "Hartwig Adam"
+    ],
+    "year": 2019,
+    "contribution": "Combined hardware-aware Neural Architecture Search (NAS) and NetAdapt algorithms with the hard-swish activation function.",
+    "problem": "Manually tuning lightweight convolutional networks is slow and misses optimal micro-architectural block selections.",
+    "strengths": [
+      "State-of-the-art speed-accuracy tradeoff on mobile CPUs",
+      "Introduces squeeze-and-excitation attention blocks to prioritize channels"
+    ],
+    "weaknesses": [
+      "Inference speed benefits are CPU-centric and may not show on high-end desktop GPUs",
+      "High design complexity makes custom modifications difficult"
+    ],
+    "legacy": "Demonstrated that automated reinforcement learning search yields better edge networks than human designers.",
+    "relevance": "Default choice for edge AI classifiers, on-device face detectors, and smart camera vision.",
+    "paperUrl": "https://arxiv.org/abs/1905.02175"
+  },
+  {
+    "id": "efficientnet",
+    "modelIds": [
+      "efficientnetb0",
+      "efficientnetb1",
+      "efficientnetb2",
+      "efficientnetb3",
+      "efficientnetb4",
+      "efficientnetb5",
+      "efficientnetb6",
+      "efficientnetb7"
+    ],
+    "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+    "authors": [
+      "Mingxing Tan",
+      "Quoc V. Le"
+    ],
+    "year": 2019,
+    "contribution": "Formulated a compound scaling method to scale network depth, width, and input resolution using a fixed mathematical coefficient.",
+    "problem": "CNNs were scaled up arbitrarily (e.g. only adding depth, or only adding width), wasting compute and missing optimal representations.",
+    "strengths": [
+      "Exceptional accuracy-to-parameter ratio (8x parameter reduction for similar accuracy)",
+      "Modular, mathematically coherent family scaling (from B0 up to B7)"
+    ],
+    "weaknesses": [
+      "Very deep variants (B6/B7) are slow to train due to deep sequential dependencies",
+      "Requires advanced training recipes (like AutoAugment) to achieve target benchmarks"
+    ],
+    "legacy": "Established scientific scaling frameworks for deep architectures, displacing ad-hoc scaling guesswork.",
+    "relevance": "One of the most popular and robust CNN backbones for image classification, transfer learning, and feature extraction.",
+    "paperUrl": "https://arxiv.org/abs/1905.11946"
+  },
+  {
     "id": "vit",
-    "modelIds": ["vit"],
+    "modelIds": [
+      "vit"
+    ],
     "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
-    "authors": ["Alexey Dosovitskiy", "Lucas Beyer", "et al."],
+    "authors": [
+      "Alexey Dosovitskiy",
+      "Lucas Beyer",
+      "et al."
+    ],
     "year": 2020,
     "contribution": "Applied standard transformer self-attention blocks directly to non-overlapping image patches, showing that CNN-style inductive bias is not necessary at scale.",
     "problem": "CNNs rely on local translation invariance and local receptive fields, which limits their global context awareness and scaling capacity on massive datasets.",
@@ -224,9 +426,15 @@
   },
   {
     "id": "swin",
-    "modelIds": ["swin"],
+    "modelIds": [
+      "swin"
+    ],
     "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
-    "authors": ["Ze Liu", "Yutong Lin", "et al."],
+    "authors": [
+      "Ze Liu",
+      "Yutong Lin",
+      "et al."
+    ],
     "year": 2021,
     "contribution": "Introduced shifted local window attention and a hierarchical patch merging structure to reduce attention complexity from quadratic to linear, enabling high-resolution image processing.",
     "problem": "Standard ViT uses global self-attention, which scales quadratically with pixel resolution, making it impractical for high-resolution tasks like object detection or segmentation.",
@@ -244,9 +452,15 @@
   },
   {
     "id": "convnext",
-    "modelIds": ["convnext"],
+    "modelIds": [
+      "convnext"
+    ],
     "title": "A ConvNet for the 2020s",
-    "authors": ["Zhuang Liu", "Hanzi Mao", "et al."],
+    "authors": [
+      "Zhuang Liu",
+      "Hanzi Mao",
+      "et al."
+    ],
     "year": 2022,
     "contribution": "Modernized a standard ResNet with transformer design choices (7x7 depthwise convs, LayerNorm, GELU, patchify stems), proving that pure CNNs can achieve accuracy and scaling comparable to ViTs.",
     "problem": "The rapid rise of Vision Transformers led to the belief that standard CNNs had hit a performance wall and could not scale as effectively.",
@@ -264,9 +478,15 @@
   },
   {
     "id": "maxvit",
-    "modelIds": ["maxvit"],
+    "modelIds": [
+      "maxvit"
+    ],
     "title": "MaxViT: Multi-Axis Vision Transformer",
-    "authors": ["Zhengsu Chen", "Jianchao Tan", "et al."],
+    "authors": [
+      "Zhengsu Chen",
+      "Jianchao Tan",
+      "et al."
+    ],
     "year": 2022,
     "contribution": "Combined MBConv CNN blocks with block window attention (local context) and sparse grid attention (global context), achieving global self-attention in linear time.",
     "problem": "Local window transformers (like Swin) lack true global receptive fields in a single block, while global transformers (like ViT) are too expensive.",

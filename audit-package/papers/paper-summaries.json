@@ -1,5 +1,52 @@
 [
   {
+    "title": "Gradient-Based Learning Applied to Document Recognition",
+    "authors": [
+      "Yann LeCun",
+      "L\u00e9on Bottou",
+      "Yoshua Bengio",
+      "Patrick Haffner"
+    ],
+    "publicationYear": 1998,
+    "doi": null,
+    "arXivLink": null,
+    "officialUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "summary": "Problem Solved: Handwritten digit recognition and character recognition were dominated by manually engineered feature extractors combined with separate classifiers, which were not robust to geometric variations.\nSignificance: Historically important baseline model for teaching deep learning concepts.",
+    "keyContributions": "Demonstrated that gradient-based learning can be applied to document recognition systems and introduced the classic convolutional network architecture (LeNet-5) utilizing weight sharing and subsampling.",
+    "strengths": [
+      "Pioneered the core components of modern CNNs: convolutions, weight sharing, pooling, and fully connected layers.",
+      "Significant reduction in parameter footprint compared to fully connected networks."
+    ],
+    "weaknesses": [
+      "Limited to low-resolution grayscale images (e.g. 32x32) due to computation bounds of 1998.",
+      "Gradient degradation and vanishing gradients when attempting to stack deeper layers."
+    ],
+    "legacy": "Established the blueprint for all future deep learning convolutional architectures."
+  },
+  {
+    "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+    "authors": [
+      "Alex Krizhevsky",
+      "Ilya Sutskever",
+      "Geoffrey E. Hinton"
+    ],
+    "publicationYear": 2012,
+    "doi": null,
+    "arXivLink": null,
+    "officialUrl": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "summary": "Problem Solved: Computer vision was stuck in a local minimum favoring handcrafted descriptors (SIFT, HOG). Deep architectures were considered untrainable and computationally prohibitive on large datasets.\nSignificance: Historically critical milestone; serves as an entry-level architecture for studying standard CNN designs.",
+    "keyContributions": "Won the ImageNet LSVRC-2012 competition by a huge margin, demonstrating that large CNNs can be trained on massive datasets using GPUs.",
+    "strengths": [
+      "Pioneered GPU acceleration for training deep CNNs.",
+      "Introduced ReLU non-linearities for faster convergence and Dropout regularization to prevent overfitting."
+    ],
+    "weaknesses": [
+      "Extremely heavy parameter count (over 60 million parameters).",
+      "Coarse early convolutions (11x11, stride 4) that miss fine-grained local textures."
+    ],
+    "legacy": "Ignited the modern deep learning revolution and established the GPU as the default hardware for training neural networks."
+  },
+  {
     "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
     "authors": [
       "Karen Simonyan",
@@ -44,6 +91,31 @@
       "Identity shortcuts do not increase representational capacity directly"
     ],
     "legacy": "Skip connections are now a standard architectural element in almost all modern vision models and Transformers."
+  },
+  {
+    "title": "Rethinking the Inception Architecture for Computer Vision",
+    "authors": [
+      "Christian Szegedy",
+      "Vincent Vanhoucke",
+      "Sergey Ioffe",
+      "Jonathon Shlens",
+      "Zbigniew Wojna"
+    ],
+    "publicationYear": 2015,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1512.00567",
+    "officialUrl": "https://arxiv.org/abs/1512.00567",
+    "summary": "Problem Solved: Earlier architectures forced a uniform choice of kernel size, missing multi-scale spatial features and incurring high compute costs.\nSignificance: Used frequently in image generation algorithms (e.g. calculating Frechet Inception Distance - FID) and classic vision systems.",
+    "keyContributions": "Introduced multi-branch Inception blocks with factorized convolutions (e.g. splitting 7x7 convs into 1x7 and 7x1) to reduce parameters.",
+    "strengths": [
+      "Extracts multi-scale features (1x1, 3x3, 5x5) simultaneously in parallel branches",
+      "Highly parameter-efficient for its accuracy class"
+    ],
+    "weaknesses": [
+      "Complex branch structure can cause bottlenecks in memory access and slow execution",
+      "Difficult to scale and adapt for custom segmentation/detection heads"
+    ],
+    "legacy": "Popularized parallel multi-branch architectures and auxiliary training loss heads."
   },
   {
     "title": "Identity Mappings in Deep Residual Networks",
@@ -94,6 +166,51 @@
     "legacy": "Demonstrated that dense feature reuse and explicit channel concatenation are viable alternatives to residual sums."
   },
   {
+    "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
+    "authors": [
+      "Fran\u00e7ois Chollet"
+    ],
+    "publicationYear": 2016,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1610.02357",
+    "officialUrl": "https://arxiv.org/abs/1610.02357",
+    "summary": "Problem Solved: The original Inception architecture assumed spatial and cross-channel correlations should be mapped jointly, wasting representation capacity.\nSignificance: Still widely used as a feature extractor backbone for semantic segmentation networks like DeepLabV3.",
+    "keyContributions": "Replaced standard Inception modules with depthwise separable convolutions, adding residual skip connections.",
+    "strengths": [
+      "Better parameter efficiency and accuracy than standard Inception V3",
+      "Extremely clean, uniform sequential layout compared to messy inception branches"
+    ],
+    "weaknesses": [
+      "Can be slower to train on systems without optimized depthwise convolution kernels",
+      "Relatively heavy parameter size compared to MobileNet"
+    ],
+    "legacy": "Bridged the gap between high-capacity inception designs and lightweight depthwise separable convolutions."
+  },
+  {
+    "title": "Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning",
+    "authors": [
+      "Christian Szegedy",
+      "Sergey Ioffe",
+      "Vincent Vanhoucke",
+      "Alex A. Alemi"
+    ],
+    "publicationYear": 2016,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1602.07261",
+    "officialUrl": "https://arxiv.org/abs/1602.07261",
+    "summary": "Problem Solved: Deep Inception networks were extremely slow and complex to train, and scaling them to larger depths led to severe training degradation.\nSignificance: Popular in research settings requiring high feature diversity and multi-scale context aggregation.",
+    "keyContributions": "Combined the multi-branch Inception module with residual skip connections, demonstrating that residual links dramatically accelerate Inception network training.",
+    "strengths": [
+      "Dramatically speeds up training convergence compared to pure Inception networks.",
+      "Maintains multi-scale receptive fields while gaining residual gradient flow stability."
+    ],
+    "weaknesses": [
+      "Highly complex, heterogeneous block configurations that are hard to optimize for custom hardware.",
+      "Significant GPU memory overhead due to multiple parallel feature branches."
+    ],
+    "legacy": "Demonstrated that the combination of residual learning and multi-branch feature extraction is highly synergetic."
+  },
+  {
     "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
     "authors": [
       "Andrew G. Howard",
@@ -120,6 +237,55 @@
       "Depthwise layers can be memory bandwidth bound on server GPUs"
     ],
     "legacy": "Pioneered mobile-first computer vision and popularized hardware-conscious CNN design."
+  },
+  {
+    "title": "Learning Transferable Architectures for Scalable Image Recognition",
+    "authors": [
+      "Barret Zoph",
+      "Vijay Vasudevan",
+      "Jonathon Shlens",
+      "Quoc V. Le"
+    ],
+    "publicationYear": 2017,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1707.07012",
+    "officialUrl": "https://arxiv.org/abs/1707.07012",
+    "summary": "Problem Solved: Manual architectural engineering is bounded by human intuition, which misses optimal, non-intuitive layer combinations.\nSignificance: No longer widely used due to cell irregularity, but historically critical as the father of modern search architectures.",
+    "keyContributions": "Designed cell-based neural search spaces (Normal Cells and Reduction Cells) optimized by reinforcement learning.",
+    "strengths": [
+      "Discovered highly optimized visual cells that easily generalize across different tasks",
+      "Achieved state-of-the-art ImageNet accuracy at the time of publication"
+    ],
+    "weaknesses": [
+      "Extremely complex, irregular node layouts make hardware caching inefficient",
+      "Massive reinforcement learning search required 500+ GPUs to run"
+    ],
+    "legacy": "Pioneered Neural Architecture Search (NAS), accelerating the automated design of AI models."
+  },
+  {
+    "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+    "authors": [
+      "Mark Sandler",
+      "Andrew Howard",
+      "Menglong Zhu",
+      "Andrey Zhmoginov",
+      "Liang-Chieh Chen"
+    ],
+    "publicationYear": 2018,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1801.04381",
+    "officialUrl": "https://arxiv.org/abs/1801.04381",
+    "summary": "Problem Solved: Standard residual blocks were designed for high-compute regimes and suffered from information loss when compressed to thin, low-channel mobile layouts.\nSignificance: Widely used as a highly efficient feature extractor for edge devices, embedded hardware, and real-time detection/segmentation tasks.",
+    "keyContributions": "Introduced the Inverted Residual Block with linear bottlenecks, allowing highly efficient information flow and feature reuse for mobile computer vision models.",
+    "strengths": [
+      "Inverted residual structure maintains high capacity in narrow layers.",
+      "Linear bottlenecks prevent ReLU activation from destroying useful manifold features in thin layers."
+    ],
+    "weaknesses": [
+      "Depthwise convolutions can be memory-bandwidth bottlenecked on standard server GPUs.",
+      "Slightly more complex block configuration compared to MobileNetV1."
+    ],
+    "legacy": "Established the inverted residual block as a primary design motif for efficient, lightweight CNN models."
   },
   {
     "title": "Searching for MobileNetV3",
@@ -153,52 +319,6 @@
     "legacy": "Demonstrated that automated reinforcement learning search yields better edge networks than human designers."
   },
   {
-    "title": "Rethinking the Inception Architecture for Computer Vision",
-    "authors": [
-      "Christian Szegedy",
-      "Vincent Vanhoucke",
-      "Sergey Ioffe",
-      "Jonathon Shlens",
-      "Zbigniew Wojna"
-    ],
-    "publicationYear": 2015,
-    "doi": null,
-    "arXivLink": "https://arxiv.org/abs/1512.00567",
-    "officialUrl": "https://arxiv.org/abs/1512.00567",
-    "summary": "Problem Solved: Earlier architectures forced a uniform choice of kernel size, missing multi-scale spatial features and incurring high compute costs.\nSignificance: Used frequently in image generation algorithms (e.g. calculating Frechet Inception Distance - FID) and classic vision systems.",
-    "keyContributions": "Introduced multi-branch Inception blocks with factorized convolutions (e.g. splitting 7x7 convs into 1x7 and 7x1) to reduce parameters.",
-    "strengths": [
-      "Extracts multi-scale features (1x1, 3x3, 5x5) simultaneously in parallel branches",
-      "Highly parameter-efficient for its accuracy class"
-    ],
-    "weaknesses": [
-      "Complex branch structure can cause bottlenecks in memory access and slow execution",
-      "Difficult to scale and adapt for custom segmentation/detection heads"
-    ],
-    "legacy": "Popularized parallel multi-branch architectures and auxiliary training loss heads."
-  },
-  {
-    "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
-    "authors": [
-      "Fran\u00e7ois Chollet"
-    ],
-    "publicationYear": 2016,
-    "doi": null,
-    "arXivLink": "https://arxiv.org/abs/1610.02357",
-    "officialUrl": "https://arxiv.org/abs/1610.02357",
-    "summary": "Problem Solved: The original Inception architecture assumed spatial and cross-channel correlations should be mapped jointly, wasting representation capacity.\nSignificance: Still widely used as a feature extractor backbone for semantic segmentation networks like DeepLabV3.",
-    "keyContributions": "Replaced standard Inception modules with depthwise separable convolutions, adding residual skip connections.",
-    "strengths": [
-      "Better parameter efficiency and accuracy than standard Inception V3",
-      "Extremely clean, uniform sequential layout compared to messy inception branches"
-    ],
-    "weaknesses": [
-      "Can be slower to train on systems without optimized depthwise convolution kernels",
-      "Relatively heavy parameter size compared to MobileNet"
-    ],
-    "legacy": "Bridged the gap between high-capacity inception designs and lightweight depthwise separable convolutions."
-  },
-  {
     "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
     "authors": [
       "Mingxing Tan",
@@ -219,30 +339,6 @@
       "Requires advanced training recipes (like AutoAugment) to achieve target benchmarks"
     ],
     "legacy": "Established scientific scaling frameworks for deep architectures, displacing ad-hoc scaling guesswork."
-  },
-  {
-    "title": "Learning Transferable Architectures for Scalable Image Recognition",
-    "authors": [
-      "Barret Zoph",
-      "Vijay Vasudevan",
-      "Jonathon Shlens",
-      "Quoc V. Le"
-    ],
-    "publicationYear": 2017,
-    "doi": null,
-    "arXivLink": "https://arxiv.org/abs/1707.07012",
-    "officialUrl": "https://arxiv.org/abs/1707.07012",
-    "summary": "Problem Solved: Manual architectural engineering is bounded by human intuition, which misses optimal, non-intuitive layer combinations.\nSignificance: No longer widely used due to cell irregularity, but historically critical as the father of modern search architectures.",
-    "keyContributions": "Designed cell-based neural search spaces (Normal Cells and Reduction Cells) optimized by reinforcement learning.",
-    "strengths": [
-      "Discovered highly optimized visual cells that easily generalize across different tasks",
-      "Achieved state-of-the-art ImageNet accuracy at the time of publication"
-    ],
-    "weaknesses": [
-      "Extremely complex, irregular node layouts make hardware caching inefficient",
-      "Massive reinforcement learning search required 500+ GPUs to run"
-    ],
-    "legacy": "Pioneered Neural Architecture Search (NAS), accelerating the automated design of AI models."
   },
   {
     "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",

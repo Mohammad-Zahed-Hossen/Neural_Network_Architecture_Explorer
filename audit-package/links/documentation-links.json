@@ -382,11 +382,5 @@
     "sourceFile": "data/models.json",
     "category": "Documentation",
     "context": "Line 1387: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception',"
-  },
-  {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet",
-    "sourceFile": "doc/PROJECT_REPORT.md",
-    "category": "Documentation",
-    "context": "Line 515: * **Actual**: e.g., `https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet` (Returns 404)."
   }
 ]

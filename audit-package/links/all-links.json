@@ -2688,10 +2688,10 @@
     "context": "Line 170: 'implementation': 'https://github.com/google-research/maxvit'"
   },
   {
-    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
+    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf',"
   },
   {
     "url": "https://pytorch.org/hub/pytorch_vision_alexnet/",
@@ -2814,10 +2814,10 @@
     "context": "Line 594: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3',"
   },
   {
-    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
+    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',"
   },
   {
     "url": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
@@ -2862,10 +2862,10 @@
     "context": "Line 764: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2',"
   },
   {
-    "url": "https://arxiv.org/abs/1905.02244",
+    "url": "https://arxiv.org/abs/1905.02175",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02244',"
+    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",
@@ -3000,100 +3000,118 @@
     "context": "Line 1387: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception',"
   },
   {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 27: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 53: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf'"
+  },
+  {
     "url": "https://arxiv.org/abs/1409.1556",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 20: 'paperUrl': 'https://arxiv.org/abs/1409.1556'"
+    "context": "Line 79: 'paperUrl': 'https://arxiv.org/abs/1409.1556'"
   },
   {
     "url": "https://arxiv.org/abs/1512.03385",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 40: 'paperUrl': 'https://arxiv.org/abs/1512.03385'"
-  },
-  {
-    "url": "https://arxiv.org/abs/1603.05027",
-    "sourceFile": "data/papers.json",
-    "category": "Research Papers",
-    "context": "Line 60: 'paperUrl': 'https://arxiv.org/abs/1603.05027'"
-  },
-  {
-    "url": "https://arxiv.org/abs/1608.06993",
-    "sourceFile": "data/papers.json",
-    "category": "Research Papers",
-    "context": "Line 80: 'paperUrl': 'https://arxiv.org/abs/1608.06993'"
-  },
-  {
-    "url": "https://arxiv.org/abs/1704.04861",
-    "sourceFile": "data/papers.json",
-    "category": "Research Papers",
-    "context": "Line 100: 'paperUrl': 'https://arxiv.org/abs/1704.04861'"
-  },
-  {
-    "url": "https://arxiv.org/abs/1905.02175",
-    "sourceFile": "data/papers.json",
-    "category": "Research Papers",
-    "context": "Line 120: 'paperUrl': 'https://arxiv.org/abs/1905.02175'"
+    "context": "Line 108: 'paperUrl': 'https://arxiv.org/abs/1512.03385'"
   },
   {
     "url": "https://arxiv.org/abs/1512.00567",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 140: 'paperUrl': 'https://arxiv.org/abs/1512.00567'"
+    "context": "Line 136: 'paperUrl': 'https://arxiv.org/abs/1512.00567'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 165: 'paperUrl': 'https://arxiv.org/abs/1603.05027'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 194: 'paperUrl': 'https://arxiv.org/abs/1608.06993'"
   },
   {
     "url": "https://arxiv.org/abs/1610.02357",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 160: 'paperUrl': 'https://arxiv.org/abs/1610.02357'"
+    "context": "Line 218: 'paperUrl': 'https://arxiv.org/abs/1610.02357'"
   },
   {
-    "url": "https://arxiv.org/abs/1905.11946",
+    "url": "https://arxiv.org/abs/1602.07261",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 183: 'paperUrl': 'https://arxiv.org/abs/1905.11946'"
+    "context": "Line 245: 'paperUrl': 'https://arxiv.org/abs/1602.07261'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 276: 'paperUrl': 'https://arxiv.org/abs/1704.04861'"
   },
   {
     "url": "https://arxiv.org/abs/1707.07012",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 203: 'paperUrl': 'https://arxiv.org/abs/1707.07012'"
+    "context": "Line 304: 'paperUrl': 'https://arxiv.org/abs/1707.07012'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 332: 'paperUrl': 'https://arxiv.org/abs/1801.04381'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 367: 'paperUrl': 'https://arxiv.org/abs/1905.02175'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 399: 'paperUrl': 'https://arxiv.org/abs/1905.11946'"
   },
   {
     "url": "https://arxiv.org/abs/2010.11929",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 223: 'paperUrl': 'https://arxiv.org/abs/2010.11929'"
+    "context": "Line 425: 'paperUrl': 'https://arxiv.org/abs/2010.11929'"
   },
   {
     "url": "https://arxiv.org/abs/2103.14030",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 243: 'paperUrl': 'https://arxiv.org/abs/2103.14030'"
+    "context": "Line 451: 'paperUrl': 'https://arxiv.org/abs/2103.14030'"
   },
   {
     "url": "https://arxiv.org/abs/2201.03545",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 263: 'paperUrl': 'https://arxiv.org/abs/2201.03545'"
+    "context": "Line 477: 'paperUrl': 'https://arxiv.org/abs/2201.03545'"
   },
   {
     "url": "https://arxiv.org/abs/2204.01697",
     "sourceFile": "data/papers.json",
     "category": "Research Papers",
-    "context": "Line 283: 'paperUrl': 'https://arxiv.org/abs/2204.01697'"
+    "context": "Line 503: 'paperUrl': 'https://arxiv.org/abs/2204.01697'"
   },
   {
     "url": "https://arxiv.org/abs/1409.1556",
     "sourceFile": "doc/ARCHITECTURE.md",
     "category": "Research Papers",
     "context": "Line 477: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
-  },
-  {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet",
-    "sourceFile": "doc/PROJECT_REPORT.md",
-    "category": "Documentation",
-    "context": "Line 515: * **Actual**: e.g., `https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet` (Returns 404)."
   },
   {
     "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
