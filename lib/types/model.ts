@@ -35,8 +35,11 @@ export interface NeuralNetworkModel {
   paperYear: number;                  // 2014
   authors: string[];                  // ["Karen Simonyan", "Andrew Zisserman"]
   paperUrl: string;                   // arXiv / paper link
+  docsUrl?: string;                   // API documentation link
   depth: number;                      // Number of layers with weights (e.g., 16 for VGG16)
   totalParameters: number;            // Total trainable parameters
+  trainableParameters?: number;       // Total trainable parameters
+  nonTrainableParameters?: number;    // Total non-trainable parameters
   totalFLOPs: number;                 // Total FLOPs (approximate)
   inputShape: ImageShape;             // { channels: 3, height: 224, width: 224 }
   top1Accuracy: number;               // ImageNet top-1 accuracy (0-1)

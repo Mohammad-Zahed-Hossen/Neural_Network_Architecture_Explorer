@@ -385,18 +385,53 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
                 )}
 
                 {/* Weight / Bias Split info */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-slate-900/50 border border-border/10 rounded-lg p-2.5">
-                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Kernel Weights</span>
-                    <span className="text-sm font-extrabold text-slate-200 mt-0.5 block">{formatNumber(layer.parameters.weights)}</span>
-                    <span className="text-[9px] text-slate-500 block">Trainable matrices</span>
+                {layer.type === 'batch_norm' && layer.parameters.trainableParameters !== undefined ? (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-slate-900/50 border border-border/10 rounded-lg p-2.5">
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Trainable Params</span>
+                        <span className="text-sm font-extrabold text-slate-200 mt-0.5 block">{formatNumber(layer.parameters.trainableParameters)}</span>
+                        <span className="text-[9px] text-slate-500 block">gamma & beta scale/shift</span>
+                      </div>
+                      <div className="bg-slate-900/50 border border-border/10 rounded-lg p-2.5">
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Non-Trainable Params</span>
+                        <span className="text-sm font-extrabold text-slate-200 mt-0.5 block">{formatNumber(layer.parameters.nonTrainableParameters || 0)}</span>
+                        <span className="text-[9px] text-slate-500 block">moving mean & variance</span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2 bg-slate-950/40 p-2.5 rounded-lg border border-border/10 text-center text-[10px]">
+                      <div>
+                        <span className="text-[#6b7280] font-bold block uppercase text-[8px]">gamma</span>
+                        <span className="font-mono text-slate-250 font-extrabold block mt-0.5">{formatShortNumber(layer.parameters.gamma || 0)}</span>
+                      </div>
+                      <div>
+                        <span className="text-[#6b7280] font-bold block uppercase text-[8px]">beta</span>
+                        <span className="font-mono text-slate-250 font-extrabold block mt-0.5">{formatShortNumber(layer.parameters.beta || 0)}</span>
+                      </div>
+                      <div>
+                        <span className="text-[#6b7280] font-bold block uppercase text-[8px]">mean</span>
+                        <span className="font-mono text-slate-250 font-extrabold block mt-0.5">{formatShortNumber(layer.parameters.movingMean || 0)}</span>
+                      </div>
+                      <div>
+                        <span className="text-[#6b7280] font-bold block uppercase text-[8px]">var</span>
+                        <span className="font-mono text-slate-250 font-extrabold block mt-0.5">{formatShortNumber(layer.parameters.movingVariance || 0)}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="bg-slate-900/50 border border-border/10 rounded-lg p-2.5">
-                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Biases</span>
-                    <span className="text-sm font-extrabold text-slate-200 mt-0.5 block">{formatNumber(layer.parameters.biases)}</span>
-                    <span className="text-[9px] text-slate-500 block">Offsets (1 per output filter)</span>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-slate-900/50 border border-border/10 rounded-lg p-2.5">
+                      <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Kernel Weights</span>
+                      <span className="text-sm font-extrabold text-slate-200 mt-0.5 block">{formatNumber(layer.parameters.weights)}</span>
+                      <span className="text-[9px] text-slate-500 block">Trainable matrices</span>
+                    </div>
+                    <div className="bg-slate-900/50 border border-border/10 rounded-lg p-2.5">
+                      <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Biases</span>
+                      <span className="text-sm font-extrabold text-slate-200 mt-0.5 block">{formatNumber(layer.parameters.biases)}</span>
+                      <span className="text-[9px] text-slate-500 block">Offsets (1 per output filter)</span>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Math Formula box */}
                 <div className="bg-slate-950/60 border border-border/10 rounded-lg p-3">

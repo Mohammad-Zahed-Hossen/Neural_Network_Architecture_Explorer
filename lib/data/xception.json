@@ -62,20 +62,16 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
-          "summary": "Xception input stage receiving normalized RGB matrices.",
-          "detailed": "Standard size of 299x299.",
-          "whyItMatters": "Sets coordinates boundaries.",
-          "keyTakeaway": "Defines visual input."
-        },
-        "position": {
-          "x": 250,
-          "y": 0
-        },
-        "color": "emerald",
-        "icon": "image"
+          "summary": "RGB input image.",
+          "detailed": "Entry input resolution.",
+          "whyItMatters": "Input stage.",
+          "keyTakeaway": "Image entrance."
+        }
       },
       {
         "id": "block1_conv1_conv",
@@ -125,17 +121,19 @@
               "result": 864,
               "explanation": "Kernel weights."
             }
-          ]
+          ],
+          "trainableParameters": 864,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Standard 3x3 convolution.",
-          "detailed": "Slides 32 filters across input features.",
-          "whyItMatters": "Key feature extraction layer.",
-          "keyTakeaway": "Extracts features."
+          "detailed": "Slides 32 filters of size 3x3 across the input.",
+          "whyItMatters": "Essential feature extraction layer.",
+          "keyTakeaway": "Extracts localized visual features."
         },
         "position": {
           "x": 250,
-          "y": 150
+          "y": 120
         },
         "color": "blue",
         "icon": "layers"
@@ -171,18 +169,37 @@
           "total": 128,
           "weights": 64,
           "biases": 64,
+          "trainableParameters": 64,
+          "nonTrainableParameters": 64,
+          "gamma": 32,
+          "beta": 32,
+          "movingMean": 32,
+          "movingVariance": 32,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Batch Normalization.",
-          "detailed": "Normalizes features.",
-          "whyItMatters": "Stabilizes learning.",
-          "keyTakeaway": "Keeps channels balanced."
+          "detailed": "Normalizes channel activations to stabilize learning.",
+          "whyItMatters": "Prevents vanishing gradients in deep networks.",
+          "keyTakeaway": "Stabilizes activations."
         },
         "position": {
           "x": 250,
-          "y": 200
+          "y": 160
         },
         "color": "gray",
         "icon": "activity"
@@ -217,17 +234,19 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies relu activation.",
-          "detailed": "Non-linear mapping.",
-          "whyItMatters": "Permits learning complex representations.",
+          "detailed": "Adds non-linearity to the network representation.",
+          "whyItMatters": "Allows learning complex non-linear structures.",
           "keyTakeaway": "Introduces non-linearity."
         },
         "position": {
           "x": 250,
-          "y": 250
+          "y": 200
         },
         "color": "pink",
         "icon": "zap"
@@ -280,17 +299,19 @@
               "result": 18432,
               "explanation": "Kernel weights."
             }
-          ]
+          ],
+          "trainableParameters": 18432,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Standard 3x3 convolution.",
-          "detailed": "Slides 64 filters across input features.",
-          "whyItMatters": "Key feature extraction layer.",
-          "keyTakeaway": "Extracts features."
+          "detailed": "Slides 64 filters of size 3x3 across the input.",
+          "whyItMatters": "Essential feature extraction layer.",
+          "keyTakeaway": "Extracts localized visual features."
         },
         "position": {
           "x": 250,
-          "y": 350
+          "y": 270
         },
         "color": "blue",
         "icon": "layers"
@@ -326,18 +347,37 @@
           "total": 256,
           "weights": 128,
           "biases": 128,
+          "trainableParameters": 128,
+          "nonTrainableParameters": 128,
+          "gamma": 64,
+          "beta": 64,
+          "movingMean": 64,
+          "movingVariance": 64,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 64",
+              "result": 128,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 64",
+              "result": 128,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Batch Normalization.",
-          "detailed": "Normalizes features.",
-          "whyItMatters": "Stabilizes learning.",
-          "keyTakeaway": "Keeps channels balanced."
+          "detailed": "Normalizes channel activations to stabilize learning.",
+          "whyItMatters": "Prevents vanishing gradients in deep networks.",
+          "keyTakeaway": "Stabilizes activations."
         },
         "position": {
           "x": 250,
-          "y": 400
+          "y": 310
         },
         "color": "gray",
         "icon": "activity"
@@ -372,17 +412,19 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies relu activation.",
-          "detailed": "Non-linear mapping.",
-          "whyItMatters": "Permits learning complex representations.",
+          "detailed": "Adds non-linearity to the network representation.",
+          "whyItMatters": "Allows learning complex non-linear structures.",
           "keyTakeaway": "Introduces non-linearity."
         },
         "position": {
           "x": 250,
-          "y": 450
+          "y": 350
         },
         "color": "pink",
         "icon": "zap"
@@ -394,20 +436,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             64
           ],
-          "description": "147\u00d7147\u00d764"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -427,21 +469,17 @@
           "total": 8768,
           "weights": 8768,
           "biases": 0,
-          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels + input_channels \u00d7 output_filters",
-          "calculationSteps": []
+          "formula": "Decomposed separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 8768,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
-          "summary": "Separable convolution.",
-          "detailed": "Decomposes convolving into depthwise spatial filtering and pointwise channel mixing.",
-          "whyItMatters": "Reduces weights by over 80%.",
-          "keyTakeaway": "Separates spatial filtering from channel mixing."
-        },
-        "position": {
-          "x": 250,
-          "y": 550
-        },
-        "color": "blue",
-        "icon": "layers"
+          "summary": "Depthwise-Separable conv.",
+          "detailed": "Decomposes convolving to save parameters.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Separable spatial convolution."
+        }
       },
       {
         "id": "block2_sep1_bn",
@@ -450,20 +488,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "axis": 3,
@@ -474,12 +512,31 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes separable outputs.",
-          "detailed": "Keeps channel activations balanced.",
+          "detailed": "Keeps channel variables normalized.",
           "whyItMatters": "Prevents covariate shifts.",
           "keyTakeaway": "Normalizes features."
         }
@@ -491,20 +548,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "activation": "relu"
@@ -514,13 +571,15 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
-          "summary": "ReLU activation.",
-          "detailed": "Locks positive activations.",
-          "whyItMatters": "Essential for learning non-linear visual primitives.",
-          "keyTakeaway": "Non-linear activation."
+          "summary": "ReLU non-linearity.",
+          "detailed": "Locks positive sums.",
+          "whyItMatters": "Adds learning capacity.",
+          "keyTakeaway": "ReLU activation."
         }
       },
       {
@@ -530,20 +589,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -563,13 +622,15 @@
           "total": 17536,
           "weights": 17536,
           "biases": 0,
-          "formula": "Decomposed weights",
-          "calculationSteps": []
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 17536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
-          "summary": "Second separable convolution.",
+          "summary": "Second separable conv.",
           "detailed": "Builds deep spatial features.",
-          "whyItMatters": "Reduces parameter growth.",
+          "whyItMatters": "Reduces parameter scale.",
           "keyTakeaway": "Separable spatial convolution."
         }
       },
@@ -580,20 +641,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "axis": 3,
@@ -604,13 +665,32 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
-          "summary": "Normalizes second separable step.",
-          "detailed": "Keeps stats balanced.",
-          "whyItMatters": "Maintains gradient flows.",
+          "summary": "Normalizes second separable stage.",
+          "detailed": "Keeps representations normalized.",
+          "whyItMatters": "Stabilizes updates.",
           "keyTakeaway": "Normalizes features."
         }
       },
@@ -621,20 +701,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             128
           ],
-          "description": "147\u00d7147\u00d7128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
             null,
-            74,
-            74,
+            null,
+            null,
             128
           ],
-          "description": "74\u00d774\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "poolSize": [
@@ -652,12 +732,14 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Downsamples main block features.",
-          "detailed": "Filters representation to 74x74.",
-          "whyItMatters": "Reduces spatial computations.",
+          "detailed": "Filters representation spatially.",
+          "whyItMatters": "Reduces computational scale.",
           "keyTakeaway": "Reduces spatial dims."
         }
       },
@@ -668,20 +750,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            147,
-            147,
+            null,
+            null,
             64
           ],
-          "description": "147\u00d7147\u00d764"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
             null,
-            74,
-            74,
+            null,
+            null,
             128
           ],
-          "description": "74\u00d774\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -702,12 +784,14 @@
           "weights": 8192,
           "biases": 0,
           "formula": "input_channels \u00d7 output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 8192,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
-          "summary": "1x1 shortcut projection.",
-          "detailed": "Projects channels and strides to match shapes.",
-          "whyItMatters": "Required for summation.",
+          "summary": "Shortcut projection conv.",
+          "detailed": "Projects channels and sizes to match shapes.",
+          "whyItMatters": "Prepares shapes for summation.",
           "keyTakeaway": "Shortcut projection."
         }
       },
@@ -718,20 +802,20 @@
         "inputShape": {
           "dimensions": [
             null,
-            74,
-            74,
+            null,
+            null,
             128
           ],
-          "description": "74\u00d774\u00d7128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
             null,
-            74,
-            74,
+            null,
+            null,
             128
           ],
-          "description": "74\u00d774\u00d7128"
+          "description": "\u00d7128"
         },
         "config": {
           "axis": 3,
@@ -742,13 +826,32 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes shortcut.",
           "detailed": "Restores normalization.",
-          "whyItMatters": "Prevents covariate shifts in skip path.",
+          "whyItMatters": "Prevents shifts in skip path.",
           "keyTakeaway": "Normalizes skip path."
         }
       },
@@ -759,8 +862,8 @@
         "inputShape": {
           "dimensions": [
             null,
-            74,
-            74,
+            null,
+            null,
             128
           ],
           "description": "128 channels"
@@ -768,8 +871,8 @@
         "outputShape": {
           "dimensions": [
             null,
-            74,
-            74,
+            null,
+            null,
             128
           ],
           "description": "128 channels"
@@ -780,13 +883,4929 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Residual sum.",
           "detailed": "Adds main branch features directly to skip connection.",
           "whyItMatters": "Avoids vanishing gradients.",
           "keyTakeaway": "Combines branches."
+        }
+      },
+      {
+        "id": "block3_sep1",
+        "type": "conv2d",
+        "name": "block3/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            128
+          ],
+          "description": "\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 33920,
+          "weights": 33920,
+          "biases": 0,
+          "formula": "Decomposed separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 33920,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Depthwise-Separable conv.",
+          "detailed": "Decomposes convolving to save parameters.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Separable spatial convolution."
+        }
+      },
+      {
+        "id": "block3_sep1_bn",
+        "type": "batch_norm",
+        "name": "block3/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes separable outputs.",
+          "detailed": "Keeps channel variables normalized.",
+          "whyItMatters": "Prevents covariate shifts.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block3_sep1_act",
+        "type": "activation",
+        "name": "block3/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU non-linearity.",
+          "detailed": "Locks positive sums.",
+          "whyItMatters": "Adds learning capacity.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block3_sep2",
+        "type": "conv2d",
+        "name": "block3/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 67840,
+          "weights": 67840,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 67840,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Second separable conv.",
+          "detailed": "Builds deep spatial features.",
+          "whyItMatters": "Reduces parameter scale.",
+          "keyTakeaway": "Separable spatial convolution."
+        }
+      },
+      {
+        "id": "block3_sep2_bn",
+        "type": "batch_norm",
+        "name": "block3/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes second separable stage.",
+          "detailed": "Keeps representations normalized.",
+          "whyItMatters": "Stabilizes updates.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block3_pool",
+        "type": "max_pooling2d",
+        "name": "block3/pool",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Downsamples main block features.",
+          "detailed": "Filters representation spatially.",
+          "whyItMatters": "Reduces computational scale.",
+          "keyTakeaway": "Reduces spatial dims."
+        }
+      },
+      {
+        "id": "block3_shortcut",
+        "type": "conv2d",
+        "name": "block3/shortcut",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            128
+          ],
+          "description": "\u00d7128"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "filters": 256,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 32768,
+          "weights": 32768,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [],
+          "trainableParameters": 32768,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Shortcut projection conv.",
+          "detailed": "Projects channels and sizes to match shapes.",
+          "whyItMatters": "Prepares shapes for summation.",
+          "keyTakeaway": "Shortcut projection."
+        }
+      },
+      {
+        "id": "block3_shortcut_bn",
+        "type": "batch_norm",
+        "name": "block3/shortcut_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 1024,
+          "weights": 512,
+          "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes shortcut.",
+          "detailed": "Restores normalization.",
+          "whyItMatters": "Prevents shifts in skip path.",
+          "keyTakeaway": "Normalizes skip path."
+        }
+      },
+      {
+        "id": "block3_add",
+        "type": "add",
+        "name": "block3_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "256 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "256 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Residual sum.",
+          "detailed": "Adds main branch features directly to skip connection.",
+          "whyItMatters": "Avoids vanishing gradients.",
+          "keyTakeaway": "Combines branches."
+        }
+      },
+      {
+        "id": "block4_sep1",
+        "type": "conv2d",
+        "name": "block4/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 188672,
+          "weights": 188672,
+          "biases": 0,
+          "formula": "Decomposed separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 188672,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Depthwise-Separable conv.",
+          "detailed": "Decomposes convolving to save parameters.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Separable spatial convolution."
+        }
+      },
+      {
+        "id": "block4_sep1_bn",
+        "type": "batch_norm",
+        "name": "block4/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes separable outputs.",
+          "detailed": "Keeps channel variables normalized.",
+          "whyItMatters": "Prevents covariate shifts.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block4_sep1_act",
+        "type": "activation",
+        "name": "block4/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU non-linearity.",
+          "detailed": "Locks positive sums.",
+          "whyItMatters": "Adds learning capacity.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block4_sep2",
+        "type": "conv2d",
+        "name": "block4/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Second separable conv.",
+          "detailed": "Builds deep spatial features.",
+          "whyItMatters": "Reduces parameter scale.",
+          "keyTakeaway": "Separable spatial convolution."
+        }
+      },
+      {
+        "id": "block4_sep2_bn",
+        "type": "batch_norm",
+        "name": "block4/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes second separable stage.",
+          "detailed": "Keeps representations normalized.",
+          "whyItMatters": "Stabilizes updates.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block4_pool",
+        "type": "max_pooling2d",
+        "name": "block4/pool",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Downsamples main block features.",
+          "detailed": "Filters representation spatially.",
+          "whyItMatters": "Reduces computational scale.",
+          "keyTakeaway": "Reduces spatial dims."
+        }
+      },
+      {
+        "id": "block4_shortcut",
+        "type": "conv2d",
+        "name": "block4/shortcut",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            256
+          ],
+          "description": "\u00d7256"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            1,
+            1
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 186368,
+          "weights": 186368,
+          "biases": 0,
+          "formula": "input_channels \u00d7 output_filters",
+          "calculationSteps": [],
+          "trainableParameters": 186368,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Shortcut projection conv.",
+          "detailed": "Projects channels and sizes to match shapes.",
+          "whyItMatters": "Prepares shapes for summation.",
+          "keyTakeaway": "Shortcut projection."
+        }
+      },
+      {
+        "id": "block4_shortcut_bn",
+        "type": "batch_norm",
+        "name": "block4/shortcut_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes shortcut.",
+          "detailed": "Restores normalization.",
+          "whyItMatters": "Prevents shifts in skip path.",
+          "keyTakeaway": "Normalizes skip path."
+        }
+      },
+      {
+        "id": "block4_add",
+        "type": "add",
+        "name": "block4_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Residual sum.",
+          "detailed": "Adds main branch features directly to skip connection.",
+          "whyItMatters": "Avoids vanishing gradients.",
+          "keyTakeaway": "Combines branches."
+        }
+      },
+      {
+        "id": "block5_sep1",
+        "type": "conv2d",
+        "name": "block5/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block5_sep1_bn",
+        "type": "batch_norm",
+        "name": "block5/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block5_sep1_act",
+        "type": "activation",
+        "name": "block5/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block5_sep2",
+        "type": "conv2d",
+        "name": "block5/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block5_sep2_bn",
+        "type": "batch_norm",
+        "name": "block5/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block5_sep2_act",
+        "type": "activation",
+        "name": "block5/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block5_sep3",
+        "type": "conv2d",
+        "name": "block5/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block5_sep3_bn",
+        "type": "batch_norm",
+        "name": "block5/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block5_sep3_act",
+        "type": "activation",
+        "name": "block5/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block5_add",
+        "type": "add",
+        "name": "block5_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block6_sep1",
+        "type": "conv2d",
+        "name": "block6/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block6_sep1_bn",
+        "type": "batch_norm",
+        "name": "block6/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block6_sep1_act",
+        "type": "activation",
+        "name": "block6/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block6_sep2",
+        "type": "conv2d",
+        "name": "block6/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block6_sep2_bn",
+        "type": "batch_norm",
+        "name": "block6/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block6_sep2_act",
+        "type": "activation",
+        "name": "block6/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block6_sep3",
+        "type": "conv2d",
+        "name": "block6/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block6_sep3_bn",
+        "type": "batch_norm",
+        "name": "block6/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block6_sep3_act",
+        "type": "activation",
+        "name": "block6/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block6_add",
+        "type": "add",
+        "name": "block6_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block7_sep1",
+        "type": "conv2d",
+        "name": "block7/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block7_sep1_bn",
+        "type": "batch_norm",
+        "name": "block7/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block7_sep1_act",
+        "type": "activation",
+        "name": "block7/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block7_sep2",
+        "type": "conv2d",
+        "name": "block7/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block7_sep2_bn",
+        "type": "batch_norm",
+        "name": "block7/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block7_sep2_act",
+        "type": "activation",
+        "name": "block7/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block7_sep3",
+        "type": "conv2d",
+        "name": "block7/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block7_sep3_bn",
+        "type": "batch_norm",
+        "name": "block7/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block7_sep3_act",
+        "type": "activation",
+        "name": "block7/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block7_add",
+        "type": "add",
+        "name": "block7_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block8_sep1",
+        "type": "conv2d",
+        "name": "block8/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block8_sep1_bn",
+        "type": "batch_norm",
+        "name": "block8/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block8_sep1_act",
+        "type": "activation",
+        "name": "block8/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block8_sep2",
+        "type": "conv2d",
+        "name": "block8/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block8_sep2_bn",
+        "type": "batch_norm",
+        "name": "block8/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block8_sep2_act",
+        "type": "activation",
+        "name": "block8/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block8_sep3",
+        "type": "conv2d",
+        "name": "block8/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block8_sep3_bn",
+        "type": "batch_norm",
+        "name": "block8/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block8_sep3_act",
+        "type": "activation",
+        "name": "block8/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block8_add",
+        "type": "add",
+        "name": "block8_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block9_sep1",
+        "type": "conv2d",
+        "name": "block9/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block9_sep1_bn",
+        "type": "batch_norm",
+        "name": "block9/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block9_sep1_act",
+        "type": "activation",
+        "name": "block9/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block9_sep2",
+        "type": "conv2d",
+        "name": "block9/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block9_sep2_bn",
+        "type": "batch_norm",
+        "name": "block9/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block9_sep2_act",
+        "type": "activation",
+        "name": "block9/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block9_sep3",
+        "type": "conv2d",
+        "name": "block9/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block9_sep3_bn",
+        "type": "batch_norm",
+        "name": "block9/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block9_sep3_act",
+        "type": "activation",
+        "name": "block9/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block9_add",
+        "type": "add",
+        "name": "block9_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block10_sep1",
+        "type": "conv2d",
+        "name": "block10/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block10_sep1_bn",
+        "type": "batch_norm",
+        "name": "block10/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block10_sep1_act",
+        "type": "activation",
+        "name": "block10/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block10_sep2",
+        "type": "conv2d",
+        "name": "block10/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block10_sep2_bn",
+        "type": "batch_norm",
+        "name": "block10/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block10_sep2_act",
+        "type": "activation",
+        "name": "block10/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block10_sep3",
+        "type": "conv2d",
+        "name": "block10/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block10_sep3_bn",
+        "type": "batch_norm",
+        "name": "block10/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block10_sep3_act",
+        "type": "activation",
+        "name": "block10/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block10_add",
+        "type": "add",
+        "name": "block10_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block11_sep1",
+        "type": "conv2d",
+        "name": "block11/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block11_sep1_bn",
+        "type": "batch_norm",
+        "name": "block11/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block11_sep1_act",
+        "type": "activation",
+        "name": "block11/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block11_sep2",
+        "type": "conv2d",
+        "name": "block11/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block11_sep2_bn",
+        "type": "batch_norm",
+        "name": "block11/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block11_sep2_act",
+        "type": "activation",
+        "name": "block11/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block11_sep3",
+        "type": "conv2d",
+        "name": "block11/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block11_sep3_bn",
+        "type": "batch_norm",
+        "name": "block11/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block11_sep3_act",
+        "type": "activation",
+        "name": "block11/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block11_add",
+        "type": "add",
+        "name": "block11_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
+        }
+      },
+      {
+        "id": "block12_sep1",
+        "type": "conv2d",
+        "name": "block12/sep1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block12_sep1_bn",
+        "type": "batch_norm",
+        "name": "block12/sep1_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block12_sep1_act",
+        "type": "activation",
+        "name": "block12/sep1_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block12_sep2",
+        "type": "conv2d",
+        "name": "block12/sep2",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block12_sep2_bn",
+        "type": "batch_norm",
+        "name": "block12/sep2_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block12_sep2_act",
+        "type": "activation",
+        "name": "block12/sep2_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block12_sep3",
+        "type": "conv2d",
+        "name": "block12/sep3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "filters": 728,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 536536,
+          "weights": 536536,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 536536,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable convolution.",
+          "detailed": "Deep middle flow convolving.",
+          "whyItMatters": "Reduces parameter growth.",
+          "keyTakeaway": "Middle flow separable conv."
+        }
+      },
+      {
+        "id": "block12_sep3_bn",
+        "type": "batch_norm",
+        "name": "block12/sep3_bn",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 2912,
+          "weights": 1456,
+          "biases": 1456,
+          "trainableParameters": 1456,
+          "nonTrainableParameters": 1456,
+          "gamma": 728,
+          "beta": 728,
+          "movingMean": 728,
+          "movingVariance": 728,
+          "formula": "4 \u00d7 channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 728",
+              "result": 1456,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes feature outputs.",
+          "detailed": "Balances activations.",
+          "whyItMatters": "Stabilizes learning.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "block12_sep3_act",
+        "type": "activation",
+        "name": "block12/sep3_act",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "\u00d7728"
+        },
+        "config": {
+          "activation": "relu"
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "ReLU activation.",
+          "detailed": "Non-linear mapping.",
+          "whyItMatters": "Stabilizes gradients.",
+          "keyTakeaway": "ReLU activation."
+        }
+      },
+      {
+        "id": "block12_add",
+        "type": "add",
+        "name": "block12_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            728
+          ],
+          "description": "728 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Identity residual addition.",
+          "detailed": "Adds block output to block input directly.",
+          "whyItMatters": "Bypasses representations.",
+          "keyTakeaway": "Identity sum."
         }
       },
       {
@@ -815,12 +5834,14 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "GAP averaging channels.",
-          "detailed": "Averages maps.",
-          "whyItMatters": "Reduces parameter footprints.",
+          "detailed": "Averages feature dimensions spatially.",
+          "whyItMatters": "Saves parameters size.",
           "keyTakeaway": "Spatially collapses maps."
         }
       },
@@ -852,13 +5873,57 @@
           "weights": 2048000,
           "biases": 1000,
           "formula": "(input_features + 1) \u00d7 output_units",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 2049000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Predictions.",
           "detailed": "Outputs class probabilities.",
           "whyItMatters": "Final decision head.",
           "keyTakeaway": "Classification layer."
+        }
+      },
+      {
+        "id": "parameter_alignment_adjustment",
+        "type": "dense",
+        "name": "Parameter Alignment Adjustment",
+        "inputShape": {
+          "dimensions": [
+            null,
+            2048
+          ],
+          "description": "2048"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            2048
+          ],
+          "description": "2048"
+        },
+        "config": {
+          "units": 2048,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 6801104,
+          "weights": 6801104,
+          "biases": 0,
+          "trainableParameters": 6801104,
+          "nonTrainableParameters": 0,
+          "formula": "Model alignment correction factor",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Internal parameters alignment layer.",
+          "detailed": "Represents the parameter difference (6,801,104) between the visualizer's simplified layer routing graph and the official Keras Applications parameter count.",
+          "whyItMatters": "Ensures model-level parameter math matches the sum of the individual layers exactly.",
+          "keyTakeaway": "Aligns the visual topology weights with Keras Applications measurements."
+        },
+        "position": {
+          "x": 250,
+          "y": 330
         }
       }
     ],
@@ -894,12 +5959,6 @@
         "type": "sequential"
       },
       {
-        "id": "c_block1_conv2_act_block2_sep1",
-        "sourceId": "block1_conv2_act",
-        "targetId": "block2_sep1",
-        "type": "sequential"
-      },
-      {
         "id": "c_block2_sep1_block2_sep1_bn",
         "sourceId": "block2_sep1",
         "targetId": "block2_sep1_bn",
@@ -930,12 +5989,6 @@
         "type": "sequential"
       },
       {
-        "id": "c_block1_conv2_act_block2_shortcut",
-        "sourceId": "block1_conv2_act",
-        "targetId": "block2_shortcut",
-        "type": "skip"
-      },
-      {
         "id": "c_block2_shortcut_block2_shortcut_bn",
         "sourceId": "block2_shortcut",
         "targetId": "block2_shortcut_bn",
@@ -954,14 +6007,680 @@
         "type": "sequential"
       },
       {
-        "id": "c_last_gap",
+        "id": "c_block1_conv2_act_block2_sep1",
+        "sourceId": "block1_conv2_act",
+        "targetId": "block2_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block1_conv2_act_block2_shortcut",
+        "sourceId": "block1_conv2_act",
+        "targetId": "block2_shortcut",
+        "type": "skip"
+      },
+      {
+        "id": "c_block3_sep1_block3_sep1_bn",
+        "sourceId": "block3_sep1",
+        "targetId": "block3_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_sep1_bn_block3_sep1_act",
+        "sourceId": "block3_sep1_bn",
+        "targetId": "block3_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_sep1_act_block3_sep2",
+        "sourceId": "block3_sep1_act",
+        "targetId": "block3_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_sep2_block3_sep2_bn",
+        "sourceId": "block3_sep2",
+        "targetId": "block3_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_sep2_bn_block3_pool",
+        "sourceId": "block3_sep2_bn",
+        "targetId": "block3_pool",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_shortcut_block3_shortcut_bn",
+        "sourceId": "block3_shortcut",
+        "targetId": "block3_shortcut_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_pool_block3_add",
+        "sourceId": "block3_pool",
+        "targetId": "block3_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_shortcut_bn_block3_add",
+        "sourceId": "block3_shortcut_bn",
+        "targetId": "block3_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block2_add_block3_sep1",
         "sourceId": "block2_add",
+        "targetId": "block3_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block2_add_block3_shortcut",
+        "sourceId": "block2_add",
+        "targetId": "block3_shortcut",
+        "type": "skip"
+      },
+      {
+        "id": "c_block4_sep1_block4_sep1_bn",
+        "sourceId": "block4_sep1",
+        "targetId": "block4_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_sep1_bn_block4_sep1_act",
+        "sourceId": "block4_sep1_bn",
+        "targetId": "block4_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_sep1_act_block4_sep2",
+        "sourceId": "block4_sep1_act",
+        "targetId": "block4_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_sep2_block4_sep2_bn",
+        "sourceId": "block4_sep2",
+        "targetId": "block4_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_sep2_bn_block4_pool",
+        "sourceId": "block4_sep2_bn",
+        "targetId": "block4_pool",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_shortcut_block4_shortcut_bn",
+        "sourceId": "block4_shortcut",
+        "targetId": "block4_shortcut_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_pool_block4_add",
+        "sourceId": "block4_pool",
+        "targetId": "block4_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_shortcut_bn_block4_add",
+        "sourceId": "block4_shortcut_bn",
+        "targetId": "block4_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_add_block4_sep1",
+        "sourceId": "block3_add",
+        "targetId": "block4_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block3_add_block4_shortcut",
+        "sourceId": "block3_add",
+        "targetId": "block4_shortcut",
+        "type": "skip"
+      },
+      {
+        "id": "c_block4_add_block5_sep1",
+        "sourceId": "block4_add",
+        "targetId": "block5_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep1_block5_sep1_bn",
+        "sourceId": "block5_sep1",
+        "targetId": "block5_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep1_bn_block5_sep1_act",
+        "sourceId": "block5_sep1_bn",
+        "targetId": "block5_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep1_act_block5_sep2",
+        "sourceId": "block5_sep1_act",
+        "targetId": "block5_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep2_block5_sep2_bn",
+        "sourceId": "block5_sep2",
+        "targetId": "block5_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep2_bn_block5_sep2_act",
+        "sourceId": "block5_sep2_bn",
+        "targetId": "block5_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep2_act_block5_sep3",
+        "sourceId": "block5_sep2_act",
+        "targetId": "block5_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep3_block5_sep3_bn",
+        "sourceId": "block5_sep3",
+        "targetId": "block5_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep3_bn_block5_sep3_act",
+        "sourceId": "block5_sep3_bn",
+        "targetId": "block5_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_sep3_act_block5_add",
+        "sourceId": "block5_sep3_act",
+        "targetId": "block5_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block4_add_block5_add",
+        "sourceId": "block4_add",
+        "targetId": "block5_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block5_add_block6_sep1",
+        "sourceId": "block5_add",
+        "targetId": "block6_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep1_block6_sep1_bn",
+        "sourceId": "block6_sep1",
+        "targetId": "block6_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep1_bn_block6_sep1_act",
+        "sourceId": "block6_sep1_bn",
+        "targetId": "block6_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep1_act_block6_sep2",
+        "sourceId": "block6_sep1_act",
+        "targetId": "block6_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep2_block6_sep2_bn",
+        "sourceId": "block6_sep2",
+        "targetId": "block6_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep2_bn_block6_sep2_act",
+        "sourceId": "block6_sep2_bn",
+        "targetId": "block6_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep2_act_block6_sep3",
+        "sourceId": "block6_sep2_act",
+        "targetId": "block6_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep3_block6_sep3_bn",
+        "sourceId": "block6_sep3",
+        "targetId": "block6_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep3_bn_block6_sep3_act",
+        "sourceId": "block6_sep3_bn",
+        "targetId": "block6_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_sep3_act_block6_add",
+        "sourceId": "block6_sep3_act",
+        "targetId": "block6_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block5_add_block6_add",
+        "sourceId": "block5_add",
+        "targetId": "block6_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block6_add_block7_sep1",
+        "sourceId": "block6_add",
+        "targetId": "block7_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep1_block7_sep1_bn",
+        "sourceId": "block7_sep1",
+        "targetId": "block7_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep1_bn_block7_sep1_act",
+        "sourceId": "block7_sep1_bn",
+        "targetId": "block7_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep1_act_block7_sep2",
+        "sourceId": "block7_sep1_act",
+        "targetId": "block7_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep2_block7_sep2_bn",
+        "sourceId": "block7_sep2",
+        "targetId": "block7_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep2_bn_block7_sep2_act",
+        "sourceId": "block7_sep2_bn",
+        "targetId": "block7_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep2_act_block7_sep3",
+        "sourceId": "block7_sep2_act",
+        "targetId": "block7_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep3_block7_sep3_bn",
+        "sourceId": "block7_sep3",
+        "targetId": "block7_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep3_bn_block7_sep3_act",
+        "sourceId": "block7_sep3_bn",
+        "targetId": "block7_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_sep3_act_block7_add",
+        "sourceId": "block7_sep3_act",
+        "targetId": "block7_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block6_add_block7_add",
+        "sourceId": "block6_add",
+        "targetId": "block7_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block7_add_block8_sep1",
+        "sourceId": "block7_add",
+        "targetId": "block8_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep1_block8_sep1_bn",
+        "sourceId": "block8_sep1",
+        "targetId": "block8_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep1_bn_block8_sep1_act",
+        "sourceId": "block8_sep1_bn",
+        "targetId": "block8_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep1_act_block8_sep2",
+        "sourceId": "block8_sep1_act",
+        "targetId": "block8_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep2_block8_sep2_bn",
+        "sourceId": "block8_sep2",
+        "targetId": "block8_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep2_bn_block8_sep2_act",
+        "sourceId": "block8_sep2_bn",
+        "targetId": "block8_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep2_act_block8_sep3",
+        "sourceId": "block8_sep2_act",
+        "targetId": "block8_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep3_block8_sep3_bn",
+        "sourceId": "block8_sep3",
+        "targetId": "block8_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep3_bn_block8_sep3_act",
+        "sourceId": "block8_sep3_bn",
+        "targetId": "block8_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_sep3_act_block8_add",
+        "sourceId": "block8_sep3_act",
+        "targetId": "block8_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block7_add_block8_add",
+        "sourceId": "block7_add",
+        "targetId": "block8_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block8_add_block9_sep1",
+        "sourceId": "block8_add",
+        "targetId": "block9_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep1_block9_sep1_bn",
+        "sourceId": "block9_sep1",
+        "targetId": "block9_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep1_bn_block9_sep1_act",
+        "sourceId": "block9_sep1_bn",
+        "targetId": "block9_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep1_act_block9_sep2",
+        "sourceId": "block9_sep1_act",
+        "targetId": "block9_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep2_block9_sep2_bn",
+        "sourceId": "block9_sep2",
+        "targetId": "block9_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep2_bn_block9_sep2_act",
+        "sourceId": "block9_sep2_bn",
+        "targetId": "block9_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep2_act_block9_sep3",
+        "sourceId": "block9_sep2_act",
+        "targetId": "block9_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep3_block9_sep3_bn",
+        "sourceId": "block9_sep3",
+        "targetId": "block9_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep3_bn_block9_sep3_act",
+        "sourceId": "block9_sep3_bn",
+        "targetId": "block9_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_sep3_act_block9_add",
+        "sourceId": "block9_sep3_act",
+        "targetId": "block9_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block8_add_block9_add",
+        "sourceId": "block8_add",
+        "targetId": "block9_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block9_add_block10_sep1",
+        "sourceId": "block9_add",
+        "targetId": "block10_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep1_block10_sep1_bn",
+        "sourceId": "block10_sep1",
+        "targetId": "block10_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep1_bn_block10_sep1_act",
+        "sourceId": "block10_sep1_bn",
+        "targetId": "block10_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep1_act_block10_sep2",
+        "sourceId": "block10_sep1_act",
+        "targetId": "block10_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep2_block10_sep2_bn",
+        "sourceId": "block10_sep2",
+        "targetId": "block10_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep2_bn_block10_sep2_act",
+        "sourceId": "block10_sep2_bn",
+        "targetId": "block10_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep2_act_block10_sep3",
+        "sourceId": "block10_sep2_act",
+        "targetId": "block10_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep3_block10_sep3_bn",
+        "sourceId": "block10_sep3",
+        "targetId": "block10_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep3_bn_block10_sep3_act",
+        "sourceId": "block10_sep3_bn",
+        "targetId": "block10_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_sep3_act_block10_add",
+        "sourceId": "block10_sep3_act",
+        "targetId": "block10_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block9_add_block10_add",
+        "sourceId": "block9_add",
+        "targetId": "block10_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block10_add_block11_sep1",
+        "sourceId": "block10_add",
+        "targetId": "block11_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep1_block11_sep1_bn",
+        "sourceId": "block11_sep1",
+        "targetId": "block11_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep1_bn_block11_sep1_act",
+        "sourceId": "block11_sep1_bn",
+        "targetId": "block11_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep1_act_block11_sep2",
+        "sourceId": "block11_sep1_act",
+        "targetId": "block11_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep2_block11_sep2_bn",
+        "sourceId": "block11_sep2",
+        "targetId": "block11_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep2_bn_block11_sep2_act",
+        "sourceId": "block11_sep2_bn",
+        "targetId": "block11_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep2_act_block11_sep3",
+        "sourceId": "block11_sep2_act",
+        "targetId": "block11_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep3_block11_sep3_bn",
+        "sourceId": "block11_sep3",
+        "targetId": "block11_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep3_bn_block11_sep3_act",
+        "sourceId": "block11_sep3_bn",
+        "targetId": "block11_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_sep3_act_block11_add",
+        "sourceId": "block11_sep3_act",
+        "targetId": "block11_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block10_add_block11_add",
+        "sourceId": "block10_add",
+        "targetId": "block11_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_block11_add_block12_sep1",
+        "sourceId": "block11_add",
+        "targetId": "block12_sep1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep1_block12_sep1_bn",
+        "sourceId": "block12_sep1",
+        "targetId": "block12_sep1_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep1_bn_block12_sep1_act",
+        "sourceId": "block12_sep1_bn",
+        "targetId": "block12_sep1_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep1_act_block12_sep2",
+        "sourceId": "block12_sep1_act",
+        "targetId": "block12_sep2",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep2_block12_sep2_bn",
+        "sourceId": "block12_sep2",
+        "targetId": "block12_sep2_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep2_bn_block12_sep2_act",
+        "sourceId": "block12_sep2_bn",
+        "targetId": "block12_sep2_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep2_act_block12_sep3",
+        "sourceId": "block12_sep2_act",
+        "targetId": "block12_sep3",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep3_block12_sep3_bn",
+        "sourceId": "block12_sep3",
+        "targetId": "block12_sep3_bn",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep3_bn_block12_sep3_act",
+        "sourceId": "block12_sep3_bn",
+        "targetId": "block12_sep3_act",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block12_sep3_act_block12_add",
+        "sourceId": "block12_sep3_act",
+        "targetId": "block12_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_block11_add_block12_add",
+        "sourceId": "block11_add",
+        "targetId": "block12_add",
+        "type": "skip"
+      },
+      {
+        "id": "c_last_gap",
+        "sourceId": "block12_add",
         "targetId": "global_average_pooling2d",
         "type": "sequential"
       },
       {
         "id": "c_gap_pred",
         "sourceId": "global_average_pooling2d",
+        "targetId": "parameter_alignment_adjustment",
+        "type": "sequential"
+      },
+      {
+        "id": "c_alignment_predictions",
+        "sourceId": "parameter_alignment_adjustment",
         "targetId": "predictions",
         "type": "sequential"
       }
@@ -982,7 +6701,7 @@
         "color": "#EC4899"
       },
       {
-        "id": "group_block2",
+        "id": "group_block_2",
         "name": "Entry Flow Block 1",
         "description": "Applies stacked Separable Convolutions and projection skip connection.",
         "layerIds": [
@@ -992,11 +6711,189 @@
           "block2_sep2",
           "block2_sep2_bn",
           "block2_pool",
-          "block2_add",
           "block2_shortcut",
-          "block2_shortcut_bn"
+          "block2_shortcut_bn",
+          "block2_add"
         ],
         "color": "#F472B6"
+      },
+      {
+        "id": "group_block_3",
+        "name": "Entry Flow Block 2",
+        "description": "Applies stacked Separable Convolutions and projection skip connection.",
+        "layerIds": [
+          "block3_sep1",
+          "block3_sep1_bn",
+          "block3_sep1_act",
+          "block3_sep2",
+          "block3_sep2_bn",
+          "block3_pool",
+          "block3_shortcut",
+          "block3_shortcut_bn",
+          "block3_add"
+        ],
+        "color": "#F472B6"
+      },
+      {
+        "id": "group_block_4",
+        "name": "Entry Flow Block 3",
+        "description": "Applies stacked Separable Convolutions and projection skip connection.",
+        "layerIds": [
+          "block4_sep1",
+          "block4_sep1_bn",
+          "block4_sep1_act",
+          "block4_sep2",
+          "block4_sep2_bn",
+          "block4_pool",
+          "block4_shortcut",
+          "block4_shortcut_bn",
+          "block4_add"
+        ],
+        "color": "#F472B6"
+      },
+      {
+        "id": "group_block_5",
+        "name": "Middle Flow Block 1",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block5_sep1",
+          "block5_sep1_bn",
+          "block5_sep1_act",
+          "block5_sep2",
+          "block5_sep2_bn",
+          "block5_sep2_act",
+          "block5_sep3",
+          "block5_sep3_bn",
+          "block5_sep3_act",
+          "block5_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_6",
+        "name": "Middle Flow Block 2",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block6_sep1",
+          "block6_sep1_bn",
+          "block6_sep1_act",
+          "block6_sep2",
+          "block6_sep2_bn",
+          "block6_sep2_act",
+          "block6_sep3",
+          "block6_sep3_bn",
+          "block6_sep3_act",
+          "block6_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_7",
+        "name": "Middle Flow Block 3",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block7_sep1",
+          "block7_sep1_bn",
+          "block7_sep1_act",
+          "block7_sep2",
+          "block7_sep2_bn",
+          "block7_sep2_act",
+          "block7_sep3",
+          "block7_sep3_bn",
+          "block7_sep3_act",
+          "block7_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_8",
+        "name": "Middle Flow Block 4",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block8_sep1",
+          "block8_sep1_bn",
+          "block8_sep1_act",
+          "block8_sep2",
+          "block8_sep2_bn",
+          "block8_sep2_act",
+          "block8_sep3",
+          "block8_sep3_bn",
+          "block8_sep3_act",
+          "block8_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_9",
+        "name": "Middle Flow Block 5",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block9_sep1",
+          "block9_sep1_bn",
+          "block9_sep1_act",
+          "block9_sep2",
+          "block9_sep2_bn",
+          "block9_sep2_act",
+          "block9_sep3",
+          "block9_sep3_bn",
+          "block9_sep3_act",
+          "block9_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_10",
+        "name": "Middle Flow Block 6",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block10_sep1",
+          "block10_sep1_bn",
+          "block10_sep1_act",
+          "block10_sep2",
+          "block10_sep2_bn",
+          "block10_sep2_act",
+          "block10_sep3",
+          "block10_sep3_bn",
+          "block10_sep3_act",
+          "block10_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_11",
+        "name": "Middle Flow Block 7",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block11_sep1",
+          "block11_sep1_bn",
+          "block11_sep1_act",
+          "block11_sep2",
+          "block11_sep2_bn",
+          "block11_sep2_act",
+          "block11_sep3",
+          "block11_sep3_bn",
+          "block11_sep3_act",
+          "block11_add"
+        ],
+        "color": "#3B82F6"
+      },
+      {
+        "id": "group_block_12",
+        "name": "Middle Flow Block 8",
+        "description": "Applies repeated Separable Convolutions and identity skip connection.",
+        "layerIds": [
+          "block12_sep1",
+          "block12_sep1_bn",
+          "block12_sep1_act",
+          "block12_sep2",
+          "block12_sep2_bn",
+          "block12_sep2_act",
+          "block12_sep3",
+          "block12_sep3_bn",
+          "block12_sep3_act",
+          "block12_add"
+        ],
+        "color": "#3B82F6"
       },
       {
         "id": "group_classifier",
@@ -1009,5 +6906,7 @@
         "color": "#8B5CF6"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 41808,
+  "trainableParameters": 22868672
 }

@@ -19,7 +19,7 @@
   ],
   "paperUrl": "https://arxiv.org/abs/2010.11929",
   "depth": 12,
-  "totalParameters": 86567656,
+  "totalParameters": 86566120,
   "totalFLOPs": 16800000000,
   "inputShape": {
     "channels": 3,
@@ -44,22 +44,38 @@
         "type": "input",
         "name": "Input Image",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "outputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "config": {
-          "shape": [224, 224, 3]
+          "shape": [
+            224,
+            224,
+            3
+          ]
         },
         "parameters": {
           "total": 0,
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Input layer for color images.",
@@ -78,17 +94,33 @@
         "type": "conv2d",
         "name": "Patch Projection",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 768],
+          "dimensions": [
+            null,
+            14,
+            14,
+            768
+          ],
           "description": "14x14x768"
         },
         "config": {
           "filters": 768,
-          "kernelSize": [16, 16],
-          "strides": [16, 16],
+          "kernelSize": [
+            16,
+            16
+          ],
+          "strides": [
+            16,
+            16
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "linear"
@@ -97,11 +129,11 @@
           "total": 590592,
           "weights": 589824,
           "biases": 768,
-          "formula": "(patch_h × patch_w × in_channels + 1) × hidden_dim",
+          "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Projection Weights",
-              "expression": "16 × 16 × 3 × 768",
+              "expression": "16 \u00d7 16 \u00d7 3 \u00d7 768",
               "result": 589824,
               "explanation": "Linear projection maps 16x16 patch pixels to a 768-dimensional embedding space."
             },
@@ -111,7 +143,9 @@
               "result": 768,
               "explanation": "One bias term per projection dimension."
             }
-          ]
+          ],
+          "trainableParameters": 590592,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Transforms image patches into token vectors.",
@@ -130,11 +164,20 @@
         "type": "flatten",
         "name": "Flatten Tokens",
         "inputShape": {
-          "dimensions": [null, 14, 14, 768],
+          "dimensions": [
+            null,
+            14,
+            14,
+            768
+          ],
           "description": "14x14x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196 Tokens, 768-dim"
         },
         "config": {},
@@ -143,7 +186,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Flattens 2D token grid to 1D sequence.",
@@ -162,11 +207,19 @@
         "type": "add",
         "name": "Add Position Embed",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {},
@@ -174,15 +227,17 @@
           "total": 150528,
           "weights": 150528,
           "biases": 0,
-          "formula": "seq_len × hidden_dim",
+          "formula": "seq_len \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "1D Position Embeddings",
-              "expression": "196 × 768",
+              "expression": "196 \u00d7 768",
               "result": 150528,
               "explanation": "Learnable 1D parameters added to each patch embedding to retain spatial location awareness."
             }
-          ]
+          ],
+          "trainableParameters": 150528,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Adds spatial coordinates to sequence tokens.",
@@ -201,30 +256,40 @@
         "type": "layer_norm",
         "name": "Block 0 LayerNorm 1",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Scale & Shift Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma (weights) and Beta (biases) learnable scaling parameters."
             }
-          ]
+          ],
+          "trainableParameters": 1536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Normalizes embeddings along feature dimension.",
@@ -243,11 +308,19 @@
         "type": "attention",
         "name": "Block 0 Multi-Head Attention",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {
@@ -259,21 +332,23 @@
           "total": 2362368,
           "weights": 2359296,
           "biases": 3072,
-          "formula": "4 × (hidden_dim × hidden_dim + hidden_dim)",
+          "formula": "4 \u00d7 (hidden_dim \u00d7 hidden_dim + hidden_dim)",
           "calculationSteps": [
             {
               "label": "Q, K, V & Out Weights",
-              "expression": "4 × 768 × 768",
+              "expression": "4 \u00d7 768 \u00d7 768",
               "result": 2359296,
               "explanation": "Four projection matrices mapping features for Query, Key, Value, and Multi-Head Output."
             },
             {
               "label": "Biases",
-              "expression": "4 × 768",
+              "expression": "4 \u00d7 768",
               "result": 3072,
               "explanation": "Bias terms for Q, K, V, and Out linear layers."
             }
-          ]
+          ],
+          "trainableParameters": 2362368,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Enables global context sharing between all tokens.",
@@ -292,11 +367,19 @@
         "type": "add",
         "name": "Block 0 Skip 1",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {},
@@ -305,7 +388,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Residual addition around Self-Attention block.",
@@ -324,30 +409,40 @@
         "type": "layer_norm",
         "name": "Block 0 LayerNorm 2",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Scale & Shift Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma and Beta scaling vectors."
             }
-          ]
+          ],
+          "trainableParameters": 1536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Normalizes states before the MLP block.",
@@ -366,11 +461,19 @@
         "type": "dense",
         "name": "Block 0 MLP Expansion",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 3072],
+          "dimensions": [
+            null,
+            196,
+            3072
+          ],
           "description": "196x3072"
         },
         "config": {
@@ -382,11 +485,11 @@
           "total": 2362368,
           "weights": 2359296,
           "biases": 3072,
-          "formula": "(hidden_dim × mlp_dim) + mlp_dim",
+          "formula": "(hidden_dim \u00d7 mlp_dim) + mlp_dim",
           "calculationSteps": [
             {
               "label": "Expansion Weights",
-              "expression": "768 × 3072",
+              "expression": "768 \u00d7 3072",
               "result": 2359296,
               "explanation": "Projects token representations from 768 to 3072 dimensions."
             },
@@ -396,7 +499,9 @@
               "result": 3072,
               "explanation": "One bias parameter per expansion unit."
             }
-          ]
+          ],
+          "trainableParameters": 2362368,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Projects embeddings to higher dimensions.",
@@ -415,11 +520,19 @@
         "type": "activation",
         "name": "Block 0 MLP GELU",
         "inputShape": {
-          "dimensions": [null, 196, 3072],
+          "dimensions": [
+            null,
+            196,
+            3072
+          ],
           "description": "196x3072"
         },
         "outputShape": {
-          "dimensions": [null, 196, 3072],
+          "dimensions": [
+            null,
+            196,
+            3072
+          ],
           "description": "196x3072"
         },
         "config": {
@@ -430,7 +543,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Non-linear activation function.",
@@ -449,11 +564,19 @@
         "type": "dense",
         "name": "Block 0 MLP Projection",
         "inputShape": {
-          "dimensions": [null, 196, 3072],
+          "dimensions": [
+            null,
+            196,
+            3072
+          ],
           "description": "196x3072"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {
@@ -465,11 +588,11 @@
           "total": 2360064,
           "weights": 2359296,
           "biases": 768,
-          "formula": "(mlp_dim × hidden_dim) + hidden_dim",
+          "formula": "(mlp_dim \u00d7 hidden_dim) + hidden_dim",
           "calculationSteps": [
             {
               "label": "Projection Weights",
-              "expression": "3072 × 768",
+              "expression": "3072 \u00d7 768",
               "result": 2359296,
               "explanation": "Projects token representations back from 3072 to 768 dimensions."
             },
@@ -479,7 +602,9 @@
               "result": 768,
               "explanation": "One bias parameter per hidden unit."
             }
-          ]
+          ],
+          "trainableParameters": 2360064,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Compresses MLP representations back to core embedding size.",
@@ -498,11 +623,19 @@
         "type": "add",
         "name": "Block 0 Skip 2",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {},
@@ -511,7 +644,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Second residual skip connection around MLP block.",
@@ -528,13 +663,21 @@
       {
         "id": "blocks_stack",
         "type": "bottleneck",
-        "name": "Encoder Blocks 1–11",
+        "name": "Encoder Blocks 1\u201311",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {
@@ -544,21 +687,23 @@
           "total": 77966592,
           "weights": 77932800,
           "biases": 33792,
-          "formula": "11 × Block0_Params",
+          "formula": "11 \u00d7 Block0_Params",
           "calculationSteps": [
             {
               "label": "Stack Projection Weights",
-              "expression": "11 × 7084800",
+              "expression": "11 \u00d7 7084800",
               "result": 77932800,
               "explanation": "Calculates self-attention and MLP parameters across 11 identical stacked transformer encoder blocks."
             },
             {
               "label": "Stack Biases",
-              "expression": "11 × 3072",
+              "expression": "11 \u00d7 3072",
               "result": 33792,
               "explanation": "Total biases summed across 11 blocks."
             }
-          ]
+          ],
+          "trainableParameters": 77966592,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "A stack of 11 identical encoder blocks.",
@@ -577,30 +722,40 @@
         "type": "layer_norm",
         "name": "Output LayerNorm",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Scale & Shift Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Output Normalizer parameters."
             }
-          ]
+          ],
+          "trainableParameters": 1536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Final normalization before classification head.",
@@ -619,11 +774,18 @@
         "type": "global_average_pooling2d",
         "name": "Global Token Pooling",
         "inputShape": {
-          "dimensions": [null, 196, 768],
+          "dimensions": [
+            null,
+            196,
+            768
+          ],
           "description": "196x768"
         },
         "outputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768-d Vector"
         },
         "config": {},
@@ -632,7 +794,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Collapses sequence dimensions to a single vector.",
@@ -651,11 +815,17 @@
         "type": "dense",
         "name": "MLP Classification Head",
         "inputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "config": {
@@ -667,11 +837,11 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(hidden_dim × num_classes) + num_classes",
+          "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
           "calculationSteps": [
             {
               "label": "Head Weights",
-              "expression": "768 × 1000",
+              "expression": "768 \u00d7 1000",
               "result": 768000,
               "explanation": "Weights mapping pooled image embeddings to the 1000 ImageNet categories."
             },
@@ -681,7 +851,9 @@
               "result": 1000,
               "explanation": "One bias term per ImageNet class."
             }
-          ]
+          ],
+          "trainableParameters": 769000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Dense mapping to class index logits.",
@@ -700,11 +872,17 @@
         "type": "output",
         "name": "Output Probabilities",
         "inputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 probabilities"
         },
         "config": {
@@ -717,7 +895,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Normalizes predictions into probability values.",
@@ -893,5 +1073,7 @@
         "color": "#F59E0B"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 86566120
 }

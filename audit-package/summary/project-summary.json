@@ -1,0 +1,246 @@
+{
+  "projectName": "Neural Network Architecture Explorer",
+  "description": "An interactive, educational platform for visualizing and analyzing classic neural network architectures, layer parameters, topologies, and historical paper details.",
+  "objective": "Provide deep-dive layer-by-layer insights, math equations, paper summaries, and hardware deployment advisor mappings.",
+  "statistics": {
+    "totalModels": 34,
+    "totalLayersCount": 8388,
+    "totalParametersRepresented": 1229831438,
+    "totalResearchPapers": 14,
+    "totalExtractedLinks": 567,
+    "totalEducationalNotes": 8372,
+    "totalGraphNodes": 8388,
+    "totalGraphEdges": 9359,
+    "exportTimestamp": "2026-06-23T09:54:15.203432Z"
+  },
+  "advisor": {
+    "questions": [
+      {
+        "id": "goal",
+        "text": "What is the primary engineering goal for this deployment?",
+        "description": "Choose the metric you care about optimizing above all else.",
+        "options": [
+          {
+            "value": "accuracy",
+            "label": "Maximum Accuracy",
+            "description": "I need the absolute highest classification correctness on complex images, regardless of model size or runtime cost."
+          },
+          {
+            "value": "latency",
+            "label": "Real-time Inference Speed",
+            "description": "I need low-latency, high-throughput execution (e.g. live video streams, high frame rates)."
+          },
+          {
+            "value": "memory",
+            "label": "Low VRAM / Memory Constraints",
+            "description": "The target system has limited RAM (e.g., edge devices, standard laptops, mobile app bundles)."
+          },
+          {
+            "value": "education",
+            "label": "Research & Educational Study",
+            "description": "I want to study the core concepts of convolutional design, parameter mapping, or historical breakthroughs."
+          }
+        ]
+      },
+      {
+        "id": "hardware",
+        "text": "What is your target hardware deployment environment?",
+        "description": "This determines the physical device where inference will execute.",
+        "options": [
+          {
+            "value": "server",
+            "label": "Cloud Server / High-End GPU",
+            "description": "NVIDIA GPUs, TPUs, or server nodes with rich memory resources."
+          },
+          {
+            "value": "mobile",
+            "label": "Smartphone (iOS / Android)",
+            "description": "Mobile app edge runtime using CoreML, TensorFlow Lite, or PyTorch Mobile."
+          },
+          {
+            "value": "embedded",
+            "label": "Embedded Board / IoT / Microcontroller",
+            "description": "Raspberry Pi, Jetson Nano, Arduino, or TinyML hardware with strict power boundaries."
+          }
+        ]
+      },
+      {
+        "id": "budget",
+        "text": "What is the available computational complexity budget?",
+        "description": "This maps directly to FLOPs (Floating Point Operations) allowed during forward passes.",
+        "options": [
+          {
+            "value": "low",
+            "label": "Strictly limited budget",
+            "description": "Minimize operations to save power, heat, and battery life."
+          },
+          {
+            "value": "medium",
+            "label": "Balanced computational budget",
+            "description": "A reasonable trade-off between throughput and accuracy."
+          },
+          {
+            "value": "high",
+            "label": "High performance / Unlimited budget",
+            "description": "Willing to spend massive computational FLOPs to gain incremental accuracy."
+          }
+        ]
+      }
+    ]
+  },
+  "evolution": [
+    {
+      "id": "lenet",
+      "name": "LeNet-5",
+      "year": 1998,
+      "problem": "Fully connected neural networks (MLPs) were used for image recognition, which ignored the spatial layout of pixels and suffered from parameter explosion as image resolution scaled.",
+      "innovation": "Introduced shared weights (convolutions) and spatial downsampling (subsampling/pooling) directly into a hierarchical network.",
+      "keyIdea": "Weight sharing forces the network to learn translation-invariant local features, while pooling reduces spatial sensitivity.",
+      "advantages": [
+        "Significant reduction in parameter footprint compared to fully connected networks",
+        "Robustness to small translations and distortions of input characters"
+      ],
+      "limitations": [
+        "Limited to small, simple grayscale images (e.g., 32x32 handwritten digits)",
+        "Prone to vanishing gradients when trying to stack deeper layers"
+      ],
+      "legacy": "Established the fundamental CNN pattern (stacked Conv-Pool layers followed by Fully Connected heads) used for the next three decades."
+    },
+    {
+      "id": "alexnet",
+      "name": "AlexNet",
+      "year": 2012,
+      "problem": "CNNs were widely considered too slow and memory-intensive to scale to large, high-resolution datasets like ImageNet, leading the vision community to favor hand-crafted features (SIFT/HOG).",
+      "innovation": "Leveraged parallel GPU training, ReLU non-linear activations for fast convergence, and dropout regularization to prevent overfitting.",
+      "keyIdea": "Scale up CNN depth and width using hardware acceleration (GPUs) and non-saturating activation functions.",
+      "advantages": [
+        "First model to dramatically outperform classical computer vision on large-scale datasets",
+        "RelU activation resolved training saturation issues seen with sigmoid/tanh"
+      ],
+      "limitations": [
+        "Large parameter footprint (60M+) concentrated heavily in the final fully connected layers",
+        "Very coarse early layers (11x11, stride 4 convolutions) that missed fine details"
+      ],
+      "legacy": "Triggered the modern deep learning revolution, proving the viability of large neural networks and establishing GPUs as standard hardware."
+    },
+    {
+      "id": "vgg",
+      "name": "VGG Family",
+      "year": 2014,
+      "problem": "AlexNet's structure was heterogeneous and arbitrary (alternating 11x11, 5x5, and 3x3 filters), making it difficult to systematically design deeper networks without optimization issues.",
+      "innovation": "Standardized the entire architecture using homogeneous stacks of small 3x3 convolutions and 2x2 max pooling.",
+      "keyIdea": "Stacking multiple small 3x3 filters achieves the same receptive field as a larger filter (e.g., two 3x3s equal a 5x5) but with fewer parameters and more non-linearities.",
+      "advantages": [
+        "Extremely clean, modular design that was easy to scale up to 19 layers",
+        "Provided highly generalizable pre-trained features that served as backbones for many tasks"
+      ],
+      "limitations": [
+        "Massive computational cost and parameter size (138M+ parameters for VGG16)",
+        "High memory consumption in the first few convolutional layers during forward passes"
+      ],
+      "legacy": "Proved that network depth is a primary dimension of model capacity and representation learning."
+    },
+    {
+      "id": "resnet",
+      "name": "ResNet Family",
+      "year": 2015,
+      "problem": "As networks grew deeper (beyond 20 layers), they suffered from 'degradation' where training accuracy saturated and then dropped, because gradients vanished or exploded during backpropagation.",
+      "innovation": "Introduced residual learning via identity skip connections that bypass one or more convolutional layers.",
+      "keyIdea": "Let stacked layers fit a residual mapping F(x) = H(x) - x, allowing the network to easily learn identity mappings (H(x) = x) if no refinement is needed.",
+      "advantages": [
+        "Solved the optimization degradation problem, allowing models to scale to 1000+ layers",
+        "Identity shortcuts allow gradients to flow directly back to early layers during backpropagation"
+      ],
+      "limitations": [
+        "Identity skip connections do not add capacity themselves, requiring more conv layers to increase representation power",
+        "Can suffer from feature redundancy where layers learn identical representations"
+      ],
+      "legacy": "Skip connections became the standard structural component of nearly all subsequent deep learning architectures (Transformers, CNNs)."
+    },
+    {
+      "id": "densenet",
+      "name": "DenseNet Family",
+      "year": 2016,
+      "problem": "ResNet's element-wise addition of identity shortcuts could wash out or dilute features across layers, requiring wider networks or deeper blocks to compensate.",
+      "innovation": "Introduced dense blocks where each layer receives the concatenated feature maps of all preceding layers as its input.",
+      "keyIdea": "Maximize feature reuse by concatenating channel representations instead of adding them, ensuring direct communication pathways between all layers.",
+      "advantages": [
+        "Excellent parameter efficiency, matching ResNet performance with up to 50% fewer parameters",
+        "Strengthens feature propagation and alleviates vanishing gradient issues"
+      ],
+      "limitations": [
+        "Extremely memory-intensive due to wide tensor concatenations, leading to high peak VRAM during training",
+        "Implementation is computationally complex to optimize for standard GPU caches"
+      ],
+      "legacy": "Highlighted the power of feature reuse and explicit shortcut concatenation, paving the way for efficient modern architectures."
+    },
+    {
+      "id": "mobilenet",
+      "name": "MobileNet Family",
+      "year": 2017,
+      "problem": "Standard convolutions are too computationally expensive and memory-heavy to run on mobile devices, microcontrollers, or embedded edge systems in real-time.",
+      "innovation": "Replaced standard convolutions with Depthwise Separable Convolutions, separating spatial filtering from channel projection.",
+      "keyIdea": "Perform a 3x3 spatial convolution on each channel independently (depthwise), followed by a 1x1 convolution (pointwise) to mix channel information.",
+      "advantages": [
+        "Reduces computational cost (FLOPs) and parameters by 8x to 9x with only a slight drop in accuracy",
+        "Highly optimized for edge deployment with adjustable width and resolution multipliers"
+      ],
+      "limitations": [
+        "Lower representational capacity, making them less suitable for extremely complex datasets",
+        "Depthwise layers can suffer from under-utilization on heavy server GPUs due to memory bandwidth limits"
+      ],
+      "legacy": "Pioneered mobile-first deep learning, proving that network architectures can be optimized specifically for target hardware constraints."
+    },
+    {
+      "id": "efficientnet",
+      "name": "EfficientNet Family",
+      "year": 2019,
+      "problem": "Scaling CNNs to improve accuracy was historically done arbitrarily (e.g. only adding layers, or only widening channels), leading to sub-optimal performance and resource waste.",
+      "innovation": "Introduced Compound Scaling, scaling network depth, width, and input resolution simultaneously using a fixed ratio.",
+      "keyIdea": "If the input image is larger, the network needs more layers to expand receptive fields, and more channels to capture fine-grained patterns.",
+      "advantages": [
+        "Superb efficiency, achieving state-of-the-art accuracy with up to 8x fewer parameters than previous models",
+        "Provides a clean, mathematically grounded scaling path from lightweight to heavy servers"
+      ],
+      "limitations": [
+        "Depthwise separable operations can be slow to train on older hardware accelerators",
+        "Extremely deep scaled versions (e.g., B7) have large training overheads"
+      ],
+      "legacy": "Changed how the industry scales convolutional networks, replacing guesswork with scientific scaling principles."
+    },
+    {
+      "id": "convnext",
+      "name": "ConvNeXt",
+      "year": 2022,
+      "problem": "Vision Transformers (ViTs) began dominating computer vision benchmarks, threatening to make CNNs obsolete, but ViTs brought quadratic computational complexity and lacked spatial inductive biases.",
+      "innovation": "Modernized standard ResNets using Transformer-inspired design choices (depthwise convolutions, larger 7x7 kernels, inverted bottlenecks, and GELU activations).",
+      "keyIdea": "Align the micro-architecture and training recipe of standard CNNs with modern Vision Transformers while maintaining pure convolution.",
+      "advantages": [
+        "Matches or exceeds Vision Transformer performance across standard tasks",
+        "Preserves the simplicity, efficiency, and scale-invariance of classic convolutions"
+      ],
+      "limitations": [
+        "Still lacks the dynamic, global-context modeling capability of self-attention on long-range dependencies",
+        "May require larger training epochs to match Transformer capacity on massive datasets"
+      ],
+      "legacy": "Restored pure convolutional architectures to competitive status in the transformer era, showing that CNNs still have strong potential."
+    },
+    {
+      "id": "vit",
+      "name": "Vision Transformer (ViT)",
+      "year": 2020,
+      "problem": "The local receptive fields and translation equivariance of convolutions (inductive biases) restrict their maximum capability when training on massive web-scale datasets.",
+      "innovation": "Replaced convolutions entirely by tokenizing images into flat patches and feeding them to a standard NLP Transformer Encoder.",
+      "keyIdea": "Treat image patches like words in a sentence and use self-attention to dynamically model dependencies between all patches globally.",
+      "advantages": [
+        "Extremely high representational capacity; scales far better than CNNs on massive datasets",
+        "Learns global visual relations in the very first layers of the network"
+      ],
+      "limitations": [
+        "Requires massive pre-training datasets (e.g. ImageNet-21k, JFT-300M) because it lacks CNN spatial inductive biases",
+        "Quadratic computational scaling with respect to image resolution (due to self-attention matrix)"
+      ],
+      "legacy": "Shifted computer vision towards unified multi-modal attention architectures, serving as the visual backbone for modern Large Multimodal Models (LMMs)."
+    }
+  ]
+}

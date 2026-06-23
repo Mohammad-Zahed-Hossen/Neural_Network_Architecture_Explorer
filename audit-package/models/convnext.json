@@ -1,0 +1,814 @@
+{
+  "modelName": "ConvNeXt",
+  "architectureFamily": "Other",
+  "publicationYear": 2022,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "totalParameters": 28475064,
+  "trainableParameters": 28475064,
+  "FLOPs": 4460000000,
+  "MACs": 2230000000,
+  "top1Accuracy": 0.821,
+  "top5Accuracy": 0.959,
+  "layerCount": 14,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "Input Image",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "stem_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "RGB image inputs for the ConvNeXt network.",
+        "detailed": "Accepts 224x224 pixels RGB color images. ConvNeXt starts downsampling immediately using a patchify-style convolution block rather than ResNet's heavy 7x7 conv stride-2 + maxpooling.",
+        "keyTakeaway": "ConvNeXt processes raw RGB inputs using a modern patch projection."
+      }
+    },
+    {
+      "layerId": "stem_conv",
+      "layerName": "Patchify Stem Conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          96
+        ],
+        "description": "56x56x96"
+      },
+      "parameters": {
+        "total": 4704,
+        "weights": 4608,
+        "biases": 96,
+        "formula": "(kernel_h \u00d7 kernel_w \u00d7 in_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Stem weights",
+            "expression": "4 \u00d7 4 \u00d7 3 \u00d7 96",
+            "result": 4608,
+            "explanation": "Extracts 4x4 image patches with stride 4, mapping them to 96 feature dimensions."
+          },
+          {
+            "label": "Biases",
+            "expression": "96",
+            "result": 96,
+            "explanation": "One bias parameter per output channel."
+          }
+        ],
+        "trainableParameters": 4704,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          4,
+          4
+        ],
+        "strides": [
+          4,
+          4
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "stem_ln"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Downsamples image to 56x56 like a patch partition.",
+        "detailed": "Uses a 4x4 convolution with stride 4. This mimics ViT's patch projection, setting a starting channel resolution of 96.",
+        "keyTakeaway": "Replaces ResNet's 7x7 stride-2 conv and maxpool stack, yielding a cleaner starting feature map."
+      }
+    },
+    {
+      "layerId": "stem_ln",
+      "layerName": "Stem LayerNorm",
+      "layerType": "layer_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          96
+        ],
+        "description": "56x56x96"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          96
+        ],
+        "description": "56x56x96"
+      },
+      "parameters": {
+        "total": 192,
+        "weights": 96,
+        "biases": 96,
+        "formula": "2 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "LN parameters",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Gamma scaling and Beta bias vectors."
+          }
+        ],
+        "trainableParameters": 192,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "connections": {
+        "incoming": [
+          "stem_conv"
+        ],
+        "outgoing": [
+          "stage1_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies Layer Normalization after the stem.",
+        "detailed": "Normalizes activations across the channel dimension (96). Replaces ResNet's Batch Normalization choice.",
+        "keyTakeaway": "ConvNeXt uses LayerNorm throughout the model to align with Transformer training configurations."
+      }
+    },
+    {
+      "layerId": "stage1_blocks",
+      "layerName": "Stage 1 (3x ConvNeXt Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          96
+        ],
+        "description": "56x56x96"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          96
+        ],
+        "description": "56x56x96"
+      },
+      "parameters": {
+        "total": 350000,
+        "weights": 348500,
+        "biases": 1500,
+        "formula": "3 \u00d7 Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 1 Weights",
+            "expression": "3 \u00d7 116166",
+            "result": 348500,
+            "explanation": "Parameters across 3 ConvNeXt blocks, each using 7x7 depthwise conv and inverted bottlenecks."
+          }
+        ],
+        "trainableParameters": 350000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 3
+      },
+      "connections": {
+        "incoming": [
+          "stem_ln"
+        ],
+        "outgoing": [
+          "downsample1_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Modern blocks with large kernels and GELU.",
+        "detailed": "Applies 7x7 depthwise convolutions (spatial mixing), followed by LayerNorm, 1x1 linear expansion to 384 channels, GELU activation, and 1x1 compression to 96 channels.",
+        "keyTakeaway": "7x7 kernels increase the receptive field early in the network, mimicking self-attention's window scope."
+      }
+    },
+    {
+      "layerId": "downsample1_conv",
+      "layerName": "Downsample 1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          96
+        ],
+        "description": "56x56x96"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          192
+        ],
+        "description": "28x28x192"
+      },
+      "parameters": {
+        "total": 73920,
+        "weights": 73728,
+        "biases": 192,
+        "formula": "(kernel_h \u00d7 kernel_w \u00d7 in_channels + 1) \u00d7 out_channels",
+        "calculationSteps": [
+          {
+            "label": "Downsample Weights",
+            "expression": "2 \u00d7 2 \u00d7 96 \u00d7 192",
+            "result": 73728,
+            "explanation": "Downsamples map resolution to 28x28 and projects features to 192 dimensions."
+          }
+        ],
+        "trainableParameters": 73920,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 192,
+        "kernelSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "stage1_blocks"
+        ],
+        "outgoing": [
+          "stage2_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Hierarchical downsampling step.",
+        "detailed": "Uses a 2x2 conv with stride 2, normalized by an associated LayerNorm. Mimics ViT/Swin patch merging steps.",
+        "keyTakeaway": "Replaces ResNet's convolution downsample blocks (which use stride-2 1x1 convs in residuals)."
+      }
+    },
+    {
+      "layerId": "stage2_blocks",
+      "layerName": "Stage 2 (3x ConvNeXt Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          192
+        ],
+        "description": "28x28x192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          192
+        ],
+        "description": "28x28x192"
+      },
+      "parameters": {
+        "total": 1400000,
+        "weights": 1397000,
+        "biases": 3000,
+        "formula": "3 \u00d7 Stage2Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 2 Weights Stack",
+            "expression": "3 \u00d7 465666",
+            "result": 1397000,
+            "explanation": "Accumulated parameters of the 3 ConvNeXt blocks in Stage 2."
+          }
+        ],
+        "trainableParameters": 1400000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 3
+      },
+      "connections": {
+        "incoming": [
+          "downsample1_conv"
+        ],
+        "outgoing": [
+          "downsample2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Processes features at 28x28 spatial scale.",
+        "detailed": "Applies ConvNeXt blocks at 28x28 resolution. Uses inverted bottleneck channels: 192 -> 768 -> 192.",
+        "keyTakeaway": "Bottleneck channels are expanded inside the block (like MobileNetV2 inverted residuals) to improve representation capacity."
+      }
+    },
+    {
+      "layerId": "downsample2_conv",
+      "layerName": "Downsample 2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          192
+        ],
+        "description": "28x28x192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          384
+        ],
+        "description": "14x14x384"
+      },
+      "parameters": {
+        "total": 295296,
+        "weights": 294912,
+        "biases": 384,
+        "formula": "in_channels \u00d7 4 \u00d7 out_channels",
+        "calculationSteps": [
+          {
+            "label": "Linear Reduction Weights",
+            "expression": "192 \u00d7 4 \u00d7 384",
+            "result": 294912,
+            "explanation": "Projects 2x2 grid features (768 dimensions) down to 384 dimensions."
+          }
+        ],
+        "trainableParameters": 295296,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 384,
+        "kernelSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "stage2_blocks"
+        ],
+        "outgoing": [
+          "stage3_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Downsamples map size to 14x14.",
+        "detailed": "Reduces spatial height/width to 14x14. Prepares representations for the deep Stage 3 block.",
+        "keyTakeaway": "Constructs multi-scale representations by decreasing spatial resolution."
+      }
+    },
+    {
+      "layerId": "stage3_blocks",
+      "layerName": "Stage 3 (9x ConvNeXt Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          384
+        ],
+        "description": "14x14x384"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          384
+        ],
+        "description": "14x14x384"
+      },
+      "parameters": {
+        "total": 13500000,
+        "weights": 13482000,
+        "biases": 18000,
+        "formula": "9 \u00d7 Stage3Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 3 Weights",
+            "expression": "9 \u00d7 1498000",
+            "result": 13482000,
+            "explanation": "Parameters of 9 stacked ConvNeXt blocks at 384 channels (expanding internally to 1536 channels)."
+          }
+        ],
+        "trainableParameters": 13500000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 9
+      },
+      "connections": {
+        "incoming": [
+          "downsample2_conv"
+        ],
+        "outgoing": [
+          "downsample3_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Core feature extraction stage (9 blocks).",
+        "detailed": "The deepest stage of the network. Large 7x7 depthwise convolutions extract deep hierarchical structures, while inverted bottlenecks combine features across channels.",
+        "keyTakeaway": "Corresponds to ResNet's deep Conv4 stage, accounting for ~47% of the model parameters."
+      }
+    },
+    {
+      "layerId": "downsample3_conv",
+      "layerName": "Downsample 3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          384
+        ],
+        "description": "14x14x384"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          768
+        ],
+        "description": "7x7x768"
+      },
+      "parameters": {
+        "total": 1180416,
+        "weights": 1179648,
+        "biases": 768,
+        "formula": "in_channels \u00d7 4 \u00d7 out_channels",
+        "calculationSteps": [
+          {
+            "label": "Linear Reduction Weights",
+            "expression": "384 \u00d7 4 \u00d7 768",
+            "result": 1179648,
+            "explanation": "Downsamples maps to final 7x7 grid and doubles channel size to 768."
+          }
+        ],
+        "trainableParameters": 1180416,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 768,
+        "kernelSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "stage3_blocks"
+        ],
+        "outgoing": [
+          "stage4_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Reduces map size to final 7x7 resolution.",
+        "detailed": "Final spatial downsampling step. Prepares ConvNeXt for Stage 4 class-specific extraction.",
+        "keyTakeaway": "Final hierarchical downsampling step."
+      }
+    },
+    {
+      "layerId": "stage4_blocks",
+      "layerName": "Stage 4 (3x ConvNeXt Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          768
+        ],
+        "description": "7x7x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          768
+        ],
+        "description": "7x7x768"
+      },
+      "parameters": {
+        "total": 10900000,
+        "weights": 10888000,
+        "biases": 12000,
+        "formula": "3 \u00d7 Stage4Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 4 Weights",
+            "expression": "3 \u00d7 3629333",
+            "result": 10888000,
+            "explanation": "Parameters of the final 3 ConvNeXt blocks operating at 768 dimensions."
+          }
+        ],
+        "trainableParameters": 10900000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 3
+      },
+      "connections": {
+        "incoming": [
+          "downsample3_conv"
+        ],
+        "outgoing": [
+          "avg_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "High-level classification features (3 blocks).",
+        "detailed": "Applies the final 3 ConvNeXt blocks. Extracts complex semantic representations at 7x7 spatial size.",
+        "keyTakeaway": "Extracts semantic visual attributes before global classification pooling."
+      }
+    },
+    {
+      "layerId": "avg_pool",
+      "layerName": "Global Average Pooling",
+      "layerType": "global_average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          768
+        ],
+        "description": "7x7x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768-d Vector"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "stage4_blocks"
+        ],
+        "outgoing": [
+          "norm_out"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Averages spatial dimensions to 1D vector.",
+        "detailed": "Averages features across the 7x7 spatial locations, generating a single 768-dimensional visual embedding vector.",
+        "keyTakeaway": "Collapses spatial dimensions to prepare features for category logit mapping."
+      }
+    },
+    {
+      "layerId": "norm_out",
+      "layerName": "Output LayerNorm",
+      "layerType": "layer_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "LN scaling parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Gamma scaling and Beta bias vectors."
+          }
+        ],
+        "trainableParameters": 1536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "connections": {
+        "incoming": [
+          "avg_pool"
+        ],
+        "outgoing": [
+          "head"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Final normalization before logits mapper.",
+        "detailed": "Applies a final layer normalization to the collapsed feature vector, stabilizing outputs before categorical evaluation.",
+        "keyTakeaway": "Final normalization step."
+      }
+    },
+    {
+      "layerId": "head",
+      "layerName": "Classification Head",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 logits"
+      },
+      "parameters": {
+        "total": 769000,
+        "weights": 768000,
+        "biases": 1000,
+        "formula": "(channels \u00d7 classes) + classes",
+        "calculationSteps": [
+          {
+            "label": "Logits weights",
+            "expression": "768 \u00d7 1000",
+            "result": 768000,
+            "explanation": "Dense weights mapping pooled features to ImageNet categories."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "Class logits biases."
+          }
+        ],
+        "trainableParameters": 769000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "linear",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "norm_out"
+        ],
+        "outgoing": [
+          "output"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Dense mapping to logits.",
+        "detailed": "Linear layer predicting class log-odds.",
+        "keyTakeaway": "Maps features to ImageNet class logits."
+      }
+    },
+    {
+      "layerId": "output",
+      "layerName": "Output Logits",
+      "layerType": "output",
+      "inputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 logits"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 probabilities"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "head"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Normalizes outputs to probabilities.",
+        "detailed": "Softmax conversion of category logits.",
+        "keyTakeaway": "Yields output confidence distribution over categories."
+      }
+    }
+  ]
+}

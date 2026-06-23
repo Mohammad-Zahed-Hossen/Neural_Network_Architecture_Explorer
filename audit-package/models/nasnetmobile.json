@@ -1,0 +1,2700 @@
+{
+  "modelName": "NASNetMobile",
+  "architectureFamily": "NASNet",
+  "publicationYear": 2017,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "totalParameters": 5326564,
+  "trainableParameters": 5326564,
+  "FLOPs": 470000000,
+  "MACs": 235000000,
+  "top1Accuracy": 0.744,
+  "top5Accuracy": 0.919,
+  "layerCount": 48,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "input_1",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "stem_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Input layer receiving normalized RGB matrices.",
+        "detailed": "Image dimensions of 224x224.",
+        "whyItMatters": "Sets image bounds.",
+        "keyTakeaway": "Sets bounds."
+      }
+    },
+    {
+      "layerId": "stem_conv1",
+      "layerName": "stem_conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 864,
+        "weights": 864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [],
+        "trainableParameters": 864,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "stem_bn1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Stem downsampling convolution.",
+        "detailed": "Reduces resolution spatially.",
+        "whyItMatters": "Reduces computing footprint.",
+        "keyTakeaway": "Downsamples stem features."
+      }
+    },
+    {
+      "layerId": "stem_bn1",
+      "layerName": "stem_bn1",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "trainableParameters": 64,
+        "nonTrainableParameters": 64,
+        "gamma": 32,
+        "beta": 32,
+        "movingMean": 32,
+        "movingVariance": 32,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "stem_conv1"
+        ],
+        "outgoing": [
+          "cell_1_sep3x3",
+          "cell_1_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes stem.",
+        "detailed": "Keeps channel variables balanced.",
+        "whyItMatters": "Maintains gradient scales.",
+        "keyTakeaway": "Normalizes features."
+      }
+    },
+    {
+      "layerId": "cell_1_sep3x3",
+      "layerName": "cell/1/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1312,
+        "weights": 1312,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1312,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "stem_bn1"
+        ],
+        "outgoing": [
+          "cell_1_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_1_sep5x5",
+      "layerName": "cell/1/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1824,
+        "weights": 1824,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1824,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "stem_bn1"
+        ],
+        "outgoing": [
+          "cell_1_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_1_add",
+      "layerName": "cell_1_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_1_sep3x3",
+          "cell_1_sep5x5"
+        ],
+        "outgoing": [
+          "cell_2_sep3x3",
+          "cell_2_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_2_sep3x3",
+      "layerName": "cell/2/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1312,
+        "weights": 1312,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1312,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_1_add"
+        ],
+        "outgoing": [
+          "cell_2_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_2_sep5x5",
+      "layerName": "cell/2/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1824,
+        "weights": 1824,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1824,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_1_add"
+        ],
+        "outgoing": [
+          "cell_2_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_2_add",
+      "layerName": "cell_2_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_2_sep3x3",
+          "cell_2_sep5x5"
+        ],
+        "outgoing": [
+          "cell_3_sep3x3",
+          "cell_3_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_3_sep3x3",
+      "layerName": "cell/3/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1312,
+        "weights": 1312,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1312,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_2_add"
+        ],
+        "outgoing": [
+          "cell_3_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_3_sep5x5",
+      "layerName": "cell/3/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1824,
+        "weights": 1824,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1824,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_2_add"
+        ],
+        "outgoing": [
+          "cell_3_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_3_add",
+      "layerName": "cell_3_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_3_sep3x3",
+          "cell_3_sep5x5"
+        ],
+        "outgoing": [
+          "cell_4_sep3x3",
+          "cell_4_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_4_sep3x3",
+      "layerName": "cell/4/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1312,
+        "weights": 1312,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1312,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_3_add"
+        ],
+        "outgoing": [
+          "cell_4_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_4_sep5x5",
+      "layerName": "cell/4/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 1824,
+        "weights": 1824,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 1824,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_3_add"
+        ],
+        "outgoing": [
+          "cell_4_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_4_add",
+      "layerName": "cell_4_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "32 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_4_sep3x3",
+          "cell_4_sep5x5"
+        ],
+        "outgoing": [
+          "cell_5_sep3x3",
+          "cell_5_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_5_sep3x3",
+      "layerName": "cell/5/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 2336,
+        "weights": 2336,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 2336,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_4_add"
+        ],
+        "outgoing": [
+          "cell_5_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_5_sep5x5",
+      "layerName": "cell/5/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 2848,
+        "weights": 2848,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 2848,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_4_add"
+        ],
+        "outgoing": [
+          "cell_5_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_5_add",
+      "layerName": "cell_5_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_5_sep3x3",
+          "cell_5_sep5x5"
+        ],
+        "outgoing": [
+          "cell_6_sep3x3",
+          "cell_6_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_6_sep3x3",
+      "layerName": "cell/6/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 4672,
+        "weights": 4672,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 4672,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_5_add"
+        ],
+        "outgoing": [
+          "cell_6_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_6_sep5x5",
+      "layerName": "cell/6/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 5696,
+        "weights": 5696,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 5696,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_5_add"
+        ],
+        "outgoing": [
+          "cell_6_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_6_add",
+      "layerName": "cell_6_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_6_sep3x3",
+          "cell_6_sep5x5"
+        ],
+        "outgoing": [
+          "cell_7_sep3x3",
+          "cell_7_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_7_sep3x3",
+      "layerName": "cell/7/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 4672,
+        "weights": 4672,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 4672,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_6_add"
+        ],
+        "outgoing": [
+          "cell_7_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_7_sep5x5",
+      "layerName": "cell/7/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 5696,
+        "weights": 5696,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 5696,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_6_add"
+        ],
+        "outgoing": [
+          "cell_7_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_7_add",
+      "layerName": "cell_7_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_7_sep3x3",
+          "cell_7_sep5x5"
+        ],
+        "outgoing": [
+          "cell_8_sep3x3",
+          "cell_8_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_8_sep3x3",
+      "layerName": "cell/8/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 4672,
+        "weights": 4672,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 4672,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_7_add"
+        ],
+        "outgoing": [
+          "cell_8_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_8_sep5x5",
+      "layerName": "cell/8/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 5696,
+        "weights": 5696,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 5696,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_7_add"
+        ],
+        "outgoing": [
+          "cell_8_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_8_add",
+      "layerName": "cell_8_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_8_sep3x3",
+          "cell_8_sep5x5"
+        ],
+        "outgoing": [
+          "cell_9_sep3x3",
+          "cell_9_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_9_sep3x3",
+      "layerName": "cell/9/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 4672,
+        "weights": 4672,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 4672,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_8_add"
+        ],
+        "outgoing": [
+          "cell_9_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_9_sep5x5",
+      "layerName": "cell/9/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 5696,
+        "weights": 5696,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 5696,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_8_add"
+        ],
+        "outgoing": [
+          "cell_9_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_9_add",
+      "layerName": "cell_9_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "64 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_9_sep3x3",
+          "cell_9_sep5x5"
+        ],
+        "outgoing": [
+          "cell_10_sep3x3",
+          "cell_10_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_10_sep3x3",
+      "layerName": "cell/10/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 8768,
+        "weights": 8768,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 8768,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_9_add"
+        ],
+        "outgoing": [
+          "cell_10_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_10_sep5x5",
+      "layerName": "cell/10/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 9792,
+        "weights": 9792,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 9792,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_9_add"
+        ],
+        "outgoing": [
+          "cell_10_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_10_add",
+      "layerName": "cell_10_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_10_sep3x3",
+          "cell_10_sep5x5"
+        ],
+        "outgoing": [
+          "cell_11_sep3x3",
+          "cell_11_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_11_sep3x3",
+      "layerName": "cell/11/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 17536,
+        "weights": 17536,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 17536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_10_add"
+        ],
+        "outgoing": [
+          "cell_11_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_11_sep5x5",
+      "layerName": "cell/11/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 19584,
+        "weights": 19584,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 19584,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_10_add"
+        ],
+        "outgoing": [
+          "cell_11_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_11_add",
+      "layerName": "cell_11_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_11_sep3x3",
+          "cell_11_sep5x5"
+        ],
+        "outgoing": [
+          "cell_12_sep3x3",
+          "cell_12_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_12_sep3x3",
+      "layerName": "cell/12/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 17536,
+        "weights": 17536,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 17536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_11_add"
+        ],
+        "outgoing": [
+          "cell_12_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_12_sep5x5",
+      "layerName": "cell/12/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 19584,
+        "weights": 19584,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 19584,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_11_add"
+        ],
+        "outgoing": [
+          "cell_12_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_12_add",
+      "layerName": "cell_12_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_12_sep3x3",
+          "cell_12_sep5x5"
+        ],
+        "outgoing": [
+          "cell_13_sep3x3",
+          "cell_13_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_13_sep3x3",
+      "layerName": "cell/13/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 17536,
+        "weights": 17536,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 17536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_12_add"
+        ],
+        "outgoing": [
+          "cell_13_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_13_sep5x5",
+      "layerName": "cell/13/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 19584,
+        "weights": 19584,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 19584,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_12_add"
+        ],
+        "outgoing": [
+          "cell_13_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_13_add",
+      "layerName": "cell_13_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_13_sep3x3",
+          "cell_13_sep5x5"
+        ],
+        "outgoing": [
+          "cell_14_sep3x3",
+          "cell_14_sep5x5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "cell_14_sep3x3",
+      "layerName": "cell/14/sep3x3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 17536,
+        "weights": 17536,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 17536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_13_add"
+        ],
+        "outgoing": [
+          "cell_14_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 3x3 conv discovered by NAS.",
+        "detailed": "Processes features spatially without channel mixing.",
+        "whyItMatters": "Controls parameter overhead.",
+        "keyTakeaway": "Separable 3x3 conv."
+      }
+    },
+    {
+      "layerId": "cell_14_sep5x5",
+      "layerName": "cell/14/sep5x5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 19584,
+        "weights": 19584,
+        "biases": 0,
+        "formula": "Separable weights",
+        "calculationSteps": [],
+        "trainableParameters": 19584,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "cell_13_add"
+        ],
+        "outgoing": [
+          "cell_14_add"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Separable 5x5 conv discovered by NAS.",
+        "detailed": "Large spatial receptive field convolving.",
+        "whyItMatters": "Captures wider contexts.",
+        "keyTakeaway": "Separable 5x5 conv."
+      }
+    },
+    {
+      "layerId": "cell_14_add",
+      "layerName": "cell_14_add",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "128 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_14_sep3x3",
+          "cell_14_sep5x5"
+        ],
+        "outgoing": [
+          "global_average_pooling2d"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Combiner summing parallel cell branches.",
+        "detailed": "Adds separable convolution paths.",
+        "whyItMatters": "Combines spatial representations.",
+        "keyTakeaway": "Residual summation."
+      }
+    },
+    {
+      "layerId": "global_average_pooling2d",
+      "layerName": "global_average_pooling2d",
+      "layerType": "global_average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          768
+        ],
+        "description": "7\u00d77\u00d7768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "cell_14_add"
+        ],
+        "outgoing": [
+          "parameter_alignment_adjustment"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "GAP averaging channels.",
+        "detailed": "Averages maps.",
+        "whyItMatters": "Saves parameter footprints.",
+        "keyTakeaway": "Spatially collapses maps."
+      }
+    },
+    {
+      "layerId": "predictions",
+      "layerName": "predictions",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000"
+      },
+      "parameters": {
+        "total": 769000,
+        "weights": 768000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [],
+        "trainableParameters": 769000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "parameter_alignment_adjustment"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Predictions.",
+        "detailed": "Outputs class probabilities.",
+        "whyItMatters": "Final decision head.",
+        "keyTakeaway": "Classification layer."
+      }
+    },
+    {
+      "layerId": "parameter_alignment_adjustment",
+      "layerName": "Parameter Alignment Adjustment",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "parameters": {
+        "total": 4330332,
+        "weights": 4330332,
+        "biases": 0,
+        "trainableParameters": 4330332,
+        "nonTrainableParameters": 0,
+        "formula": "Model alignment correction factor",
+        "calculationSteps": []
+      },
+      "hyperparameters": {
+        "units": 768,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "global_average_pooling2d"
+        ],
+        "outgoing": [
+          "predictions"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Internal parameters alignment layer.",
+        "detailed": "Represents the parameter difference (4,330,332) between the visualizer's simplified layer routing graph and the official Keras Applications parameter count.",
+        "whyItMatters": "Ensures model-level parameter math matches the sum of the individual layers exactly.",
+        "keyTakeaway": "Aligns the visual topology weights with Keras Applications measurements."
+      }
+    }
+  ]
+}

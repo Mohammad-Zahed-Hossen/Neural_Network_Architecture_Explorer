@@ -15,7 +15,7 @@
   ],
   "paperUrl": "https://arxiv.org/abs/2103.14030",
   "depth": 36,
-  "totalParameters": 28286590,
+  "totalParameters": 28474872,
   "totalFLOPs": 4500000000,
   "inputShape": {
     "channels": 3,
@@ -40,22 +40,38 @@
         "type": "input",
         "name": "Input Image",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "outputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "config": {
-          "shape": [224, 224, 3]
+          "shape": [
+            224,
+            224,
+            3
+          ]
         },
         "parameters": {
           "total": 0,
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "RGB image inputs for the Swin Network.",
@@ -74,17 +90,33 @@
         "type": "conv2d",
         "name": "Patch Partition Stem",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3"
         },
         "outputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "config": {
           "filters": 96,
-          "kernelSize": [4, 4],
-          "strides": [4, 4],
+          "kernelSize": [
+            4,
+            4
+          ],
+          "strides": [
+            4,
+            4
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "linear"
@@ -93,11 +125,11 @@
           "total": 4704,
           "weights": 4608,
           "biases": 96,
-          "formula": "(patch_h × patch_w × in_channels + 1) × embedding_dim",
+          "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 embedding_dim",
           "calculationSteps": [
             {
               "label": "Stem Weights",
-              "expression": "4 × 4 × 3 × 96",
+              "expression": "4 \u00d7 4 \u00d7 3 \u00d7 96",
               "result": 4608,
               "explanation": "Convolutes 4x4 non-overlapping patches, mapping each patch's RGB pixels to 96 feature dimensions."
             },
@@ -107,7 +139,9 @@
               "result": 96,
               "explanation": "One bias term per output channel."
             }
-          ]
+          ],
+          "trainableParameters": 4704,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Splits the input into 4x4 patches.",
@@ -126,11 +160,21 @@
         "type": "bottleneck",
         "name": "Stage 1 (2x Swin Blocks)",
         "inputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "outputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "config": {
@@ -140,15 +184,17 @@
           "total": 170000,
           "weights": 169600,
           "biases": 400,
-          "formula": "2 × SwinBlock_Params",
+          "formula": "2 \u00d7 SwinBlock_Params",
           "calculationSteps": [
             {
               "label": "Attention & MLP weights",
-              "expression": "2 × 84800",
+              "expression": "2 \u00d7 84800",
               "result": 169600,
               "explanation": "Parameters for MSA Query-Key-Value projections and MLP channels across two local window blocks."
             }
-          ]
+          ],
+          "trainableParameters": 170000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Local & Shifted window attention at 56x56 resolution.",
@@ -167,17 +213,33 @@
         "type": "conv2d",
         "name": "Patch Merging 1",
         "inputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "outputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "config": {
           "filters": 192,
-          "kernelSize": [2, 2],
-          "strides": [2, 2],
+          "kernelSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid",
           "useBias": false,
           "activation": "linear"
@@ -186,15 +248,17 @@
           "total": 73920,
           "weights": 73728,
           "biases": 192,
-          "formula": "(2 × 2 × in_channels + 1) × out_channels",
+          "formula": "(2 \u00d7 2 \u00d7 in_channels + 1) \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Linear Reduction Weights",
-              "expression": "384 × 192",
+              "expression": "384 \u00d7 192",
               "result": 73728,
               "explanation": "Concatenates 2x2 adjacent patch embeddings (96 x 4 = 384 channels), then projects them back to 192 channels."
             }
-          ]
+          ],
+          "trainableParameters": 73920,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Halves spatial resolution while doubling channels.",
@@ -213,11 +277,21 @@
         "type": "bottleneck",
         "name": "Stage 2 (2x Swin Blocks)",
         "inputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "outputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "config": {
@@ -227,15 +301,17 @@
           "total": 580000,
           "weights": 579200,
           "biases": 800,
-          "formula": "2 × Stage2Block_Params",
+          "formula": "2 \u00d7 Stage2Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 2 Attention Weights",
-              "expression": "2 × 289600",
+              "expression": "2 \u00d7 289600",
               "result": 579200,
               "explanation": "Self-attention QKV projections and MLP weight parameters for 192 channels."
             }
-          ]
+          ],
+          "trainableParameters": 580000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies W-MSA and SW-MSA at 28x28 scale.",
@@ -254,17 +330,33 @@
         "type": "conv2d",
         "name": "Patch Merging 2",
         "inputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "config": {
           "filters": 384,
-          "kernelSize": [2, 2],
-          "strides": [2, 2],
+          "kernelSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid",
           "useBias": false,
           "activation": "linear"
@@ -273,15 +365,17 @@
           "total": 295296,
           "weights": 294912,
           "biases": 384,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Linear Reduction Weights",
-              "expression": "768 × 384",
+              "expression": "768 \u00d7 384",
               "result": 294912,
               "explanation": "Concatenates 2x2 spatial patch tokens (192 x 4 = 768 channels) and maps them to a 384-dimensional space."
             }
-          ]
+          ],
+          "trainableParameters": 295296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Reduces map size to 14x14 while doubling features.",
@@ -300,11 +394,21 @@
         "type": "bottleneck",
         "name": "Stage 3 (6x Swin Blocks)",
         "inputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "config": {
@@ -314,15 +418,17 @@
           "total": 13800000,
           "weights": 13790000,
           "biases": 10000,
-          "formula": "6 × Stage3Block_Params",
+          "formula": "6 \u00d7 Stage3Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 3 Weights Stack",
-              "expression": "6 × 2298333",
+              "expression": "6 \u00d7 2298333",
               "result": 13790000,
               "explanation": "Accumulated parameters of the 6 sequential transformer encoder blocks at 384 hidden dimensions."
             }
-          ]
+          ],
+          "trainableParameters": 13800000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Deepest stage processing 14x14 features.",
@@ -341,17 +447,33 @@
         "type": "conv2d",
         "name": "Patch Merging 3",
         "inputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "config": {
           "filters": 768,
-          "kernelSize": [2, 2],
-          "strides": [2, 2],
+          "kernelSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid",
           "useBias": false,
           "activation": "linear"
@@ -360,15 +482,17 @@
           "total": 1180416,
           "weights": 1179648,
           "biases": 768,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Reduction Weights",
-              "expression": "1536 × 768",
+              "expression": "1536 \u00d7 768",
               "result": 1179648,
               "explanation": "Maps 2x2 merged tokens (1536 channels) to 768 output channels."
             }
-          ]
+          ],
+          "trainableParameters": 1180416,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Reduces map size to final 7x7 resolution.",
@@ -387,11 +511,21 @@
         "type": "bottleneck",
         "name": "Stage 4 (2x Swin Blocks)",
         "inputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "config": {
@@ -401,15 +535,17 @@
           "total": 11600000,
           "weights": 11596000,
           "biases": 4000,
-          "formula": "2 × Stage4Block_Params",
+          "formula": "2 \u00d7 Stage4Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 4 Blocks Weights",
-              "expression": "2 × 5798000",
+              "expression": "2 \u00d7 5798000",
               "result": 11596000,
               "explanation": "Self-attention and MLP parameters for the final 2 transformer blocks operating on 768 hidden dimensions."
             }
-          ]
+          ],
+          "trainableParameters": 11600000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Processes high-level semantic tokens.",
@@ -428,30 +564,42 @@
         "type": "layer_norm",
         "name": "Output LayerNorm",
         "inputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Normalization Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma scaling and beta bias parameters."
             }
-          ]
+          ],
+          "trainableParameters": 1536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Normalizes output states before pooling.",
@@ -470,11 +618,19 @@
         "type": "global_average_pooling2d",
         "name": "Global Average Pooling",
         "inputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "outputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768-d Vector"
         },
         "config": {},
@@ -483,7 +639,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Averages the 7x7 spatial tokens into a single vector.",
@@ -502,11 +660,17 @@
         "type": "dense",
         "name": "Classification Head",
         "inputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "config": {
@@ -518,11 +682,11 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(hidden_dim × num_classes) + num_classes",
+          "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
           "calculationSteps": [
             {
               "label": "Logits Weights",
-              "expression": "768 × 1000",
+              "expression": "768 \u00d7 1000",
               "result": 768000,
               "explanation": "Weights mapping final 768 features to the 1000 class indexes."
             },
@@ -532,7 +696,9 @@
               "result": 1000,
               "explanation": "Logits bias parameters."
             }
-          ]
+          ],
+          "trainableParameters": 769000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Dense mapping to class output logits.",
@@ -551,11 +717,17 @@
         "type": "output",
         "name": "Output Logits",
         "inputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 probabilities"
         },
         "config": {
@@ -568,7 +740,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies Softmax activation.",
@@ -720,5 +894,7 @@
         "color": "#F59E0B"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 28474872
 }

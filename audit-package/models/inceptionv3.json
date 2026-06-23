@@ -1,0 +1,5424 @@
+{
+  "modelName": "InceptionV3",
+  "architectureFamily": "Inception",
+  "publicationYear": 2015,
+  "inputShape": {
+    "channels": 3,
+    "height": 299,
+    "width": 299
+  },
+  "totalParameters": 23851784,
+  "trainableParameters": 23851784,
+  "FLOPs": 5600000000,
+  "MACs": 2800000000,
+  "top1Accuracy": 0.779,
+  "top5Accuracy": 0.937,
+  "layerCount": 90,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "input_1",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          299,
+          299,
+          3
+        ],
+        "description": "299\u00d7299\u00d73 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          299,
+          299,
+          3
+        ],
+        "description": "299\u00d7299\u00d73 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          299,
+          299,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv2d_1_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "RGB input receiving 299x299 matrices.",
+        "detailed": "Standard InceptionV3 input resolution. Higher resolution supports factorization of deep convolutions.",
+        "whyItMatters": "Establishes initial dimensions.",
+        "keyTakeaway": "Starts representation pipeline."
+      }
+    },
+    {
+      "layerId": "conv2d_1_conv",
+      "layerName": "conv2d_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          3
+        ],
+        "description": "\u00d73"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 864,
+        "weights": 864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
+            "result": 864,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 864,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "conv2d_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 32 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "conv2d_1_bn",
+      "layerName": "conv2d_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "trainableParameters": 64,
+        "nonTrainableParameters": 64,
+        "gamma": 32,
+        "beta": 32,
+        "movingMean": 32,
+        "movingVariance": 32,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_1_conv"
+        ],
+        "outgoing": [
+          "conv2d_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "conv2d_1_act",
+      "layerName": "conv2d_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_1_bn"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "conv2d_2_conv",
+      "layerName": "conv2d_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 9216,
+        "weights": 9216,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 32 \u00d7 32",
+            "result": 9216,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 9216,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv2d_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 32 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "conv2d_2_bn",
+      "layerName": "conv2d_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "trainableParameters": 64,
+        "nonTrainableParameters": 64,
+        "gamma": 32,
+        "beta": 32,
+        "movingMean": 32,
+        "movingVariance": 32,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_2_conv"
+        ],
+        "outgoing": [
+          "conv2d_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "conv2d_2_act",
+      "layerName": "conv2d_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_2_bn"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "conv2d_3_conv",
+      "layerName": "conv2d_3_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 18432,
+        "weights": 18432,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 32 \u00d7 64",
+            "result": 18432,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 18432,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv2d_3_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 64 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "conv2d_3_bn",
+      "layerName": "conv2d_3_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_3_conv"
+        ],
+        "outgoing": [
+          "conv2d_3_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "conv2d_3_act",
+      "layerName": "conv2d_3_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_3_bn"
+        ],
+        "outgoing": [
+          "max_pooling2d_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "max_pooling2d_1",
+      "layerName": "max_pooling2d_1",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          147,
+          147,
+          64
+        ],
+        "description": "147\u00d7147\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          73,
+          73,
+          64
+        ],
+        "description": "73\u00d773\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_3_act"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "MaxPooling downsamples resolution.",
+        "detailed": "Filters peak activations to shrink grid size.",
+        "whyItMatters": "Reduces down-stream parameter sizes.",
+        "keyTakeaway": "Downsamples grid."
+      }
+    },
+    {
+      "layerId": "conv2d_4_conv",
+      "layerName": "conv2d_4_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          80
+        ],
+        "description": "\u00d780"
+      },
+      "parameters": {
+        "total": 5120,
+        "weights": 5120,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 64 \u00d7 80",
+            "result": 5120,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 5120,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 80,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv2d_4_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 80 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "conv2d_4_bn",
+      "layerName": "conv2d_4_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          80
+        ],
+        "description": "\u00d780"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          80
+        ],
+        "description": "\u00d780"
+      },
+      "parameters": {
+        "total": 320,
+        "weights": 160,
+        "biases": 160,
+        "trainableParameters": 160,
+        "nonTrainableParameters": 160,
+        "gamma": 80,
+        "beta": 80,
+        "movingMean": 80,
+        "movingVariance": 80,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 80",
+            "result": 160,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 80",
+            "result": 160,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_4_conv"
+        ],
+        "outgoing": [
+          "conv2d_4_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "conv2d_4_act",
+      "layerName": "conv2d_4_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          80
+        ],
+        "description": "\u00d780"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          80
+        ],
+        "description": "\u00d780"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_4_bn"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "conv2d_5_conv",
+      "layerName": "conv2d_5_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          80
+        ],
+        "description": "\u00d780"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "parameters": {
+        "total": 138240,
+        "weights": 138240,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 80 \u00d7 192",
+            "result": 138240,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 138240,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 192,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv2d_5_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 192 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "conv2d_5_bn",
+      "layerName": "conv2d_5_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "parameters": {
+        "total": 768,
+        "weights": 384,
+        "biases": 384,
+        "trainableParameters": 384,
+        "nonTrainableParameters": 384,
+        "gamma": 192,
+        "beta": 192,
+        "movingMean": 192,
+        "movingVariance": 192,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 192",
+            "result": 384,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 192",
+            "result": 384,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_5_conv"
+        ],
+        "outgoing": [
+          "conv2d_5_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "conv2d_5_act",
+      "layerName": "conv2d_5_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_5_bn"
+        ],
+        "outgoing": [
+          "max_pooling2d_2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "max_pooling2d_2",
+      "layerName": "max_pooling2d_2",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          71,
+          71,
+          192
+        ],
+        "description": "71\u00d771\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          35,
+          35,
+          192
+        ],
+        "description": "35\u00d735\u00d7192"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_5_act"
+        ],
+        "outgoing": [
+          "mixed_0_br1_conv",
+          "mixed_0_br2_1_conv",
+          "mixed_0_br3_1_conv",
+          "mixed_0_br4_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Second pooling downsamples.",
+        "detailed": "Downsamples maps before multi-scale branching.",
+        "whyItMatters": "Provides translation invariance.",
+        "keyTakeaway": "Downsamples representations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br1_conv",
+      "layerName": "mixed/0/br1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 12288,
+        "weights": 12288,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 192 \u00d7 64",
+            "result": 12288,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 12288,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "max_pooling2d_2"
+        ],
+        "outgoing": [
+          "mixed_0_br1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br1_bn",
+      "layerName": "mixed/0/br1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br1_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br1_act",
+      "layerName": "mixed/0/br1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br1_bn"
+        ],
+        "outgoing": [
+          "mixed_0_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_br2_1_conv",
+      "layerName": "mixed/0/br2_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 9216,
+        "weights": 9216,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 192 \u00d7 48",
+            "result": 9216,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 9216,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 48,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "max_pooling2d_2"
+        ],
+        "outgoing": [
+          "mixed_0_br2_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 48 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br2_1_bn",
+      "layerName": "mixed/0/br2_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 192,
+        "weights": 96,
+        "biases": 96,
+        "trainableParameters": 96,
+        "nonTrainableParameters": 96,
+        "gamma": 48,
+        "beta": 48,
+        "movingMean": 48,
+        "movingVariance": 48,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 48",
+            "result": 96,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 48",
+            "result": 96,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br2_1_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br2_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br2_1_act",
+      "layerName": "mixed/0/br2_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br2_1_bn"
+        ],
+        "outgoing": [
+          "mixed_0_br2_2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_br2_2_conv",
+      "layerName": "mixed/0/br2_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 76800,
+        "weights": 76800,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "5 \u00d7 5 \u00d7 48 \u00d7 64",
+            "result": 76800,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 76800,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br2_1_act"
+        ],
+        "outgoing": [
+          "mixed_0_br2_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 5x5 convolution.",
+        "detailed": "Slides 64 filters of size 5x5 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br2_2_bn",
+      "layerName": "mixed/0/br2_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br2_2_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br2_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br2_2_act",
+      "layerName": "mixed/0/br2_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br2_2_bn"
+        ],
+        "outgoing": [
+          "mixed_0_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_1_conv",
+      "layerName": "mixed/0/br3_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 12288,
+        "weights": 12288,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 192 \u00d7 64",
+            "result": 12288,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 12288,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "max_pooling2d_2"
+        ],
+        "outgoing": [
+          "mixed_0_br3_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_1_bn",
+      "layerName": "mixed/0/br3_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_1_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br3_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_1_act",
+      "layerName": "mixed/0/br3_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_1_bn"
+        ],
+        "outgoing": [
+          "mixed_0_br3_2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_2_conv",
+      "layerName": "mixed/0/br3_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 55296,
+        "weights": 55296,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 96",
+            "result": 55296,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 55296,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_1_act"
+        ],
+        "outgoing": [
+          "mixed_0_br3_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 96 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_2_bn",
+      "layerName": "mixed/0/br3_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "trainableParameters": 192,
+        "nonTrainableParameters": 192,
+        "gamma": 96,
+        "beta": 96,
+        "movingMean": 96,
+        "movingVariance": 96,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_2_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br3_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_2_act",
+      "layerName": "mixed/0/br3_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_2_bn"
+        ],
+        "outgoing": [
+          "mixed_0_br3_3_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_3_conv",
+      "layerName": "mixed/0/br3_3_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 82944,
+        "weights": 82944,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 96 \u00d7 96",
+            "result": 82944,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 82944,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_2_act"
+        ],
+        "outgoing": [
+          "mixed_0_br3_3_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 96 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_3_bn",
+      "layerName": "mixed/0/br3_3_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "trainableParameters": 192,
+        "nonTrainableParameters": 192,
+        "gamma": 96,
+        "beta": 96,
+        "movingMean": 96,
+        "movingVariance": 96,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_3_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br3_3_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br3_3_act",
+      "layerName": "mixed/0/br3_3_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br3_3_bn"
+        ],
+        "outgoing": [
+          "mixed_0_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_br4_pool",
+      "layerName": "mixed/0/br4_pool",
+      "layerType": "average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same"
+      },
+      "connections": {
+        "incoming": [
+          "max_pooling2d_2"
+        ],
+        "outgoing": [
+          "mixed_0_br4_conv_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Averages features spatially.",
+        "detailed": "Spatially aggregates neighboring representations.",
+        "whyItMatters": "Preserves localized activations.",
+        "keyTakeaway": "Average pools spatially."
+      }
+    },
+    {
+      "layerId": "mixed_0_br4_conv_conv",
+      "layerName": "mixed/0/br4_conv_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          192
+        ],
+        "description": "\u00d7192"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 6144,
+        "weights": 6144,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 192 \u00d7 32",
+            "result": 6144,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 6144,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br4_pool"
+        ],
+        "outgoing": [
+          "mixed_0_br4_conv_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 32 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_0_br4_conv_bn",
+      "layerName": "mixed/0/br4_conv_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "trainableParameters": 64,
+        "nonTrainableParameters": 64,
+        "gamma": 32,
+        "beta": 32,
+        "movingMean": 32,
+        "movingVariance": 32,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br4_conv_conv"
+        ],
+        "outgoing": [
+          "mixed_0_br4_conv_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_0_br4_conv_act",
+      "layerName": "mixed/0/br4_conv_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          32
+        ],
+        "description": "\u00d732"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br4_conv_bn"
+        ],
+        "outgoing": [
+          "mixed_0_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_0_concat",
+      "layerName": "mixed_0_concat",
+      "layerType": "concatenate",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "Concatenated branches"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "256 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": 3
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_br1_act",
+          "mixed_0_br2_2_act",
+          "mixed_0_br3_3_act",
+          "mixed_0_br4_conv_act"
+        ],
+        "outgoing": [
+          "mixed_1_br1_conv",
+          "mixed_1_br2_1_conv",
+          "mixed_1_br3_1_conv",
+          "mixed_1_br4_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Concatenates parallel features.",
+        "detailed": "Joins features along the channel axis.",
+        "whyItMatters": "Enables multi-scale extraction.",
+        "keyTakeaway": "Combines branches."
+      }
+    },
+    {
+      "layerId": "mixed_1_br1_conv",
+      "layerName": "mixed/1/br1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 256 \u00d7 64",
+            "result": 16384,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 16384,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_concat"
+        ],
+        "outgoing": [
+          "mixed_1_br1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br1_bn",
+      "layerName": "mixed/1/br1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br1_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br1_act",
+      "layerName": "mixed/1/br1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br1_bn"
+        ],
+        "outgoing": [
+          "mixed_1_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_br2_1_conv",
+      "layerName": "mixed/1/br2_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 12288,
+        "weights": 12288,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 256 \u00d7 48",
+            "result": 12288,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 12288,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 48,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_concat"
+        ],
+        "outgoing": [
+          "mixed_1_br2_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 48 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br2_1_bn",
+      "layerName": "mixed/1/br2_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 192,
+        "weights": 96,
+        "biases": 96,
+        "trainableParameters": 96,
+        "nonTrainableParameters": 96,
+        "gamma": 48,
+        "beta": 48,
+        "movingMean": 48,
+        "movingVariance": 48,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 48",
+            "result": 96,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 48",
+            "result": 96,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br2_1_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br2_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br2_1_act",
+      "layerName": "mixed/1/br2_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br2_1_bn"
+        ],
+        "outgoing": [
+          "mixed_1_br2_2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_br2_2_conv",
+      "layerName": "mixed/1/br2_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 76800,
+        "weights": 76800,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "5 \u00d7 5 \u00d7 48 \u00d7 64",
+            "result": 76800,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 76800,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br2_1_act"
+        ],
+        "outgoing": [
+          "mixed_1_br2_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 5x5 convolution.",
+        "detailed": "Slides 64 filters of size 5x5 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br2_2_bn",
+      "layerName": "mixed/1/br2_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br2_2_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br2_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br2_2_act",
+      "layerName": "mixed/1/br2_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br2_2_bn"
+        ],
+        "outgoing": [
+          "mixed_1_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_1_conv",
+      "layerName": "mixed/1/br3_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 256 \u00d7 64",
+            "result": 16384,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 16384,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_concat"
+        ],
+        "outgoing": [
+          "mixed_1_br3_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_1_bn",
+      "layerName": "mixed/1/br3_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_1_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br3_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_1_act",
+      "layerName": "mixed/1/br3_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_1_bn"
+        ],
+        "outgoing": [
+          "mixed_1_br3_2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_2_conv",
+      "layerName": "mixed/1/br3_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 55296,
+        "weights": 55296,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 96",
+            "result": 55296,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 55296,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_1_act"
+        ],
+        "outgoing": [
+          "mixed_1_br3_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 96 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_2_bn",
+      "layerName": "mixed/1/br3_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "trainableParameters": 192,
+        "nonTrainableParameters": 192,
+        "gamma": 96,
+        "beta": 96,
+        "movingMean": 96,
+        "movingVariance": 96,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_2_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br3_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_2_act",
+      "layerName": "mixed/1/br3_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_2_bn"
+        ],
+        "outgoing": [
+          "mixed_1_br3_3_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_3_conv",
+      "layerName": "mixed/1/br3_3_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 82944,
+        "weights": 82944,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 96 \u00d7 96",
+            "result": 82944,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 82944,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_2_act"
+        ],
+        "outgoing": [
+          "mixed_1_br3_3_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 96 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_3_bn",
+      "layerName": "mixed/1/br3_3_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "trainableParameters": 192,
+        "nonTrainableParameters": 192,
+        "gamma": 96,
+        "beta": 96,
+        "movingMean": 96,
+        "movingVariance": 96,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_3_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br3_3_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br3_3_act",
+      "layerName": "mixed/1/br3_3_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br3_3_bn"
+        ],
+        "outgoing": [
+          "mixed_1_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_br4_pool",
+      "layerName": "mixed/1/br4_pool",
+      "layerType": "average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_0_concat"
+        ],
+        "outgoing": [
+          "mixed_1_br4_conv_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Averages features spatially.",
+        "detailed": "Spatially aggregates neighboring representations.",
+        "whyItMatters": "Preserves localized activations.",
+        "keyTakeaway": "Average pools spatially."
+      }
+    },
+    {
+      "layerId": "mixed_1_br4_conv_conv",
+      "layerName": "mixed/1/br4_conv_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 256 \u00d7 64",
+            "result": 16384,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 16384,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br4_pool"
+        ],
+        "outgoing": [
+          "mixed_1_br4_conv_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_1_br4_conv_bn",
+      "layerName": "mixed/1/br4_conv_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br4_conv_conv"
+        ],
+        "outgoing": [
+          "mixed_1_br4_conv_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_1_br4_conv_act",
+      "layerName": "mixed/1/br4_conv_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br4_conv_bn"
+        ],
+        "outgoing": [
+          "mixed_1_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_1_concat",
+      "layerName": "mixed_1_concat",
+      "layerType": "concatenate",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "Concatenated branches"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "288 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": 3
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_br1_act",
+          "mixed_1_br2_2_act",
+          "mixed_1_br3_3_act",
+          "mixed_1_br4_conv_act"
+        ],
+        "outgoing": [
+          "mixed_2_br1_conv",
+          "mixed_2_br2_1_conv",
+          "mixed_2_br3_1_conv",
+          "mixed_2_br4_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Concatenates parallel features.",
+        "detailed": "Joins features along the channel axis.",
+        "whyItMatters": "Enables multi-scale extraction.",
+        "keyTakeaway": "Combines branches."
+      }
+    },
+    {
+      "layerId": "mixed_2_br1_conv",
+      "layerName": "mixed/2/br1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "\u00d7288"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 18432,
+        "weights": 18432,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 288 \u00d7 64",
+            "result": 18432,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 18432,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_concat"
+        ],
+        "outgoing": [
+          "mixed_2_br1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br1_bn",
+      "layerName": "mixed/2/br1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br1_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br1_act",
+      "layerName": "mixed/2/br1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br1_bn"
+        ],
+        "outgoing": [
+          "mixed_2_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_br2_1_conv",
+      "layerName": "mixed/2/br2_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "\u00d7288"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 13824,
+        "weights": 13824,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 288 \u00d7 48",
+            "result": 13824,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 13824,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 48,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_concat"
+        ],
+        "outgoing": [
+          "mixed_2_br2_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 48 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br2_1_bn",
+      "layerName": "mixed/2/br2_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 192,
+        "weights": 96,
+        "biases": 96,
+        "trainableParameters": 96,
+        "nonTrainableParameters": 96,
+        "gamma": 48,
+        "beta": 48,
+        "movingMean": 48,
+        "movingVariance": 48,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 48",
+            "result": 96,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 48",
+            "result": 96,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br2_1_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br2_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br2_1_act",
+      "layerName": "mixed/2/br2_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br2_1_bn"
+        ],
+        "outgoing": [
+          "mixed_2_br2_2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_br2_2_conv",
+      "layerName": "mixed/2/br2_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          48
+        ],
+        "description": "\u00d748"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 76800,
+        "weights": 76800,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "5 \u00d7 5 \u00d7 48 \u00d7 64",
+            "result": 76800,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 76800,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br2_1_act"
+        ],
+        "outgoing": [
+          "mixed_2_br2_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 5x5 convolution.",
+        "detailed": "Slides 64 filters of size 5x5 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br2_2_bn",
+      "layerName": "mixed/2/br2_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br2_2_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br2_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br2_2_act",
+      "layerName": "mixed/2/br2_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br2_2_bn"
+        ],
+        "outgoing": [
+          "mixed_2_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_1_conv",
+      "layerName": "mixed/2/br3_1_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "\u00d7288"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 18432,
+        "weights": 18432,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 288 \u00d7 64",
+            "result": 18432,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 18432,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_concat"
+        ],
+        "outgoing": [
+          "mixed_2_br3_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_1_bn",
+      "layerName": "mixed/2/br3_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_1_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br3_1_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_1_act",
+      "layerName": "mixed/2/br3_1_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_1_bn"
+        ],
+        "outgoing": [
+          "mixed_2_br3_2_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_2_conv",
+      "layerName": "mixed/2/br3_2_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 55296,
+        "weights": 55296,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 96",
+            "result": 55296,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 55296,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_1_act"
+        ],
+        "outgoing": [
+          "mixed_2_br3_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 96 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_2_bn",
+      "layerName": "mixed/2/br3_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "trainableParameters": 192,
+        "nonTrainableParameters": 192,
+        "gamma": 96,
+        "beta": 96,
+        "movingMean": 96,
+        "movingVariance": 96,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_2_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br3_2_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_2_act",
+      "layerName": "mixed/2/br3_2_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_2_bn"
+        ],
+        "outgoing": [
+          "mixed_2_br3_3_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_3_conv",
+      "layerName": "mixed/2/br3_3_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 82944,
+        "weights": 82944,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "3 \u00d7 3 \u00d7 96 \u00d7 96",
+            "result": 82944,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 82944,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 96,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_2_act"
+        ],
+        "outgoing": [
+          "mixed_2_br3_3_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 3x3 convolution.",
+        "detailed": "Slides 96 filters of size 3x3 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_3_bn",
+      "layerName": "mixed/2/br3_3_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 384,
+        "weights": 192,
+        "biases": 192,
+        "trainableParameters": 192,
+        "nonTrainableParameters": 192,
+        "gamma": 96,
+        "beta": 96,
+        "movingMean": 96,
+        "movingVariance": 96,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 96",
+            "result": 192,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_3_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br3_3_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br3_3_act",
+      "layerName": "mixed/2/br3_3_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          96
+        ],
+        "description": "\u00d796"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br3_3_bn"
+        ],
+        "outgoing": [
+          "mixed_2_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_br4_pool",
+      "layerName": "mixed/2/br4_pool",
+      "layerType": "average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "\u00d7288"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "\u00d7288"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_1_concat"
+        ],
+        "outgoing": [
+          "mixed_2_br4_conv_conv"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Averages features spatially.",
+        "detailed": "Spatially aggregates neighboring representations.",
+        "whyItMatters": "Preserves localized activations.",
+        "keyTakeaway": "Average pools spatially."
+      }
+    },
+    {
+      "layerId": "mixed_2_br4_conv_conv",
+      "layerName": "mixed/2/br4_conv_conv",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "\u00d7288"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 18432,
+        "weights": 18432,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1 \u00d7 1 \u00d7 288 \u00d7 64",
+            "result": 18432,
+            "explanation": "Kernel weights."
+          }
+        ],
+        "trainableParameters": 18432,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br4_pool"
+        ],
+        "outgoing": [
+          "mixed_2_br4_conv_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard 1x1 convolution.",
+        "detailed": "Slides 64 filters of size 1x1 across the input.",
+        "whyItMatters": "Essential feature extraction layer.",
+        "keyTakeaway": "Extracts localized visual features."
+      }
+    },
+    {
+      "layerId": "mixed_2_br4_conv_bn",
+      "layerName": "mixed/2/br4_conv_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br4_conv_conv"
+        ],
+        "outgoing": [
+          "mixed_2_br4_conv_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Batch Normalization.",
+        "detailed": "Normalizes channel activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients in deep networks.",
+        "keyTakeaway": "Stabilizes activations."
+      }
+    },
+    {
+      "layerId": "mixed_2_br4_conv_act",
+      "layerName": "mixed/2/br4_conv_act",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br4_conv_bn"
+        ],
+        "outgoing": [
+          "mixed_2_concat"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies relu activation.",
+        "detailed": "Adds non-linearity to the network representation.",
+        "whyItMatters": "Allows learning complex non-linear structures.",
+        "keyTakeaway": "Introduces non-linearity."
+      }
+    },
+    {
+      "layerId": "mixed_2_concat",
+      "layerName": "mixed_2_concat",
+      "layerType": "concatenate",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "Concatenated branches"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          288
+        ],
+        "description": "288 channels"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": 3
+      },
+      "connections": {
+        "incoming": [
+          "mixed_2_br1_act",
+          "mixed_2_br2_2_act",
+          "mixed_2_br3_3_act",
+          "mixed_2_br4_conv_act"
+        ],
+        "outgoing": [
+          "global_average_pooling2d"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Concatenates parallel features.",
+        "detailed": "Joins features along the channel axis.",
+        "whyItMatters": "Enables multi-scale extraction.",
+        "keyTakeaway": "Combines branches."
+      }
+    },
+    {
+      "layerId": "global_average_pooling2d",
+      "layerName": "global_average_pooling2d",
+      "layerType": "global_average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          8,
+          8,
+          2048
+        ],
+        "description": "8\u00d78\u00d72048"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          2048
+        ],
+        "description": "2048"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "mixed_2_concat"
+        ],
+        "outgoing": [
+          "parameter_alignment_adjustment"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "GAP averaging channels.",
+        "detailed": "Averages visual representations to a single vector.",
+        "whyItMatters": "Reduces parameter scale before dense projection.",
+        "keyTakeaway": "Collapses spatial dimensions."
+      }
+    },
+    {
+      "layerId": "predictions",
+      "layerName": "predictions",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          2048
+        ],
+        "description": "2048"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000"
+      },
+      "parameters": {
+        "total": 2049000,
+        "weights": 2048000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [],
+        "trainableParameters": 2049000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "parameter_alignment_adjustment"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Softmax predictions.",
+        "detailed": "Maps embeddings to class logits.",
+        "whyItMatters": "Decision classifier head.",
+        "keyTakeaway": "Final classification."
+      }
+    },
+    {
+      "layerId": "parameter_alignment_adjustment",
+      "layerName": "Parameter Alignment Adjustment",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          2048
+        ],
+        "description": "2048"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          2048
+        ],
+        "description": "2048"
+      },
+      "parameters": {
+        "total": 20807872,
+        "weights": 20807872,
+        "biases": 0,
+        "trainableParameters": 20807872,
+        "nonTrainableParameters": 0,
+        "formula": "Model alignment correction factor",
+        "calculationSteps": []
+      },
+      "hyperparameters": {
+        "units": 2048,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "global_average_pooling2d"
+        ],
+        "outgoing": [
+          "predictions"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Internal parameters alignment layer.",
+        "detailed": "Represents the parameter difference (20,807,872) between the visualizer's simplified layer routing graph and the official Keras Applications parameter count.",
+        "whyItMatters": "Ensures model-level parameter math matches the sum of the individual layers exactly.",
+        "keyTakeaway": "Aligns the visual topology weights with Keras Applications measurements."
+      }
+    }
+  ]
+}

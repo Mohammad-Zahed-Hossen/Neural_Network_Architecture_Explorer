@@ -1,0 +1,172 @@
+{
+  "lenet": {
+    "paper": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "documentation": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
+    "implementation": "https://github.com/pytorch/examples/blob/main/mnist/main.py"
+  },
+  "alexnet": {
+    "paper": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "documentation": "https://pytorch.org/hub/pytorch_vision_alexnet/",
+    "implementation": "https://github.com/pytorch/vision/blob/main/torchvision/models/alexnet.py"
+  },
+  "vgg16": {
+    "paper": "https://arxiv.org/abs/1409.1556",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/vgg16.py"
+  },
+  "vgg19": {
+    "paper": "https://arxiv.org/abs/1409.1556",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg19",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/vgg19.py"
+  },
+  "resnet50": {
+    "paper": "https://arxiv.org/abs/1512.03385",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py"
+  },
+  "resnet50v2": {
+    "paper": "https://arxiv.org/abs/1603.05027",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py"
+  },
+  "resnet101": {
+    "paper": "https://arxiv.org/abs/1512.03385",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py"
+  },
+  "resnet101v2": {
+    "paper": "https://arxiv.org/abs/1603.05027",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py"
+  },
+  "resnet152": {
+    "paper": "https://arxiv.org/abs/1512.03385",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py"
+  },
+  "resnet152v2": {
+    "paper": "https://arxiv.org/abs/1603.05027",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py"
+  },
+  "densenet121": {
+    "paper": "https://arxiv.org/abs/1608.06993",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/densenet.py"
+  },
+  "densenet169": {
+    "paper": "https://arxiv.org/abs/1608.06993",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/densenet.py"
+  },
+  "densenet201": {
+    "paper": "https://arxiv.org/abs/1608.06993",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/densenet.py"
+  },
+  "mobilenet": {
+    "paper": "https://arxiv.org/abs/1704.04861",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet.py"
+  },
+  "mobilenetv2": {
+    "paper": "https://arxiv.org/abs/1801.04381",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v2.py"
+  },
+  "mobilenetv3large": {
+    "paper": "https://arxiv.org/abs/1905.02244",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v3.py"
+  },
+  "mobilenetv3small": {
+    "paper": "https://arxiv.org/abs/1905.02244",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v3.py"
+  },
+  "efficientnetb0": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb1": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB1",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb2": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB2",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb3": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB3",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb4": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB4",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb5": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB5",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb6": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB6",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "efficientnetb7": {
+    "paper": "https://arxiv.org/abs/1905.11946",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB7",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py"
+  },
+  "inceptionv3": {
+    "paper": "https://arxiv.org/abs/1512.00567",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/inception_v3.py"
+  },
+  "inceptionresnetv2": {
+    "paper": "https://arxiv.org/abs/1602.07261",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_resnet_v2/InceptionResNetV2",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/inception_resnet_v2.py"
+  },
+  "xception": {
+    "paper": "https://arxiv.org/abs/1610.02357",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/xception.py"
+  },
+  "nasnetmobile": {
+    "paper": "https://arxiv.org/abs/1707.07012",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/nasnet.py"
+  },
+  "nasnetlarge": {
+    "paper": "https://arxiv.org/abs/1707.07012",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge",
+    "implementation": "https://github.com/keras-team/keras/blob/master/keras/applications/nasnet.py"
+  },
+  "vit": {
+    "paper": "https://arxiv.org/abs/2010.11929",
+    "documentation": "https://huggingface.co/docs/transformers/model_doc/vit",
+    "implementation": "https://github.com/google-research/vision_transformer"
+  },
+  "swin": {
+    "paper": "https://arxiv.org/abs/2103.14030",
+    "documentation": "https://huggingface.co/docs/transformers/model_doc/swin",
+    "implementation": "https://github.com/microsoft/Swin-Transformer"
+  },
+  "convnext": {
+    "paper": "https://arxiv.org/abs/2201.03545",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny",
+    "implementation": "https://github.com/facebookresearch/ConvNeXt"
+  },
+  "maxvit": {
+    "paper": "https://arxiv.org/abs/2204.01697",
+    "documentation": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
+    "implementation": "https://github.com/google-research/maxvit"
+  }
+}

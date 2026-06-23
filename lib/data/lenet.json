@@ -5,7 +5,7 @@
   "paperYear": 1998,
   "authors": [
     "Yann LeCun",
-    "Léon Bottou",
+    "L\u00e9on Bottou",
     "Yoshua Bengio",
     "Patrick Haffner"
   ],
@@ -36,22 +36,38 @@
         "type": "input",
         "name": "Input Image",
         "inputShape": {
-          "dimensions": [null, 32, 32, 1],
+          "dimensions": [
+            null,
+            32,
+            32,
+            1
+          ],
           "description": "32x32x1 Grayscale Image"
         },
         "outputShape": {
-          "dimensions": [null, 32, 32, 1],
+          "dimensions": [
+            null,
+            32,
+            32,
+            1
+          ],
           "description": "32x32x1 Grayscale Image"
         },
         "config": {
-          "shape": [32, 32, 1]
+          "shape": [
+            32,
+            32,
+            1
+          ]
         },
         "parameters": {
           "total": 0,
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Input layer for grayscale digits.",
@@ -70,17 +86,33 @@
         "type": "conv2d",
         "name": "Conv 1 (C1)",
         "inputShape": {
-          "dimensions": [null, 32, 32, 1],
+          "dimensions": [
+            null,
+            32,
+            32,
+            1
+          ],
           "description": "32x32x1"
         },
         "outputShape": {
-          "dimensions": [null, 28, 28, 6],
+          "dimensions": [
+            null,
+            28,
+            28,
+            6
+          ],
           "description": "28x28x6"
         },
         "config": {
           "filters": 6,
-          "kernelSize": [5, 5],
-          "strides": [1, 1],
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "tanh"
@@ -89,11 +121,11 @@
           "total": 156,
           "weights": 150,
           "biases": 6,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "5 × 5 × 1 × 6",
+              "expression": "5 \u00d7 5 \u00d7 1 \u00d7 6",
               "result": 150,
               "explanation": "6 filters of size 5x5 operating over 1 input channel."
             },
@@ -103,7 +135,9 @@
               "result": 6,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 156,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Extracts 6 simple local feature maps.",
@@ -122,16 +156,32 @@
         "type": "average_pooling2d",
         "name": "Average Pool 1 (S2)",
         "inputShape": {
-          "dimensions": [null, 28, 28, 6],
+          "dimensions": [
+            null,
+            28,
+            28,
+            6
+          ],
           "description": "28x28x6"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 6],
+          "dimensions": [
+            null,
+            14,
+            14,
+            6
+          ],
           "description": "14x14x6"
         },
         "config": {
-          "poolSize": [2, 2],
-          "strides": [2, 2],
+          "poolSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid"
         },
         "parameters": {
@@ -139,7 +189,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Downsamples feature maps by 2x.",
@@ -158,17 +210,33 @@
         "type": "conv2d",
         "name": "Conv 2 (C3)",
         "inputShape": {
-          "dimensions": [null, 14, 14, 6],
+          "dimensions": [
+            null,
+            14,
+            14,
+            6
+          ],
           "description": "14x14x6"
         },
         "outputShape": {
-          "dimensions": [null, 10, 10, 16],
+          "dimensions": [
+            null,
+            10,
+            10,
+            16
+          ],
           "description": "10x10x16"
         },
         "config": {
           "filters": 16,
-          "kernelSize": [5, 5],
-          "strides": [1, 1],
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "tanh"
@@ -177,11 +245,11 @@
           "total": 2416,
           "weights": 2400,
           "biases": 16,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "5 × 5 × 6 × 16",
+              "expression": "5 \u00d7 5 \u00d7 6 \u00d7 16",
               "result": 2400,
               "explanation": "16 filters of size 5x5 operating over 6 input channels."
             },
@@ -191,7 +259,9 @@
               "result": 16,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 2416,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Extracts 16 high-level feature maps.",
@@ -210,16 +280,32 @@
         "type": "average_pooling2d",
         "name": "Average Pool 2 (S4)",
         "inputShape": {
-          "dimensions": [null, 10, 10, 16],
+          "dimensions": [
+            null,
+            10,
+            10,
+            16
+          ],
           "description": "10x10x16"
         },
         "outputShape": {
-          "dimensions": [null, 5, 5, 16],
+          "dimensions": [
+            null,
+            5,
+            5,
+            16
+          ],
           "description": "5x5x16"
         },
         "config": {
-          "poolSize": [2, 2],
-          "strides": [2, 2],
+          "poolSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid"
         },
         "parameters": {
@@ -227,7 +313,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Downsamples feature maps to 5x5.",
@@ -246,11 +334,19 @@
         "type": "flatten",
         "name": "Flatten",
         "inputShape": {
-          "dimensions": [null, 5, 5, 16],
+          "dimensions": [
+            null,
+            5,
+            5,
+            16
+          ],
           "description": "5x5x16"
         },
         "outputShape": {
-          "dimensions": [null, 400],
+          "dimensions": [
+            null,
+            400
+          ],
           "description": "400-d Vector"
         },
         "config": {},
@@ -259,7 +355,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Flattens 3D tensor to 1D vector.",
@@ -278,11 +376,17 @@
         "type": "dense",
         "name": "Fully Connected 1 (F5)",
         "inputShape": {
-          "dimensions": [null, 400],
+          "dimensions": [
+            null,
+            400
+          ],
           "description": "400"
         },
         "outputShape": {
-          "dimensions": [null, 120],
+          "dimensions": [
+            null,
+            120
+          ],
           "description": "120"
         },
         "config": {
@@ -294,11 +398,11 @@
           "total": 48120,
           "weights": 48000,
           "biases": 120,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "400 × 120",
+              "expression": "400 \u00d7 120",
               "result": 48000,
               "explanation": "Weight matrix connecting 400 input features to 120 units."
             },
@@ -308,7 +412,9 @@
               "result": 120,
               "explanation": "One trainable bias per unit."
             }
-          ]
+          ],
+          "trainableParameters": 48120,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "First dense classification layer.",
@@ -327,11 +433,17 @@
         "type": "dense",
         "name": "Fully Connected 2 (F6)",
         "inputShape": {
-          "dimensions": [null, 120],
+          "dimensions": [
+            null,
+            120
+          ],
           "description": "120"
         },
         "outputShape": {
-          "dimensions": [null, 84],
+          "dimensions": [
+            null,
+            84
+          ],
           "description": "84"
         },
         "config": {
@@ -343,11 +455,11 @@
           "total": 10164,
           "weights": 10080,
           "biases": 84,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "120 × 84",
+              "expression": "120 \u00d7 84",
               "result": 10080,
               "explanation": "Connections from 120 features to 84 units."
             },
@@ -357,7 +469,9 @@
               "result": 84,
               "explanation": "One trainable bias per unit."
             }
-          ]
+          ],
+          "trainableParameters": 10164,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Second dense layer mapping to digit features.",
@@ -376,11 +490,17 @@
         "type": "output",
         "name": "Output Classes",
         "inputShape": {
-          "dimensions": [null, 84],
+          "dimensions": [
+            null,
+            84
+          ],
           "description": "84"
         },
         "outputShape": {
-          "dimensions": [null, 10],
+          "dimensions": [
+            null,
+            10
+          ],
           "description": "10 digit probabilities"
         },
         "config": {
@@ -392,11 +512,11 @@
           "total": 850,
           "weights": 840,
           "biases": 10,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "84 × 10",
+              "expression": "84 \u00d7 10",
               "result": 840,
               "explanation": "Connections from 84 features to 10 final classes."
             },
@@ -406,7 +526,9 @@
               "result": 10,
               "explanation": "One bias per class."
             }
-          ]
+          ],
+          "trainableParameters": 850,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Softmax layer predicting digit index (0-9).",
@@ -506,5 +628,7 @@
         "color": "#84CC16"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 61706
 }

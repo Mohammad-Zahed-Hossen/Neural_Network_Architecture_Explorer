@@ -1,0 +1,339 @@
+[
+  {
+    "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+    "authors": [
+      "Karen Simonyan",
+      "Andrew Zisserman"
+    ],
+    "publicationYear": 2014,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1409.1556",
+    "officialUrl": "https://arxiv.org/abs/1409.1556",
+    "summary": "Problem Solved: Early networks (e.g. AlexNet) relied on large, heterogeneous kernel grids (11x11, 5x5) which increased parameters and constrained structural depth.\nSignificance: Replaced by residual networks for backbones, but widely used in perceptual loss functions, style transfer, and feature matching.",
+    "keyContributions": "Demonstrated that stacking multiple small 3x3 convolutions standardizes visual design and enables much deeper networks.",
+    "strengths": [
+      "Uniform, clean design utilizing simple 3x3 conv structures",
+      "Pretrained models serve as excellent generic visual extractors"
+    ],
+    "weaknesses": [
+      "Extremely heavy parameter count (138M+ for VGG16)",
+      "High computational cost and slow training rates"
+    ],
+    "legacy": "Established depth as a primary design dimension, driving research towards standardizing filter grids."
+  },
+  {
+    "title": "Deep Residual Learning for Image Recognition",
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
+    "publicationYear": 2015,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1512.03385",
+    "officialUrl": "https://arxiv.org/abs/1512.03385",
+    "summary": "Problem Solved: As feedforward networks exceeded 20 layers, training errors rose sharply (degradation problem) because backpropagated gradients saturated or vanished.\nSignificance: ResNet50 is still the default baseline backbone and industry benchmark for standard computer vision tasks.",
+    "keyContributions": "Introduced identity shortcut skip connections to bypass layer parameters, enabling deep models to compile and train without optimization saturation.",
+    "strengths": [
+      "Allows training networks with 1000+ layers with stable convergence",
+      "Dramatically reduced parameter count compared to massive sequential networks like VGG"
+    ],
+    "weaknesses": [
+      "Adding layers increases runtime, which can require bottleneck optimizations",
+      "Identity shortcuts do not increase representational capacity directly"
+    ],
+    "legacy": "Skip connections are now a standard architectural element in almost all modern vision models and Transformers."
+  },
+  {
+    "title": "Identity Mappings in Deep Residual Networks",
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
+    "publicationYear": 2016,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1603.05027",
+    "officialUrl": "https://arxiv.org/abs/1603.05027",
+    "summary": "Problem Solved: In the original ResNet, activations passed through additions and ReLUs, modifying clean identity shortcuts and slightly hindering gradient flow in extreme depths.\nSignificance: Commonly chosen over ResNet V1 when training extremely deep models or custom variations.",
+    "keyContributions": "Redesigned the residual block to place Batch Normalization and ReLU activations *before* the convolution (Pre-activation).",
+    "strengths": [
+      "Ensures an completely clean identity path for gradients to flow uninterrupted",
+      "Reduces overfitting and improves classification accuracy over original ResNets"
+    ],
+    "weaknesses": [
+      "Requires slightly different hyperparameter adjustments for training stabilization",
+      "Marginally changes the API and activation extraction points"
+    ],
+    "legacy": "Popularized the pre-activation design layout, which is standard in many modern transformer models."
+  },
+  {
+    "title": "Densely Connected Convolutional Networks",
+    "authors": [
+      "Gao Huang",
+      "Zhuang Liu",
+      "Laurens van der Maaten",
+      "Kilian Q. Weinberger"
+    ],
+    "publicationYear": 2016,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1608.06993",
+    "officialUrl": "https://arxiv.org/abs/1608.06993",
+    "summary": "Problem Solved: Information and gradients can dilute or wash out when passed through deep layers, and ResNet's identity additions can blend features redundantly.\nSignificance: Used frequently in medical imaging and segmentations where high-resolution low-level features are critical.",
+    "keyContributions": "Connected each layer to every other layer in a feedforward block, concatenating feature maps instead of adding them.",
+    "strengths": [
+      "Exceptional parameter efficiency (matches ResNet accuracy with half the parameters)",
+      "Continuous feature reuse ensures all layers access low-level and high-level features"
+    ],
+    "weaknesses": [
+      "Extremely high memory footprint because concatenated tensors must be held in VRAM buffers",
+      "Slower inference speed on older GPU architectures due to memory layout overhead"
+    ],
+    "legacy": "Demonstrated that dense feature reuse and explicit channel concatenation are viable alternatives to residual sums."
+  },
+  {
+    "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+    "authors": [
+      "Andrew G. Howard",
+      "Menglong Zhu",
+      "Bo Chen",
+      "Dmitry Kalenichenko",
+      "Weijun Wang",
+      "Tobias Weyand",
+      "Marco Andreetto",
+      "Hartwig Adam"
+    ],
+    "publicationYear": 2017,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1704.04861",
+    "officialUrl": "https://arxiv.org/abs/1704.04861",
+    "summary": "Problem Solved: Standard convolutional layers are too computationally expensive and parameter-heavy for real-time mobile app and edge deployment.\nSignificance: Highly popular for mobile applications, real-time object detection, and background blur filters.",
+    "keyContributions": "Introduced depthwise separable convolutions to build lightweight, low-latency visual models.",
+    "strengths": [
+      "Reduces computation (FLOPs) and parameters by up to 9x with minimal accuracy drops",
+      "Extremely small file size (e.g. ~16MB), ideal for mobile app bundles"
+    ],
+    "weaknesses": [
+      "Reduced capacity leads to lower classification accuracy on highly complex datasets",
+      "Depthwise layers can be memory bandwidth bound on server GPUs"
+    ],
+    "legacy": "Pioneered mobile-first computer vision and popularized hardware-conscious CNN design."
+  },
+  {
+    "title": "Searching for MobileNetV3",
+    "authors": [
+      "Andrew Howard",
+      "Mark Sandler",
+      "Grace Chu",
+      "Liang-Chieh Chen",
+      "Bo Chen",
+      "Mingxing Tan",
+      "Weijun Wang",
+      "Yukun Zhu",
+      "Ruoming Peng",
+      "Vijay Vasudevan",
+      "Hartwig Adam"
+    ],
+    "publicationYear": 2019,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1905.02175",
+    "officialUrl": "https://arxiv.org/abs/1905.02175",
+    "summary": "Problem Solved: Manually tuning lightweight convolutional networks is slow and misses optimal micro-architectural block selections.\nSignificance: Default choice for edge AI classifiers, on-device face detectors, and smart camera vision.",
+    "keyContributions": "Combined hardware-aware Neural Architecture Search (NAS) and NetAdapt algorithms with the hard-swish activation function.",
+    "strengths": [
+      "State-of-the-art speed-accuracy tradeoff on mobile CPUs",
+      "Introduces squeeze-and-excitation attention blocks to prioritize channels"
+    ],
+    "weaknesses": [
+      "Inference speed benefits are CPU-centric and may not show on high-end desktop GPUs",
+      "High design complexity makes custom modifications difficult"
+    ],
+    "legacy": "Demonstrated that automated reinforcement learning search yields better edge networks than human designers."
+  },
+  {
+    "title": "Rethinking the Inception Architecture for Computer Vision",
+    "authors": [
+      "Christian Szegedy",
+      "Vincent Vanhoucke",
+      "Sergey Ioffe",
+      "Jonathon Shlens",
+      "Zbigniew Wojna"
+    ],
+    "publicationYear": 2015,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1512.00567",
+    "officialUrl": "https://arxiv.org/abs/1512.00567",
+    "summary": "Problem Solved: Earlier architectures forced a uniform choice of kernel size, missing multi-scale spatial features and incurring high compute costs.\nSignificance: Used frequently in image generation algorithms (e.g. calculating Frechet Inception Distance - FID) and classic vision systems.",
+    "keyContributions": "Introduced multi-branch Inception blocks with factorized convolutions (e.g. splitting 7x7 convs into 1x7 and 7x1) to reduce parameters.",
+    "strengths": [
+      "Extracts multi-scale features (1x1, 3x3, 5x5) simultaneously in parallel branches",
+      "Highly parameter-efficient for its accuracy class"
+    ],
+    "weaknesses": [
+      "Complex branch structure can cause bottlenecks in memory access and slow execution",
+      "Difficult to scale and adapt for custom segmentation/detection heads"
+    ],
+    "legacy": "Popularized parallel multi-branch architectures and auxiliary training loss heads."
+  },
+  {
+    "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
+    "authors": [
+      "Fran\u00e7ois Chollet"
+    ],
+    "publicationYear": 2016,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1610.02357",
+    "officialUrl": "https://arxiv.org/abs/1610.02357",
+    "summary": "Problem Solved: The original Inception architecture assumed spatial and cross-channel correlations should be mapped jointly, wasting representation capacity.\nSignificance: Still widely used as a feature extractor backbone for semantic segmentation networks like DeepLabV3.",
+    "keyContributions": "Replaced standard Inception modules with depthwise separable convolutions, adding residual skip connections.",
+    "strengths": [
+      "Better parameter efficiency and accuracy than standard Inception V3",
+      "Extremely clean, uniform sequential layout compared to messy inception branches"
+    ],
+    "weaknesses": [
+      "Can be slower to train on systems without optimized depthwise convolution kernels",
+      "Relatively heavy parameter size compared to MobileNet"
+    ],
+    "legacy": "Bridged the gap between high-capacity inception designs and lightweight depthwise separable convolutions."
+  },
+  {
+    "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+    "authors": [
+      "Mingxing Tan",
+      "Quoc V. Le"
+    ],
+    "publicationYear": 2019,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1905.11946",
+    "officialUrl": "https://arxiv.org/abs/1905.11946",
+    "summary": "Problem Solved: CNNs were scaled up arbitrarily (e.g. only adding depth, or only adding width), wasting compute and missing optimal representations.\nSignificance: One of the most popular and robust CNN backbones for image classification, transfer learning, and feature extraction.",
+    "keyContributions": "Formulated a compound scaling method to scale network depth, width, and input resolution using a fixed mathematical coefficient.",
+    "strengths": [
+      "Exceptional accuracy-to-parameter ratio (8x parameter reduction for similar accuracy)",
+      "Modular, mathematically coherent family scaling (from B0 up to B7)"
+    ],
+    "weaknesses": [
+      "Very deep variants (B6/B7) are slow to train due to deep sequential dependencies",
+      "Requires advanced training recipes (like AutoAugment) to achieve target benchmarks"
+    ],
+    "legacy": "Established scientific scaling frameworks for deep architectures, displacing ad-hoc scaling guesswork."
+  },
+  {
+    "title": "Learning Transferable Architectures for Scalable Image Recognition",
+    "authors": [
+      "Barret Zoph",
+      "Vijay Vasudevan",
+      "Jonathon Shlens",
+      "Quoc V. Le"
+    ],
+    "publicationYear": 2017,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/1707.07012",
+    "officialUrl": "https://arxiv.org/abs/1707.07012",
+    "summary": "Problem Solved: Manual architectural engineering is bounded by human intuition, which misses optimal, non-intuitive layer combinations.\nSignificance: No longer widely used due to cell irregularity, but historically critical as the father of modern search architectures.",
+    "keyContributions": "Designed cell-based neural search spaces (Normal Cells and Reduction Cells) optimized by reinforcement learning.",
+    "strengths": [
+      "Discovered highly optimized visual cells that easily generalize across different tasks",
+      "Achieved state-of-the-art ImageNet accuracy at the time of publication"
+    ],
+    "weaknesses": [
+      "Extremely complex, irregular node layouts make hardware caching inefficient",
+      "Massive reinforcement learning search required 500+ GPUs to run"
+    ],
+    "legacy": "Pioneered Neural Architecture Search (NAS), accelerating the automated design of AI models."
+  },
+  {
+    "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+    "authors": [
+      "Alexey Dosovitskiy",
+      "Lucas Beyer",
+      "et al."
+    ],
+    "publicationYear": 2020,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/2010.11929",
+    "officialUrl": "https://arxiv.org/abs/2010.11929",
+    "summary": "Problem Solved: CNNs rely on local translation invariance and local receptive fields, which limits their global context awareness and scaling capacity on massive datasets.\nSignificance: Serves as the foundation for modern vision backbones, generative vision models, and multi-modal models like CLIP.",
+    "keyContributions": "Applied standard transformer self-attention blocks directly to non-overlapping image patches, showing that CNN-style inductive bias is not necessary at scale.",
+    "strengths": [
+      "Captures global long-range relationships in the very first layers",
+      "Scales exceptionally well with massive datasets and computational budgets"
+    ],
+    "weaknesses": [
+      "Lacks inductive bias, requiring massive dataset pretraining or heavy data augmentation to generalize",
+      "Quadratic complexity with token sequence length limits high-resolution deployment"
+    ],
+    "legacy": "Launched the Vision Transformer revolution, shifting the computer vision backbone paradigm away from pure CNNs."
+  },
+  {
+    "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "authors": [
+      "Ze Liu",
+      "Yutong Lin",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/2103.14030",
+    "officialUrl": "https://arxiv.org/abs/2103.14030",
+    "summary": "Problem Solved: Standard ViT uses global self-attention, which scales quadratically with pixel resolution, making it impractical for high-resolution tasks like object detection or segmentation.\nSignificance: Widely used as the state-of-the-art backbone for dense prediction tasks, including object detection (COCO) and semantic segmentation.",
+    "keyContributions": "Introduced shifted local window attention and a hierarchical patch merging structure to reduce attention complexity from quadratic to linear, enabling high-resolution image processing.",
+    "strengths": [
+      "Linear complexity makes it fast and practical for high-resolution images",
+      "Hierarchical representations allow multi-scale feature extractions"
+    ],
+    "weaknesses": [
+      "Windows restrict global context sharing within a single layer; cross-window communication relies on window shifts in subsequent blocks",
+      "High implementation complexity compared to standard ViT"
+    ],
+    "legacy": "Popularized local window self-attention in Vision Transformers, enabling them to act as general-purpose backbones for standard downstream tasks."
+  },
+  {
+    "title": "A ConvNet for the 2020s",
+    "authors": [
+      "Zhuang Liu",
+      "Hanzi Mao",
+      "et al."
+    ],
+    "publicationYear": 2022,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/2201.03545",
+    "officialUrl": "https://arxiv.org/abs/2201.03545",
+    "summary": "Problem Solved: The rapid rise of Vision Transformers led to the belief that standard CNNs had hit a performance wall and could not scale as effectively.\nSignificance: Extremely popular backbone in modern vision setups (like Stable Diffusion) due to its simplicity, speed, and robustness.",
+    "keyContributions": "Modernized a standard ResNet with transformer design choices (7x7 depthwise convs, LayerNorm, GELU, patchify stems), proving that pure CNNs can achieve accuracy and scaling comparable to ViTs.",
+    "strengths": [
+      "Maintains CNN speed, memory efficiency, and simple implementation while matching ViT accuracy",
+      "Doesn't require custom window attention kernels, facilitating deployment"
+    ],
+    "weaknesses": [
+      "Still bounded by local receptive fields (though larger 7x7) compared to global self-attention",
+      "Lacks the dynamic token-routing behavior of Transformers"
+    ],
+    "legacy": "Resurrected interest in pure convolutional backbones, showing that architectural training recipes and macro design choices are more critical than the attention vs. conv dichotomy itself."
+  },
+  {
+    "title": "MaxViT: Multi-Axis Vision Transformer",
+    "authors": [
+      "Zhengsu Chen",
+      "Jianchao Tan",
+      "et al."
+    ],
+    "publicationYear": 2022,
+    "doi": null,
+    "arXivLink": "https://arxiv.org/abs/2204.01697",
+    "officialUrl": "https://arxiv.org/abs/2204.01697",
+    "summary": "Problem Solved: Local window transformers (like Swin) lack true global receptive fields in a single block, while global transformers (like ViT) are too expensive.\nSignificance: State-of-the-art results on ImageNet classification and generative models, frequently used in competitive vision benchmark leaderboards.",
+    "keyContributions": "Combined MBConv CNN blocks with block window attention (local context) and sparse grid attention (global context), achieving global self-attention in linear time.",
+    "strengths": [
+      "Computes true global attention in linear time",
+      "Combines CNN inductive bias (MBConv) with Transformer flexibility"
+    ],
+    "weaknesses": [
+      "High parameter count and complex block structure",
+      "Slower training throughput compared to pure CNNs"
+    ],
+    "legacy": "Demonstrated that combining local convolutions with grid-based global attention creates highly efficient hybrid vision architectures."
+  }
+]

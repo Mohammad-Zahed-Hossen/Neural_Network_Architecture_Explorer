@@ -1,0 +1,75 @@
+{
+  "questions": [
+    {
+      "id": "goal",
+      "text": "What is the primary engineering goal for this deployment?",
+      "description": "Choose the metric you care about optimizing above all else.",
+      "options": [
+        {
+          "value": "accuracy",
+          "label": "Maximum Accuracy",
+          "description": "I need the absolute highest classification correctness on complex images, regardless of model size or runtime cost."
+        },
+        {
+          "value": "latency",
+          "label": "Real-time Inference Speed",
+          "description": "I need low-latency, high-throughput execution (e.g. live video streams, high frame rates)."
+        },
+        {
+          "value": "memory",
+          "label": "Low VRAM / Memory Constraints",
+          "description": "The target system has limited RAM (e.g., edge devices, standard laptops, mobile app bundles)."
+        },
+        {
+          "value": "education",
+          "label": "Research & Educational Study",
+          "description": "I want to study the core concepts of convolutional design, parameter mapping, or historical breakthroughs."
+        }
+      ]
+    },
+    {
+      "id": "hardware",
+      "text": "What is your target hardware deployment environment?",
+      "description": "This determines the physical device where inference will execute.",
+      "options": [
+        {
+          "value": "server",
+          "label": "Cloud Server / High-End GPU",
+          "description": "NVIDIA GPUs, TPUs, or server nodes with rich memory resources."
+        },
+        {
+          "value": "mobile",
+          "label": "Smartphone (iOS / Android)",
+          "description": "Mobile app edge runtime using CoreML, TensorFlow Lite, or PyTorch Mobile."
+        },
+        {
+          "value": "embedded",
+          "label": "Embedded Board / IoT / Microcontroller",
+          "description": "Raspberry Pi, Jetson Nano, Arduino, or TinyML hardware with strict power boundaries."
+        }
+      ]
+    },
+    {
+      "id": "budget",
+      "text": "What is the available computational complexity budget?",
+      "description": "This maps directly to FLOPs (Floating Point Operations) allowed during forward passes.",
+      "options": [
+        {
+          "value": "low",
+          "label": "Strictly limited budget",
+          "description": "Minimize operations to save power, heat, and battery life."
+        },
+        {
+          "value": "medium",
+          "label": "Balanced computational budget",
+          "description": "A reasonable trade-off between throughput and accuracy."
+        },
+        {
+          "value": "high",
+          "label": "High performance / Unlimited budget",
+          "description": "Willing to spend massive computational FLOPs to gain incremental accuracy."
+        }
+      ]
+    }
+  ]
+}

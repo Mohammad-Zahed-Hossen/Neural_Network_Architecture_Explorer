@@ -1,0 +1,61 @@
+[
+  {
+    "title": "Path 1: Feedforward & Homogeneous Stacks",
+    "subtitle": "Learn the fundamentals of sequential feature processing",
+    "description": "Start with VGG architectures to understand how repeated 3x3 convolutions build receptive fields. Understand spatial downsampling using max pooling and global feature mapping via dense layers.",
+    "themeColor": "#3B82F6",
+    "models": [
+      {
+        "id": "vgg16",
+        "name": "VGG16",
+        "desc": "138M params, simple linear stack"
+      },
+      {
+        "id": "vgg19",
+        "name": "VGG19",
+        "desc": "143M params, deeper linear stack"
+      }
+    ]
+  },
+  {
+    "title": "Path 2: The Residual Revolution",
+    "subtitle": "Master skip connections and training stability",
+    "description": "Learn how ResNets solve the vanishing gradient problem in deep networks using skip connections that bypass identity signals. Move from ResNet50 to deeper variants and compare pre-activation ResNet V2 structures.",
+    "themeColor": "#10B981",
+    "models": [
+      {
+        "id": "resnet50",
+        "name": "ResNet50",
+        "desc": "Identity shortcut mappings"
+      },
+      {
+        "id": "resnet50v2",
+        "name": "ResNet50V2",
+        "desc": "Pre-activation shortcut structure"
+      },
+      {
+        "id": "resnet152",
+        "name": "ResNet152",
+        "desc": "Deepest original ResNet variant"
+      }
+    ]
+  },
+  {
+    "title": "Path 3: Dense Connectivity & Feature Reuse",
+    "subtitle": "Maximize parameters and computational efficiency",
+    "description": "Study how DenseNet connects every layer directly to all subsequent layers. Learn how feature map concatenation maximizes reuse and parameter efficiency, enabling high accuracy with up to 90% fewer parameters.",
+    "themeColor": "#8B5CF6",
+    "models": [
+      {
+        "id": "densenet121",
+        "name": "DenseNet121",
+        "desc": "Densely connected blocks, 8M params"
+      },
+      {
+        "id": "densenet201",
+        "name": "DenseNet201",
+        "desc": "Deepest densely connected architecture"
+      }
+    ]
+  }
+]

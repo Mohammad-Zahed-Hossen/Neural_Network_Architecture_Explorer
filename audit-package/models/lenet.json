@@ -1,0 +1,544 @@
+{
+  "modelName": "LeNet 5",
+  "architectureFamily": "Foundational",
+  "publicationYear": 1998,
+  "inputShape": {
+    "channels": 1,
+    "height": 32,
+    "width": 32
+  },
+  "totalParameters": 61706,
+  "trainableParameters": 61706,
+  "FLOPs": 340000,
+  "MACs": 170000,
+  "top1Accuracy": 0.992,
+  "top5Accuracy": 0.998,
+  "layerCount": 9,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "Input Image",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          32,
+          32,
+          1
+        ],
+        "description": "32x32x1 Grayscale Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          32,
+          32,
+          1
+        ],
+        "description": "32x32x1 Grayscale Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          32,
+          32,
+          1
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv2d_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Input layer for grayscale digits.",
+        "detailed": "Accepts 32x32 pixel grayscale images. Yann LeCun padded the original 28x28 MNIST digits to 32x32 so that potential features could be centered.",
+        "keyTakeaway": "Padding inputs allows early convolutions to extract boundary information cleanly."
+      }
+    },
+    {
+      "layerId": "conv2d_1",
+      "layerName": "Conv 1 (C1)",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          32,
+          32,
+          1
+        ],
+        "description": "32x32x1"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          6
+        ],
+        "description": "28x28x6"
+      },
+      "parameters": {
+        "total": 156,
+        "weights": 150,
+        "biases": 6,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "5 \u00d7 5 \u00d7 1 \u00d7 6",
+            "result": 150,
+            "explanation": "6 filters of size 5x5 operating over 1 input channel."
+          },
+          {
+            "label": "Biases",
+            "expression": "6",
+            "result": 6,
+            "explanation": "One trainable bias per filter."
+          }
+        ],
+        "trainableParameters": 156,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 6,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "tanh"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "avg_pool_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Extracts 6 simple local feature maps.",
+        "detailed": "Uses 6 distinct 5x5 convolutional filters. Since padding is 'valid', the spatial height/width shrinks from 32 to 28.",
+        "keyTakeaway": "Valid padding naturally shrinks spatial dimensions."
+      }
+    },
+    {
+      "layerId": "avg_pool_1",
+      "layerName": "Average Pool 1 (S2)",
+      "layerType": "average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          6
+        ],
+        "description": "28x28x6"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          6
+        ],
+        "description": "14x14x6"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_1"
+        ],
+        "outgoing": [
+          "conv2d_2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Downsamples feature maps by 2x.",
+        "detailed": "Average pooling calculates the mean values over 2x2 grids, reducing spatial dimensions to 14x14 while keeping the 6 channels constant.",
+        "keyTakeaway": "Pooling introduces spatial scale invariance."
+      }
+    },
+    {
+      "layerId": "conv2d_2",
+      "layerName": "Conv 2 (C3)",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          6
+        ],
+        "description": "14x14x6"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          10,
+          10,
+          16
+        ],
+        "description": "10x10x16"
+      },
+      "parameters": {
+        "total": 2416,
+        "weights": 2400,
+        "biases": 16,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "5 \u00d7 5 \u00d7 6 \u00d7 16",
+            "result": 2400,
+            "explanation": "16 filters of size 5x5 operating over 6 input channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "16",
+            "result": 16,
+            "explanation": "One trainable bias per filter."
+          }
+        ],
+        "trainableParameters": 2416,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 16,
+        "kernelSize": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "tanh"
+      },
+      "connections": {
+        "incoming": [
+          "avg_pool_1"
+        ],
+        "outgoing": [
+          "avg_pool_2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Extracts 16 high-level feature maps.",
+        "detailed": "Computes 16 filters of size 5x5 over the 14x14 features. Pushes the network to learn combinations of low-level features.",
+        "keyTakeaway": "Deeper convolutional layers combine simple features into complex representations."
+      }
+    },
+    {
+      "layerId": "avg_pool_2",
+      "layerName": "Average Pool 2 (S4)",
+      "layerType": "average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          10,
+          10,
+          16
+        ],
+        "description": "10x10x16"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          5,
+          5,
+          16
+        ],
+        "description": "5x5x16"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "conv2d_2"
+        ],
+        "outgoing": [
+          "flatten_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Downsamples feature maps to 5x5.",
+        "detailed": "Halves the height and width from 10 to 5. Keeps parameter count low before entering fully connected segments.",
+        "keyTakeaway": "Downsampling prevents fully connected layers from overfitting."
+      }
+    },
+    {
+      "layerId": "flatten_1",
+      "layerName": "Flatten",
+      "layerType": "flatten",
+      "inputShape": {
+        "dimensions": [
+          null,
+          5,
+          5,
+          16
+        ],
+        "description": "5x5x16"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          400
+        ],
+        "description": "400-d Vector"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "avg_pool_2"
+        ],
+        "outgoing": [
+          "dense_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Flattens 3D tensor to 1D vector.",
+        "detailed": "Rearranges the 5x5x16 feature maps into a single flat vector of length 400 to serve as input for classification layers.",
+        "keyTakeaway": "Flattening bridges spatial representations and categorical classifiers."
+      }
+    },
+    {
+      "layerId": "dense_1",
+      "layerName": "Fully Connected 1 (F5)",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          400
+        ],
+        "description": "400"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          120
+        ],
+        "description": "120"
+      },
+      "parameters": {
+        "total": 48120,
+        "weights": 48000,
+        "biases": 120,
+        "formula": "(input_units + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "400 \u00d7 120",
+            "result": 48000,
+            "explanation": "Weight matrix connecting 400 input features to 120 units."
+          },
+          {
+            "label": "Biases",
+            "expression": "120",
+            "result": 120,
+            "explanation": "One trainable bias per unit."
+          }
+        ],
+        "trainableParameters": 48120,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 120,
+        "activation": "tanh",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "flatten_1"
+        ],
+        "outgoing": [
+          "dense_2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "First dense classification layer.",
+        "detailed": "Applies a full dot product calculation. Tanh activation maps outputs between -1 and 1.",
+        "keyTakeaway": "Fully connected layers map learned features to global classifications."
+      }
+    },
+    {
+      "layerId": "dense_2",
+      "layerName": "Fully Connected 2 (F6)",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          120
+        ],
+        "description": "120"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          84
+        ],
+        "description": "84"
+      },
+      "parameters": {
+        "total": 10164,
+        "weights": 10080,
+        "biases": 84,
+        "formula": "(input_units + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "120 \u00d7 84",
+            "result": 10080,
+            "explanation": "Connections from 120 features to 84 units."
+          },
+          {
+            "label": "Biases",
+            "expression": "84",
+            "result": 84,
+            "explanation": "One trainable bias per unit."
+          }
+        ],
+        "trainableParameters": 10164,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 84,
+        "activation": "tanh",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "dense_1"
+        ],
+        "outgoing": [
+          "output"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Second dense layer mapping to digit features.",
+        "detailed": "Reduces dimensionality from 120 to 84, preparing for the final digit classification mapping.",
+        "keyTakeaway": "Intermediate dense layers squeeze classifications into core classes."
+      }
+    },
+    {
+      "layerId": "output",
+      "layerName": "Output Classes",
+      "layerType": "output",
+      "inputShape": {
+        "dimensions": [
+          null,
+          84
+        ],
+        "description": "84"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          10
+        ],
+        "description": "10 digit probabilities"
+      },
+      "parameters": {
+        "total": 850,
+        "weights": 840,
+        "biases": 10,
+        "formula": "(input_units + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "84 \u00d7 10",
+            "result": 840,
+            "explanation": "Connections from 84 features to 10 final classes."
+          },
+          {
+            "label": "Biases",
+            "expression": "10",
+            "result": 10,
+            "explanation": "One bias per class."
+          }
+        ],
+        "trainableParameters": 850,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 10,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "dense_2"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Softmax layer predicting digit index (0-9).",
+        "detailed": "Converts final raw scores into a probability distribution summing to 1.0 across the 10 numeric digits.",
+        "keyTakeaway": "Softmax enables model outputs to be interpreted as probabilities."
+      }
+    }
+  ]
+}

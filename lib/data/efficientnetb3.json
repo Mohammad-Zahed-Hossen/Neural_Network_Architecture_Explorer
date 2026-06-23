@@ -9,7 +9,7 @@
   ],
   "paperUrl": "https://arxiv.org/abs/1905.11946",
   "depth": 154,
-  "totalParameters": 12233232,
+  "totalParameters": 12320528,
   "totalFLOPs": 1860000000,
   "inputShape": {
     "channels": 3,
@@ -64,7 +64,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Retinal layer receiving raw RGB pixel matrices.",
@@ -107,7 +109,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs dynamic rescaling and normalization of input pixels.",
@@ -161,7 +165,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Zero padding for the stem conv.",
@@ -224,7 +230,9 @@
               "result": 1080,
               "explanation": "Stem convolution maps input channels to scaled filters."
             }
-          ]
+          ],
+          "trainableParameters": 1080,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Standard early downsampling 3x3 convolution.",
@@ -270,8 +278,27 @@
           "total": 160,
           "weights": 80,
           "biases": 80,
+          "trainableParameters": 80,
+          "nonTrainableParameters": 80,
+          "gamma": 40,
+          "beta": 40,
+          "movingMean": 40,
+          "movingVariance": 40,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 40",
+              "result": 80,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 40",
+              "result": 80,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes stem activations.",
@@ -314,7 +341,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies swish activation.",
@@ -377,7 +406,9 @@
               "result": 360,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 360,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -423,8 +454,27 @@
           "total": 160,
           "weights": 80,
           "biases": 80,
+          "trainableParameters": 80,
+          "nonTrainableParameters": 80,
+          "gamma": 40,
+          "beta": 40,
+          "movingMean": 40,
+          "movingVariance": 40,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 40",
+              "result": 80,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 40",
+              "result": 80,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -467,7 +517,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -506,7 +558,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -562,7 +616,9 @@
           "weights": 400,
           "biases": 10,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 410,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -618,7 +674,9 @@
           "weights": 400,
           "biases": 40,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 440,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -661,7 +719,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -724,7 +784,9 @@
               "result": 960,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 960,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -770,8 +832,27 @@
           "total": 96,
           "weights": 48,
           "biases": 48,
+          "trainableParameters": 48,
+          "nonTrainableParameters": 48,
+          "gamma": 24,
+          "beta": 24,
+          "movingMean": 24,
+          "movingVariance": 24,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 24",
+              "result": 48,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 24",
+              "result": 48,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -832,7 +913,9 @@
               "result": 216,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 216,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -878,8 +961,27 @@
           "total": 96,
           "weights": 48,
           "biases": 48,
+          "trainableParameters": 48,
+          "nonTrainableParameters": 48,
+          "gamma": 24,
+          "beta": 24,
+          "movingMean": 24,
+          "movingVariance": 24,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 24",
+              "result": 48,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 24",
+              "result": 48,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -922,7 +1024,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -961,7 +1065,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -1017,7 +1123,9 @@
           "weights": 144,
           "biases": 6,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 150,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -1073,7 +1181,9 @@
           "weights": 144,
           "biases": 24,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 168,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -1116,7 +1226,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -1179,7 +1291,9 @@
               "result": 576,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 576,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -1225,8 +1339,27 @@
           "total": 96,
           "weights": 48,
           "biases": 48,
+          "trainableParameters": 48,
+          "nonTrainableParameters": 48,
+          "gamma": 24,
+          "beta": 24,
+          "movingMean": 24,
+          "movingVariance": 24,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 24",
+              "result": 48,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 24",
+              "result": 48,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -1267,7 +1400,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -1330,7 +1465,9 @@
               "result": 3456,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 3456,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -1376,8 +1513,27 @@
           "total": 576,
           "weights": 288,
           "biases": 288,
+          "trainableParameters": 288,
+          "nonTrainableParameters": 288,
+          "gamma": 144,
+          "beta": 144,
+          "movingMean": 144,
+          "movingVariance": 144,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 144",
+              "result": 288,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 144",
+              "result": 288,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -1420,7 +1576,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -1472,7 +1630,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Zero padding for stride conv.",
@@ -1533,7 +1693,9 @@
               "result": 1296,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 1296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -1579,8 +1741,27 @@
           "total": 576,
           "weights": 288,
           "biases": 288,
+          "trainableParameters": 288,
+          "nonTrainableParameters": 288,
+          "gamma": 144,
+          "beta": 144,
+          "movingMean": 144,
+          "movingVariance": 144,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 144",
+              "result": 288,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 144",
+              "result": 288,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -1623,7 +1804,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -1662,7 +1845,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -1718,7 +1903,9 @@
           "weights": 864,
           "biases": 6,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 870,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -1774,7 +1961,9 @@
           "weights": 864,
           "biases": 144,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1008,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -1817,7 +2006,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -1880,7 +2071,9 @@
               "result": 4608,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -1926,8 +2119,27 @@
           "total": 128,
           "weights": 64,
           "biases": 64,
+          "trainableParameters": 64,
+          "nonTrainableParameters": 64,
+          "gamma": 32,
+          "beta": 32,
+          "movingMean": 32,
+          "movingVariance": 32,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -1988,7 +2200,9 @@
               "result": 6144,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 6144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -2034,8 +2248,27 @@
           "total": 768,
           "weights": 384,
           "biases": 384,
+          "trainableParameters": 384,
+          "nonTrainableParameters": 384,
+          "gamma": 192,
+          "beta": 192,
+          "movingMean": 192,
+          "movingVariance": 192,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -2078,7 +2311,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -2139,7 +2374,9 @@
               "result": 1728,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 1728,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -2185,8 +2422,27 @@
           "total": 768,
           "weights": 384,
           "biases": 384,
+          "trainableParameters": 384,
+          "nonTrainableParameters": 384,
+          "gamma": 192,
+          "beta": 192,
+          "movingMean": 192,
+          "movingVariance": 192,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -2229,7 +2485,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -2268,7 +2526,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -2324,7 +2584,9 @@
           "weights": 1536,
           "biases": 8,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1544,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -2380,7 +2642,9 @@
           "weights": 1536,
           "biases": 192,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1728,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -2423,7 +2687,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -2486,7 +2752,9 @@
               "result": 6144,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 6144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -2532,8 +2800,27 @@
           "total": 128,
           "weights": 64,
           "biases": 64,
+          "trainableParameters": 64,
+          "nonTrainableParameters": 64,
+          "gamma": 32,
+          "beta": 32,
+          "movingMean": 32,
+          "movingVariance": 32,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -2574,7 +2861,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -2637,7 +2926,9 @@
               "result": 6144,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 6144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -2683,8 +2974,27 @@
           "total": 768,
           "weights": 384,
           "biases": 384,
+          "trainableParameters": 384,
+          "nonTrainableParameters": 384,
+          "gamma": 192,
+          "beta": 192,
+          "movingMean": 192,
+          "movingVariance": 192,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -2727,7 +3037,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -2788,7 +3100,9 @@
               "result": 1728,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 1728,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -2834,8 +3148,27 @@
           "total": 768,
           "weights": 384,
           "biases": 384,
+          "trainableParameters": 384,
+          "nonTrainableParameters": 384,
+          "gamma": 192,
+          "beta": 192,
+          "movingMean": 192,
+          "movingVariance": 192,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -2878,7 +3211,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -2917,7 +3252,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -2973,7 +3310,9 @@
           "weights": 1536,
           "biases": 8,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1544,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -3029,7 +3368,9 @@
           "weights": 1536,
           "biases": 192,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1728,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -3072,7 +3413,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -3135,7 +3478,9 @@
               "result": 6144,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 6144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -3181,8 +3526,27 @@
           "total": 128,
           "weights": 64,
           "biases": 64,
+          "trainableParameters": 64,
+          "nonTrainableParameters": 64,
+          "gamma": 32,
+          "beta": 32,
+          "movingMean": 32,
+          "movingVariance": 32,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -3223,7 +3587,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -3286,7 +3652,9 @@
               "result": 6144,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 6144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -3332,8 +3700,27 @@
           "total": 768,
           "weights": 384,
           "biases": 384,
+          "trainableParameters": 384,
+          "nonTrainableParameters": 384,
+          "gamma": 192,
+          "beta": 192,
+          "movingMean": 192,
+          "movingVariance": 192,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -3376,7 +3763,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -3428,7 +3817,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Zero padding for stride conv.",
@@ -3489,7 +3880,9 @@
               "result": 4800,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 4800,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -3535,8 +3928,27 @@
           "total": 768,
           "weights": 384,
           "biases": 384,
+          "trainableParameters": 384,
+          "nonTrainableParameters": 384,
+          "gamma": 192,
+          "beta": 192,
+          "movingMean": 192,
+          "movingVariance": 192,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 192",
+              "result": 384,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -3579,7 +3991,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -3618,7 +4032,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -3674,7 +4090,9 @@
           "weights": 1536,
           "biases": 8,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1544,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -3730,7 +4148,9 @@
           "weights": 1536,
           "biases": 192,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 1728,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -3773,7 +4193,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -3836,7 +4258,9 @@
               "result": 9216,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 9216,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -3882,8 +4306,27 @@
           "total": 192,
           "weights": 96,
           "biases": 96,
+          "trainableParameters": 96,
+          "nonTrainableParameters": 96,
+          "gamma": 48,
+          "beta": 48,
+          "movingMean": 48,
+          "movingVariance": 48,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 48",
+              "result": 96,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 48",
+              "result": 96,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -3944,7 +4387,9 @@
               "result": 13824,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 13824,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -3990,8 +4435,27 @@
           "total": 1152,
           "weights": 576,
           "biases": 576,
+          "trainableParameters": 576,
+          "nonTrainableParameters": 576,
+          "gamma": 288,
+          "beta": 288,
+          "movingMean": 288,
+          "movingVariance": 288,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -4034,7 +4498,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -4095,7 +4561,9 @@
               "result": 7200,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 7200,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -4141,8 +4609,27 @@
           "total": 1152,
           "weights": 576,
           "biases": 576,
+          "trainableParameters": 576,
+          "nonTrainableParameters": 576,
+          "gamma": 288,
+          "beta": 288,
+          "movingMean": 288,
+          "movingVariance": 288,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -4185,7 +4672,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -4224,7 +4713,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -4280,7 +4771,9 @@
           "weights": 3456,
           "biases": 12,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 3468,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -4336,7 +4829,9 @@
           "weights": 3456,
           "biases": 288,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 3744,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -4379,7 +4874,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -4442,7 +4939,9 @@
               "result": 13824,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 13824,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -4488,8 +4987,27 @@
           "total": 192,
           "weights": 96,
           "biases": 96,
+          "trainableParameters": 96,
+          "nonTrainableParameters": 96,
+          "gamma": 48,
+          "beta": 48,
+          "movingMean": 48,
+          "movingVariance": 48,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 48",
+              "result": 96,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 48",
+              "result": 96,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -4530,7 +5048,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -4593,7 +5113,9 @@
               "result": 13824,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 13824,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -4639,8 +5161,27 @@
           "total": 1152,
           "weights": 576,
           "biases": 576,
+          "trainableParameters": 576,
+          "nonTrainableParameters": 576,
+          "gamma": 288,
+          "beta": 288,
+          "movingMean": 288,
+          "movingVariance": 288,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -4683,7 +5224,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -4744,7 +5287,9 @@
               "result": 7200,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 7200,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -4790,8 +5335,27 @@
           "total": 1152,
           "weights": 576,
           "biases": 576,
+          "trainableParameters": 576,
+          "nonTrainableParameters": 576,
+          "gamma": 288,
+          "beta": 288,
+          "movingMean": 288,
+          "movingVariance": 288,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -4834,7 +5398,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -4873,7 +5439,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -4929,7 +5497,9 @@
           "weights": 3456,
           "biases": 12,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 3468,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -4985,7 +5555,9 @@
           "weights": 3456,
           "biases": 288,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 3744,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -5028,7 +5600,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -5091,7 +5665,9 @@
               "result": 13824,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 13824,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -5137,8 +5713,27 @@
           "total": 192,
           "weights": 96,
           "biases": 96,
+          "trainableParameters": 96,
+          "nonTrainableParameters": 96,
+          "gamma": 48,
+          "beta": 48,
+          "movingMean": 48,
+          "movingVariance": 48,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 48",
+              "result": 96,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 48",
+              "result": 96,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -5179,7 +5774,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -5242,7 +5839,9 @@
               "result": 13824,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 13824,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -5288,8 +5887,27 @@
           "total": 1152,
           "weights": 576,
           "biases": 576,
+          "trainableParameters": 576,
+          "nonTrainableParameters": 576,
+          "gamma": 288,
+          "beta": 288,
+          "movingMean": 288,
+          "movingVariance": 288,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -5332,7 +5950,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -5384,7 +6004,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Zero padding for stride conv.",
@@ -5445,7 +6067,9 @@
               "result": 2592,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 2592,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -5491,8 +6115,27 @@
           "total": 1152,
           "weights": 576,
           "biases": 576,
+          "trainableParameters": 576,
+          "nonTrainableParameters": 576,
+          "gamma": 288,
+          "beta": 288,
+          "movingMean": 288,
+          "movingVariance": 288,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 288",
+              "result": 576,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -5535,7 +6178,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -5574,7 +6219,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -5630,7 +6277,9 @@
           "weights": 3456,
           "biases": 12,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 3468,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -5686,7 +6335,9 @@
           "weights": 3456,
           "biases": 288,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 3744,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -5729,7 +6380,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -5792,7 +6445,9 @@
               "result": 27648,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 27648,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -5838,8 +6493,27 @@
           "total": 384,
           "weights": 192,
           "biases": 192,
+          "trainableParameters": 192,
+          "nonTrainableParameters": 192,
+          "gamma": 96,
+          "beta": 96,
+          "movingMean": 96,
+          "movingVariance": 96,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -5900,7 +6574,9 @@
               "result": 55296,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -5946,8 +6622,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -5990,7 +6685,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -6051,7 +6748,9 @@
               "result": 5184,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 5184,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -6097,8 +6796,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -6141,7 +6859,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -6180,7 +6900,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -6236,7 +6958,9 @@
           "weights": 13824,
           "biases": 24,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 13848,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -6292,7 +7016,9 @@
           "weights": 13824,
           "biases": 576,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 14400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -6335,7 +7061,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -6398,7 +7126,9 @@
               "result": 55296,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -6444,8 +7174,27 @@
           "total": 384,
           "weights": 192,
           "biases": 192,
+          "trainableParameters": 192,
+          "nonTrainableParameters": 192,
+          "gamma": 96,
+          "beta": 96,
+          "movingMean": 96,
+          "movingVariance": 96,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -6486,7 +7235,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -6549,7 +7300,9 @@
               "result": 55296,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -6595,8 +7348,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -6639,7 +7411,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -6700,7 +7474,9 @@
               "result": 5184,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 5184,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -6746,8 +7522,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -6790,7 +7585,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -6829,7 +7626,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -6885,7 +7684,9 @@
           "weights": 13824,
           "biases": 24,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 13848,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -6941,7 +7742,9 @@
           "weights": 13824,
           "biases": 576,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 14400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -6984,7 +7787,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -7047,7 +7852,9 @@
               "result": 55296,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -7093,8 +7900,27 @@
           "total": 384,
           "weights": 192,
           "biases": 192,
+          "trainableParameters": 192,
+          "nonTrainableParameters": 192,
+          "gamma": 96,
+          "beta": 96,
+          "movingMean": 96,
+          "movingVariance": 96,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -7135,7 +7961,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -7198,7 +8026,9 @@
               "result": 55296,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -7244,8 +8074,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -7288,7 +8137,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -7349,7 +8200,9 @@
               "result": 5184,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 5184,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -7395,8 +8248,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -7439,7 +8311,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -7478,7 +8352,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -7534,7 +8410,9 @@
           "weights": 13824,
           "biases": 24,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 13848,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -7590,7 +8468,9 @@
           "weights": 13824,
           "biases": 576,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 14400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -7633,7 +8513,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -7696,7 +8578,9 @@
               "result": 55296,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -7742,8 +8626,27 @@
           "total": 384,
           "weights": 192,
           "biases": 192,
+          "trainableParameters": 192,
+          "nonTrainableParameters": 192,
+          "gamma": 96,
+          "beta": 96,
+          "movingMean": 96,
+          "movingVariance": 96,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -7784,7 +8687,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -7847,7 +8752,9 @@
               "result": 55296,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -7893,8 +8800,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -7937,7 +8863,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -7998,7 +8926,9 @@
               "result": 5184,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 5184,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -8044,8 +8974,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -8088,7 +9037,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -8127,7 +9078,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -8183,7 +9136,9 @@
           "weights": 13824,
           "biases": 24,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 13848,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -8239,7 +9194,9 @@
           "weights": 13824,
           "biases": 576,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 14400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -8282,7 +9239,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -8345,7 +9304,9 @@
               "result": 55296,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -8391,8 +9352,27 @@
           "total": 384,
           "weights": 192,
           "biases": 192,
+          "trainableParameters": 192,
+          "nonTrainableParameters": 192,
+          "gamma": 96,
+          "beta": 96,
+          "movingMean": 96,
+          "movingVariance": 96,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 96",
+              "result": 192,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -8433,7 +9413,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -8496,7 +9478,9 @@
               "result": 55296,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 55296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -8542,8 +9526,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -8586,7 +9589,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -8647,7 +9652,9 @@
               "result": 14400,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 14400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -8693,8 +9700,27 @@
           "total": 2304,
           "weights": 1152,
           "biases": 1152,
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 1152,
+          "gamma": 576,
+          "beta": 576,
+          "movingMean": 576,
+          "movingVariance": 576,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 576",
+              "result": 1152,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -8737,7 +9763,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -8776,7 +9804,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -8832,7 +9862,9 @@
           "weights": 13824,
           "biases": 24,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 13848,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -8888,7 +9920,9 @@
           "weights": 13824,
           "biases": 576,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 14400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -8931,7 +9965,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -8994,7 +10030,9 @@
               "result": 78336,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 78336,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -9040,8 +10078,27 @@
           "total": 544,
           "weights": 272,
           "biases": 272,
+          "trainableParameters": 272,
+          "nonTrainableParameters": 272,
+          "gamma": 136,
+          "beta": 136,
+          "movingMean": 136,
+          "movingVariance": 136,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -9102,7 +10159,9 @@
               "result": 110976,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -9148,8 +10207,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -9192,7 +10270,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -9253,7 +10333,9 @@
               "result": 20400,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 20400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -9299,8 +10381,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -9343,7 +10444,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -9382,7 +10485,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -9438,7 +10543,9 @@
           "weights": 27744,
           "biases": 34,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 27778,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -9494,7 +10601,9 @@
           "weights": 27744,
           "biases": 816,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 28560,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -9537,7 +10646,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -9600,7 +10711,9 @@
               "result": 110976,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -9646,8 +10759,27 @@
           "total": 544,
           "weights": 272,
           "biases": 272,
+          "trainableParameters": 272,
+          "nonTrainableParameters": 272,
+          "gamma": 136,
+          "beta": 136,
+          "movingMean": 136,
+          "movingVariance": 136,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -9688,7 +10820,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -9751,7 +10885,9 @@
               "result": 110976,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -9797,8 +10933,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -9841,7 +10996,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -9902,7 +11059,9 @@
               "result": 20400,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 20400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -9948,8 +11107,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -9992,7 +11170,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -10031,7 +11211,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -10087,7 +11269,9 @@
           "weights": 27744,
           "biases": 34,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 27778,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -10143,7 +11327,9 @@
           "weights": 27744,
           "biases": 816,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 28560,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -10186,7 +11372,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -10249,7 +11437,9 @@
               "result": 110976,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -10295,8 +11485,27 @@
           "total": 544,
           "weights": 272,
           "biases": 272,
+          "trainableParameters": 272,
+          "nonTrainableParameters": 272,
+          "gamma": 136,
+          "beta": 136,
+          "movingMean": 136,
+          "movingVariance": 136,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -10337,7 +11546,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -10400,7 +11611,9 @@
               "result": 110976,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -10446,8 +11659,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -10490,7 +11722,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -10551,7 +11785,9 @@
               "result": 20400,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 20400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -10597,8 +11833,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -10641,7 +11896,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -10680,7 +11937,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -10736,7 +11995,9 @@
           "weights": 27744,
           "biases": 34,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 27778,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -10792,7 +12053,9 @@
           "weights": 27744,
           "biases": 816,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 28560,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -10835,7 +12098,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -10898,7 +12163,9 @@
               "result": 110976,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -10944,8 +12211,27 @@
           "total": 544,
           "weights": 272,
           "biases": 272,
+          "trainableParameters": 272,
+          "nonTrainableParameters": 272,
+          "gamma": 136,
+          "beta": 136,
+          "movingMean": 136,
+          "movingVariance": 136,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -10986,7 +12272,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -11049,7 +12337,9 @@
               "result": 110976,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -11095,8 +12385,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -11139,7 +12448,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -11200,7 +12511,9 @@
               "result": 20400,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 20400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -11246,8 +12559,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -11290,7 +12622,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -11329,7 +12663,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -11385,7 +12721,9 @@
           "weights": 27744,
           "biases": 34,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 27778,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -11441,7 +12779,9 @@
           "weights": 27744,
           "biases": 816,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 28560,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -11484,7 +12824,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -11547,7 +12889,9 @@
               "result": 110976,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -11593,8 +12937,27 @@
           "total": 544,
           "weights": 272,
           "biases": 272,
+          "trainableParameters": 272,
+          "nonTrainableParameters": 272,
+          "gamma": 136,
+          "beta": 136,
+          "movingMean": 136,
+          "movingVariance": 136,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 136",
+              "result": 272,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -11635,7 +12998,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -11698,7 +13063,9 @@
               "result": 110976,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 110976,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -11744,8 +13111,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -11788,7 +13174,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -11840,7 +13228,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Zero padding for stride conv.",
@@ -11901,7 +13291,9 @@
               "result": 20400,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 20400,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -11947,8 +13339,27 @@
           "total": 3264,
           "weights": 1632,
           "biases": 1632,
+          "trainableParameters": 1632,
+          "nonTrainableParameters": 1632,
+          "gamma": 816,
+          "beta": 816,
+          "movingMean": 816,
+          "movingVariance": 816,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 816",
+              "result": 1632,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -11991,7 +13402,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -12030,7 +13443,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -12086,7 +13501,9 @@
           "weights": 27744,
           "biases": 34,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 27778,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -12142,7 +13559,9 @@
           "weights": 27744,
           "biases": 816,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 28560,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -12185,7 +13604,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -12248,7 +13669,9 @@
               "result": 189312,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 189312,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -12294,8 +13717,27 @@
           "total": 928,
           "weights": 464,
           "biases": 464,
+          "trainableParameters": 464,
+          "nonTrainableParameters": 464,
+          "gamma": 232,
+          "beta": 232,
+          "movingMean": 232,
+          "movingVariance": 232,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -12356,7 +13798,9 @@
               "result": 322944,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -12402,8 +13846,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -12446,7 +13909,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -12507,7 +13972,9 @@
               "result": 34800,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 34800,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -12553,8 +14020,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -12597,7 +14083,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -12636,7 +14124,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -12692,7 +14182,9 @@
           "weights": 80736,
           "biases": 58,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 80794,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -12748,7 +14240,9 @@
           "weights": 80736,
           "biases": 1392,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 82128,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -12791,7 +14285,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -12854,7 +14350,9 @@
               "result": 322944,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -12900,8 +14398,27 @@
           "total": 928,
           "weights": 464,
           "biases": 464,
+          "trainableParameters": 464,
+          "nonTrainableParameters": 464,
+          "gamma": 232,
+          "beta": 232,
+          "movingMean": 232,
+          "movingVariance": 232,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -12942,7 +14459,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -13005,7 +14524,9 @@
               "result": 322944,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -13051,8 +14572,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -13095,7 +14635,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -13156,7 +14698,9 @@
               "result": 34800,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 34800,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -13202,8 +14746,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -13246,7 +14809,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -13285,7 +14850,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -13341,7 +14908,9 @@
           "weights": 80736,
           "biases": 58,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 80794,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -13397,7 +14966,9 @@
           "weights": 80736,
           "biases": 1392,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 82128,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -13440,7 +15011,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -13503,7 +15076,9 @@
               "result": 322944,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -13549,8 +15124,27 @@
           "total": 928,
           "weights": 464,
           "biases": 464,
+          "trainableParameters": 464,
+          "nonTrainableParameters": 464,
+          "gamma": 232,
+          "beta": 232,
+          "movingMean": 232,
+          "movingVariance": 232,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -13591,7 +15185,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -13654,7 +15250,9 @@
               "result": 322944,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -13700,8 +15298,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -13744,7 +15361,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -13805,7 +15424,9 @@
               "result": 34800,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 34800,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -13851,8 +15472,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -13895,7 +15535,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -13934,7 +15576,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -13990,7 +15634,9 @@
           "weights": 80736,
           "biases": 58,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 80794,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -14046,7 +15692,9 @@
           "weights": 80736,
           "biases": 1392,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 82128,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -14089,7 +15737,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -14152,7 +15802,9 @@
               "result": 322944,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -14198,8 +15850,27 @@
           "total": 928,
           "weights": 464,
           "biases": 464,
+          "trainableParameters": 464,
+          "nonTrainableParameters": 464,
+          "gamma": 232,
+          "beta": 232,
+          "movingMean": 232,
+          "movingVariance": 232,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -14240,7 +15911,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -14303,7 +15976,9 @@
               "result": 322944,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -14349,8 +16024,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -14393,7 +16087,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -14454,7 +16150,9 @@
               "result": 34800,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 34800,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -14500,8 +16198,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -14544,7 +16261,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -14583,7 +16302,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -14639,7 +16360,9 @@
           "weights": 80736,
           "biases": 58,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 80794,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -14695,7 +16418,9 @@
           "weights": 80736,
           "biases": 1392,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 82128,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -14738,7 +16463,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -14801,7 +16528,9 @@
               "result": 322944,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -14847,8 +16576,27 @@
           "total": 928,
           "weights": 464,
           "biases": 464,
+          "trainableParameters": 464,
+          "nonTrainableParameters": 464,
+          "gamma": 232,
+          "beta": 232,
+          "movingMean": 232,
+          "movingVariance": 232,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -14889,7 +16637,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -14952,7 +16702,9 @@
               "result": 322944,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -14998,8 +16750,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -15042,7 +16813,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -15103,7 +16876,9 @@
               "result": 34800,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 34800,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 5x5 convolution.",
@@ -15149,8 +16924,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -15193,7 +16987,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -15232,7 +17028,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -15288,7 +17086,9 @@
           "weights": 80736,
           "biases": 58,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 80794,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -15344,7 +17144,9 @@
           "weights": 80736,
           "biases": 1392,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 82128,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -15387,7 +17189,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -15450,7 +17254,9 @@
               "result": 322944,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -15496,8 +17302,27 @@
           "total": 928,
           "weights": 464,
           "biases": 464,
+          "trainableParameters": 464,
+          "nonTrainableParameters": 464,
+          "gamma": 232,
+          "beta": 232,
+          "movingMean": 232,
+          "movingVariance": 232,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 232",
+              "result": 464,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -15538,7 +17363,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -15601,7 +17428,9 @@
               "result": 322944,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 322944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -15647,8 +17476,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -15691,7 +17539,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -15752,7 +17602,9 @@
               "result": 12528,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 12528,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -15798,8 +17650,27 @@
           "total": 5568,
           "weights": 2784,
           "biases": 2784,
+          "trainableParameters": 2784,
+          "nonTrainableParameters": 2784,
+          "gamma": 1392,
+          "beta": 1392,
+          "movingMean": 1392,
+          "movingVariance": 1392,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1392",
+              "result": 2784,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -15842,7 +17713,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -15881,7 +17754,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -15937,7 +17812,9 @@
           "weights": 80736,
           "biases": 58,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 80794,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -15993,7 +17870,9 @@
           "weights": 80736,
           "biases": 1392,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 82128,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -16036,7 +17915,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -16099,7 +17980,9 @@
               "result": 534528,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 534528,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -16145,8 +18028,27 @@
           "total": 1536,
           "weights": 768,
           "biases": 768,
+          "trainableParameters": 768,
+          "nonTrainableParameters": 768,
+          "gamma": 384,
+          "beta": 384,
+          "movingMean": 384,
+          "movingVariance": 384,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 384",
+              "result": 768,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 384",
+              "result": 768,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -16207,7 +18109,9 @@
               "result": 884736,
               "explanation": "1x1 expansion convolution."
             }
-          ]
+          ],
+          "trainableParameters": 884736,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 Expansion bottleneck layer.",
@@ -16253,8 +18157,27 @@
           "total": 9216,
           "weights": 4608,
           "biases": 4608,
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 4608,
+          "gamma": 2304,
+          "beta": 2304,
+          "movingMean": 2304,
+          "movingVariance": 2304,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 2304",
+              "result": 4608,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 2304",
+              "result": 4608,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes expansion.",
@@ -16297,7 +18220,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -16358,7 +18283,9 @@
               "result": 20736,
               "explanation": "Kernel weights convolving over spatial maps."
             }
-          ]
+          ],
+          "trainableParameters": 20736,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Spatial depthwise 3x3 convolution.",
@@ -16404,8 +18331,27 @@
           "total": 9216,
           "weights": 4608,
           "biases": 4608,
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 4608,
+          "gamma": 2304,
+          "beta": 2304,
+          "movingMean": 2304,
+          "movingVariance": 2304,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 2304",
+              "result": 4608,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 2304",
+              "result": 4608,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -16448,7 +18394,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -16487,7 +18435,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE Squeeze averaging spatial activations.",
@@ -16543,7 +18493,9 @@
           "weights": 221184,
           "biases": 96,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 221280,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE reduction layer.",
@@ -16599,7 +18551,9 @@
           "weights": 221184,
           "biases": 2304,
           "formula": "input_channels \u00d7 output_filters + output_filters",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 223488,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "SE expand layer with sigmoid activation.",
@@ -16642,7 +18596,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Excitation step.",
@@ -16705,7 +18661,9 @@
               "result": 884736,
               "explanation": "Compresses channel bottleneck."
             }
-          ]
+          ],
+          "trainableParameters": 884736,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 projection conv (linear bottleneck).",
@@ -16751,8 +18709,27 @@
           "total": 1536,
           "weights": 768,
           "biases": 768,
+          "trainableParameters": 768,
+          "nonTrainableParameters": 768,
+          "gamma": 384,
+          "beta": 384,
+          "movingMean": 384,
+          "movingVariance": 384,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 384",
+              "result": 768,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 384",
+              "result": 768,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes projection.",
@@ -16793,7 +18770,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Performs residual sum.",
@@ -16856,7 +18835,9 @@
               "result": 589824,
               "explanation": "Final feature synthesizer weights."
             }
-          ]
+          ],
+          "trainableParameters": 589824,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "1x1 final convolution.",
@@ -16902,8 +18883,27 @@
           "total": 6144,
           "weights": 3072,
           "biases": 3072,
+          "trainableParameters": 3072,
+          "nonTrainableParameters": 3072,
+          "gamma": 1536,
+          "beta": 1536,
+          "movingMean": 1536,
+          "movingVariance": 1536,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1536",
+              "result": 3072,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1536",
+              "result": 3072,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes final conv.",
@@ -16946,7 +18946,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Swish activation.",
@@ -16985,7 +18987,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Global average pooling.",
@@ -17035,7 +19039,9 @@
               "result": 1536000,
               "explanation": "Fully connected mapping weights."
             }
-          ]
+          ],
+          "trainableParameters": 1537000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Computes probabilities for the 1,000 target classes.",
@@ -19922,5 +21928,7 @@
         "color": "#8B5CF6"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 87296,
+  "trainableParameters": 12233232
 }

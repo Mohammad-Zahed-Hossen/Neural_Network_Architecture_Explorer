@@ -1,0 +1,5141 @@
+{
+  "modelName": "MobileNet",
+  "architectureFamily": "MobileNet",
+  "publicationYear": 2017,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "totalParameters": 4253864,
+  "trainableParameters": 4253864,
+  "FLOPs": 569000000,
+  "MACs": 284500000,
+  "top1Accuracy": 0.704,
+  "top5Accuracy": 0.895,
+  "layerCount": 84,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "input_1",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Retinal layer receiving raw RGB pixel matrices.",
+        "detailed": "Accepts normalized three-channel RGB images of size 224x224. This spatial standardization ensures weight compatibility in subsequent layers.",
+        "whyItMatters": "Establishes spatial dimensions for the network.",
+        "keyTakeaway": "Fixed input sizes are critical to prevent spatial alignment errors."
+      }
+    },
+    {
+      "layerId": "conv1",
+      "layerName": "conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 864,
+        "weights": 864,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
+            "result": 864,
+            "explanation": "32 convolutional filters of size 3x3 convolving over 3 RGB channels. Stride 2 downsamples output to 112x112."
+          }
+        ],
+        "trainableParameters": 864,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "conv1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Standard early 3x3 convolution to downsample inputs.",
+        "detailed": "Captures initial visual patterns like lines and edges. Stride of 2 halves resolution to reduce downstream processing.",
+        "whyItMatters": "Early spatial reduction saves computation in deeper stages.",
+        "keyTakeaway": "Early layers capture general visual contours."
+      }
+    },
+    {
+      "layerId": "conv1_bn",
+      "layerName": "conv1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "trainableParameters": 64,
+        "nonTrainableParameters": 64,
+        "gamma": 32,
+        "beta": 32,
+        "movingMean": 32,
+        "movingVariance": 32,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv1"
+        ],
+        "outgoing": [
+          "conv1_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes conv1 outputs.",
+        "detailed": "Normalizes activations to stabilize learning.",
+        "whyItMatters": "Prevents vanishing gradients.",
+        "keyTakeaway": "Stabilizes initial features."
+      }
+    },
+    {
+      "layerId": "conv1_relu",
+      "layerName": "conv1_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv1_bn"
+        ],
+        "outgoing": [
+          "conv_dw_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "ReLU6 activation capping outputs to 6.",
+        "detailed": "Capping values to 6 prevents numerical overflow and is optimal for fixed-point integer quantization on edge hardware.",
+        "whyItMatters": "Essential for deployment on low-precision microcontrollers and mobile processors.",
+        "keyTakeaway": "Capped activations prevent precision loss during quantization."
+      }
+    },
+    {
+      "layerId": "conv_dw_1",
+      "layerName": "conv_dw_1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 288,
+        "weights": 288,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 32",
+            "result": 288,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 288,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 32,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv1_relu"
+        ],
+        "outgoing": [
+          "conv_dw_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 32 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_1_bn",
+      "layerName": "conv_dw_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 128,
+        "weights": 64,
+        "biases": 64,
+        "trainableParameters": 64,
+        "nonTrainableParameters": 64,
+        "gamma": 32,
+        "beta": 32,
+        "movingMean": 32,
+        "movingVariance": 32,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 32",
+            "result": 64,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_1"
+        ],
+        "outgoing": [
+          "conv_dw_1_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_1_relu",
+      "layerName": "conv_dw_1_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_1_bn"
+        ],
+        "outgoing": [
+          "conv_pw_1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_1",
+      "layerName": "conv_pw_1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          32
+        ],
+        "description": "112\u00d7112\u00d732"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112\u00d7112\u00d764"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 2048,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "32 \u00d7 64",
+            "result": 2048,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 2048,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_1_relu"
+        ],
+        "outgoing": [
+          "conv_pw_1_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 32 to 64.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_1_bn",
+      "layerName": "conv_pw_1_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112\u00d7112\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112\u00d7112\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_1"
+        ],
+        "outgoing": [
+          "conv_pw_1_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_1_relu",
+      "layerName": "conv_pw_1_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112\u00d7112\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112\u00d7112\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_1_bn"
+        ],
+        "outgoing": [
+          "conv_dw_2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_2",
+      "layerName": "conv_dw_2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112\u00d7112\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56\u00d756\u00d764"
+      },
+      "parameters": {
+        "total": 576,
+        "weights": 576,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 64",
+            "result": 576,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 576,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_1_relu"
+        ],
+        "outgoing": [
+          "conv_dw_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 64 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_2_bn",
+      "layerName": "conv_dw_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56\u00d756\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56\u00d756\u00d764"
+      },
+      "parameters": {
+        "total": 256,
+        "weights": 128,
+        "biases": 128,
+        "trainableParameters": 128,
+        "nonTrainableParameters": 128,
+        "gamma": 64,
+        "beta": 64,
+        "movingMean": 64,
+        "movingVariance": 64,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 64",
+            "result": 128,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_2"
+        ],
+        "outgoing": [
+          "conv_dw_2_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_2_relu",
+      "layerName": "conv_dw_2_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56\u00d756\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56\u00d756\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_2_bn"
+        ],
+        "outgoing": [
+          "conv_pw_2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_2",
+      "layerName": "conv_pw_2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56\u00d756\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 8192,
+        "weights": 8192,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "64 \u00d7 128",
+            "result": 8192,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 8192,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_2_relu"
+        ],
+        "outgoing": [
+          "conv_pw_2_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 64 to 128.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_2_bn",
+      "layerName": "conv_pw_2_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "trainableParameters": 256,
+        "nonTrainableParameters": 256,
+        "gamma": 128,
+        "beta": 128,
+        "movingMean": 128,
+        "movingVariance": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_2"
+        ],
+        "outgoing": [
+          "conv_pw_2_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_2_relu",
+      "layerName": "conv_pw_2_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_2_bn"
+        ],
+        "outgoing": [
+          "conv_dw_3"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_3",
+      "layerName": "conv_dw_3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 1152,
+        "weights": 1152,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 128",
+            "result": 1152,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 1152,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_2_relu"
+        ],
+        "outgoing": [
+          "conv_dw_3_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 128 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_3_bn",
+      "layerName": "conv_dw_3_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "trainableParameters": 256,
+        "nonTrainableParameters": 256,
+        "gamma": 128,
+        "beta": 128,
+        "movingMean": 128,
+        "movingVariance": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_3"
+        ],
+        "outgoing": [
+          "conv_dw_3_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_3_relu",
+      "layerName": "conv_dw_3_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_3_bn"
+        ],
+        "outgoing": [
+          "conv_pw_3"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_3",
+      "layerName": "conv_pw_3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 16384,
+        "weights": 16384,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "128 \u00d7 128",
+            "result": 16384,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 16384,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_3_relu"
+        ],
+        "outgoing": [
+          "conv_pw_3_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 128 to 128.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_3_bn",
+      "layerName": "conv_pw_3_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "trainableParameters": 256,
+        "nonTrainableParameters": 256,
+        "gamma": 128,
+        "beta": 128,
+        "movingMean": 128,
+        "movingVariance": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_3"
+        ],
+        "outgoing": [
+          "conv_pw_3_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_3_relu",
+      "layerName": "conv_pw_3_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_3_bn"
+        ],
+        "outgoing": [
+          "conv_dw_4"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_4",
+      "layerName": "conv_dw_4",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          128
+        ],
+        "description": "56\u00d756\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28\u00d728\u00d7128"
+      },
+      "parameters": {
+        "total": 1152,
+        "weights": 1152,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 128",
+            "result": 1152,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 1152,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_3_relu"
+        ],
+        "outgoing": [
+          "conv_dw_4_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 128 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_4_bn",
+      "layerName": "conv_dw_4_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28\u00d728\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28\u00d728\u00d7128"
+      },
+      "parameters": {
+        "total": 512,
+        "weights": 256,
+        "biases": 256,
+        "trainableParameters": 256,
+        "nonTrainableParameters": 256,
+        "gamma": 128,
+        "beta": 128,
+        "movingMean": 128,
+        "movingVariance": 128,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 128",
+            "result": 256,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_4"
+        ],
+        "outgoing": [
+          "conv_dw_4_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_4_relu",
+      "layerName": "conv_dw_4_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28\u00d728\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28\u00d728\u00d7128"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_4_bn"
+        ],
+        "outgoing": [
+          "conv_pw_4"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_4",
+      "layerName": "conv_pw_4",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28\u00d728\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 32768,
+        "weights": 32768,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "128 \u00d7 256",
+            "result": 32768,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 32768,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_4_relu"
+        ],
+        "outgoing": [
+          "conv_pw_4_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 128 to 256.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_4_bn",
+      "layerName": "conv_pw_4_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "trainableParameters": 512,
+        "nonTrainableParameters": 512,
+        "gamma": 256,
+        "beta": 256,
+        "movingMean": 256,
+        "movingVariance": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_4"
+        ],
+        "outgoing": [
+          "conv_pw_4_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_4_relu",
+      "layerName": "conv_pw_4_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_4_bn"
+        ],
+        "outgoing": [
+          "conv_dw_5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_5",
+      "layerName": "conv_dw_5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 2304,
+        "weights": 2304,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 256",
+            "result": 2304,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 2304,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_4_relu"
+        ],
+        "outgoing": [
+          "conv_dw_5_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 256 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_5_bn",
+      "layerName": "conv_dw_5_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "trainableParameters": 512,
+        "nonTrainableParameters": 512,
+        "gamma": 256,
+        "beta": 256,
+        "movingMean": 256,
+        "movingVariance": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_5"
+        ],
+        "outgoing": [
+          "conv_dw_5_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_5_relu",
+      "layerName": "conv_dw_5_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_5_bn"
+        ],
+        "outgoing": [
+          "conv_pw_5"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_5",
+      "layerName": "conv_pw_5",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 65536,
+        "weights": 65536,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "256 \u00d7 256",
+            "result": 65536,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 65536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_5_relu"
+        ],
+        "outgoing": [
+          "conv_pw_5_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 256 to 256.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_5_bn",
+      "layerName": "conv_pw_5_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "trainableParameters": 512,
+        "nonTrainableParameters": 512,
+        "gamma": 256,
+        "beta": 256,
+        "movingMean": 256,
+        "movingVariance": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_5"
+        ],
+        "outgoing": [
+          "conv_pw_5_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_5_relu",
+      "layerName": "conv_pw_5_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_5_bn"
+        ],
+        "outgoing": [
+          "conv_dw_6"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_6",
+      "layerName": "conv_dw_6",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          256
+        ],
+        "description": "28\u00d728\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14\u00d714\u00d7256"
+      },
+      "parameters": {
+        "total": 2304,
+        "weights": 2304,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 256",
+            "result": 2304,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 2304,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_5_relu"
+        ],
+        "outgoing": [
+          "conv_dw_6_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 256 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_6_bn",
+      "layerName": "conv_dw_6_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14\u00d714\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14\u00d714\u00d7256"
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "trainableParameters": 512,
+        "nonTrainableParameters": 512,
+        "gamma": 256,
+        "beta": 256,
+        "movingMean": 256,
+        "movingVariance": 256,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 256",
+            "result": 512,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_6"
+        ],
+        "outgoing": [
+          "conv_dw_6_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_6_relu",
+      "layerName": "conv_dw_6_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14\u00d714\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14\u00d714\u00d7256"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_6_bn"
+        ],
+        "outgoing": [
+          "conv_pw_6"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_6",
+      "layerName": "conv_pw_6",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14\u00d714\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 131072,
+        "weights": 131072,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "256 \u00d7 512",
+            "result": 131072,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 131072,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_6_relu"
+        ],
+        "outgoing": [
+          "conv_pw_6_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 256 to 512.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_6_bn",
+      "layerName": "conv_pw_6_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_6"
+        ],
+        "outgoing": [
+          "conv_pw_6_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_6_relu",
+      "layerName": "conv_pw_6_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_6_bn"
+        ],
+        "outgoing": [
+          "conv_dw_7"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_7",
+      "layerName": "conv_dw_7",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 4608,
+        "weights": 4608,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 512",
+            "result": 4608,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 4608,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_6_relu"
+        ],
+        "outgoing": [
+          "conv_dw_7_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_7_bn",
+      "layerName": "conv_dw_7_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_7"
+        ],
+        "outgoing": [
+          "conv_dw_7_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_7_relu",
+      "layerName": "conv_dw_7_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_7_bn"
+        ],
+        "outgoing": [
+          "conv_pw_7"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_7",
+      "layerName": "conv_pw_7",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "512 \u00d7 512",
+            "result": 262144,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 262144,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_7_relu"
+        ],
+        "outgoing": [
+          "conv_pw_7_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_7_bn",
+      "layerName": "conv_pw_7_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_7"
+        ],
+        "outgoing": [
+          "conv_pw_7_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_7_relu",
+      "layerName": "conv_pw_7_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_7_bn"
+        ],
+        "outgoing": [
+          "conv_dw_8"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_8",
+      "layerName": "conv_dw_8",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 4608,
+        "weights": 4608,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 512",
+            "result": 4608,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 4608,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_7_relu"
+        ],
+        "outgoing": [
+          "conv_dw_8_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_8_bn",
+      "layerName": "conv_dw_8_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_8"
+        ],
+        "outgoing": [
+          "conv_dw_8_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_8_relu",
+      "layerName": "conv_dw_8_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_8_bn"
+        ],
+        "outgoing": [
+          "conv_pw_8"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_8",
+      "layerName": "conv_pw_8",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "512 \u00d7 512",
+            "result": 262144,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 262144,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_8_relu"
+        ],
+        "outgoing": [
+          "conv_pw_8_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_8_bn",
+      "layerName": "conv_pw_8_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_8"
+        ],
+        "outgoing": [
+          "conv_pw_8_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_8_relu",
+      "layerName": "conv_pw_8_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_8_bn"
+        ],
+        "outgoing": [
+          "conv_dw_9"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_9",
+      "layerName": "conv_dw_9",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 4608,
+        "weights": 4608,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 512",
+            "result": 4608,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 4608,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_8_relu"
+        ],
+        "outgoing": [
+          "conv_dw_9_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_9_bn",
+      "layerName": "conv_dw_9_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_9"
+        ],
+        "outgoing": [
+          "conv_dw_9_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_9_relu",
+      "layerName": "conv_dw_9_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_9_bn"
+        ],
+        "outgoing": [
+          "conv_pw_9"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_9",
+      "layerName": "conv_pw_9",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "512 \u00d7 512",
+            "result": 262144,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 262144,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_9_relu"
+        ],
+        "outgoing": [
+          "conv_pw_9_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_9_bn",
+      "layerName": "conv_pw_9_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_9"
+        ],
+        "outgoing": [
+          "conv_pw_9_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_9_relu",
+      "layerName": "conv_pw_9_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_9_bn"
+        ],
+        "outgoing": [
+          "conv_dw_10"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_10",
+      "layerName": "conv_dw_10",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 4608,
+        "weights": 4608,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 512",
+            "result": 4608,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 4608,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_9_relu"
+        ],
+        "outgoing": [
+          "conv_dw_10_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_10_bn",
+      "layerName": "conv_dw_10_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_10"
+        ],
+        "outgoing": [
+          "conv_dw_10_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_10_relu",
+      "layerName": "conv_dw_10_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_10_bn"
+        ],
+        "outgoing": [
+          "conv_pw_10"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_10",
+      "layerName": "conv_pw_10",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "512 \u00d7 512",
+            "result": 262144,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 262144,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_10_relu"
+        ],
+        "outgoing": [
+          "conv_pw_10_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_10_bn",
+      "layerName": "conv_pw_10_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_10"
+        ],
+        "outgoing": [
+          "conv_pw_10_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_10_relu",
+      "layerName": "conv_pw_10_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_10_bn"
+        ],
+        "outgoing": [
+          "conv_dw_11"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_11",
+      "layerName": "conv_dw_11",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 4608,
+        "weights": 4608,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 512",
+            "result": 4608,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 4608,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_10_relu"
+        ],
+        "outgoing": [
+          "conv_dw_11_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_11_bn",
+      "layerName": "conv_dw_11_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_11"
+        ],
+        "outgoing": [
+          "conv_dw_11_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_11_relu",
+      "layerName": "conv_dw_11_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_11_bn"
+        ],
+        "outgoing": [
+          "conv_pw_11"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_11",
+      "layerName": "conv_pw_11",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 262144,
+        "weights": 262144,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "512 \u00d7 512",
+            "result": 262144,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 262144,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_11_relu"
+        ],
+        "outgoing": [
+          "conv_pw_11_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 512.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_11_bn",
+      "layerName": "conv_pw_11_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_11"
+        ],
+        "outgoing": [
+          "conv_pw_11_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_11_relu",
+      "layerName": "conv_pw_11_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          512
+        ],
+        "description": "14\u00d714\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_11_bn"
+        ],
+        "outgoing": [
+          "conv_dw_12"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_12",
+      "layerName": "conv_dw_12",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          512
+        ],
+        "description": "7\u00d77\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          512
+        ],
+        "description": "3\u00d73\u00d7512"
+      },
+      "parameters": {
+        "total": 4608,
+        "weights": 4608,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 512",
+            "result": 4608,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 4608,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_11_relu"
+        ],
+        "outgoing": [
+          "conv_dw_12_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 512 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_12_bn",
+      "layerName": "conv_dw_12_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          512
+        ],
+        "description": "3\u00d73\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          512
+        ],
+        "description": "3\u00d73\u00d7512"
+      },
+      "parameters": {
+        "total": 2048,
+        "weights": 1024,
+        "biases": 1024,
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 1024,
+        "gamma": 512,
+        "beta": 512,
+        "movingMean": 512,
+        "movingVariance": 512,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_12"
+        ],
+        "outgoing": [
+          "conv_dw_12_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_12_relu",
+      "layerName": "conv_dw_12_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          512
+        ],
+        "description": "3\u00d73\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          512
+        ],
+        "description": "3\u00d73\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_12_bn"
+        ],
+        "outgoing": [
+          "conv_pw_12"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_12",
+      "layerName": "conv_pw_12",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          512
+        ],
+        "description": "3\u00d73\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          1024
+        ],
+        "description": "3\u00d73\u00d71024"
+      },
+      "parameters": {
+        "total": 524288,
+        "weights": 524288,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "512 \u00d7 1024",
+            "result": 524288,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 524288,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_12_relu"
+        ],
+        "outgoing": [
+          "conv_pw_12_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 512 to 1024.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_12_bn",
+      "layerName": "conv_pw_12_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          1024
+        ],
+        "description": "3\u00d73\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          1024
+        ],
+        "description": "3\u00d73\u00d71024"
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "trainableParameters": 2048,
+        "nonTrainableParameters": 2048,
+        "gamma": 1024,
+        "beta": 1024,
+        "movingMean": 1024,
+        "movingVariance": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 1024",
+            "result": 2048,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 1024",
+            "result": 2048,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_12"
+        ],
+        "outgoing": [
+          "conv_pw_12_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_12_relu",
+      "layerName": "conv_pw_12_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          1024
+        ],
+        "description": "3\u00d73\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          3,
+          3,
+          1024
+        ],
+        "description": "3\u00d73\u00d71024"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_12_bn"
+        ],
+        "outgoing": [
+          "conv_dw_13"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_dw_13",
+      "layerName": "conv_dw_13",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "parameters": {
+        "total": 9216,
+        "weights": 9216,
+        "biases": 0,
+        "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Depthwise weights",
+            "expression": "3 \u00d7 3 \u00d7 1024",
+            "result": 9216,
+            "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
+          }
+        ],
+        "trainableParameters": 9216,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 1024,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_12_relu"
+        ],
+        "outgoing": [
+          "conv_dw_13_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Depthwise convolution performing spatial filtering.",
+        "detailed": "Operates spatial convolving over each of the 1024 channels separately. Cuts down computing weights by 90% compared to standard convolutions.",
+        "whyItMatters": "The core mechanism behind MobileNet's fast runtime and low parameter size.",
+        "keyTakeaway": "Depthwise convolutions perform spatial filtering without mixing channels."
+      }
+    },
+    {
+      "layerId": "conv_dw_13_bn",
+      "layerName": "conv_dw_13_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "trainableParameters": 2048,
+        "nonTrainableParameters": 2048,
+        "gamma": 1024,
+        "beta": 1024,
+        "movingMean": 1024,
+        "movingVariance": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 1024",
+            "result": 2048,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 1024",
+            "result": 2048,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_13"
+        ],
+        "outgoing": [
+          "conv_dw_13_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes depthwise outputs.",
+        "detailed": "Stabilizes the activation scale before non-linear gating.",
+        "whyItMatters": "Enables faster and more robust gradient updates.",
+        "keyTakeaway": "Keeps spatial distributions stable."
+      }
+    },
+    {
+      "layerId": "conv_dw_13_relu",
+      "layerName": "conv_dw_13_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_13_bn"
+        ],
+        "outgoing": [
+          "conv_pw_13"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to depthwise outputs.",
+        "detailed": "Calculates f(x) = min(max(0, x), 6) element-wise.",
+        "whyItMatters": "Controls numerical ranges for embedded hardware.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "conv_pw_13",
+      "layerName": "conv_pw_13",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "parameters": {
+        "total": 1048576,
+        "weights": 1048576,
+        "biases": 0,
+        "formula": "input_channels \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Pointwise weights",
+            "expression": "1024 \u00d7 1024",
+            "result": 1048576,
+            "explanation": "Combines spatial activations across channels."
+          }
+        ],
+        "trainableParameters": 1048576,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 1024,
+        "kernelSize": [
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "valid",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "conv_dw_13_relu"
+        ],
+        "outgoing": [
+          "conv_pw_13_bn"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Pointwise 1x1 convolution mapping features.",
+        "detailed": "Performs linear combinations over the spatial outputs to project channels from 1024 to 1024.",
+        "whyItMatters": "Handles the cross-channel feature integration step in depthwise-separable conv blocks.",
+        "keyTakeaway": "Mixes channels using 1x1 filter maps."
+      }
+    },
+    {
+      "layerId": "conv_pw_13_bn",
+      "layerName": "conv_pw_13_bn",
+      "layerType": "batch_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "parameters": {
+        "total": 4096,
+        "weights": 2048,
+        "biases": 2048,
+        "trainableParameters": 2048,
+        "nonTrainableParameters": 2048,
+        "gamma": 1024,
+        "beta": 1024,
+        "movingMean": 1024,
+        "movingVariance": 1024,
+        "formula": "4 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "Trainable Parameters (gamma, beta)",
+            "expression": "2 \u00d7 1024",
+            "result": 2048,
+            "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+          },
+          {
+            "label": "Non-trainable Parameters (mean, variance)",
+            "expression": "2 \u00d7 1024",
+            "result": 2048,
+            "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+          }
+        ]
+      },
+      "hyperparameters": {
+        "axis": 3,
+        "momentum": 0.99,
+        "epsilon": 0.001
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_13"
+        ],
+        "outgoing": [
+          "conv_pw_13_relu"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes pointwise outputs.",
+        "detailed": "Normalizes the mixed representation before activation.",
+        "whyItMatters": "Prepares activations for representation matching.",
+        "keyTakeaway": "Maintains normal variance across channels."
+      }
+    },
+    {
+      "layerId": "conv_pw_13_relu",
+      "layerName": "conv_pw_13_relu",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "conv_pw_13_bn"
+        ],
+        "outgoing": [
+          "global_average_pooling2d"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Applies ReLU6 activation to pointwise outputs.",
+        "detailed": "Computes rectified output limited to 6.",
+        "whyItMatters": "Final non-linear gating of block output.",
+        "keyTakeaway": "Capped non-linearity."
+      }
+    },
+    {
+      "layerId": "global_average_pooling2d",
+      "layerName": "global_average_pooling2d",
+      "layerType": "global_average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          1024
+        ],
+        "description": "7\u00d77\u00d71024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1024
+        ],
+        "description": "1024"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "conv_pw_13_relu"
+        ],
+        "outgoing": [
+          "predictions"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Global average pooling.",
+        "detailed": "Averages spatial dimensions (7x7) to form a global feature vector.",
+        "whyItMatters": "Avoids parameter bloat associated with flattening.",
+        "keyTakeaway": "Replaces heavy fully connected layers with zero parameters."
+      }
+    },
+    {
+      "layerId": "predictions",
+      "layerName": "predictions",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          1024
+        ],
+        "description": "1024"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000"
+      },
+      "parameters": {
+        "total": 1025000,
+        "weights": 1024000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Weights",
+            "expression": "1024 \u00d7 1000",
+            "result": 1024000,
+            "explanation": "Fully connected mapping weights."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One learnable bias parameter per output class."
+          }
+        ],
+        "trainableParameters": 1025000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "global_average_pooling2d"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Computes probabilities for the 1,000 target classes.",
+        "detailed": "Uses softmax activation function to compute class probabilities.",
+        "whyItMatters": "Converts numerical logits into values that sum to 1.",
+        "keyTakeaway": "Classification decision layer."
+      }
+    }
+  ]
+}

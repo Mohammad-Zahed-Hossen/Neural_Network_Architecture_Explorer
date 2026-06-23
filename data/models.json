@@ -22,6 +22,8 @@
     ],
     "params": 62378344,
     "totalParameters": 62378344,
+    "trainableParameters": 62378344,
+    "nonTrainableParameters": 0,
     "top1": 57.099999999999994,
     "top1Accuracy": 0.571,
     "top5": 80.2,
@@ -31,9 +33,9 @@
     "flops": 720000000,
     "totalFLOPs": 720000000,
     "depth": 8,
-    "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
     "colorTheme": "#F59E0B",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet",
+    "docsUrl": "https://pytorch.org/hub/pytorch_vision_alexnet/",
     "description": "AlexNet is the landmark architecture that won the ImageNet 2012 competition by a massive margin, establishing GPU-accelerated CNNs as the state-of-the-art approach in computer vision."
   },
   {
@@ -41,7 +43,7 @@
     "name": "ConvNeXt",
     "fullName": "A ConvNet for the 2020s (Tiny)",
     "family": "Other",
-    "category": "Transformer",
+    "category": "Other",
     "efficiency": "balanced",
     "year": 2022,
     "paperYear": 2022,
@@ -60,8 +62,10 @@
       "Modern-CNN",
       "ImageNet"
     ],
-    "params": 28589128,
-    "totalParameters": 28589128,
+    "params": 28475064,
+    "totalParameters": 28475064,
+    "trainableParameters": 28475064,
+    "nonTrainableParameters": 0,
     "top1": 82.1,
     "top1Accuracy": 0.821,
     "top5": 95.89999999999999,
@@ -73,7 +77,7 @@
     "depth": 30,
     "paperUrl": "https://arxiv.org/abs/2201.03545",
     "colorTheme": "#10B981",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ConvNeXt",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny",
     "description": "ConvNeXt modernizes classical ResNet architectures by incorporating modern Transformer-style design decisions, such as large 7x7 depthwise convolutions, inverted bottleneck channel ratios, GELU activations, and Layer Normalization. Proves that standard CNNs can achieve accuracy and scaling trends comparable to Vision Transformers."
   },
   {
@@ -100,6 +104,8 @@
     ],
     "params": 8062504,
     "totalParameters": 8062504,
+    "trainableParameters": 7978856,
+    "nonTrainableParameters": 83648,
     "top1": 75.0,
     "top1Accuracy": 0.75,
     "top5": 92.30000000000001,
@@ -111,7 +117,7 @@
     "depth": 121,
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#8B5CF6",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/DenseNet121",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
     "description": "DenseNet121 connects every layer to all preceding layers in a feed-forward manner. This maximizes feature reuse and avoids redundant parameter mapping, allowing 121 layers to run with only 8M parameters."
   },
   {
@@ -136,8 +142,10 @@
       "Dense",
       "ImageNet"
     ],
-    "params": 14149088,
-    "totalParameters": 14149088,
+    "params": 14307880,
+    "totalParameters": 14307880,
+    "trainableParameters": 14149480,
+    "nonTrainableParameters": 158400,
     "top1": 75.6,
     "top1Accuracy": 0.756,
     "top5": 92.7,
@@ -149,7 +157,7 @@
     "depth": 169,
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#7C3AED",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/DenseNet169",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
     "description": "Deeper 169-layer variant of DenseNet. Balances accuracy improvement with computational cost through dense connections and efficient feature reuse."
   },
   {
@@ -176,6 +184,8 @@
     ],
     "params": 20242984,
     "totalParameters": 20242984,
+    "trainableParameters": 20013928,
+    "nonTrainableParameters": 229056,
     "top1": 76.9,
     "top1Accuracy": 0.769,
     "top5": 93.5,
@@ -187,7 +197,7 @@
     "depth": 201,
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#6D28D9",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/DenseNet201",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
     "description": "The largest DenseNet variant with 201 layers. Achieves excellent accuracy through dense feature reuse while maintaining parameter efficiency compared to older architectures."
   },
   {
@@ -213,6 +223,8 @@
     ],
     "params": 5330564,
     "totalParameters": 5330564,
+    "trainableParameters": 5288548,
+    "nonTrainableParameters": 42016,
     "top1": 77.3,
     "top1Accuracy": 0.773,
     "top5": 93.5,
@@ -224,7 +236,7 @@
     "depth": 84,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB0",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks scaled using compound scaling values."
   },
   {
@@ -248,8 +260,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 7794184,
-    "totalParameters": 7794184,
+    "params": 7856232,
+    "totalParameters": 7856232,
+    "trainableParameters": 7794184,
+    "nonTrainableParameters": 62048,
     "top1": 79.10000000000001,
     "top1Accuracy": 0.791,
     "top5": 94.39999999999999,
@@ -261,7 +275,7 @@
     "depth": 106,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB1",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB1",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B1) scaled using compound scaling values."
   },
   {
@@ -285,8 +299,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 9109994,
-    "totalParameters": 9109994,
+    "params": 9177562,
+    "totalParameters": 9177562,
+    "trainableParameters": 9109994,
+    "nonTrainableParameters": 67568,
     "top1": 80.2,
     "top1Accuracy": 0.802,
     "top5": 95.0,
@@ -298,7 +314,7 @@
     "depth": 115,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB2",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B2) scaled using compound scaling values."
   },
   {
@@ -322,8 +338,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 12233232,
-    "totalParameters": 12233232,
+    "params": 12320528,
+    "totalParameters": 12320528,
+    "trainableParameters": 12233232,
+    "nonTrainableParameters": 87296,
     "top1": 81.3,
     "top1Accuracy": 0.813,
     "top5": 95.6,
@@ -335,7 +353,7 @@
     "depth": 154,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB3",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB3",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B3) scaled using compound scaling values."
   },
   {
@@ -359,8 +377,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 19341616,
-    "totalParameters": 19341616,
+    "params": 19466816,
+    "totalParameters": 19466816,
+    "trainableParameters": 19341616,
+    "nonTrainableParameters": 125200,
     "top1": 83.0,
     "top1Accuracy": 0.83,
     "top5": 96.0,
@@ -372,7 +392,7 @@
     "depth": 214,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB4",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB4",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B4) scaled using compound scaling values."
   },
   {
@@ -396,8 +416,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 30389784,
-    "totalParameters": 30389784,
+    "params": 30562520,
+    "totalParameters": 30562520,
+    "trainableParameters": 30389784,
+    "nonTrainableParameters": 172736,
     "top1": 83.7,
     "top1Accuracy": 0.837,
     "top5": 96.3,
@@ -409,7 +431,7 @@
     "depth": 456,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB5",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB5",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B5) scaled using compound scaling values."
   },
   {
@@ -433,8 +455,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 43040704,
-    "totalParameters": 43040704,
+    "params": 43265136,
+    "totalParameters": 43265136,
+    "trainableParameters": 43040704,
+    "nonTrainableParameters": 224432,
     "top1": 84.2,
     "top1Accuracy": 0.842,
     "top5": 96.8,
@@ -446,7 +470,7 @@
     "depth": 550,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB6",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB6",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B6) scaled using compound scaling values."
   },
   {
@@ -470,8 +494,10 @@
       "Compound-Scaling",
       "ImageNet"
     ],
-    "params": 66658687,
-    "totalParameters": 66658687,
+    "params": 66658680,
+    "totalParameters": 66658680,
+    "trainableParameters": 66347960,
+    "nonTrainableParameters": 310720,
     "top1": 84.39999999999999,
     "top1Accuracy": 0.844,
     "top5": 97.0,
@@ -483,7 +509,7 @@
     "depth": 813,
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/EfficientNetB7",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB7",
     "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks (B7) scaled using compound scaling values."
   },
   {
@@ -511,6 +537,8 @@
     ],
     "params": 55873736,
     "totalParameters": 55873736,
+    "trainableParameters": 55871080,
+    "nonTrainableParameters": 2656,
     "top1": 80.30000000000001,
     "top1Accuracy": 0.803,
     "top5": 95.3,
@@ -522,7 +550,7 @@
     "depth": 164,
     "paperUrl": "https://arxiv.org/abs/1602.07261",
     "colorTheme": "#D97706",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionResNetV2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_resnet_v2/InceptionResNetV2",
     "description": "InceptionResNetV2 merges parallel multi-branch Inception blocks with ResNet residual sum operations, optimizing training stability and visual extraction capabilities."
   },
   {
@@ -548,8 +576,10 @@
       "Multi-branch",
       "ImageNet"
     ],
-    "params": 23834568,
-    "totalParameters": 23834568,
+    "params": 23851784,
+    "totalParameters": 23851784,
+    "trainableParameters": 23848072,
+    "nonTrainableParameters": 3712,
     "top1": 77.9,
     "top1Accuracy": 0.779,
     "top5": 93.7,
@@ -561,7 +591,7 @@
     "depth": 48,
     "paperUrl": "https://arxiv.org/abs/1512.00567",
     "colorTheme": "#F59E0B",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3",
     "description": "InceptionV3 is a multi-branch convolutional neural network utilizing factorized and parallel convolution blocks to process visual features at multiple spatial receptive fields simultaneously."
   },
   {
@@ -588,6 +618,8 @@
     ],
     "params": 61706,
     "totalParameters": 61706,
+    "trainableParameters": 61706,
+    "nonTrainableParameters": 0,
     "top1": 99.2,
     "top1Accuracy": 0.992,
     "top5": 99.8,
@@ -597,9 +629,9 @@
     "flops": 340000,
     "totalFLOPs": 340000,
     "depth": 5,
-    "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
     "colorTheme": "#84CC16",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/LeNet5",
+    "docsUrl": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
     "description": "LeNet-5 is the pioneering convolutional neural network that established standard weight sharing, local receptive fields, and subsampling structures to read handwritten digits."
   },
   {
@@ -607,7 +639,7 @@
     "name": "MaxViT",
     "fullName": "MaxViT: Multi-Axis Vision Transformer (Tiny)",
     "family": "Other",
-    "category": "Transformer",
+    "category": "Other",
     "efficiency": "balanced",
     "year": 2022,
     "paperYear": 2022,
@@ -628,8 +660,10 @@
       "Hybrid",
       "ImageNet"
     ],
-    "params": 30919420,
-    "totalParameters": 30919420,
+    "params": 30552616,
+    "totalParameters": 30552616,
+    "trainableParameters": 30552616,
+    "nonTrainableParameters": 0,
     "top1": 83.6,
     "top1Accuracy": 0.836,
     "top5": 96.6,
@@ -641,7 +675,7 @@
     "depth": 32,
     "paperUrl": "https://arxiv.org/abs/2204.01697",
     "colorTheme": "#A855F7",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MaxViT",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
     "description": "MaxViT (Multi-Axis Vision Transformer) is a hybrid backbone combining CNN MBConv blocks with two attention mechanisms: Block Attention (self-attention inside local windows) and Grid Attention (self-attention across a sparse dilated grid). This dual-attention approach achieves global interactions in linear time relative to image size."
   },
   {
@@ -673,6 +707,8 @@
     ],
     "params": 4253864,
     "totalParameters": 4253864,
+    "trainableParameters": 4231976,
+    "nonTrainableParameters": 21888,
     "top1": 70.39999999999999,
     "top1Accuracy": 0.704,
     "top5": 89.5,
@@ -684,7 +720,7 @@
     "depth": 28,
     "paperUrl": "https://arxiv.org/abs/1704.04861",
     "colorTheme": "#0EA5E9",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNet",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet",
     "description": "Introduces depthwise separable convolutions to create lightweight models. Designed for mobile and embedded vision applications with minimal computational overhead."
   },
   {
@@ -712,6 +748,8 @@
     ],
     "params": 3538984,
     "totalParameters": 3538984,
+    "trainableParameters": 3504872,
+    "nonTrainableParameters": 34112,
     "top1": 71.8,
     "top1Accuracy": 0.718,
     "top5": 91.0,
@@ -723,7 +761,7 @@
     "depth": 53,
     "paperUrl": "https://arxiv.org/abs/1801.04381",
     "colorTheme": "#0EA5E9",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2",
     "description": "MobileNetV2 is a highly efficient CNN optimized for mobile applications. It introduces inverted residual blocks with linear bottlenecks, leveraging depthwise-separable convolutions to cut calculation weights by over 90% while preserving accuracy."
   },
   {
@@ -756,8 +794,10 @@
       "NAS",
       "ImageNet"
     ],
-    "params": 5422104,
-    "totalParameters": 5422104,
+    "params": 5507432,
+    "totalParameters": 5507432,
+    "trainableParameters": 5483032,
+    "nonTrainableParameters": 24400,
     "top1": 75.4,
     "top1Accuracy": 0.754,
     "top5": 92.30000000000001,
@@ -767,9 +807,9 @@
     "flops": 219000000,
     "totalFLOPs": 219000000,
     "depth": 109,
-    "paperUrl": "https://arxiv.org/abs/1905.02175",
+    "paperUrl": "https://arxiv.org/abs/1905.02244",
     "colorTheme": "#00D9FF",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
     "description": "Larger MobileNetV3 variant optimized for better accuracy. Uses hardware-aware search and squeeze-and-excitation blocks for improved performance."
   },
   {
@@ -803,8 +843,10 @@
       "NAS",
       "ImageNet"
     ],
-    "params": 2535592,
-    "totalParameters": 2535592,
+    "params": 2554968,
+    "totalParameters": 2554968,
+    "trainableParameters": 2542856,
+    "nonTrainableParameters": 12112,
     "top1": 67.10000000000001,
     "top1Accuracy": 0.671,
     "top5": 87.5,
@@ -814,9 +856,9 @@
     "flops": 65000000,
     "totalFLOPs": 65000000,
     "depth": 66,
-    "paperUrl": "https://arxiv.org/abs/1905.02175",
+    "paperUrl": "https://arxiv.org/abs/1905.02244",
     "colorTheme": "#0891B2",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
     "description": "Ultra-lightweight MobileNet variant found through neural architecture search. Ideal for extreme mobile constraints with very small parameter count."
   },
   {
@@ -843,6 +885,8 @@
     ],
     "params": 88949818,
     "totalParameters": 88949818,
+    "trainableParameters": 88949626,
+    "nonTrainableParameters": 192,
     "top1": 82.5,
     "top1Accuracy": 0.825,
     "top5": 96.0,
@@ -854,7 +898,7 @@
     "depth": 389,
     "paperUrl": "https://arxiv.org/abs/1707.07012",
     "colorTheme": "#0891B2",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/NASNetLarge",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge",
     "description": "Large architecture discovered through neural architecture search. Achieves state-of-the-art accuracy through automated design rather than manual engineering."
   },
   {
@@ -882,6 +926,8 @@
     ],
     "params": 5326564,
     "totalParameters": 5326564,
+    "trainableParameters": 5326500,
+    "nonTrainableParameters": 64,
     "top1": 74.4,
     "top1Accuracy": 0.744,
     "top5": 91.9,
@@ -893,7 +939,7 @@
     "depth": 81,
     "paperUrl": "https://arxiv.org/abs/1707.07012",
     "colorTheme": "#06B6D4",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/NASNetMobile",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile",
     "description": "Mobile-optimized neural architecture found through automated architecture search. Achieves good accuracy-to-efficiency ratio for mobile deployment."
   },
   {
@@ -918,8 +964,10 @@
       "Residual",
       "ImageNet"
     ],
-    "params": 44707176,
-    "totalParameters": 44707176,
+    "params": 44654504,
+    "totalParameters": 44654504,
+    "trainableParameters": 44549160,
+    "nonTrainableParameters": 105344,
     "top1": 76.4,
     "top1Accuracy": 0.764,
     "top5": 93.2,
@@ -931,7 +979,7 @@
     "depth": 101,
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#059669",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet101",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
     "description": "101-layer residual network with even deeper architecture. Stacks bottleneck blocks for computational efficiency while maintaining representational power."
   },
   {
@@ -958,6 +1006,8 @@
     ],
     "params": 44675560,
     "totalParameters": 44675560,
+    "trainableParameters": 44577896,
+    "nonTrainableParameters": 97664,
     "top1": 77.3,
     "top1Accuracy": 0.773,
     "top5": 93.60000000000001,
@@ -969,7 +1019,7 @@
     "depth": 101,
     "paperUrl": "https://arxiv.org/abs/1603.05027",
     "colorTheme": "#22C55E",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet101V2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
     "description": "101-layer ResNet V2 with pre-activation structure. Outperforms original ResNet101 and provides a good balance between accuracy and computational cost."
   },
   {
@@ -994,8 +1044,10 @@
       "Residual",
       "ImageNet"
     ],
-    "params": 60192808,
-    "totalParameters": 60192808,
+    "params": 60344232,
+    "totalParameters": 60344232,
+    "trainableParameters": 60192808,
+    "nonTrainableParameters": 151424,
     "top1": 77.0,
     "top1Accuracy": 0.77,
     "top5": 93.8,
@@ -1007,7 +1059,7 @@
     "depth": 152,
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#047857",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet152",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
     "description": "The deepest variant in the original ResNet family with 152 layers. Achieves best accuracy but requires more computational resources. Demonstrates that deeper networks benefit from skip connections."
   },
   {
@@ -1032,8 +1084,10 @@
       "Residual",
       "ImageNet"
     ],
-    "params": 60192808,
-    "totalParameters": 60192808,
+    "params": 60380648,
+    "totalParameters": 60380648,
+    "trainableParameters": 60236904,
+    "nonTrainableParameters": 143744,
     "top1": 78.0,
     "top1Accuracy": 0.78,
     "top5": 94.0,
@@ -1045,7 +1099,7 @@
     "depth": 152,
     "paperUrl": "https://arxiv.org/abs/1603.05027",
     "colorTheme": "#4ADE80",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet152V2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
     "description": "The deepest ResNet V2 variant. Achieves state-of-the-art accuracy at the time with improved gradient flow and training dynamics."
   },
   {
@@ -1070,8 +1124,10 @@
       "Residual",
       "ImageNet"
     ],
-    "params": 25636712,
-    "totalParameters": 25636712,
+    "params": 25610152,
+    "totalParameters": 25610152,
+    "trainableParameters": 25557032,
+    "nonTrainableParameters": 53120,
     "top1": 74.9,
     "top1Accuracy": 0.749,
     "top5": 92.10000000000001,
@@ -1083,7 +1139,7 @@
     "depth": 50,
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#10B981",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet50",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50",
     "description": "ResNet50 is a seminal convolutional neural network utilizing residual skip connections to facilitate backpropagation in deep architectures. This addresses the vanishing gradient problem, allowing stable weight updates across 50 layers."
   },
   {
@@ -1110,6 +1166,8 @@
     ],
     "params": 25613800,
     "totalParameters": 25613800,
+    "trainableParameters": 25568360,
+    "nonTrainableParameters": 45440,
     "top1": 76.0,
     "top1Accuracy": 0.76,
     "top5": 93.0,
@@ -1121,7 +1179,7 @@
     "depth": 50,
     "paperUrl": "https://arxiv.org/abs/1603.05027",
     "colorTheme": "#16A34A",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet50V2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
     "description": "Improved ResNet architecture with pre-activation, improving gradient flow and training stability. Better performance than original ResNet50 with similar parameters."
   },
   {
@@ -1129,7 +1187,7 @@
     "name": "Swin Transformer",
     "fullName": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows (Tiny)",
     "family": "Other",
-    "category": "Transformer",
+    "category": "Other",
     "efficiency": "balanced",
     "year": 2021,
     "paperYear": 2021,
@@ -1150,8 +1208,10 @@
       "Hierarchical",
       "ImageNet"
     ],
-    "params": 28286590,
-    "totalParameters": 28286590,
+    "params": 28474872,
+    "totalParameters": 28474872,
+    "trainableParameters": 28474872,
+    "nonTrainableParameters": 0,
     "top1": 81.3,
     "top1Accuracy": 0.813,
     "top5": 95.5,
@@ -1163,7 +1223,7 @@
     "depth": 36,
     "paperUrl": "https://arxiv.org/abs/2103.14030",
     "colorTheme": "#F43F5E",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/SwinTransformer",
+    "docsUrl": "https://huggingface.co/docs/transformers/model_doc/swin",
     "description": "Swin Transformer is a hierarchical Vision Transformer that computes self-attention within non-overlapping local windows. It introduces shifted windows between layers to allow communication across window boundaries. Resolves the quadratic computational complexity of ViT, enabling linear scaling."
   },
   {
@@ -1188,6 +1248,8 @@
     ],
     "params": 138357544,
     "totalParameters": 138357544,
+    "trainableParameters": 138357544,
+    "nonTrainableParameters": 0,
     "top1": 71.3,
     "top1Accuracy": 0.713,
     "top5": 90.10000000000001,
@@ -1199,7 +1261,7 @@
     "depth": 16,
     "paperUrl": "https://arxiv.org/abs/1409.1556",
     "colorTheme": "#3B82F6",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG16",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16",
     "description": "VGG16 is a classic CNN architecture characterized by its homogeneous stacks of 3x3 convolutions and 2x2 max pooling. Its simple, linear design demonstrates how stacking small convolutions can build powerful deep visual descriptors."
   },
   {
@@ -1224,6 +1286,8 @@
     ],
     "params": 143667240,
     "totalParameters": 143667240,
+    "trainableParameters": 143667240,
+    "nonTrainableParameters": 0,
     "top1": 71.5,
     "top1Accuracy": 0.715,
     "top5": 90.3,
@@ -1235,7 +1299,7 @@
     "depth": 19,
     "paperUrl": "https://arxiv.org/abs/1409.1556",
     "colorTheme": "#2563EB",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG19",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg19",
     "description": "VGG19 is the 19-layer variant of the classic VGG series, adding extra convolutional layers to Blocks 3, 4, and 5. This deep stack of small 3x3 filters further expands the network's receptive fields and feature representation capabilities."
   },
   {
@@ -1243,7 +1307,7 @@
     "name": "ViT",
     "fullName": "An Image is Worth 16x16 Words: Vision Transformer (Base/16)",
     "family": "Other",
-    "category": "Transformer",
+    "category": "Other",
     "efficiency": "balanced",
     "year": 2020,
     "paperYear": 2020,
@@ -1268,8 +1332,10 @@
       "Sequence",
       "ImageNet"
     ],
-    "params": 86567656,
-    "totalParameters": 86567656,
+    "params": 86566120,
+    "totalParameters": 86566120,
+    "trainableParameters": 86566120,
+    "nonTrainableParameters": 0,
     "top1": 77.9,
     "top1Accuracy": 0.779,
     "top5": 94.3,
@@ -1281,7 +1347,7 @@
     "depth": 12,
     "paperUrl": "https://arxiv.org/abs/2010.11929",
     "colorTheme": "#D946EF",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/ViT",
+    "docsUrl": "https://huggingface.co/docs/transformers/model_doc/vit",
     "description": "ViT (Vision Transformer) applies a pure standard Transformer encoder directly to image patches. It splits the image into a sequence of flat patches, projects them linearly, and updates global relationships using self-attention. Bypasses CNN convolution operations entirely."
   },
   {
@@ -1305,6 +1371,8 @@
     ],
     "params": 22910480,
     "totalParameters": 22910480,
+    "trainableParameters": 22868672,
+    "nonTrainableParameters": 41808,
     "top1": 79.0,
     "top1Accuracy": 0.79,
     "top5": 94.5,
@@ -1316,7 +1384,7 @@
     "depth": 71,
     "paperUrl": "https://arxiv.org/abs/1610.02357",
     "colorTheme": "#EC4899",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/Xception",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception",
     "description": "Xception replaces standard Inception modules with Depthwise Separable Convolutions, significantly reducing parameters and accelerating feature mapping capabilities."
   }
 ]

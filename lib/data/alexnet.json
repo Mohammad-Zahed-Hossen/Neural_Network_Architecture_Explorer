@@ -35,22 +35,38 @@
         "type": "input",
         "name": "Input Image",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "outputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "config": {
-          "shape": [224, 224, 3]
+          "shape": [
+            224,
+            224,
+            3
+          ]
         },
         "parameters": {
           "total": 0,
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Input layer for RGB ImageNet images.",
@@ -69,17 +85,33 @@
         "type": "conv2d",
         "name": "Conv 1",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3"
         },
         "outputShape": {
-          "dimensions": [null, 55, 55, 96],
+          "dimensions": [
+            null,
+            55,
+            55,
+            96
+          ],
           "description": "55x55x96"
         },
         "config": {
           "filters": 96,
-          "kernelSize": [11, 11],
-          "strides": [4, 4],
+          "kernelSize": [
+            11,
+            11
+          ],
+          "strides": [
+            4,
+            4
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "relu"
@@ -88,11 +120,11 @@
           "total": 34944,
           "weights": 34848,
           "biases": 96,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "11 × 11 × 3 × 96",
+              "expression": "11 \u00d7 11 \u00d7 3 \u00d7 96",
               "result": 34848,
               "explanation": "96 filters of size 11x11 operating over 3 color input channels."
             },
@@ -102,7 +134,9 @@
               "result": 96,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 34944,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Extracts coarse edge and color representations.",
@@ -121,16 +155,32 @@
         "type": "max_pooling2d",
         "name": "Max Pool 1",
         "inputShape": {
-          "dimensions": [null, 55, 55, 96],
+          "dimensions": [
+            null,
+            55,
+            55,
+            96
+          ],
           "description": "55x55x96"
         },
         "outputShape": {
-          "dimensions": [null, 27, 27, 96],
+          "dimensions": [
+            null,
+            27,
+            27,
+            96
+          ],
           "description": "27x27x96"
         },
         "config": {
-          "poolSize": [3, 3],
-          "strides": [2, 2],
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid"
         },
         "parameters": {
@@ -138,7 +188,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Overlapping max pooling by 2x.",
@@ -157,17 +209,33 @@
         "type": "conv2d",
         "name": "Conv 2",
         "inputShape": {
-          "dimensions": [null, 27, 27, 96],
+          "dimensions": [
+            null,
+            27,
+            27,
+            96
+          ],
           "description": "27x27x96"
         },
         "outputShape": {
-          "dimensions": [null, 27, 27, 256],
+          "dimensions": [
+            null,
+            27,
+            27,
+            256
+          ],
           "description": "27x27x256"
         },
         "config": {
           "filters": 256,
-          "kernelSize": [5, 5],
-          "strides": [1, 1],
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "same",
           "useBias": true,
           "activation": "relu"
@@ -176,11 +244,11 @@
           "total": 614656,
           "weights": 614400,
           "biases": 256,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "5 × 5 × 96 × 256",
+              "expression": "5 \u00d7 5 \u00d7 96 \u00d7 256",
               "result": 614400,
               "explanation": "256 filters of size 5x5 operating over 96 input channels."
             },
@@ -190,7 +258,9 @@
               "result": 256,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 614656,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Extracts 256 intermediate feature maps.",
@@ -209,16 +279,32 @@
         "type": "max_pooling2d",
         "name": "Max Pool 2",
         "inputShape": {
-          "dimensions": [null, 27, 27, 256],
+          "dimensions": [
+            null,
+            27,
+            27,
+            256
+          ],
           "description": "27x27x256"
         },
         "outputShape": {
-          "dimensions": [null, 13, 13, 256],
+          "dimensions": [
+            null,
+            13,
+            13,
+            256
+          ],
           "description": "13x13x256"
         },
         "config": {
-          "poolSize": [3, 3],
-          "strides": [2, 2],
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid"
         },
         "parameters": {
@@ -226,7 +312,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Overlapping max pooling to 13x13.",
@@ -245,17 +333,33 @@
         "type": "conv2d",
         "name": "Conv 3",
         "inputShape": {
-          "dimensions": [null, 13, 13, 256],
+          "dimensions": [
+            null,
+            13,
+            13,
+            256
+          ],
           "description": "13x13x256"
         },
         "outputShape": {
-          "dimensions": [null, 13, 13, 384],
+          "dimensions": [
+            null,
+            13,
+            13,
+            384
+          ],
           "description": "13x13x384"
         },
         "config": {
           "filters": 384,
-          "kernelSize": [3, 3],
-          "strides": [1, 1],
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "same",
           "useBias": true,
           "activation": "relu"
@@ -264,11 +368,11 @@
           "total": 885120,
           "weights": 884736,
           "biases": 384,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "3 × 3 × 256 × 384",
+              "expression": "3 \u00d7 3 \u00d7 256 \u00d7 384",
               "result": 884736,
               "explanation": "384 filters of size 3x3 operating over 256 input channels."
             },
@@ -278,7 +382,9 @@
               "result": 384,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 885120,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "First of three stacked convolutional layers.",
@@ -297,17 +403,33 @@
         "type": "conv2d",
         "name": "Conv 4",
         "inputShape": {
-          "dimensions": [null, 13, 13, 384],
+          "dimensions": [
+            null,
+            13,
+            13,
+            384
+          ],
           "description": "13x13x384"
         },
         "outputShape": {
-          "dimensions": [null, 13, 13, 384],
+          "dimensions": [
+            null,
+            13,
+            13,
+            384
+          ],
           "description": "13x13x384"
         },
         "config": {
           "filters": 384,
-          "kernelSize": [3, 3],
-          "strides": [1, 1],
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "same",
           "useBias": true,
           "activation": "relu"
@@ -316,11 +438,11 @@
           "total": 1327488,
           "weights": 1327104,
           "biases": 384,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "3 × 3 × 384 × 384",
+              "expression": "3 \u00d7 3 \u00d7 384 \u00d7 384",
               "result": 1327104,
               "explanation": "384 filters of size 3x3 operating over 384 input channels."
             },
@@ -330,7 +452,9 @@
               "result": 384,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 1327488,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Second stacked 3x3 convolution layer.",
@@ -349,17 +473,33 @@
         "type": "conv2d",
         "name": "Conv 5",
         "inputShape": {
-          "dimensions": [null, 13, 13, 384],
+          "dimensions": [
+            null,
+            13,
+            13,
+            384
+          ],
           "description": "13x13x384"
         },
         "outputShape": {
-          "dimensions": [null, 13, 13, 256],
+          "dimensions": [
+            null,
+            13,
+            13,
+            256
+          ],
           "description": "13x13x256"
         },
         "config": {
           "filters": 256,
-          "kernelSize": [3, 3],
-          "strides": [1, 1],
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "same",
           "useBias": true,
           "activation": "relu"
@@ -368,11 +508,11 @@
           "total": 884992,
           "weights": 884736,
           "biases": 256,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "3 × 3 × 384 × 256",
+              "expression": "3 \u00d7 3 \u00d7 384 \u00d7 256",
               "result": 884736,
               "explanation": "256 filters of size 3x3 operating over 384 input channels."
             },
@@ -382,7 +522,9 @@
               "result": 256,
               "explanation": "One trainable bias per filter."
             }
-          ]
+          ],
+          "trainableParameters": 884992,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Third stacked 3x3 convolution layer.",
@@ -401,16 +543,32 @@
         "type": "max_pooling2d",
         "name": "Max Pool 3",
         "inputShape": {
-          "dimensions": [null, 13, 13, 256],
+          "dimensions": [
+            null,
+            13,
+            13,
+            256
+          ],
           "description": "13x13x256"
         },
         "outputShape": {
-          "dimensions": [null, 6, 6, 256],
+          "dimensions": [
+            null,
+            6,
+            6,
+            256
+          ],
           "description": "6x6x256"
         },
         "config": {
-          "poolSize": [3, 3],
-          "strides": [2, 2],
+          "poolSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid"
         },
         "parameters": {
@@ -418,7 +576,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Final pooling downsampling to 6x6.",
@@ -437,11 +597,19 @@
         "type": "flatten",
         "name": "Flatten",
         "inputShape": {
-          "dimensions": [null, 6, 6, 256],
+          "dimensions": [
+            null,
+            6,
+            6,
+            256
+          ],
           "description": "6x6x256"
         },
         "outputShape": {
-          "dimensions": [null, 9216],
+          "dimensions": [
+            null,
+            9216
+          ],
           "description": "9216-d Vector"
         },
         "config": {},
@@ -450,7 +618,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Flattens 6x6x256 maps to a 9216 vector.",
@@ -469,11 +639,17 @@
         "type": "dense",
         "name": "Fully Connected 1",
         "inputShape": {
-          "dimensions": [null, 9216],
+          "dimensions": [
+            null,
+            9216
+          ],
           "description": "9216"
         },
         "outputShape": {
-          "dimensions": [null, 4096],
+          "dimensions": [
+            null,
+            4096
+          ],
           "description": "4096"
         },
         "config": {
@@ -485,11 +661,11 @@
           "total": 37752832,
           "weights": 37748736,
           "biases": 4096,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "9216 × 4096",
+              "expression": "9216 \u00d7 4096",
               "result": 37748736,
               "explanation": "Weight matrix connecting 9216 input features to 4096 units."
             },
@@ -499,7 +675,9 @@
               "result": 4096,
               "explanation": "One trainable bias per unit."
             }
-          ]
+          ],
+          "trainableParameters": 37752832,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "First massive dense layer.",
@@ -518,11 +696,17 @@
         "type": "dense",
         "name": "Fully Connected 2",
         "inputShape": {
-          "dimensions": [null, 4096],
+          "dimensions": [
+            null,
+            4096
+          ],
           "description": "4096"
         },
         "outputShape": {
-          "dimensions": [null, 4096],
+          "dimensions": [
+            null,
+            4096
+          ],
           "description": "4096"
         },
         "config": {
@@ -534,11 +718,11 @@
           "total": 16781312,
           "weights": 16777216,
           "biases": 4096,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "4096 × 4096",
+              "expression": "4096 \u00d7 4096",
               "result": 16777216,
               "explanation": "Connections from 4096 features to 4096 units."
             },
@@ -548,7 +732,9 @@
               "result": 4096,
               "explanation": "One trainable bias per unit."
             }
-          ]
+          ],
+          "trainableParameters": 16781312,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Second dense layer.",
@@ -567,11 +753,17 @@
         "type": "output",
         "name": "Output Classes",
         "inputShape": {
-          "dimensions": [null, 4096],
+          "dimensions": [
+            null,
+            4096
+          ],
           "description": "4096"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 ImageNet classes"
         },
         "config": {
@@ -583,11 +775,11 @@
           "total": 4097000,
           "weights": 4096000,
           "biases": 1000,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "4096 × 1000",
+              "expression": "4096 \u00d7 1000",
               "result": 4096000,
               "explanation": "Connections from 4096 features to 1000 final classes."
             },
@@ -597,7 +789,9 @@
               "result": 1000,
               "explanation": "One bias per class."
             }
-          ]
+          ],
+          "trainableParameters": 4097000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Softmax layer predicting 1000 ImageNet categories.",
@@ -725,5 +919,7 @@
         "color": "#F59E0B"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 62378344
 }

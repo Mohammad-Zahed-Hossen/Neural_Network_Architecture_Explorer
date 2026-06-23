@@ -1,0 +1,624 @@
+{
+  "modelName": "MaxViT",
+  "architectureFamily": "Other",
+  "publicationYear": 2022,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "totalParameters": 30552616,
+  "trainableParameters": 30552616,
+  "FLOPs": 5600000000,
+  "MACs": 2800000000,
+  "top1Accuracy": 0.836,
+  "top5Accuracy": 0.966,
+  "layerCount": 11,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "Input Image",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "stem_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "RGB image inputs for the MaxViT network.",
+        "detailed": "Accepts standard 224x224 pixels RGB color images. Sourced from the tf.keras.applications.MaxViT API.",
+        "keyTakeaway": "Processes standard color images."
+      }
+    },
+    {
+      "layerId": "stem_conv1",
+      "layerName": "Stem Conv 1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112x112x64"
+      },
+      "parameters": {
+        "total": 1728,
+        "weights": 1728,
+        "biases": 0,
+        "formula": "kernel_h \u00d7 kernel_w \u00d7 in_channels \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Conv Weights",
+            "expression": "3 \u00d7 3 \u00d7 3 \u00d7 64",
+            "result": 1728,
+            "explanation": "Standard 3x3 stride-2 conv downsampling the image to half size (112x112)."
+          }
+        ],
+        "trainableParameters": 1728,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "stem_conv2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "First stem convolution downsampling by 2x.",
+        "detailed": "Uses 3x3 conv with stride 2 to quickly reduce spatial dimensions, lowering overall compute complexity.",
+        "keyTakeaway": "Quick spatial reduction keeps downstream compute loads small."
+      }
+    },
+    {
+      "layerId": "stem_conv2",
+      "layerName": "Stem Conv 2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112x112x64"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112x112x64"
+      },
+      "parameters": {
+        "total": 36864,
+        "weights": 36864,
+        "biases": 0,
+        "formula": "kernel_h \u00d7 kernel_w \u00d7 in_channels \u00d7 filters",
+        "calculationSteps": [
+          {
+            "label": "Conv Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
+            "result": 36864,
+            "explanation": "Processes features at 112x112 scale, capturing fine local structures."
+          }
+        ],
+        "trainableParameters": 36864,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": false,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "stem_conv1"
+        ],
+        "outgoing": [
+          "stage1_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Second stem convolution.",
+        "detailed": "Captures fine local edge and texture groupings before downsampling to Stage 1.",
+        "keyTakeaway": "Extracts initial low-level features."
+      }
+    },
+    {
+      "layerId": "stage1_blocks",
+      "layerName": "Stage 1 (2x MaxViT Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          112,
+          112,
+          64
+        ],
+        "description": "112x112x64"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56x56x64"
+      },
+      "parameters": {
+        "total": 500000,
+        "weights": 498000,
+        "biases": 2000,
+        "formula": "2 \u00d7 MaxViTBlock_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 1 Weights Stack",
+            "expression": "2 \u00d7 249000",
+            "result": 498000,
+            "explanation": "Weights of MBConv, Block Attention, and Grid Attention layers across two MaxViT blocks."
+          }
+        ],
+        "trainableParameters": 500000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 2
+      },
+      "connections": {
+        "incoming": [
+          "stem_conv2"
+        ],
+        "outgoing": [
+          "stage2_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "First hybrid stage combining conv and dual attention.",
+        "detailed": "Downsamples maps to 56x56. Applies Block Attention (W-MSA inside 7x7 windows) followed by Grid Attention (G-MSA across sparse 7x7 grids). Together, they capture both local details and global relationships.",
+        "keyTakeaway": "Multi-axis attention (Block + Grid) provides global attention coverage in linear compute time."
+      }
+    },
+    {
+      "layerId": "stage2_blocks",
+      "layerName": "Stage 2 (2x MaxViT Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          56,
+          56,
+          64
+        ],
+        "description": "56x56x64"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28x28x128"
+      },
+      "parameters": {
+        "total": 2000000,
+        "weights": 1996000,
+        "biases": 4000,
+        "formula": "2 \u00d7 Stage2Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 2 weights",
+            "expression": "2 \u00d7 998000",
+            "result": 1996000,
+            "explanation": "Dual-attention and convolution parameters mapping 64 channels to 128 channels."
+          }
+        ],
+        "trainableParameters": 2000000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 2
+      },
+      "connections": {
+        "incoming": [
+          "stage1_blocks"
+        ],
+        "outgoing": [
+          "stage3_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Stage 2 at 28x28 resolution.",
+        "detailed": "Constructs multi-scale representations. The MBConv downsamples inputs, while the dual attention blocks process channel relationships at 28x28 scale.",
+        "keyTakeaway": "Constructs mid-level hierarchical features."
+      }
+    },
+    {
+      "layerId": "stage3_blocks",
+      "layerName": "Stage 3 (6x MaxViT Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          28,
+          28,
+          128
+        ],
+        "description": "28x28x128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14x14x256"
+      },
+      "parameters": {
+        "total": 14000000,
+        "weights": 13988000,
+        "biases": 12000,
+        "formula": "6 \u00d7 Stage3Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 3 Weights Stack",
+            "expression": "6 \u00d7 2331333",
+            "result": 13988000,
+            "explanation": "Parameters of 6 sequential blocks at 256 dimensions, doing deep hybrid visual extraction."
+          }
+        ],
+        "trainableParameters": 14000000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 6
+      },
+      "connections": {
+        "incoming": [
+          "stage2_blocks"
+        ],
+        "outgoing": [
+          "stage4_blocks"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Deepest extraction stage with 6 blocks.",
+        "detailed": "The core representative bottleneck stage. Combines convolution and attention, processing semantic structures at 14x14 resolution.",
+        "keyTakeaway": "Extracts complex object parts and textures, matching standard deep block structures."
+      }
+    },
+    {
+      "layerId": "stage4_blocks",
+      "layerName": "Stage 4 (2x MaxViT Blocks)",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          256
+        ],
+        "description": "14x14x256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          512
+        ],
+        "description": "7x7x512"
+      },
+      "parameters": {
+        "total": 13500000,
+        "weights": 13494000,
+        "biases": 6000,
+        "formula": "2 \u00d7 Stage4Block_Params",
+        "calculationSteps": [
+          {
+            "label": "Stage 4 weights",
+            "expression": "2 \u00d7 6747000",
+            "result": 13494000,
+            "explanation": "Parameters of the final 2 blocks operating at 512 hidden channels."
+          }
+        ],
+        "trainableParameters": 13500000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 2
+      },
+      "connections": {
+        "incoming": [
+          "stage3_blocks"
+        ],
+        "outgoing": [
+          "norm_out"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Final extraction stage at 7x7 resolution.",
+        "detailed": "Processes high-level semantic representation at final 7x7 grid size before classification.",
+        "keyTakeaway": "Processes high-level class features."
+      }
+    },
+    {
+      "layerId": "norm_out",
+      "layerName": "Output LayerNorm",
+      "layerType": "layer_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          512
+        ],
+        "description": "7x7x512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          512
+        ],
+        "description": "7x7x512"
+      },
+      "parameters": {
+        "total": 1024,
+        "weights": 512,
+        "biases": 512,
+        "formula": "2 \u00d7 channels",
+        "calculationSteps": [
+          {
+            "label": "LN parameters",
+            "expression": "2 \u00d7 512",
+            "result": 1024,
+            "explanation": "Gamma scaling and Beta bias vectors."
+          }
+        ],
+        "trainableParameters": 1024,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "connections": {
+        "incoming": [
+          "stage4_blocks"
+        ],
+        "outgoing": [
+          "avg_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Final normalization before pooling.",
+        "detailed": "Stabilizes embeddings across the 512 channel dimensions.",
+        "keyTakeaway": "Final normalization step."
+      }
+    },
+    {
+      "layerId": "avg_pool",
+      "layerName": "Global Average Pooling",
+      "layerType": "global_average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          512
+        ],
+        "description": "7x7x512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          512
+        ],
+        "description": "512-d Vector"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "norm_out"
+        ],
+        "outgoing": [
+          "head"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Collapses spatial dimensions to 1D vector.",
+        "detailed": "Averages final activations across the 7x7 grid to compile a 512-dimensional vector.",
+        "keyTakeaway": "Aggregates final visual features globally."
+      }
+    },
+    {
+      "layerId": "head",
+      "layerName": "Classification Head",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          512
+        ],
+        "description": "512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 logits"
+      },
+      "parameters": {
+        "total": 513000,
+        "weights": 512000,
+        "biases": 1000,
+        "formula": "(channels \u00d7 classes) + classes",
+        "calculationSteps": [
+          {
+            "label": "Head Weights",
+            "expression": "512 \u00d7 1000",
+            "result": 512000,
+            "explanation": "Dense mapping weights predicting class categories."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "Class logits biases."
+          }
+        ],
+        "trainableParameters": 513000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "linear",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "avg_pool"
+        ],
+        "outgoing": [
+          "output"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Dense logits prediction head.",
+        "detailed": "Linear layer predicting visual logits.",
+        "keyTakeaway": "Final category mapping."
+      }
+    },
+    {
+      "layerId": "output",
+      "layerName": "Output Logits",
+      "layerType": "output",
+      "inputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 logits"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 probabilities"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "head"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Softmax conversion mapping logits to probabilities.",
+        "detailed": "Converts visual category logits into probability distributions.",
+        "keyTakeaway": "Generates output categorical confidence levels."
+      }
+    }
+  ]
+}

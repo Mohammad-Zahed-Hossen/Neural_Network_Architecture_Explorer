@@ -108,6 +108,12 @@ export interface ParameterBreakdown {
   biases: number;
   formula: string;                    // Human-readable formula
   calculationSteps: CalculationStep[];
+  trainableParameters?: number;
+  nonTrainableParameters?: number;
+  gamma?: number;
+  beta?: number;
+  movingMean?: number;
+  movingVariance?: number;
 }
 
 export interface EducationalNote {

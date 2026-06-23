@@ -1,0 +1,632 @@
+[
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "app/research-map/page.tsx",
+    "category": "Research Papers",
+    "context": "Line 43: paperUrl: 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "app/research-map/page.tsx",
+    "category": "Research Papers",
+    "context": "Line 63: paperUrl: 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf'"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "components/research-map/research-flow.tsx",
+    "category": "Research Papers",
+    "context": "Line 32: paperUrl: 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "components/research-map/research-flow.tsx",
+    "category": "Research Papers",
+    "context": "Line 52: paperUrl: 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf'"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 3: 'paper': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 8: 'paper': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 13: 'paper': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 23: 'paper': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 28: 'paper': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 53: 'paper': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 68: 'paper': 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 73: 'paper': 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02244",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 78: 'paper': 'https://arxiv.org/abs/1905.02244',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 88: 'paper': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 128: 'paper': 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 133: 'paper': 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 138: 'paper': 'https://arxiv.org/abs/1610.02357',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 143: 'paper': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 153: 'paper': 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 158: 'paper': 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 163: 'paper': 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 168: 'paper': 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 78: 'paperUrl': 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 118: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 237: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 551: 'paperUrl': 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 592: 'paperUrl': 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 676: 'paperUrl': 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 721: 'paperUrl': 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 762: 'paperUrl': 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02244",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02244',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 899: 'paperUrl': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 980: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1020: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1224: 'paperUrl': 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1262: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1348: 'paperUrl': 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1385: 'paperUrl': 'https://arxiv.org/abs/1610.02357',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 20: 'paperUrl': 'https://arxiv.org/abs/1409.1556'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 40: 'paperUrl': 'https://arxiv.org/abs/1512.03385'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 60: 'paperUrl': 'https://arxiv.org/abs/1603.05027'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 80: 'paperUrl': 'https://arxiv.org/abs/1608.06993'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 100: 'paperUrl': 'https://arxiv.org/abs/1704.04861'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 120: 'paperUrl': 'https://arxiv.org/abs/1905.02175'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 140: 'paperUrl': 'https://arxiv.org/abs/1512.00567'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 160: 'paperUrl': 'https://arxiv.org/abs/1610.02357'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 183: 'paperUrl': 'https://arxiv.org/abs/1905.11946'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 203: 'paperUrl': 'https://arxiv.org/abs/1707.07012'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 223: 'paperUrl': 'https://arxiv.org/abs/2010.11929'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 243: 'paperUrl': 'https://arxiv.org/abs/2103.14030'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 263: 'paperUrl': 'https://arxiv.org/abs/2201.03545'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 283: 'paperUrl': 'https://arxiv.org/abs/2204.01697'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "doc/ARCHITECTURE.md",
+    "category": "Research Papers",
+    "context": "Line 477: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "lib/data/alexnet.json",
+    "category": "Research Papers",
+    "context": "Line 11: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "lib/data/convnext.json",
+    "category": "Research Papers",
+    "context": "Line 14: 'paperUrl': 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/densenet121.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/densenet169.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/densenet201.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb0.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb1.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb2.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb3.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb4.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb5.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb6.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb7.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "lib/data/inceptionresnetv2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "lib/data/inceptionv3.json",
+    "category": "Research Papers",
+    "context": "Line 13: 'paperUrl': 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "lib/data/lenet.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "lib/data/maxvit.json",
+    "category": "Research Papers",
+    "context": "Line 16: 'paperUrl': 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "lib/data/mobilenet.json",
+    "category": "Research Papers",
+    "context": "Line 16: 'paperUrl': 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "lib/data/mobilenetv2.json",
+    "category": "Research Papers",
+    "context": "Line 13: 'paperUrl': 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "lib/data/mobilenetv3large.json",
+    "category": "Research Papers",
+    "context": "Line 19: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "lib/data/mobilenetv3small.json",
+    "category": "Research Papers",
+    "context": "Line 19: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 36: paperUrl: 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 78: paperUrl: 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 138: paperUrl: 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 200: paperUrl: 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 262: paperUrl: 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 282: paperUrl: 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 302: paperUrl: 'https://arxiv.org/abs/1905.02175',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 344: paperUrl: 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 364: paperUrl: 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 386: paperUrl: 'https://arxiv.org/abs/1610.02357',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 408: paperUrl: 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 570: paperUrl: 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 610: paperUrl: 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 630: paperUrl: 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 650: paperUrl: 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 670: paperUrl: 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "lib/data/nasnetlarge.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "lib/data/nasnetmobile.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/resnet101.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/resnet101v2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/resnet152.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/resnet152v2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/resnet50.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/resnet50v2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "lib/data/swin.json",
+    "category": "Research Papers",
+    "context": "Line 16: 'paperUrl': 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "lib/data/vgg16.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "lib/data/vgg19.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "lib/data/vit.json",
+    "category": "Research Papers",
+    "context": "Line 20: 'paperUrl': 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "lib/data/xception.json",
+    "category": "Research Papers",
+    "context": "Line 9: 'paperUrl': 'https://arxiv.org/abs/1610.02357',"
+  }
+]

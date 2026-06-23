@@ -70,7 +70,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Retinal layer receiving raw RGB pixel matrices.",
@@ -133,7 +135,9 @@
               "result": 864,
               "explanation": "32 convolutional filters of size 3x3 convolving over 3 RGB channels. Stride 2 downsamples output to 112x112."
             }
-          ]
+          ],
+          "trainableParameters": 864,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Standard early 3x3 convolution to downsample inputs.",
@@ -179,13 +183,25 @@
           "total": 128,
           "weights": 64,
           "biases": 64,
+          "trainableParameters": 64,
+          "nonTrainableParameters": 64,
+          "gamma": 32,
+          "beta": 32,
+          "movingMean": 32,
+          "movingVariance": 32,
           "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
-              "label": "Parameters",
-              "expression": "4 \u00d7 32",
-              "result": 128,
-              "explanation": "Moving mean/variance + trainable scale/shift parameters."
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
           ]
         },
@@ -232,7 +248,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "ReLU6 activation capping outputs to 6.",
@@ -295,7 +313,9 @@
               "result": 288,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 288,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -341,8 +361,27 @@
           "total": 128,
           "weights": 64,
           "biases": 64,
+          "trainableParameters": 64,
+          "nonTrainableParameters": 64,
+          "gamma": 32,
+          "beta": 32,
+          "movingMean": 32,
+          "movingVariance": 32,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 32",
+              "result": 64,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -387,7 +426,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -450,7 +491,9 @@
               "result": 2048,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 2048,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -496,8 +539,27 @@
           "total": 256,
           "weights": 128,
           "biases": 128,
+          "trainableParameters": 128,
+          "nonTrainableParameters": 128,
+          "gamma": 64,
+          "beta": 64,
+          "movingMean": 64,
+          "movingVariance": 64,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 64",
+              "result": 128,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 64",
+              "result": 128,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -542,7 +604,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -605,7 +669,9 @@
               "result": 576,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 576,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -651,8 +717,27 @@
           "total": 256,
           "weights": 128,
           "biases": 128,
+          "trainableParameters": 128,
+          "nonTrainableParameters": 128,
+          "gamma": 64,
+          "beta": 64,
+          "movingMean": 64,
+          "movingVariance": 64,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 64",
+              "result": 128,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 64",
+              "result": 128,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -697,7 +782,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -760,7 +847,9 @@
               "result": 8192,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 8192,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -806,8 +895,27 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -852,7 +960,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -915,7 +1025,9 @@
               "result": 1152,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -961,8 +1073,27 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -1007,7 +1138,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -1070,7 +1203,9 @@
               "result": 16384,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 16384,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -1116,8 +1251,27 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -1162,7 +1316,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -1225,7 +1381,9 @@
               "result": 1152,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 1152,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -1271,8 +1429,27 @@
           "total": 512,
           "weights": 256,
           "biases": 256,
+          "trainableParameters": 256,
+          "nonTrainableParameters": 256,
+          "gamma": 128,
+          "beta": 128,
+          "movingMean": 128,
+          "movingVariance": 128,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 128",
+              "result": 256,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -1317,7 +1494,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -1380,7 +1559,9 @@
               "result": 32768,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 32768,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -1426,8 +1607,27 @@
           "total": 1024,
           "weights": 512,
           "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -1472,7 +1672,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -1535,7 +1737,9 @@
               "result": 2304,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 2304,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -1581,8 +1785,27 @@
           "total": 1024,
           "weights": 512,
           "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -1627,7 +1850,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -1690,7 +1915,9 @@
               "result": 65536,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 65536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -1736,8 +1963,27 @@
           "total": 1024,
           "weights": 512,
           "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -1782,7 +2028,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -1845,7 +2093,9 @@
               "result": 2304,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 2304,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -1891,8 +2141,27 @@
           "total": 1024,
           "weights": 512,
           "biases": 512,
+          "trainableParameters": 512,
+          "nonTrainableParameters": 512,
+          "gamma": 256,
+          "beta": 256,
+          "movingMean": 256,
+          "movingVariance": 256,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 256",
+              "result": 512,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -1937,7 +2206,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -2000,7 +2271,9 @@
               "result": 131072,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 131072,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -2046,8 +2319,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -2092,7 +2384,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -2155,7 +2449,9 @@
               "result": 4608,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -2201,8 +2497,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -2247,7 +2562,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -2310,7 +2627,9 @@
               "result": 262144,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 262144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -2356,8 +2675,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -2402,7 +2740,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -2465,7 +2805,9 @@
               "result": 4608,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -2511,8 +2853,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -2557,7 +2918,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -2620,7 +2983,9 @@
               "result": 262144,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 262144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -2666,8 +3031,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -2712,7 +3096,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -2775,7 +3161,9 @@
               "result": 4608,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -2821,8 +3209,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -2867,7 +3274,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -2930,7 +3339,9 @@
               "result": 262144,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 262144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -2976,8 +3387,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -3022,7 +3452,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -3085,7 +3517,9 @@
               "result": 4608,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -3131,8 +3565,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -3177,7 +3630,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -3240,7 +3695,9 @@
               "result": 262144,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 262144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -3286,8 +3743,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -3332,7 +3808,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -3395,7 +3873,9 @@
               "result": 4608,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -3441,8 +3921,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -3487,7 +3986,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -3550,7 +4051,9 @@
               "result": 262144,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 262144,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -3596,8 +4099,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -3642,7 +4164,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -3705,7 +4229,9 @@
               "result": 4608,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 4608,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -3751,8 +4277,27 @@
           "total": 2048,
           "weights": 1024,
           "biases": 1024,
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 1024,
+          "gamma": 512,
+          "beta": 512,
+          "movingMean": 512,
+          "movingVariance": 512,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 512",
+              "result": 1024,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -3797,7 +4342,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -3860,7 +4407,9 @@
               "result": 524288,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 524288,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -3906,8 +4455,27 @@
           "total": 4096,
           "weights": 2048,
           "biases": 2048,
+          "trainableParameters": 2048,
+          "nonTrainableParameters": 2048,
+          "gamma": 1024,
+          "beta": 1024,
+          "movingMean": 1024,
+          "movingVariance": 1024,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1024",
+              "result": 2048,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1024",
+              "result": 2048,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -3952,7 +4520,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -4015,7 +4585,9 @@
               "result": 9216,
               "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
             }
-          ]
+          ],
+          "trainableParameters": 9216,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Depthwise convolution performing spatial filtering.",
@@ -4061,8 +4633,27 @@
           "total": 4096,
           "weights": 2048,
           "biases": 2048,
+          "trainableParameters": 2048,
+          "nonTrainableParameters": 2048,
+          "gamma": 1024,
+          "beta": 1024,
+          "movingMean": 1024,
+          "movingVariance": 1024,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1024",
+              "result": 2048,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1024",
+              "result": 2048,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes depthwise outputs.",
@@ -4107,7 +4698,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to depthwise outputs.",
@@ -4170,7 +4763,9 @@
               "result": 1048576,
               "explanation": "Combines spatial activations across channels."
             }
-          ]
+          ],
+          "trainableParameters": 1048576,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Pointwise 1x1 convolution mapping features.",
@@ -4216,8 +4811,27 @@
           "total": 4096,
           "weights": 2048,
           "biases": 2048,
+          "trainableParameters": 2048,
+          "nonTrainableParameters": 2048,
+          "gamma": 1024,
+          "beta": 1024,
+          "movingMean": 1024,
+          "movingVariance": 1024,
           "formula": "4 \u00d7 channels",
-          "calculationSteps": []
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 \u00d7 1024",
+              "result": 2048,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 \u00d7 1024",
+              "result": 2048,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
         },
         "educationalNote": {
           "summary": "Normalizes pointwise outputs.",
@@ -4262,7 +4876,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies ReLU6 activation to pointwise outputs.",
@@ -4303,7 +4919,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Global average pooling.",
@@ -4359,7 +4977,9 @@
               "result": 1000,
               "explanation": "One learnable bias parameter per output class."
             }
-          ]
+          ],
+          "trainableParameters": 1025000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Computes probabilities for the 1,000 target classes.",
@@ -5080,5 +5700,7 @@
         "color": "#8B5CF6"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 21888,
+  "trainableParameters": 4231976
 }

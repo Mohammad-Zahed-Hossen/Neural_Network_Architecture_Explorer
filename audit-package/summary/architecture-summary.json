@@ -1,0 +1,342 @@
+[
+  {
+    "modelId": "alexnet",
+    "name": "AlexNet",
+    "family": "Foundational",
+    "year": 2012,
+    "totalParameters": 62378344,
+    "totalFLOPs": 720000000,
+    "top1Accuracy": 0.571,
+    "layerCount": 13
+  },
+  {
+    "modelId": "convnext",
+    "name": "ConvNeXt",
+    "family": "Other",
+    "year": 2022,
+    "totalParameters": 28475064,
+    "totalFLOPs": 4460000000,
+    "top1Accuracy": 0.821,
+    "layerCount": 14
+  },
+  {
+    "modelId": "densenet121",
+    "name": "DenseNet121",
+    "family": "DenseNet",
+    "year": 2016,
+    "totalParameters": 8062504,
+    "totalFLOPs": 2900000000,
+    "top1Accuracy": 0.75,
+    "layerCount": 429
+  },
+  {
+    "modelId": "densenet169",
+    "name": "DenseNet169",
+    "family": "DenseNet",
+    "year": 2016,
+    "totalParameters": 14307880,
+    "totalFLOPs": 3400000000,
+    "top1Accuracy": 0.756,
+    "layerCount": 597
+  },
+  {
+    "modelId": "densenet201",
+    "name": "DenseNet201",
+    "family": "DenseNet",
+    "year": 2016,
+    "totalParameters": 20242984,
+    "totalFLOPs": 4300000000,
+    "top1Accuracy": 0.769,
+    "layerCount": 709
+  },
+  {
+    "modelId": "efficientnetb0",
+    "name": "EfficientNetB0",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 5330564,
+    "totalFLOPs": 390000000,
+    "top1Accuracy": 0.773,
+    "layerCount": 213
+  },
+  {
+    "modelId": "efficientnetb1",
+    "name": "EfficientNetB1",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 7856232,
+    "totalFLOPs": 710000000,
+    "top1Accuracy": 0.791,
+    "layerCount": 301
+  },
+  {
+    "modelId": "efficientnetb2",
+    "name": "EfficientNetB2",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 9177562,
+    "totalFLOPs": 1030000000,
+    "top1Accuracy": 0.802,
+    "layerCount": 301
+  },
+  {
+    "modelId": "efficientnetb3",
+    "name": "EfficientNetB3",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 12320528,
+    "totalFLOPs": 1860000000,
+    "top1Accuracy": 0.813,
+    "layerCount": 340
+  },
+  {
+    "modelId": "efficientnetb4",
+    "name": "EfficientNetB4",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 19466816,
+    "totalFLOPs": 4800000000,
+    "top1Accuracy": 0.83,
+    "layerCount": 418
+  },
+  {
+    "modelId": "efficientnetb5",
+    "name": "EfficientNetB5",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 30562520,
+    "totalFLOPs": 9700000000,
+    "top1Accuracy": 0.837,
+    "layerCount": 506
+  },
+  {
+    "modelId": "efficientnetb6",
+    "name": "EfficientNetB6",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 43265136,
+    "totalFLOPs": 19300000000,
+    "top1Accuracy": 0.842,
+    "layerCount": 584
+  },
+  {
+    "modelId": "efficientnetb7",
+    "name": "EfficientNetB7",
+    "family": "EfficientNet",
+    "year": 2019,
+    "totalParameters": 66658680,
+    "totalFLOPs": 37000000000,
+    "top1Accuracy": 0.844,
+    "layerCount": 711
+  },
+  {
+    "modelId": "inceptionresnetv2",
+    "name": "InceptionResNetV2",
+    "family": "Inception",
+    "year": 2016,
+    "totalParameters": 55873736,
+    "totalFLOPs": 13100000000,
+    "top1Accuracy": 0.803,
+    "layerCount": 124
+  },
+  {
+    "modelId": "inceptionv3",
+    "name": "InceptionV3",
+    "family": "Inception",
+    "year": 2015,
+    "totalParameters": 23851784,
+    "totalFLOPs": 5600000000,
+    "top1Accuracy": 0.779,
+    "layerCount": 90
+  },
+  {
+    "modelId": "lenet",
+    "name": "LeNet 5",
+    "family": "Foundational",
+    "year": 1998,
+    "totalParameters": 61706,
+    "totalFLOPs": 340000,
+    "top1Accuracy": 0.992,
+    "layerCount": 9
+  },
+  {
+    "modelId": "maxvit",
+    "name": "MaxViT",
+    "family": "Other",
+    "year": 2022,
+    "totalParameters": 30552616,
+    "totalFLOPs": 5600000000,
+    "top1Accuracy": 0.836,
+    "layerCount": 11
+  },
+  {
+    "modelId": "mobilenet",
+    "name": "MobileNet",
+    "family": "MobileNet",
+    "year": 2017,
+    "totalParameters": 4253864,
+    "totalFLOPs": 569000000,
+    "top1Accuracy": 0.704,
+    "layerCount": 84
+  },
+  {
+    "modelId": "mobilenetv2",
+    "name": "MobileNetV2",
+    "family": "MobileNet",
+    "year": 2018,
+    "totalParameters": 3538984,
+    "totalFLOPs": 300000000,
+    "top1Accuracy": 0.718,
+    "layerCount": 152
+  },
+  {
+    "modelId": "mobilenetv3large",
+    "name": "MobileNetV3 Large",
+    "family": "MobileNet",
+    "year": 2019,
+    "totalParameters": 5507432,
+    "totalFLOPs": 219000000,
+    "top1Accuracy": 0.754,
+    "layerCount": 169
+  },
+  {
+    "modelId": "mobilenetv3small",
+    "name": "MobileNetV3 Small",
+    "family": "MobileNet",
+    "year": 2019,
+    "totalParameters": 2554968,
+    "totalFLOPs": 65000000,
+    "top1Accuracy": 0.671,
+    "layerCount": 137
+  },
+  {
+    "modelId": "nasnetlarge",
+    "name": "NASNetLarge",
+    "family": "NASNet",
+    "year": 2017,
+    "totalParameters": 88949818,
+    "totalFLOPs": 24040000000,
+    "top1Accuracy": 0.825,
+    "layerCount": 66
+  },
+  {
+    "modelId": "nasnetmobile",
+    "name": "NASNetMobile",
+    "family": "NASNet",
+    "year": 2017,
+    "totalParameters": 5326564,
+    "totalFLOPs": 470000000,
+    "top1Accuracy": 0.744,
+    "layerCount": 48
+  },
+  {
+    "modelId": "resnet101",
+    "name": "ResNet101",
+    "family": "ResNet",
+    "year": 2015,
+    "totalParameters": 44654504,
+    "totalFLOPs": 7600000000,
+    "top1Accuracy": 0.764,
+    "layerCount": 346
+  },
+  {
+    "modelId": "resnet101v2",
+    "name": "ResNet101V2",
+    "family": "ResNet",
+    "year": 2016,
+    "totalParameters": 44675560,
+    "totalFLOPs": 7600000000,
+    "top1Accuracy": 0.773,
+    "layerCount": 376
+  },
+  {
+    "modelId": "resnet152",
+    "name": "ResNet152",
+    "family": "ResNet",
+    "year": 2015,
+    "totalParameters": 60344232,
+    "totalFLOPs": 11300000000,
+    "top1Accuracy": 0.77,
+    "layerCount": 516
+  },
+  {
+    "modelId": "resnet152v2",
+    "name": "ResNet152V2",
+    "family": "ResNet",
+    "year": 2016,
+    "totalParameters": 60380648,
+    "totalFLOPs": 11300000000,
+    "top1Accuracy": 0.78,
+    "layerCount": 563
+  },
+  {
+    "modelId": "resnet50",
+    "name": "ResNet50",
+    "family": "ResNet",
+    "year": 2015,
+    "totalParameters": 25610152,
+    "totalFLOPs": 4100000000,
+    "top1Accuracy": 0.749,
+    "layerCount": 176
+  },
+  {
+    "modelId": "resnet50v2",
+    "name": "ResNet50V2",
+    "family": "ResNet",
+    "year": 2016,
+    "totalParameters": 25613800,
+    "totalFLOPs": 4100000000,
+    "top1Accuracy": 0.76,
+    "layerCount": 189
+  },
+  {
+    "modelId": "swin",
+    "name": "Swin Transformer",
+    "family": "Other",
+    "year": 2021,
+    "totalParameters": 28474872,
+    "totalFLOPs": 4500000000,
+    "top1Accuracy": 0.813,
+    "layerCount": 13
+  },
+  {
+    "modelId": "vgg16",
+    "name": "VGG16",
+    "family": "VGG",
+    "year": 2014,
+    "totalParameters": 138357544,
+    "totalFLOPs": 15300000000,
+    "top1Accuracy": 0.713,
+    "layerCount": 23
+  },
+  {
+    "modelId": "vgg19",
+    "name": "VGG19",
+    "family": "VGG",
+    "year": 2014,
+    "totalParameters": 143667240,
+    "totalFLOPs": 19600000000,
+    "top1Accuracy": 0.715,
+    "layerCount": 26
+  },
+  {
+    "modelId": "vit",
+    "name": "ViT",
+    "family": "Other",
+    "year": 2020,
+    "totalParameters": 86566120,
+    "totalFLOPs": 16800000000,
+    "top1Accuracy": 0.779,
+    "layerCount": 17
+  },
+  {
+    "modelId": "xception",
+    "name": "Xception",
+    "family": "Xception",
+    "year": 2016,
+    "totalParameters": 22910480,
+    "totalFLOPs": 8400000000,
+    "top1Accuracy": 0.79,
+    "layerCount": 117
+  }
+]

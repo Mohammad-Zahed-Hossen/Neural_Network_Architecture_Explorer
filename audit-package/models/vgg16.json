@@ -1,0 +1,1623 @@
+{
+  "modelName": "VGG16",
+  "architectureFamily": "VGG",
+  "publicationYear": 2014,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "totalParameters": 138357544,
+  "trainableParameters": 138357544,
+  "FLOPs": 15300000000,
+  "MACs": 7650000000,
+  "top1Accuracy": 0.713,
+  "top5Accuracy": 0.901,
+  "layerCount": 23,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "input_1",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224\u00d7224\u00d73 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "block1_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Retinal layer receiving raw RGB pixel matrices.",
+        "detailed": "Accepts normalized three-channel RGB images of size 224x224. This spatial standardization ensures weight compatibility in subsequent fully connected layers.",
+        "whyItMatters": "Establishes spatial dimensions for the model.",
+        "keyTakeaway": "Fixed input sizes are critical to prevent spatial alignment errors."
+      }
+    },
+    {
+      "layerId": "block1_conv1",
+      "layerName": "block1_conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          3
+        ],
+        "description": "\u00d73"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 1792,
+        "weights": 1728,
+        "biases": 64,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 3 \u00d7 64",
+            "result": 1728,
+            "explanation": "64 kernels of size 3x3 convolving over 3 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "64",
+            "result": 64,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "1728 + 64",
+            "result": 1792,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 1792,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "block1_conv2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 64 filters.",
+        "detailed": "Slides 64 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block1_conv2",
+      "layerName": "block1_conv2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 36928,
+        "weights": 36864,
+        "biases": 64,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
+            "result": 36864,
+            "explanation": "64 kernels of size 3x3 convolving over 64 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "64",
+            "result": 64,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "36864 + 64",
+            "result": 36928,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 36928,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 64,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block1_conv1"
+        ],
+        "outgoing": [
+          "block1_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 64 filters.",
+        "detailed": "Slides 64 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block1_pool",
+      "layerName": "block1_pool",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "block1_conv2"
+        ],
+        "outgoing": [
+          "block2_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Halves spatial resolution while retaining peak features.",
+        "detailed": "Slides a 2x2 window with stride 2 over each feature map, outputting the maximum value in that cell. Downsamples resolution, decreasing compute while preserving dominant signals.",
+        "whyItMatters": "Introduces spatial translation invariance.",
+        "keyTakeaway": "Pooling achieves downsampling and feature invariance with zero learnable parameters."
+      }
+    },
+    {
+      "layerId": "block2_conv1",
+      "layerName": "block2_conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          64
+        ],
+        "description": "\u00d764"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 73856,
+        "weights": 73728,
+        "biases": 128,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 64 \u00d7 128",
+            "result": 73728,
+            "explanation": "128 kernels of size 3x3 convolving over 64 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "128",
+            "result": 128,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "73728 + 128",
+            "result": 73856,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 73856,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block1_pool"
+        ],
+        "outgoing": [
+          "block2_conv2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 128 filters.",
+        "detailed": "Slides 128 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block2_conv2",
+      "layerName": "block2_conv2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 147584,
+        "weights": 147456,
+        "biases": 128,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 128",
+            "result": 147456,
+            "explanation": "128 kernels of size 3x3 convolving over 128 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "128",
+            "result": 128,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "147456 + 128",
+            "result": 147584,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 147584,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 128,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block2_conv1"
+        ],
+        "outgoing": [
+          "block2_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 128 filters.",
+        "detailed": "Slides 128 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block2_pool",
+      "layerName": "block2_pool",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "block2_conv2"
+        ],
+        "outgoing": [
+          "block3_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Halves spatial resolution while retaining peak features.",
+        "detailed": "Slides a 2x2 window with stride 2 over each feature map, outputting the maximum value in that cell. Downsamples resolution, decreasing compute while preserving dominant signals.",
+        "whyItMatters": "Introduces spatial translation invariance.",
+        "keyTakeaway": "Pooling achieves downsampling and feature invariance with zero learnable parameters."
+      }
+    },
+    {
+      "layerId": "block3_conv1",
+      "layerName": "block3_conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          128
+        ],
+        "description": "\u00d7128"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "parameters": {
+        "total": 295168,
+        "weights": 294912,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 128 \u00d7 256",
+            "result": 294912,
+            "explanation": "256 kernels of size 3x3 convolving over 128 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "294912 + 256",
+            "result": 295168,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 295168,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block2_pool"
+        ],
+        "outgoing": [
+          "block3_conv2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 256 filters.",
+        "detailed": "Slides 256 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block3_conv2",
+      "layerName": "block3_conv2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "parameters": {
+        "total": 590080,
+        "weights": 589824,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "256 kernels of size 3x3 convolving over 256 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "589824 + 256",
+            "result": 590080,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 590080,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block3_conv1"
+        ],
+        "outgoing": [
+          "block3_conv3"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 256 filters.",
+        "detailed": "Slides 256 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block3_conv3",
+      "layerName": "block3_conv3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "parameters": {
+        "total": 590080,
+        "weights": 589824,
+        "biases": 256,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 256",
+            "result": 589824,
+            "explanation": "256 kernels of size 3x3 convolving over 256 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "256",
+            "result": 256,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "589824 + 256",
+            "result": 590080,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 590080,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 256,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block3_conv2"
+        ],
+        "outgoing": [
+          "block3_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 256 filters.",
+        "detailed": "Slides 256 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block3_pool",
+      "layerName": "block3_pool",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "block3_conv3"
+        ],
+        "outgoing": [
+          "block4_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Halves spatial resolution while retaining peak features.",
+        "detailed": "Slides a 2x2 window with stride 2 over each feature map, outputting the maximum value in that cell. Downsamples resolution, decreasing compute while preserving dominant signals.",
+        "whyItMatters": "Introduces spatial translation invariance.",
+        "keyTakeaway": "Pooling achieves downsampling and feature invariance with zero learnable parameters."
+      }
+    },
+    {
+      "layerId": "block4_conv1",
+      "layerName": "block4_conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          256
+        ],
+        "description": "\u00d7256"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 1180160,
+        "weights": 1179648,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 256 \u00d7 512",
+            "result": 1179648,
+            "explanation": "512 kernels of size 3x3 convolving over 256 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "1179648 + 512",
+            "result": 1180160,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 1180160,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block3_pool"
+        ],
+        "outgoing": [
+          "block4_conv2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 512 filters.",
+        "detailed": "Slides 512 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block4_conv2",
+      "layerName": "block4_conv2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 2359808,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block4_conv1"
+        ],
+        "outgoing": [
+          "block4_conv3"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 512 filters.",
+        "detailed": "Slides 512 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block4_conv3",
+      "layerName": "block4_conv3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 2359808,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block4_conv2"
+        ],
+        "outgoing": [
+          "block4_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 512 filters.",
+        "detailed": "Slides 512 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block4_pool",
+      "layerName": "block4_pool",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "block4_conv3"
+        ],
+        "outgoing": [
+          "block5_conv1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Halves spatial resolution while retaining peak features.",
+        "detailed": "Slides a 2x2 window with stride 2 over each feature map, outputting the maximum value in that cell. Downsamples resolution, decreasing compute while preserving dominant signals.",
+        "whyItMatters": "Introduces spatial translation invariance.",
+        "keyTakeaway": "Pooling achieves downsampling and feature invariance with zero learnable parameters."
+      }
+    },
+    {
+      "layerId": "block5_conv1",
+      "layerName": "block5_conv1",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 2359808,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block4_pool"
+        ],
+        "outgoing": [
+          "block5_conv2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 512 filters.",
+        "detailed": "Slides 512 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block5_conv2",
+      "layerName": "block5_conv2",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 2359808,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block5_conv1"
+        ],
+        "outgoing": [
+          "block5_conv3"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 512 filters.",
+        "detailed": "Slides 512 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block5_conv3",
+      "layerName": "block5_conv3",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 2359808,
+        "weights": 2359296,
+        "biases": 512,
+        "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 output_filters",
+        "calculationSteps": [
+          {
+            "label": "Kernel Weights",
+            "expression": "3 \u00d7 3 \u00d7 512 \u00d7 512",
+            "result": 2359296,
+            "explanation": "512 kernels of size 3x3 convolving over 512 channels."
+          },
+          {
+            "label": "Biases",
+            "expression": "512",
+            "result": 512,
+            "explanation": "One learnable bias parameter per filter."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "2359296 + 512",
+            "result": 2359808,
+            "explanation": "Sum of weights and biases."
+          }
+        ],
+        "trainableParameters": 2359808,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 512,
+        "kernelSize": [
+          3,
+          3
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "padding": "same",
+        "useBias": true,
+        "activation": "relu"
+      },
+      "connections": {
+        "incoming": [
+          "block5_conv2"
+        ],
+        "outgoing": [
+          "block5_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "3x3 convolution layer with 512 filters.",
+        "detailed": "Slides 512 filters across input features to extract local patterns (like curves and edges).",
+        "whyItMatters": "Foundational feature extraction step.",
+        "keyTakeaway": "Extracts local spatial representations."
+      }
+    },
+    {
+      "layerId": "block5_pool",
+      "layerName": "block5_pool",
+      "layerType": "max_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          null,
+          null,
+          512
+        ],
+        "description": "\u00d7512"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "poolSize": [
+          2,
+          2
+        ],
+        "strides": [
+          2,
+          2
+        ],
+        "padding": "valid"
+      },
+      "connections": {
+        "incoming": [
+          "block5_conv3"
+        ],
+        "outgoing": [
+          "flatten"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Halves spatial resolution while retaining peak features.",
+        "detailed": "Slides a 2x2 window with stride 2 over each feature map, outputting the maximum value in that cell. Downsamples resolution, decreasing compute while preserving dominant signals.",
+        "whyItMatters": "Introduces spatial translation invariance.",
+        "keyTakeaway": "Pooling achieves downsampling and feature invariance with zero learnable parameters."
+      }
+    },
+    {
+      "layerId": "flatten",
+      "layerName": "flatten",
+      "layerType": "flatten",
+      "inputShape": {
+        "dimensions": [
+          null,
+          7,
+          7,
+          512
+        ],
+        "description": "7\u00d77\u00d7512"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          25088
+        ],
+        "description": "25088"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "block5_pool"
+        ],
+        "outgoing": [
+          "fc1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Unrolls spatial features into a 1D vector.",
+        "detailed": "Converts the 3D tensor of shape 7x7x512 into a single vector of length 25088. This step transitions the model from spatial feature mapping to multi-class classification reasoning.",
+        "whyItMatters": "Bridges local convolutions and dense classifiers.",
+        "keyTakeaway": "Flattening discards spatial dimensions while preserving the raw activation vector."
+      }
+    },
+    {
+      "layerId": "fc1",
+      "layerName": "fc1",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          25088
+        ],
+        "description": "25088"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          4096
+        ],
+        "description": "4096"
+      },
+      "parameters": {
+        "total": 102764544,
+        "weights": 102760448,
+        "biases": 4096,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Fully Connected Weights",
+            "expression": "25088 \u00d7 4096",
+            "result": 102760448,
+            "explanation": "Every input element is connected to all 4096 output units via a learnable weight."
+          },
+          {
+            "label": "Biases",
+            "expression": "4096",
+            "result": 4096,
+            "explanation": "One bias term per output unit."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "102760448 + 4096",
+            "result": 102764544,
+            "explanation": "Combined weights and biases."
+          }
+        ],
+        "trainableParameters": 102764544,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 4096,
+        "activation": "relu",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "flatten"
+        ],
+        "outgoing": [
+          "fc2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "First dense layer containing 102.7M parameters.",
+        "detailed": "This single layer accounts for over 70% of VGG's total parameter count. It performs global visual reasoning across the entire set of flattened features, determining how parts relate to classes.",
+        "whyItMatters": "The massive parameter footprint of this transition is why modern models prefer Global Average Pooling over Flattening.",
+        "keyTakeaway": "Fully connected layers contain the majority of standard CNN parameters."
+      }
+    },
+    {
+      "layerId": "fc2",
+      "layerName": "fc2",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          4096
+        ],
+        "description": "4096"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          4096
+        ],
+        "description": "4096"
+      },
+      "parameters": {
+        "total": 16781312,
+        "weights": 16777216,
+        "biases": 4096,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Fully Connected Weights",
+            "expression": "4096 \u00d7 4096",
+            "result": 16777216,
+            "explanation": "Every unit from FC1 is connected to all 4096 units of FC2."
+          },
+          {
+            "label": "Biases",
+            "expression": "4096",
+            "result": 4096,
+            "explanation": "One bias term per output unit."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "16777216 + 4096",
+            "result": 16781312,
+            "explanation": "Combined weights and biases."
+          }
+        ],
+        "trainableParameters": 16781312,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 4096,
+        "activation": "relu",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "fc1"
+        ],
+        "outgoing": [
+          "predictions"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Second dense layer representing high-level semantic abstractions.",
+        "detailed": "Performs further non-linear mapping on the 4096-dimensional global visual representations, building high-level classification templates.",
+        "whyItMatters": "Deep fully connected layers learn abstract visual classification features.",
+        "keyTakeaway": "Refines global visual representations."
+      }
+    },
+    {
+      "layerId": "predictions",
+      "layerName": "predictions",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          4096
+        ],
+        "description": "4096"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000"
+      },
+      "parameters": {
+        "total": 4097000,
+        "weights": 4096000,
+        "biases": 1000,
+        "formula": "(input_features + 1) \u00d7 output_units",
+        "calculationSteps": [
+          {
+            "label": "Fully Connected Weights",
+            "expression": "4096 \u00d7 1000",
+            "result": 4096000,
+            "explanation": "Every unit from FC2 is connected to the 1000 final output class units."
+          },
+          {
+            "label": "Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One bias term per classification class."
+          },
+          {
+            "label": "Total Parameters",
+            "expression": "4096000 + 1000",
+            "result": 4097000,
+            "explanation": "Combined weights and biases."
+          }
+        ],
+        "trainableParameters": 4097000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "fc2"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Softmax classification output layer.",
+        "detailed": "The final network stage. Converts learned features into a probability distribution over 1000 ImageNet categories.",
+        "whyItMatters": "Provides interpretable confidence scores representing the model's decisions.",
+        "keyTakeaway": "Softmax maps outputs to a valid probability distribution that sums to 1."
+      }
+    }
+  ]
+}

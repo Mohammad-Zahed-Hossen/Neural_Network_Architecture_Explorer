@@ -63,7 +63,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Retinal layer receiving raw RGB pixel matrices.",
@@ -138,7 +140,9 @@
               "result": 1792,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 1792,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 64 filters.",
@@ -213,7 +217,9 @@
               "result": 36928,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 36928,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 64 filters.",
@@ -266,7 +272,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Halves spatial resolution while retaining peak features.",
@@ -341,7 +349,9 @@
               "result": 73856,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 73856,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 128 filters.",
@@ -416,7 +426,9 @@
               "result": 147584,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 147584,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 128 filters.",
@@ -469,7 +481,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Halves spatial resolution while retaining peak features.",
@@ -544,7 +558,9 @@
               "result": 295168,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 295168,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 256 filters.",
@@ -619,7 +635,9 @@
               "result": 590080,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 590080,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 256 filters.",
@@ -694,7 +712,9 @@
               "result": 590080,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 590080,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 256 filters.",
@@ -769,7 +789,9 @@
               "result": 590080,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 590080,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 256 filters.",
@@ -822,7 +844,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Halves spatial resolution while retaining peak features.",
@@ -897,7 +921,9 @@
               "result": 1180160,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 1180160,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -972,7 +998,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1047,7 +1075,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1122,7 +1152,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1175,7 +1207,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Halves spatial resolution while retaining peak features.",
@@ -1250,7 +1284,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1325,7 +1361,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1400,7 +1438,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1475,7 +1515,9 @@
               "result": 2359808,
               "explanation": "Sum of weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 2359808,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "3x3 convolution layer with 512 filters.",
@@ -1528,7 +1570,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Halves spatial resolution while retaining peak features.",
@@ -1569,7 +1613,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Unrolls spatial features into a 1D vector.",
@@ -1631,7 +1677,9 @@
               "result": 102764544,
               "explanation": "Combined weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 102764544,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "First dense layer containing 102.7M parameters.",
@@ -1693,7 +1741,9 @@
               "result": 16781312,
               "explanation": "Combined weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 16781312,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Second dense layer representing high-level semantic abstractions.",
@@ -1755,7 +1805,9 @@
               "result": 4097000,
               "explanation": "Combined weights and biases."
             }
-          ]
+          ],
+          "trainableParameters": 4097000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Softmax classification output layer.",
@@ -1998,5 +2050,7 @@
         "color": "#1D4ED8"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 143667240
 }

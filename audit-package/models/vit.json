@@ -1,0 +1,925 @@
+{
+  "modelName": "ViT",
+  "architectureFamily": "Other",
+  "publicationYear": 2020,
+  "inputShape": {
+    "channels": 3,
+    "height": 224,
+    "width": 224
+  },
+  "totalParameters": 86566120,
+  "trainableParameters": 86566120,
+  "FLOPs": 16800000000,
+  "MACs": 8400000000,
+  "top1Accuracy": 0.779,
+  "top5Accuracy": 0.943,
+  "layerCount": 17,
+  "layers": [
+    {
+      "layerId": "input_1",
+      "layerName": "Input Image",
+      "layerType": "input",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3 RGB Image"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3 RGB Image"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "shape": [
+          224,
+          224,
+          3
+        ]
+      },
+      "connections": {
+        "incoming": [],
+        "outgoing": [
+          "patch_proj"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Input layer for color images.",
+        "detailed": "Accepts 224x224 pixels RGB images. Unlike CNNs, which process pixels directly, ViT will divide this image into 16x16 non-overlapping patches.",
+        "keyTakeaway": "Standard input size for ViT-Base is 224x224, matching standard CNN benchmarks."
+      }
+    },
+    {
+      "layerId": "patch_proj",
+      "layerName": "Patch Projection",
+      "layerType": "conv2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          224,
+          224,
+          3
+        ],
+        "description": "224x224x3"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          768
+        ],
+        "description": "14x14x768"
+      },
+      "parameters": {
+        "total": 590592,
+        "weights": 589824,
+        "biases": 768,
+        "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Projection Weights",
+            "expression": "16 \u00d7 16 \u00d7 3 \u00d7 768",
+            "result": 589824,
+            "explanation": "Linear projection maps 16x16 patch pixels to a 768-dimensional embedding space."
+          },
+          {
+            "label": "Biases",
+            "expression": "768",
+            "result": 768,
+            "explanation": "One bias term per projection dimension."
+          }
+        ],
+        "trainableParameters": 590592,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "filters": 768,
+        "kernelSize": [
+          16,
+          16
+        ],
+        "strides": [
+          16,
+          16
+        ],
+        "padding": "valid",
+        "useBias": true,
+        "activation": "linear"
+      },
+      "connections": {
+        "incoming": [
+          "input_1"
+        ],
+        "outgoing": [
+          "flatten_patches"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Transforms image patches into token vectors.",
+        "detailed": "Uses a 16x16 2D convolution with stride 16. This extracts 14x14 = 196 patches and projects each patch into a 768-dimensional embedding, acting as 'visual tokens'.",
+        "keyTakeaway": "Patch projection translates spatial pixels into sequence tokens for the Transformer."
+      }
+    },
+    {
+      "layerId": "flatten_patches",
+      "layerName": "Flatten Tokens",
+      "layerType": "flatten",
+      "inputShape": {
+        "dimensions": [
+          null,
+          14,
+          14,
+          768
+        ],
+        "description": "14x14x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196 Tokens, 768-dim"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "patch_proj"
+        ],
+        "outgoing": [
+          "pos_embed"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Flattens 2D token grid to 1D sequence.",
+        "detailed": "Flattens the 14x14 spatial grid of patches into a sequence of 196 patch tokens, making it compatible with standard sequence encoders.",
+        "keyTakeaway": "Sequence length is fixed at 196 (plus an optional CLS class token)."
+      }
+    },
+    {
+      "layerId": "pos_embed",
+      "layerName": "Add Position Embed",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 150528,
+        "weights": 150528,
+        "biases": 0,
+        "formula": "seq_len \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "1D Position Embeddings",
+            "expression": "196 \u00d7 768",
+            "result": 150528,
+            "explanation": "Learnable 1D parameters added to each patch embedding to retain spatial location awareness."
+          }
+        ],
+        "trainableParameters": 150528,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "flatten_patches"
+        ],
+        "outgoing": [
+          "block0_ln1",
+          "block0_add1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Adds spatial coordinates to sequence tokens.",
+        "detailed": "Since Self-Attention is permutation invariant, it ignores sequence order. Learnable position embeddings are added to restore spatial layout awareness.",
+        "keyTakeaway": "Position embeddings are critical for retaining the spatial topology of the image."
+      }
+    },
+    {
+      "layerId": "block0_ln1",
+      "layerName": "Block 0 LayerNorm 1",
+      "layerType": "layer_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Scale & Shift Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Gamma (weights) and Beta (biases) learnable scaling parameters."
+          }
+        ],
+        "trainableParameters": 1536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "connections": {
+        "incoming": [
+          "pos_embed"
+        ],
+        "outgoing": [
+          "block0_msa"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes embeddings along feature dimension.",
+        "detailed": "Layer Normalization stabilizes the hidden states by computing the mean and variance across the feature dimension (768) independently for each token.",
+        "keyTakeaway": "LayerNorm is applied before self-attention (pre-LN style) in modern ViTs to ensure training stability."
+      }
+    },
+    {
+      "layerId": "block0_msa",
+      "layerName": "Block 0 Multi-Head Attention",
+      "layerType": "attention",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 2362368,
+        "weights": 2359296,
+        "biases": 3072,
+        "formula": "4 \u00d7 (hidden_dim \u00d7 hidden_dim + hidden_dim)",
+        "calculationSteps": [
+          {
+            "label": "Q, K, V & Out Weights",
+            "expression": "4 \u00d7 768 \u00d7 768",
+            "result": 2359296,
+            "explanation": "Four projection matrices mapping features for Query, Key, Value, and Multi-Head Output."
+          },
+          {
+            "label": "Biases",
+            "expression": "4 \u00d7 768",
+            "result": 3072,
+            "explanation": "Bias terms for Q, K, V, and Out linear layers."
+          }
+        ],
+        "trainableParameters": 2362368,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "numHeads": 12,
+        "headDim": 64,
+        "hiddenDim": 768
+      },
+      "connections": {
+        "incoming": [
+          "block0_ln1"
+        ],
+        "outgoing": [
+          "block0_add1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Enables global context sharing between all tokens.",
+        "detailed": "Uses 12 attention heads. Computes Query-Key similarity dot-products, creating an attention matrix. Tokens weight and retrieve information from all other tokens globally, ignoring spatial distances.",
+        "keyTakeaway": "Self-attention replaces convolution's local receptive field with a global receptivity in every layer."
+      }
+    },
+    {
+      "layerId": "block0_add1",
+      "layerName": "Block 0 Skip 1",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "block0_msa",
+          "pos_embed"
+        ],
+        "outgoing": [
+          "block0_ln2",
+          "block0_add2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Residual addition around Self-Attention block.",
+        "detailed": "Adds the input of the LN+Attention block to its output: x = x + Attention(LN(x)). Ensures gradients flow directly backward through the layers.",
+        "keyTakeaway": "Prevents vanishing gradients across deep stacks of transformer encoder layers."
+      }
+    },
+    {
+      "layerId": "block0_ln2",
+      "layerName": "Block 0 LayerNorm 2",
+      "layerType": "layer_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Scale & Shift Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Gamma and Beta scaling vectors."
+          }
+        ],
+        "trainableParameters": 1536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "connections": {
+        "incoming": [
+          "block0_add1"
+        ],
+        "outgoing": [
+          "block0_mlp_dense1"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Normalizes states before the MLP block.",
+        "detailed": "Normalizes states across the embedding dimension to prepare inputs for the high-dimensional non-linear projections of the MLP layer.",
+        "keyTakeaway": "LayerNorm ensures stable training dynamics before MLP expansion."
+      }
+    },
+    {
+      "layerId": "block0_mlp_dense1",
+      "layerName": "Block 0 MLP Expansion",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          3072
+        ],
+        "description": "196x3072"
+      },
+      "parameters": {
+        "total": 2362368,
+        "weights": 2359296,
+        "biases": 3072,
+        "formula": "(hidden_dim \u00d7 mlp_dim) + mlp_dim",
+        "calculationSteps": [
+          {
+            "label": "Expansion Weights",
+            "expression": "768 \u00d7 3072",
+            "result": 2359296,
+            "explanation": "Projects token representations from 768 to 3072 dimensions."
+          },
+          {
+            "label": "Biases",
+            "expression": "3072",
+            "result": 3072,
+            "explanation": "One bias parameter per expansion unit."
+          }
+        ],
+        "trainableParameters": 2362368,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 3072,
+        "activation": "linear",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "block0_ln2"
+        ],
+        "outgoing": [
+          "block0_mlp_act"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Projects embeddings to higher dimensions.",
+        "detailed": "Projects embeddings to a 4x higher dimensional space (3072). This allows features to be linearly separated and combined through non-linear activations.",
+        "keyTakeaway": "MLP blocks operate on each token embedding independently (channel-wise mixing)."
+      }
+    },
+    {
+      "layerId": "block0_mlp_act",
+      "layerName": "Block 0 MLP GELU",
+      "layerType": "activation",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          3072
+        ],
+        "description": "196x3072"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          3072
+        ],
+        "description": "196x3072"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "activation": "gelu"
+      },
+      "connections": {
+        "incoming": [
+          "block0_mlp_dense1"
+        ],
+        "outgoing": [
+          "block0_mlp_dense2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Non-linear activation function.",
+        "detailed": "GELU (Gaussian Error Linear Unit) scales inputs by their cumulative probability distribution, providing a smoother gradient flow than ReLU.",
+        "keyTakeaway": "GELU is the standard activation function in modern vision and text transformer blocks."
+      }
+    },
+    {
+      "layerId": "block0_mlp_dense2",
+      "layerName": "Block 0 MLP Projection",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          3072
+        ],
+        "description": "196x3072"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 2360064,
+        "weights": 2359296,
+        "biases": 768,
+        "formula": "(mlp_dim \u00d7 hidden_dim) + hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Projection Weights",
+            "expression": "3072 \u00d7 768",
+            "result": 2359296,
+            "explanation": "Projects token representations back from 3072 to 768 dimensions."
+          },
+          {
+            "label": "Biases",
+            "expression": "768",
+            "result": 768,
+            "explanation": "One bias parameter per hidden unit."
+          }
+        ],
+        "trainableParameters": 2360064,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 768,
+        "activation": "linear",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "block0_mlp_act"
+        ],
+        "outgoing": [
+          "block0_add2"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Compresses MLP representations back to core embedding size.",
+        "detailed": "Maps the expanded features back to the main sequence dimension (768), ensuring output token shapes match skip shortcut dimensions.",
+        "keyTakeaway": "Prepares MLP representations for residual summation."
+      }
+    },
+    {
+      "layerId": "block0_add2",
+      "layerName": "Block 0 Skip 2",
+      "layerType": "add",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "block0_mlp_dense2",
+          "block0_add1"
+        ],
+        "outgoing": [
+          "blocks_stack"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Second residual skip connection around MLP block.",
+        "detailed": "Summates the attention representation (from skip 1) with the compressed MLP output: x = x + MLP(LN(x)).",
+        "keyTakeaway": "Bypasses MLP layers to maintain stable backprop flow."
+      }
+    },
+    {
+      "layerId": "blocks_stack",
+      "layerName": "Encoder Blocks 1\u201311",
+      "layerType": "bottleneck",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 77966592,
+        "weights": 77932800,
+        "biases": 33792,
+        "formula": "11 \u00d7 Block0_Params",
+        "calculationSteps": [
+          {
+            "label": "Stack Projection Weights",
+            "expression": "11 \u00d7 7084800",
+            "result": 77932800,
+            "explanation": "Calculates self-attention and MLP parameters across 11 identical stacked transformer encoder blocks."
+          },
+          {
+            "label": "Stack Biases",
+            "expression": "11 \u00d7 3072",
+            "result": 33792,
+            "explanation": "Total biases summed across 11 blocks."
+          }
+        ],
+        "trainableParameters": 77966592,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "expansion": 11
+      },
+      "connections": {
+        "incoming": [
+          "block0_add2"
+        ],
+        "outgoing": [
+          "norm_out"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "A stack of 11 identical encoder blocks.",
+        "detailed": "Repeatedly processes sequence relationships. Each block contains self-attention and MLP sub-layers. Deep layers refine semantic features of token interactions.",
+        "keyTakeaway": "ViT-Base stacks a total of 12 transformer encoder blocks for deep representation learning."
+      }
+    },
+    {
+      "layerId": "norm_out",
+      "layerName": "Output LayerNorm",
+      "layerType": "layer_norm",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "parameters": {
+        "total": 1536,
+        "weights": 768,
+        "biases": 768,
+        "formula": "2 \u00d7 hidden_dim",
+        "calculationSteps": [
+          {
+            "label": "Scale & Shift Parameters",
+            "expression": "2 \u00d7 768",
+            "result": 1536,
+            "explanation": "Output Normalizer parameters."
+          }
+        ],
+        "trainableParameters": 1536,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "axis": -1,
+        "epsilon": 1e-06
+      },
+      "connections": {
+        "incoming": [
+          "blocks_stack"
+        ],
+        "outgoing": [
+          "avg_pool"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Final normalization before classification head.",
+        "detailed": "Stabilizes the final output states of the Transformer encoder before mapping to categorical logits.",
+        "keyTakeaway": "Final LayerNorm ensures scale consistency before the classifier."
+      }
+    },
+    {
+      "layerId": "avg_pool",
+      "layerName": "Global Token Pooling",
+      "layerType": "global_average_pooling2d",
+      "inputShape": {
+        "dimensions": [
+          null,
+          196,
+          768
+        ],
+        "description": "196x768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768-d Vector"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {},
+      "connections": {
+        "incoming": [
+          "norm_out"
+        ],
+        "outgoing": [
+          "head"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Collapses sequence dimensions to a single vector.",
+        "detailed": "Averages representations across all 196 sequence tokens to construct a unified image representation vector. (Note: Sourced from Keras ViT, which uses average pooling over sequence instead of the standard CLS token).",
+        "keyTakeaway": "Collapses spatial/sequence dimension to create a global class embedding."
+      }
+    },
+    {
+      "layerId": "head",
+      "layerName": "MLP Classification Head",
+      "layerType": "dense",
+      "inputShape": {
+        "dimensions": [
+          null,
+          768
+        ],
+        "description": "768"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 logits"
+      },
+      "parameters": {
+        "total": 769000,
+        "weights": 768000,
+        "biases": 1000,
+        "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
+        "calculationSteps": [
+          {
+            "label": "Head Weights",
+            "expression": "768 \u00d7 1000",
+            "result": 768000,
+            "explanation": "Weights mapping pooled image embeddings to the 1000 ImageNet categories."
+          },
+          {
+            "label": "Head Biases",
+            "expression": "1000",
+            "result": 1000,
+            "explanation": "One bias term per ImageNet class."
+          }
+        ],
+        "trainableParameters": 769000,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "linear",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "avg_pool"
+        ],
+        "outgoing": [
+          "output"
+        ]
+      },
+      "educationalNotes": {
+        "summary": "Dense mapping to class index logits.",
+        "detailed": "Final fully connected classification layer predicting categorical scores.",
+        "keyTakeaway": "Predicts raw log-odds (logits) for the classifier."
+      }
+    },
+    {
+      "layerId": "output",
+      "layerName": "Output Probabilities",
+      "layerType": "output",
+      "inputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 logits"
+      },
+      "outputShape": {
+        "dimensions": [
+          null,
+          1000
+        ],
+        "description": "1000 probabilities"
+      },
+      "parameters": {
+        "total": 0,
+        "weights": 0,
+        "biases": 0,
+        "formula": "None",
+        "calculationSteps": [],
+        "trainableParameters": 0,
+        "nonTrainableParameters": 0
+      },
+      "hyperparameters": {
+        "units": 1000,
+        "activation": "softmax",
+        "useBias": true
+      },
+      "connections": {
+        "incoming": [
+          "head"
+        ],
+        "outgoing": []
+      },
+      "educationalNotes": {
+        "summary": "Normalizes predictions into probability values.",
+        "detailed": "Softmax maps logits to positive values summing to 1.0, representing the model's prediction confidence score for each class.",
+        "keyTakeaway": "Yields output confidence distribution over ImageNet classes."
+      }
+    }
+  ]
+}

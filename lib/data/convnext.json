@@ -13,7 +13,7 @@
   ],
   "paperUrl": "https://arxiv.org/abs/2201.03545",
   "depth": 30,
-  "totalParameters": 28589128,
+  "totalParameters": 28475064,
   "totalFLOPs": 4460000000,
   "inputShape": {
     "channels": 3,
@@ -38,22 +38,38 @@
         "type": "input",
         "name": "Input Image",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "outputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "config": {
-          "shape": [224, 224, 3]
+          "shape": [
+            224,
+            224,
+            3
+          ]
         },
         "parameters": {
           "total": 0,
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "RGB image inputs for the ConvNeXt network.",
@@ -72,17 +88,33 @@
         "type": "conv2d",
         "name": "Patchify Stem Conv",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3"
         },
         "outputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "config": {
           "filters": 96,
-          "kernelSize": [4, 4],
-          "strides": [4, 4],
+          "kernelSize": [
+            4,
+            4
+          ],
+          "strides": [
+            4,
+            4
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "linear"
@@ -91,11 +123,11 @@
           "total": 4704,
           "weights": 4608,
           "biases": 96,
-          "formula": "(kernel_h × kernel_w × in_channels + 1) × filters",
+          "formula": "(kernel_h \u00d7 kernel_w \u00d7 in_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Stem weights",
-              "expression": "4 × 4 × 3 × 96",
+              "expression": "4 \u00d7 4 \u00d7 3 \u00d7 96",
               "result": 4608,
               "explanation": "Extracts 4x4 image patches with stride 4, mapping them to 96 feature dimensions."
             },
@@ -105,7 +137,9 @@
               "result": 96,
               "explanation": "One bias parameter per output channel."
             }
-          ]
+          ],
+          "trainableParameters": 4704,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Downsamples image to 56x56 like a patch partition.",
@@ -124,30 +158,42 @@
         "type": "layer_norm",
         "name": "Stem LayerNorm",
         "inputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "outputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 192,
           "weights": 96,
           "biases": 96,
-          "formula": "2 × channels",
+          "formula": "2 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "LN parameters",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Gamma scaling and Beta bias vectors."
             }
-          ]
+          ],
+          "trainableParameters": 192,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Applies Layer Normalization after the stem.",
@@ -166,11 +212,21 @@
         "type": "bottleneck",
         "name": "Stage 1 (3x ConvNeXt Blocks)",
         "inputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "outputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "config": {
@@ -180,15 +236,17 @@
           "total": 350000,
           "weights": 348500,
           "biases": 1500,
-          "formula": "3 × Block_Params",
+          "formula": "3 \u00d7 Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 1 Weights",
-              "expression": "3 × 116166",
+              "expression": "3 \u00d7 116166",
               "result": 348500,
               "explanation": "Parameters across 3 ConvNeXt blocks, each using 7x7 depthwise conv and inverted bottlenecks."
             }
-          ]
+          ],
+          "trainableParameters": 350000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Modern blocks with large kernels and GELU.",
@@ -207,17 +265,33 @@
         "type": "conv2d",
         "name": "Downsample 1",
         "inputShape": {
-          "dimensions": [null, 56, 56, 96],
+          "dimensions": [
+            null,
+            56,
+            56,
+            96
+          ],
           "description": "56x56x96"
         },
         "outputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "config": {
           "filters": 192,
-          "kernelSize": [2, 2],
-          "strides": [2, 2],
+          "kernelSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "linear"
@@ -226,15 +300,17 @@
           "total": 73920,
           "weights": 73728,
           "biases": 192,
-          "formula": "(kernel_h × kernel_w × in_channels + 1) × out_channels",
+          "formula": "(kernel_h \u00d7 kernel_w \u00d7 in_channels + 1) \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Downsample Weights",
-              "expression": "2 × 2 × 96 × 192",
+              "expression": "2 \u00d7 2 \u00d7 96 \u00d7 192",
               "result": 73728,
               "explanation": "Downsamples map resolution to 28x28 and projects features to 192 dimensions."
             }
-          ]
+          ],
+          "trainableParameters": 73920,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Hierarchical downsampling step.",
@@ -253,11 +329,21 @@
         "type": "bottleneck",
         "name": "Stage 2 (3x ConvNeXt Blocks)",
         "inputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "outputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "config": {
@@ -267,15 +353,17 @@
           "total": 1400000,
           "weights": 1397000,
           "biases": 3000,
-          "formula": "3 × Stage2Block_Params",
+          "formula": "3 \u00d7 Stage2Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 2 Weights Stack",
-              "expression": "3 × 465666",
+              "expression": "3 \u00d7 465666",
               "result": 1397000,
               "explanation": "Accumulated parameters of the 3 ConvNeXt blocks in Stage 2."
             }
-          ]
+          ],
+          "trainableParameters": 1400000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Processes features at 28x28 spatial scale.",
@@ -294,17 +382,33 @@
         "type": "conv2d",
         "name": "Downsample 2",
         "inputShape": {
-          "dimensions": [null, 28, 28, 192],
+          "dimensions": [
+            null,
+            28,
+            28,
+            192
+          ],
           "description": "28x28x192"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "config": {
           "filters": 384,
-          "kernelSize": [2, 2],
-          "strides": [2, 2],
+          "kernelSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "linear"
@@ -313,15 +417,17 @@
           "total": 295296,
           "weights": 294912,
           "biases": 384,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Linear Reduction Weights",
-              "expression": "192 × 4 × 384",
+              "expression": "192 \u00d7 4 \u00d7 384",
               "result": 294912,
               "explanation": "Projects 2x2 grid features (768 dimensions) down to 384 dimensions."
             }
-          ]
+          ],
+          "trainableParameters": 295296,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Downsamples map size to 14x14.",
@@ -340,11 +446,21 @@
         "type": "bottleneck",
         "name": "Stage 3 (9x ConvNeXt Blocks)",
         "inputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "config": {
@@ -354,15 +470,17 @@
           "total": 13500000,
           "weights": 13482000,
           "biases": 18000,
-          "formula": "9 × Stage3Block_Params",
+          "formula": "9 \u00d7 Stage3Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 3 Weights",
-              "expression": "9 × 1498000",
+              "expression": "9 \u00d7 1498000",
               "result": 13482000,
               "explanation": "Parameters of 9 stacked ConvNeXt blocks at 384 channels (expanding internally to 1536 channels)."
             }
-          ]
+          ],
+          "trainableParameters": 13500000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Core feature extraction stage (9 blocks).",
@@ -381,17 +499,33 @@
         "type": "conv2d",
         "name": "Downsample 3",
         "inputShape": {
-          "dimensions": [null, 14, 14, 384],
+          "dimensions": [
+            null,
+            14,
+            14,
+            384
+          ],
           "description": "14x14x384"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "config": {
           "filters": 768,
-          "kernelSize": [2, 2],
-          "strides": [2, 2],
+          "kernelSize": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "valid",
           "useBias": true,
           "activation": "linear"
@@ -400,15 +534,17 @@
           "total": 1180416,
           "weights": 1179648,
           "biases": 768,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Linear Reduction Weights",
-              "expression": "384 × 4 × 768",
+              "expression": "384 \u00d7 4 \u00d7 768",
               "result": 1179648,
               "explanation": "Downsamples maps to final 7x7 grid and doubles channel size to 768."
             }
-          ]
+          ],
+          "trainableParameters": 1180416,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Reduces map size to final 7x7 resolution.",
@@ -427,11 +563,21 @@
         "type": "bottleneck",
         "name": "Stage 4 (3x ConvNeXt Blocks)",
         "inputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "config": {
@@ -441,15 +587,17 @@
           "total": 10900000,
           "weights": 10888000,
           "biases": 12000,
-          "formula": "3 × Stage4Block_Params",
+          "formula": "3 \u00d7 Stage4Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 4 Weights",
-              "expression": "3 × 3629333",
+              "expression": "3 \u00d7 3629333",
               "result": 10888000,
               "explanation": "Parameters of the final 3 ConvNeXt blocks operating at 768 dimensions."
             }
-          ]
+          ],
+          "trainableParameters": 10900000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "High-level classification features (3 blocks).",
@@ -468,11 +616,19 @@
         "type": "global_average_pooling2d",
         "name": "Global Average Pooling",
         "inputShape": {
-          "dimensions": [null, 7, 7, 768],
+          "dimensions": [
+            null,
+            7,
+            7,
+            768
+          ],
           "description": "7x7x768"
         },
         "outputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768-d Vector"
         },
         "config": {},
@@ -481,7 +637,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Averages spatial dimensions to 1D vector.",
@@ -500,30 +658,38 @@
         "type": "layer_norm",
         "name": "Output LayerNorm",
         "inputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768"
         },
         "outputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × channels",
+          "formula": "2 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "LN scaling parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma scaling and Beta bias vectors."
             }
-          ]
+          ],
+          "trainableParameters": 1536,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Final normalization before logits mapper.",
@@ -542,11 +708,17 @@
         "type": "dense",
         "name": "Classification Head",
         "inputShape": {
-          "dimensions": [null, 768],
+          "dimensions": [
+            null,
+            768
+          ],
           "description": "768"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "config": {
@@ -558,11 +730,11 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(channels × classes) + classes",
+          "formula": "(channels \u00d7 classes) + classes",
           "calculationSteps": [
             {
               "label": "Logits weights",
-              "expression": "768 × 1000",
+              "expression": "768 \u00d7 1000",
               "result": 768000,
               "explanation": "Dense weights mapping pooled features to ImageNet categories."
             },
@@ -572,7 +744,9 @@
               "result": 1000,
               "explanation": "Class logits biases."
             }
-          ]
+          ],
+          "trainableParameters": 769000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Dense mapping to logits.",
@@ -591,11 +765,17 @@
         "type": "output",
         "name": "Output Logits",
         "inputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 probabilities"
         },
         "config": {
@@ -608,7 +788,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Normalizes outputs to probabilities.",
@@ -767,5 +949,7 @@
         "color": "#F59E0B"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 28475064
 }

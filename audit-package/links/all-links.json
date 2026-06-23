@@ -1,0 +1,3404 @@
+[
+  {
+    "url": "https://nextjs.org/docs/app/api-reference/config/typescript",
+    "sourceFile": "next-env.d.ts",
+    "category": "Documentation",
+    "context": "Line 6: // see https://nextjs.org/docs/app/api-reference/config/typescript for more information."
+  },
+  {
+    "url": "https://registry.npmjs.org/",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 34: 'resolved': 'https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/sindresorhus",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 42: 'url': 'https://github.com/sponsors/sindresorhus'"
+  },
+  {
+    "url": "https://opencollective.com/babel",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 98: 'url': 'https://opencollective.com/babel'"
+  },
+  {
+    "url": "https://opencollective.com/eslint",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 331: 'url': 'https://opencollective.com/eslint'"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 339: 'resolved': 'https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz',"
+  },
+  {
+    "url": "https://eslint.org/donate",
+    "sourceFile": "package-lock.json",
+    "category": "Documentation",
+    "context": "Line 435: 'url': 'https://eslint.org/donate'"
+  },
+  {
+    "url": "https://github.com/sponsors/nzakas",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 511: 'url': 'https://github.com/sponsors/nzakas'"
+  },
+  {
+    "url": "https://opencollective.com/libvips",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 554: 'url': 'https://opencollective.com/libvips'"
+  },
+  {
+    "url": "https://github.com/sponsors/Brooooooklyn",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 1104: 'url': 'https://github.com/sponsors/Brooooooklyn'"
+  },
+  {
+    "url": "https://registry.npmjs.org/immer/-/immer-11.1.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 1343: 'resolved': 'https://registry.npmjs.org/immer/-/immer-11.1.8.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/immer",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 1348: 'url': 'https://opencollective.com/immer'"
+  },
+  {
+    "url": "https://opencollective.com/typescript-eslint",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 1848: 'url': 'https://opencollective.com/typescript-eslint'"
+  },
+  {
+    "url": "https://registry.npmjs.org/ignore/-/ignore-7.0.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 1858: 'resolved': 'https://registry.npmjs.org/ignore/-/ignore-7.0.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2017: 'resolved': 'https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2027: 'resolved': 'https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2040: 'resolved': 'https://registry.npmjs.org/minimatch/-/minimatch-10.2.5.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/isaacs",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 2051: 'url': 'https://github.com/sponsors/isaacs'"
+  },
+  {
+    "url": "https://registry.npmjs.org/semver/-/semver-7.8.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2056: 'resolved': 'https://registry.npmjs.org/semver/-/semver-7.8.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2111: 'resolved': 'https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/acorn/-/acorn-8.17.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2520: 'resolved': 'https://registry.npmjs.org/acorn/-/acorn-8.17.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2533: 'resolved': 'https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2543: 'resolved': 'https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/epoberezkin",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 2555: 'url': 'https://github.com/sponsors/epoberezkin'"
+  },
+  {
+    "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2560: 'resolved': 'https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz',"
+  },
+  {
+    "url": "https://github.com/chalk/ansi-styles?sponsor=1",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 2571: 'url': 'https://github.com/chalk/ansi-styles?sponsor=1'"
+  },
+  {
+    "url": "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2576: 'resolved': 'https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/aria-query/-/aria-query-5.3.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2583: 'resolved': 'https://registry.npmjs.org/aria-query/-/aria-query-5.3.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/array-buffer-byte-length/-/array-buffer-byte-length-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2593: 'resolved': 'https://registry.npmjs.org/array-buffer-byte-length/-/array-buffer-byte-length-1.0.2.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/ljharb",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 2605: 'url': 'https://github.com/sponsors/ljharb'"
+  },
+  {
+    "url": "https://registry.npmjs.org/array-includes/-/array-includes-3.1.9.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2610: 'resolved': 'https://registry.npmjs.org/array-includes/-/array-includes-3.1.9.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/array.prototype.findlast/-/array.prototype.findlast-1.2.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2633: 'resolved': 'https://registry.npmjs.org/array.prototype.findlast/-/array.prototype.findlast-1.2.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/array.prototype.findlastindex/-/array.prototype.findlastindex-1.2.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2654: 'resolved': 'https://registry.npmjs.org/array.prototype.findlastindex/-/array.prototype.findlastindex-1.2.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/array.prototype.flat/-/array.prototype.flat-1.3.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2676: 'resolved': 'https://registry.npmjs.org/array.prototype.flat/-/array.prototype.flat-1.3.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/array.prototype.flatmap/-/array.prototype.flatmap-1.3.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2695: 'resolved': 'https://registry.npmjs.org/array.prototype.flatmap/-/array.prototype.flatmap-1.3.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/array.prototype.tosorted/-/array.prototype.tosorted-1.1.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2714: 'resolved': 'https://registry.npmjs.org/array.prototype.tosorted/-/array.prototype.tosorted-1.1.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/arraybuffer.prototype.slice/-/arraybuffer.prototype.slice-1.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2731: 'resolved': 'https://registry.npmjs.org/arraybuffer.prototype.slice/-/arraybuffer.prototype.slice-1.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/ast-types-flow/-/ast-types-flow-0.0.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2753: 'resolved': 'https://registry.npmjs.org/ast-types-flow/-/ast-types-flow-0.0.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/async-function/-/async-function-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2760: 'resolved': 'https://registry.npmjs.org/async-function/-/async-function-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2770: 'resolved': 'https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.7.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/axe-core/-/axe-core-4.12.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2786: 'resolved': 'https://registry.npmjs.org/axe-core/-/axe-core-4.12.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/axobject-query/-/axobject-query-4.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2796: 'resolved': 'https://registry.npmjs.org/axobject-query/-/axobject-query-4.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2806: 'resolved': 'https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.38.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2813: 'resolved': 'https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.38.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.15.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2825: 'resolved': 'https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.15.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2836: 'resolved': 'https://registry.npmjs.org/braces/-/braces-3.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2849: 'resolved': 'https://registry.npmjs.org/browserslist/-/browserslist-4.28.2.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/browserslist",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2855: 'url': 'https://opencollective.com/browserslist'"
+  },
+  {
+    "url": "https://tidelift.com/funding/github/npm/browserslist",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2859: 'url': 'https://tidelift.com/funding/github/npm/browserslist'"
+  },
+  {
+    "url": "https://github.com/sponsors/ai",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 2863: 'url': 'https://github.com/sponsors/ai'"
+  },
+  {
+    "url": "https://registry.npmjs.org/call-bind/-/call-bind-1.0.9.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2883: 'resolved': 'https://registry.npmjs.org/call-bind/-/call-bind-1.0.9.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2902: 'resolved': 'https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2916: 'resolved': 'https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/callsites/-/callsites-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2933: 'resolved': 'https://registry.npmjs.org/callsites/-/callsites-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001799.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2943: 'resolved': 'https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001799.tgz',"
+  },
+  {
+    "url": "https://tidelift.com/funding/github/npm/caniuse-lite",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2952: 'url': 'https://tidelift.com/funding/github/npm/caniuse-lite'"
+  },
+  {
+    "url": "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2963: 'resolved': 'https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz',"
+  },
+  {
+    "url": "https://github.com/chalk/chalk?sponsor=1",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 2975: 'url': 'https://github.com/chalk/chalk?sponsor=1'"
+  },
+  {
+    "url": "https://registry.npmjs.org/classcat/-/classcat-5.0.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2980: 'resolved': 'https://registry.npmjs.org/classcat/-/classcat-5.0.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2986: 'resolved': 'https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 2992: 'resolved': 'https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3001: 'resolved': 'https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3014: 'resolved': 'https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3021: 'resolved': 'https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3028: 'resolved': 'https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3035: 'resolved': 'https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3050: 'resolved': 'https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-array/-/d3-array-3.2.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3057: 'resolved': 'https://registry.npmjs.org/d3-array/-/d3-array-3.2.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-color/-/d3-color-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3069: 'resolved': 'https://registry.npmjs.org/d3-color/-/d3-color-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-dispatch/-/d3-dispatch-3.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3078: 'resolved': 'https://registry.npmjs.org/d3-dispatch/-/d3-dispatch-3.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-drag/-/d3-drag-3.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3087: 'resolved': 'https://registry.npmjs.org/d3-drag/-/d3-drag-3.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-ease/-/d3-ease-3.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3100: 'resolved': 'https://registry.npmjs.org/d3-ease/-/d3-ease-3.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-format/-/d3-format-3.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3109: 'resolved': 'https://registry.npmjs.org/d3-format/-/d3-format-3.1.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-interpolate/-/d3-interpolate-3.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3118: 'resolved': 'https://registry.npmjs.org/d3-interpolate/-/d3-interpolate-3.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-path/-/d3-path-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3130: 'resolved': 'https://registry.npmjs.org/d3-path/-/d3-path-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-scale/-/d3-scale-4.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3139: 'resolved': 'https://registry.npmjs.org/d3-scale/-/d3-scale-4.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-selection/-/d3-selection-3.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3155: 'resolved': 'https://registry.npmjs.org/d3-selection/-/d3-selection-3.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-shape/-/d3-shape-3.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3164: 'resolved': 'https://registry.npmjs.org/d3-shape/-/d3-shape-3.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-time/-/d3-time-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3176: 'resolved': 'https://registry.npmjs.org/d3-time/-/d3-time-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-time-format/-/d3-time-format-4.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3188: 'resolved': 'https://registry.npmjs.org/d3-time-format/-/d3-time-format-4.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-timer/-/d3-timer-3.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3200: 'resolved': 'https://registry.npmjs.org/d3-timer/-/d3-timer-3.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-transition/-/d3-transition-3.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3209: 'resolved': 'https://registry.npmjs.org/d3-transition/-/d3-transition-3.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/d3-zoom/-/d3-zoom-3.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3228: 'resolved': 'https://registry.npmjs.org/d3-zoom/-/d3-zoom-3.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3244: 'resolved': 'https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/data-view-buffer/-/data-view-buffer-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3251: 'resolved': 'https://registry.npmjs.org/data-view-buffer/-/data-view-buffer-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/data-view-byte-length/-/data-view-byte-length-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3269: 'resolved': 'https://registry.npmjs.org/data-view-byte-length/-/data-view-byte-length-1.0.2.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/inspect-js",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 3282: 'url': 'https://github.com/sponsors/inspect-js'"
+  },
+  {
+    "url": "https://registry.npmjs.org/data-view-byte-offset/-/data-view-byte-offset-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3287: 'resolved': 'https://registry.npmjs.org/data-view-byte-offset/-/data-view-byte-offset-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3305: 'resolved': 'https://registry.npmjs.org/debug/-/debug-4.4.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/decimal.js-light/-/decimal.js-light-2.5.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3323: 'resolved': 'https://registry.npmjs.org/decimal.js-light/-/decimal.js-light-2.5.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/deep-is/-/deep-is-0.1.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3329: 'resolved': 'https://registry.npmjs.org/deep-is/-/deep-is-0.1.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3336: 'resolved': 'https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/define-properties/-/define-properties-1.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3354: 'resolved': 'https://registry.npmjs.org/define-properties/-/define-properties-1.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3372: 'resolved': 'https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3382: 'resolved': 'https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3395: 'resolved': 'https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.376.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3410: 'resolved': 'https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.376.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3417: 'resolved': 'https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3424: 'resolved': 'https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-abstract/-/es-abstract-1.24.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3438: 'resolved': 'https://registry.npmjs.org/es-abstract/-/es-abstract-1.24.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-abstract-get/-/es-abstract-get-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3507: 'resolved': 'https://registry.npmjs.org/es-abstract-get/-/es-abstract-get-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3526: 'resolved': 'https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3536: 'resolved': 'https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-iterator-helpers/-/es-iterator-helpers-1.3.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3546: 'resolved': 'https://registry.npmjs.org/es-iterator-helpers/-/es-iterator-helpers-1.3.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3574: 'resolved': 'https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-set-tostringtag/-/es-set-tostringtag-2.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3587: 'resolved': 'https://registry.npmjs.org/es-set-tostringtag/-/es-set-tostringtag-2.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-shim-unscopables/-/es-shim-unscopables-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3603: 'resolved': 'https://registry.npmjs.org/es-shim-unscopables/-/es-shim-unscopables-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-to-primitive/-/es-to-primitive-1.3.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3616: 'resolved': 'https://registry.npmjs.org/es-to-primitive/-/es-to-primitive-1.3.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.48.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3636: 'resolved': 'https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.48.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3646: 'resolved': 'https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3656: 'resolved': 'https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint/-/eslint-9.39.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3669: 'resolved': 'https://registry.npmjs.org/eslint/-/eslint-9.39.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-config-next/-/eslint-config-next-16.2.9.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3729: 'resolved': 'https://registry.npmjs.org/eslint-config-next/-/eslint-config-next-16.2.9.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/globals/-/globals-16.4.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3756: 'resolved': 'https://registry.npmjs.org/globals/-/globals-16.4.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.10.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3769: 'resolved': 'https://registry.npmjs.org/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.10.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3781: 'resolved': 'https://registry.npmjs.org/debug/-/debug-3.2.7.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.10.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3791: 'resolved': 'https://registry.npmjs.org/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.10.1.tgz..."
+  },
+  {
+    "url": "https://opencollective.com/eslint-import-resolver-typescript",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3808: 'url': 'https://opencollective.com/eslint-import-resolver-typescript'"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-module-utils/-/eslint-module-utils-2.13.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3826: 'resolved': 'https://registry.npmjs.org/eslint-module-utils/-/eslint-module-utils-2.13.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3854: 'resolved': 'https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.10.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3898: 'resolved': 'https://registry.npmjs.org/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.10.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-7.37.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3928: 'resolved': 'https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-7.37.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-7.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3961: 'resolved': 'https://registry.npmjs.org/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-7.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-scope/-/eslint-scope-8.4.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3981: 'resolved': 'https://registry.npmjs.org/eslint-scope/-/eslint-scope-8.4.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 3998: 'resolved': 'https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/espree/-/espree-10.4.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4011: 'resolved': 'https://registry.npmjs.org/espree/-/espree-10.4.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/esquery/-/esquery-1.7.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4029: 'resolved': 'https://registry.npmjs.org/esquery/-/esquery-1.7.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/esrecurse/-/esrecurse-4.3.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4042: 'resolved': 'https://registry.npmjs.org/esrecurse/-/esrecurse-4.3.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/estraverse/-/estraverse-5.3.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4055: 'resolved': 'https://registry.npmjs.org/estraverse/-/estraverse-5.3.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4065: 'resolved': 'https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-5.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4075: 'resolved': 'https://registry.npmjs.org/eventemitter3/-/eventemitter3-5.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4081: 'resolved': 'https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4088: 'resolved': 'https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4105: 'resolved': 'https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4118: 'resolved': 'https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4125: 'resolved': 'https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/fastq/-/fastq-1.20.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4132: 'resolved': 'https://registry.npmjs.org/fastq/-/fastq-1.20.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-8.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4142: 'resolved': 'https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-8.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4155: 'resolved': 'https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/find-up/-/find-up-5.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4168: 'resolved': 'https://registry.npmjs.org/find-up/-/find-up-5.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/flat-cache/-/flat-cache-4.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4185: 'resolved': 'https://registry.npmjs.org/flat-cache/-/flat-cache-4.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/flatted/-/flatted-3.4.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4199: 'resolved': 'https://registry.npmjs.org/flatted/-/flatted-3.4.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/for-each/-/for-each-0.3.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4206: 'resolved': 'https://registry.npmjs.org/for-each/-/for-each-0.3.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/framer-motion/-/framer-motion-12.40.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4222: 'resolved': 'https://registry.npmjs.org/framer-motion/-/framer-motion-12.40.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4249: 'resolved': 'https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/function.prototype.name/-/function.prototype.name-1.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4259: 'resolved': 'https://registry.npmjs.org/function.prototype.name/-/function.prototype.name-1.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4283: 'resolved': 'https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/generator-function/-/generator-function-2.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4293: 'resolved': 'https://registry.npmjs.org/generator-function/-/generator-function-2.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4303: 'resolved': 'https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4313: 'resolved': 'https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4338: 'resolved': 'https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/get-symbol-description/-/get-symbol-description-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4352: 'resolved': 'https://registry.npmjs.org/get-symbol-description/-/get-symbol-description-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.14.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4370: 'resolved': 'https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.14.0.tgz',"
+  },
+  {
+    "url": "https://github.com/privatenumber/get-tsconfig?sponsor=1",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 4378: 'url': 'https://github.com/privatenumber/get-tsconfig?sponsor=1'"
+  },
+  {
+    "url": "https://registry.npmjs.org/glob-parent/-/glob-parent-6.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4383: 'resolved': 'https://registry.npmjs.org/glob-parent/-/glob-parent-6.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/globals/-/globals-14.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4396: 'resolved': 'https://registry.npmjs.org/globals/-/globals-14.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/globalthis/-/globalthis-1.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4409: 'resolved': 'https://registry.npmjs.org/globalthis/-/globalthis-1.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4426: 'resolved': 'https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4439: 'resolved': 'https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/has-bigints/-/has-bigints-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4446: 'resolved': 'https://registry.npmjs.org/has-bigints/-/has-bigints-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4459: 'resolved': 'https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4469: 'resolved': 'https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/has-proto/-/has-proto-1.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4482: 'resolved': 'https://registry.npmjs.org/has-proto/-/has-proto-1.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4498: 'resolved': 'https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4511: 'resolved': 'https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4527: 'resolved': 'https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/hermes-estree/-/hermes-estree-0.25.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4540: 'resolved': 'https://registry.npmjs.org/hermes-estree/-/hermes-estree-0.25.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/hermes-parser/-/hermes-parser-0.25.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4547: 'resolved': 'https://registry.npmjs.org/hermes-parser/-/hermes-parser-0.25.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/ignore/-/ignore-5.3.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4557: 'resolved': 'https://registry.npmjs.org/ignore/-/ignore-5.3.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/immer/-/immer-10.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4567: 'resolved': 'https://registry.npmjs.org/immer/-/immer-10.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4577: 'resolved': 'https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/imurmurhash/-/imurmurhash-0.1.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4594: 'resolved': 'https://registry.npmjs.org/imurmurhash/-/imurmurhash-0.1.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/internal-slot/-/internal-slot-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4604: 'resolved': 'https://registry.npmjs.org/internal-slot/-/internal-slot-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/internmap/-/internmap-2.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4619: 'resolved': 'https://registry.npmjs.org/internmap/-/internmap-2.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-array-buffer/-/is-array-buffer-3.0.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4628: 'resolved': 'https://registry.npmjs.org/is-array-buffer/-/is-array-buffer-3.0.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-async-function/-/is-async-function-2.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4646: 'resolved': 'https://registry.npmjs.org/is-async-function/-/is-async-function-2.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-bigint/-/is-bigint-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4666: 'resolved': 'https://registry.npmjs.org/is-bigint/-/is-bigint-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-boolean-object/-/is-boolean-object-1.2.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4682: 'resolved': 'https://registry.npmjs.org/is-boolean-object/-/is-boolean-object-1.2.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-bun-module/-/is-bun-module-2.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4699: 'resolved': 'https://registry.npmjs.org/is-bun-module/-/is-bun-module-2.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4722: 'resolved': 'https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-core-module/-/is-core-module-2.16.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4735: 'resolved': 'https://registry.npmjs.org/is-core-module/-/is-core-module-2.16.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-data-view/-/is-data-view-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4751: 'resolved': 'https://registry.npmjs.org/is-data-view/-/is-data-view-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-date-object/-/is-date-object-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4769: 'resolved': 'https://registry.npmjs.org/is-date-object/-/is-date-object-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-document.all/-/is-document.all-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4786: 'resolved': 'https://registry.npmjs.org/is-document.all/-/is-document.all-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4802: 'resolved': 'https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-finalizationregistry/-/is-finalizationregistry-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4812: 'resolved': 'https://registry.npmjs.org/is-finalizationregistry/-/is-finalizationregistry-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-generator-function/-/is-generator-function-1.1.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4828: 'resolved': 'https://registry.npmjs.org/is-generator-function/-/is-generator-function-1.1.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4848: 'resolved': 'https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-map/-/is-map-2.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4861: 'resolved': 'https://registry.npmjs.org/is-map/-/is-map-2.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-negative-zero/-/is-negative-zero-2.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4874: 'resolved': 'https://registry.npmjs.org/is-negative-zero/-/is-negative-zero-2.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4887: 'resolved': 'https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-number-object/-/is-number-object-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4897: 'resolved': 'https://registry.npmjs.org/is-number-object/-/is-number-object-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-regex/-/is-regex-1.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4914: 'resolved': 'https://registry.npmjs.org/is-regex/-/is-regex-1.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-set/-/is-set-2.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4933: 'resolved': 'https://registry.npmjs.org/is-set/-/is-set-2.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-shared-array-buffer/-/is-shared-array-buffer-1.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4946: 'resolved': 'https://registry.npmjs.org/is-shared-array-buffer/-/is-shared-array-buffer-1.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-string/-/is-string-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4962: 'resolved': 'https://registry.npmjs.org/is-string/-/is-string-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-symbol/-/is-symbol-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4979: 'resolved': 'https://registry.npmjs.org/is-symbol/-/is-symbol-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-typed-array/-/is-typed-array-1.1.15.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 4997: 'resolved': 'https://registry.npmjs.org/is-typed-array/-/is-typed-array-1.1.15.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-weakmap/-/is-weakmap-2.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5013: 'resolved': 'https://registry.npmjs.org/is-weakmap/-/is-weakmap-2.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-weakref/-/is-weakref-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5026: 'resolved': 'https://registry.npmjs.org/is-weakref/-/is-weakref-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/is-weakset/-/is-weakset-2.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5042: 'resolved': 'https://registry.npmjs.org/is-weakset/-/is-weakset-2.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/isarray/-/isarray-2.0.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5059: 'resolved': 'https://registry.npmjs.org/isarray/-/isarray-2.0.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5066: 'resolved': 'https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/iterator.prototype/-/iterator.prototype-1.1.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5073: 'resolved': 'https://registry.npmjs.org/iterator.prototype/-/iterator.prototype-1.1.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/jiti/-/jiti-2.7.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5091: 'resolved': 'https://registry.npmjs.org/jiti/-/jiti-2.7.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5101: 'resolved': 'https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5108: 'resolved': 'https://registry.npmjs.org/js-yaml/-/js-yaml-4.2.0.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/puzrin",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 5114: 'url': 'https://github.com/sponsors/puzrin'"
+  },
+  {
+    "url": "https://github.com/sponsors/nodeca",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 5118: 'url': 'https://github.com/sponsors/nodeca'"
+  },
+  {
+    "url": "https://registry.npmjs.org/jsesc/-/jsesc-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5131: 'resolved': 'https://registry.npmjs.org/jsesc/-/jsesc-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/json-buffer/-/json-buffer-3.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5144: 'resolved': 'https://registry.npmjs.org/json-buffer/-/json-buffer-3.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5151: 'resolved': 'https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5158: 'resolved': 'https://registry.npmjs.org/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1...."
+  },
+  {
+    "url": "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5165: 'resolved': 'https://registry.npmjs.org/json5/-/json5-2.2.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/jsx-ast-utils/-/jsx-ast-utils-3.3.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5178: 'resolved': 'https://registry.npmjs.org/jsx-ast-utils/-/jsx-ast-utils-3.3.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5194: 'resolved': 'https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/language-subtag-registry/-/language-subtag-registry-0.3.23.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5204: 'resolved': 'https://registry.npmjs.org/language-subtag-registry/-/language-subtag-registry-0.3.23.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/language-tags/-/language-tags-1.0.9.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5211: 'resolved': 'https://registry.npmjs.org/language-tags/-/language-tags-1.0.9.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/levn/-/levn-0.4.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5224: 'resolved': 'https://registry.npmjs.org/levn/-/levn-0.4.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss/-/lightningcss-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5238: 'resolved': 'https://registry.npmjs.org/lightningcss/-/lightningcss-1.32.0.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/parcel",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5250: 'url': 'https://opencollective.com/parcel'"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-android-arm64/-/lightningcss-android-arm64-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5268: 'resolved': 'https://registry.npmjs.org/lightningcss-android-arm64/-/lightningcss-android-arm64-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5289: 'resolved': 'https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5310: 'resolved': 'https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5331: 'resolved': 'https://registry.npmjs.org/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5352: 'resolved': 'https://registry.npmjs.org/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5373: 'resolved': 'https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5397: 'resolved': 'https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5421: 'resolved': 'https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5445: 'resolved': 'https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5469: 'resolved': 'https://registry.npmjs.org/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.32.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5490: 'resolved': 'https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.32.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/locate-path/-/locate-path-6.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5511: 'resolved': 'https://registry.npmjs.org/locate-path/-/locate-path-6.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5527: 'resolved': 'https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5534: 'resolved': 'https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5547: 'resolved': 'https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/lucide-react/-/lucide-react-1.21.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5557: 'resolved': 'https://registry.npmjs.org/lucide-react/-/lucide-react-1.21.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5566: 'resolved': 'https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5576: 'resolved': 'https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5586: 'resolved': 'https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5596: 'resolved': 'https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5610: 'resolved': 'https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5623: 'resolved': 'https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/motion-dom/-/motion-dom-12.40.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5633: 'resolved': 'https://registry.npmjs.org/motion-dom/-/motion-dom-12.40.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/motion-utils/-/motion-utils-12.39.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5642: 'resolved': 'https://registry.npmjs.org/motion-utils/-/motion-utils-12.39.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5648: 'resolved': 'https://registry.npmjs.org/ms/-/ms-2.1.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.14.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5655: 'resolved': 'https://registry.npmjs.org/nanoid/-/nanoid-3.3.14.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/napi-postinstall/-/napi-postinstall-0.3.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5673: 'resolved': 'https://registry.npmjs.org/napi-postinstall/-/napi-postinstall-0.3.4.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/napi-postinstall",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5684: 'url': 'https://opencollective.com/napi-postinstall'"
+  },
+  {
+    "url": "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5689: 'resolved': 'https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/next/-/next-16.2.9.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5696: 'resolved': 'https://registry.npmjs.org/next/-/next-16.2.9.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/postcss/-/postcss-8.4.31.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5749: 'resolved': 'https://registry.npmjs.org/postcss/-/postcss-8.4.31.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/postcss/",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5754: 'url': 'https://opencollective.com/postcss/'"
+  },
+  {
+    "url": "https://tidelift.com/funding/github/npm/postcss",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5758: 'url': 'https://tidelift.com/funding/github/npm/postcss'"
+  },
+  {
+    "url": "https://registry.npmjs.org/node-exports-info/-/node-exports-info-1.6.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5777: 'resolved': 'https://registry.npmjs.org/node-exports-info/-/node-exports-info-1.6.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.48.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5796: 'resolved': 'https://registry.npmjs.org/node-releases/-/node-releases-2.0.48.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5806: 'resolved': 'https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5816: 'resolved': 'https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5829: 'resolved': 'https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object.assign/-/object.assign-4.1.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5839: 'resolved': 'https://registry.npmjs.org/object.assign/-/object.assign-4.1.7.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object.entries/-/object.entries-1.1.9.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5860: 'resolved': 'https://registry.npmjs.org/object.entries/-/object.entries-1.1.9.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object.fromentries/-/object.fromentries-2.0.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5876: 'resolved': 'https://registry.npmjs.org/object.fromentries/-/object.fromentries-2.0.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object.groupby/-/object.groupby-1.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5895: 'resolved': 'https://registry.npmjs.org/object.groupby/-/object.groupby-1.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/object.values/-/object.values-1.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5910: 'resolved': 'https://registry.npmjs.org/object.values/-/object.values-1.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/optionator/-/optionator-0.9.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5929: 'resolved': 'https://registry.npmjs.org/optionator/-/optionator-0.9.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/own-keys/-/own-keys-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5947: 'resolved': 'https://registry.npmjs.org/own-keys/-/own-keys-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5965: 'resolved': 'https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/p-locate/-/p-locate-5.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5981: 'resolved': 'https://registry.npmjs.org/p-locate/-/p-locate-5.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/parent-module/-/parent-module-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 5997: 'resolved': 'https://registry.npmjs.org/parent-module/-/parent-module-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6010: 'resolved': 'https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6020: 'resolved': 'https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6030: 'resolved': 'https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6037: 'resolved': 'https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6043: 'resolved': 'https://registry.npmjs.org/picomatch/-/picomatch-2.3.2.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/jonschlinkert",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 6051: 'url': 'https://github.com/sponsors/jonschlinkert'"
+  },
+  {
+    "url": "https://registry.npmjs.org/possible-typed-array-names/-/possible-typed-array-names-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6056: 'resolved': 'https://registry.npmjs.org/possible-typed-array-names/-/possible-typed-array-names-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/postcss/-/postcss-8.5.15.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6066: 'resolved': 'https://registry.npmjs.org/postcss/-/postcss-8.5.15.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6095: 'resolved': 'https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6105: 'resolved': 'https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6117: 'resolved': 'https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6127: 'resolved': 'https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/feross",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 6133: 'url': 'https://github.com/sponsors/feross'"
+  },
+  {
+    "url": "https://www.patreon.com/feross",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6137: 'url': 'https://www.patreon.com/feross'"
+  },
+  {
+    "url": "https://feross.org/support",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6141: 'url': 'https://feross.org/support'"
+  },
+  {
+    "url": "https://registry.npmjs.org/react/-/react-19.2.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6148: 'resolved': 'https://registry.npmjs.org/react/-/react-19.2.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6157: 'resolved': 'https://registry.npmjs.org/react-dom/-/react-dom-19.2.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6169: 'resolved': 'https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/react-redux/-/react-redux-9.3.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6175: 'resolved': 'https://registry.npmjs.org/react-redux/-/react-redux-9.3.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/recharts/-/recharts-3.8.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6198: 'resolved': 'https://registry.npmjs.org/recharts/-/recharts-3.8.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/redux/-/redux-5.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6228: 'resolved': 'https://registry.npmjs.org/redux/-/redux-5.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/redux-thunk/-/redux-thunk-3.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6234: 'resolved': 'https://registry.npmjs.org/redux-thunk/-/redux-thunk-3.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/reflect.getprototypeof/-/reflect.getprototypeof-1.0.10.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6243: 'resolved': 'https://registry.npmjs.org/reflect.getprototypeof/-/reflect.getprototypeof-1.0.10.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/regexp.prototype.flags/-/regexp.prototype.flags-1.5.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6266: 'resolved': 'https://registry.npmjs.org/regexp.prototype.flags/-/regexp.prototype.flags-1.5.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/reselect/-/reselect-5.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6287: 'resolved': 'https://registry.npmjs.org/reselect/-/reselect-5.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6293: 'resolved': 'https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.7.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/resolve-from/-/resolve-from-4.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6317: 'resolved': 'https://registry.npmjs.org/resolve-from/-/resolve-from-4.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/resolve-pkg-maps/-/resolve-pkg-maps-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6327: 'resolved': 'https://registry.npmjs.org/resolve-pkg-maps/-/resolve-pkg-maps-1.0.0.tgz',"
+  },
+  {
+    "url": "https://github.com/privatenumber/resolve-pkg-maps?sponsor=1",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 6332: 'url': 'https://github.com/privatenumber/resolve-pkg-maps?sponsor=1'"
+  },
+  {
+    "url": "https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6337: 'resolved': 'https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6348: 'resolved': 'https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.1.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6372: 'resolved': 'https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.1.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/safe-push-apply/-/safe-push-apply-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6392: 'resolved': 'https://registry.npmjs.org/safe-push-apply/-/safe-push-apply-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/safe-regex-test/-/safe-regex-test-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6409: 'resolved': 'https://registry.npmjs.org/safe-regex-test/-/safe-regex-test-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6427: 'resolved': 'https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6433: 'resolved': 'https://registry.npmjs.org/semver/-/semver-6.3.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6443: 'resolved': 'https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/set-function-name/-/set-function-name-2.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6461: 'resolved': 'https://registry.npmjs.org/set-function-name/-/set-function-name-2.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/set-proto/-/set-proto-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6477: 'resolved': 'https://registry.npmjs.org/set-proto/-/set-proto-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/sharp/-/sharp-0.34.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6492: 'resolved': 'https://registry.npmjs.org/sharp/-/sharp-0.34.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6550: 'resolved': 'https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6563: 'resolved': 'https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6573: 'resolved': 'https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6593: 'resolved': 'https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6610: 'resolved': 'https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6629: 'resolved': 'https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6649: 'resolved': 'https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/stable-hash/-/stable-hash-0.0.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6658: 'resolved': 'https://registry.npmjs.org/stable-hash/-/stable-hash-0.0.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/stop-iteration-iterator/-/stop-iteration-iterator-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6665: 'resolved': 'https://registry.npmjs.org/stop-iteration-iterator/-/stop-iteration-iterator-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/string.prototype.includes/-/string.prototype.includes-2.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6679: 'resolved': 'https://registry.npmjs.org/string.prototype.includes/-/string.prototype.includes-2.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/string.prototype.matchall/-/string.prototype.matchall-4.0.12.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6694: 'resolved': 'https://registry.npmjs.org/string.prototype.matchall/-/string.prototype.matchall-4.0.12.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/string.prototype.repeat/-/string.prototype.repeat-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6722: 'resolved': 'https://registry.npmjs.org/string.prototype.repeat/-/string.prototype.repeat-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/string.prototype.trim/-/string.prototype.trim-1.2.11.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6733: 'resolved': 'https://registry.npmjs.org/string.prototype.trim/-/string.prototype.trim-1.2.11.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/string.prototype.trimend/-/string.prototype.trimend-1.0.10.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6756: 'resolved': 'https://registry.npmjs.org/string.prototype.trimend/-/string.prototype.trimend-1.0.10.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/string.prototype.trimstart/-/string.prototype.trimstart-1.0.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6775: 'resolved': 'https://registry.npmjs.org/string.prototype.trimstart/-/string.prototype.trimstart-1.0.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/strip-bom/-/strip-bom-3.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6793: 'resolved': 'https://registry.npmjs.org/strip-bom/-/strip-bom-3.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6803: 'resolved': 'https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/styled-jsx/-/styled-jsx-5.1.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6816: 'resolved': 'https://registry.npmjs.org/styled-jsx/-/styled-jsx-5.1.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6839: 'resolved': 'https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6852: 'resolved': 'https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-3.6.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6865: 'resolved': 'https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-3.6.0.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/dcastil",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 6870: 'url': 'https://github.com/sponsors/dcastil'"
+  },
+  {
+    "url": "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6875: 'resolved': 'https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/tapable/-/tapable-2.3.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6882: 'resolved': 'https://registry.npmjs.org/tapable/-/tapable-2.3.3.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/webpack",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6891: 'url': 'https://opencollective.com/webpack'"
+  },
+  {
+    "url": "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.3.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6896: 'resolved': 'https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.3.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6902: 'resolved': 'https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/SuperchupuDev",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 6914: 'url': 'https://github.com/sponsors/SuperchupuDev'"
+  },
+  {
+    "url": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6919: 'resolved': 'https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6937: 'resolved': 'https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6950: 'resolved': 'https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.5.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6963: 'resolved': 'https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.5.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-3.15.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6976: 'resolved': 'https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-3.15.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/json5/-/json5-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 6989: 'resolved': 'https://registry.npmjs.org/json5/-/json5-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7002: 'resolved': 'https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/type-check/-/type-check-0.4.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7008: 'resolved': 'https://registry.npmjs.org/type-check/-/type-check-0.4.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/typed-array-buffer/-/typed-array-buffer-1.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7021: 'resolved': 'https://registry.npmjs.org/typed-array-buffer/-/typed-array-buffer-1.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/typed-array-byte-length/-/typed-array-byte-length-1.0.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7036: 'resolved': 'https://registry.npmjs.org/typed-array-byte-length/-/typed-array-byte-length-1.0.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/typed-array-byte-offset/-/typed-array-byte-offset-1.0.4.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7056: 'resolved': 'https://registry.npmjs.org/typed-array-byte-offset/-/typed-array-byte-offset-1.0.4.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/typed-array-length/-/typed-array-length-1.0.8.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7078: 'resolved': 'https://registry.npmjs.org/typed-array-length/-/typed-array-length-1.0.8.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7099: 'resolved': 'https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.61.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7113: 'resolved': 'https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.61.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/unbox-primitive/-/unbox-primitive-1.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7137: 'resolved': 'https://registry.npmjs.org/unbox-primitive/-/unbox-primitive-1.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7156: 'resolved': 'https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/unrs-resolver/-/unrs-resolver-1.12.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7163: 'resolved': 'https://registry.npmjs.org/unrs-resolver/-/unrs-resolver-1.12.2.tgz',"
+  },
+  {
+    "url": "https://opencollective.com/unrs-resolver",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7172: 'url': 'https://opencollective.com/unrs-resolver'"
+  },
+  {
+    "url": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.2.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7201: 'resolved': 'https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.2.3.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/uri-js/-/uri-js-4.4.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7232: 'resolved': 'https://registry.npmjs.org/uri-js/-/uri-js-4.4.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7242: 'resolved': 'https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/victory-vendor/-/victory-vendor-37.3.6.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7251: 'resolved': 'https://registry.npmjs.org/victory-vendor/-/victory-vendor-37.3.6.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7273: 'resolved': 'https://registry.npmjs.org/which/-/which-2.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/which-boxed-primitive/-/which-boxed-primitive-1.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7289: 'resolved': 'https://registry.npmjs.org/which-boxed-primitive/-/which-boxed-primitive-1.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/which-builtin-type/-/which-builtin-type-1.2.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7309: 'resolved': 'https://registry.npmjs.org/which-builtin-type/-/which-builtin-type-1.2.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/which-collection/-/which-collection-1.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7337: 'resolved': 'https://registry.npmjs.org/which-collection/-/which-collection-1.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.22.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7356: 'resolved': 'https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.22.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/word-wrap/-/word-wrap-1.2.5.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7378: 'resolved': 'https://registry.npmjs.org/word-wrap/-/word-wrap-1.2.5.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7388: 'resolved': 'https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7395: 'resolved': 'https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/zod/-/zod-4.4.3.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7408: 'resolved': 'https://registry.npmjs.org/zod/-/zod-4.4.3.tgz',"
+  },
+  {
+    "url": "https://github.com/sponsors/colinhacks",
+    "sourceFile": "package-lock.json",
+    "category": "References",
+    "context": "Line 7413: 'url': 'https://github.com/sponsors/colinhacks'"
+  },
+  {
+    "url": "https://registry.npmjs.org/zod-validation-error/-/zod-validation-error-4.0.2.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7418: 'resolved': 'https://registry.npmjs.org/zod-validation-error/-/zod-validation-error-4.0.2.tgz',"
+  },
+  {
+    "url": "https://registry.npmjs.org/zustand/-/zustand-4.5.7.tgz",
+    "sourceFile": "package-lock.json",
+    "category": "External Sources",
+    "context": "Line 7431: 'resolved': 'https://registry.npmjs.org/zustand/-/zustand-4.5.7.tgz',"
+  },
+  {
+    "url": "http://localhost",
+    "sourceFile": "README.md",
+    "category": "External Sources",
+    "context": "Line 64: Open [http://localhost:3000](http://localhost:3000) with your browser to see the application."
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "app/research-map/page.tsx",
+    "category": "Research Papers",
+    "context": "Line 43: paperUrl: 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "app/research-map/page.tsx",
+    "category": "Research Papers",
+    "context": "Line 63: paperUrl: 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf'"
+  },
+  {
+    "url": "http://www.w3.org/2000/svg",
+    "sourceFile": "app/research-map/page.tsx",
+    "category": "External Sources",
+    "context": "Line 259: xmlns='http://www.w3.org/2000/svg'"
+  },
+  {
+    "url": "http://www.w3.org/2000/svg",
+    "sourceFile": "components/model-explorer/explorer-client.tsx",
+    "category": "External Sources",
+    "context": "Line 361: <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' str..."
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "components/research-map/research-flow.tsx",
+    "category": "Research Papers",
+    "context": "Line 32: paperUrl: 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "components/research-map/research-flow.tsx",
+    "category": "Research Papers",
+    "context": "Line 52: paperUrl: 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf'"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 3: 'paper': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
+  },
+  {
+    "url": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 4: 'documentation': 'https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html',"
+  },
+  {
+    "url": "https://github.com/pytorch/examples/blob/main/mnist/main.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 5: 'implementation': 'https://github.com/pytorch/examples/blob/main/mnist/main.py'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 8: 'paper': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
+  },
+  {
+    "url": "https://pytorch.org/hub/pytorch_vision_alexnet/",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 9: 'documentation': 'https://pytorch.org/hub/pytorch_vision_alexnet/',"
+  },
+  {
+    "url": "https://github.com/pytorch/vision/blob/main/torchvision/models/alexnet.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 10: 'implementation': 'https://github.com/pytorch/vision/blob/main/torchvision/models/alexnet.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 13: 'paper': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 14: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/vgg16.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 15: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/vgg16.py'"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg19",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 19: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg19',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/vgg19.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 20: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/vgg19.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 23: 'paper': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 24: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 25: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/resnet.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 28: 'paper': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 29: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 34: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 39: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 44: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 49: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 53: 'paper': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 54: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/densenet.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 55: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/densenet.py'"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 59: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 64: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 68: 'paper': 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 69: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 70: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 73: 'paper': 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 74: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v2.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 75: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v2.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02244",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 78: 'paper': 'https://arxiv.org/abs/1905.02244',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 79: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v3.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 80: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/mobilenet_v3.py'"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 84: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 88: 'paper': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 89: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 90: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/efficientnet.py'"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB1",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 94: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB1',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB2",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 99: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB2',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB3",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 104: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB3',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB4",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 109: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB4',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB5",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 114: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB5',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB6",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 119: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB6',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB7",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 124: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB7',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 128: 'paper': 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 129: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/inception_v3.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 130: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/inception_v3.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 133: 'paper': 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_resnet_v2/InceptionResNetV2",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 134: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_resnet_v2/InceptionResNetV2..."
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/inception_resnet_v2.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 135: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/inception_resnet_v2.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 138: 'paper': 'https://arxiv.org/abs/1610.02357',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 139: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/xception.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 140: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/xception.py'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 143: 'paper': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 144: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile',"
+  },
+  {
+    "url": "https://github.com/keras-team/keras/blob/master/keras/applications/nasnet.py",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 145: 'implementation': 'https://github.com/keras-team/keras/blob/master/keras/applications/nasnet.py'"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 149: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 153: 'paper': 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://huggingface.co/docs/transformers/model_doc/vit",
+    "sourceFile": "data/link_registry.json",
+    "category": "External Sources",
+    "context": "Line 154: 'documentation': 'https://huggingface.co/docs/transformers/model_doc/vit',"
+  },
+  {
+    "url": "https://github.com/google-research/vision_transformer",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 155: 'implementation': 'https://github.com/google-research/vision_transformer'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 158: 'paper': 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://huggingface.co/docs/transformers/model_doc/swin",
+    "sourceFile": "data/link_registry.json",
+    "category": "External Sources",
+    "context": "Line 159: 'documentation': 'https://huggingface.co/docs/transformers/model_doc/swin',"
+  },
+  {
+    "url": "https://github.com/microsoft/Swin-Transformer",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 160: 'implementation': 'https://github.com/microsoft/Swin-Transformer'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 163: 'paper': 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 164: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny',"
+  },
+  {
+    "url": "https://github.com/facebookresearch/ConvNeXt",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 165: 'implementation': 'https://github.com/facebookresearch/ConvNeXt'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "data/link_registry.json",
+    "category": "Research Papers",
+    "context": "Line 168: 'paper': 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
+    "sourceFile": "data/link_registry.json",
+    "category": "Documentation",
+    "context": "Line 169: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny',"
+  },
+  {
+    "url": "https://github.com/google-research/maxvit",
+    "sourceFile": "data/link_registry.json",
+    "category": "References",
+    "context": "Line 170: 'implementation': 'https://github.com/google-research/maxvit'"
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
+  },
+  {
+    "url": "https://pytorch.org/hub/pytorch_vision_alexnet/",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 38: 'docsUrl': 'https://pytorch.org/hub/pytorch_vision_alexnet/',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 78: 'paperUrl': 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 80: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 118: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 120: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 160: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 200: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 237: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 239: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB1",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 278: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB1',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB2",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 317: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB2',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB3",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 356: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB3',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB4",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 395: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB4',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB5",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 434: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB5',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB6",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 473: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB6',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB7",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 512: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB7',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 551: 'paperUrl': 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_resnet_v2/InceptionResNetV2",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 553: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_resnet_v2/InceptionResNetV2',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 592: 'paperUrl': 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 594: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3',"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
+  },
+  {
+    "url": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 634: 'docsUrl': 'https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 676: 'paperUrl': 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 678: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 721: 'paperUrl': 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 723: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 762: 'paperUrl': 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 764: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02244",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02244',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 812: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 861: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 899: 'paperUrl': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 901: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 942: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 980: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 982: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1020: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1022: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1062: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1102: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1142: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1182: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1224: 'paperUrl': 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://huggingface.co/docs/transformers/model_doc/swin",
+    "sourceFile": "data/models.json",
+    "category": "External Sources",
+    "context": "Line 1226: 'docsUrl': 'https://huggingface.co/docs/transformers/model_doc/swin',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1262: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1264: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg19",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1302: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg19',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1348: 'paperUrl': 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://huggingface.co/docs/transformers/model_doc/vit",
+    "sourceFile": "data/models.json",
+    "category": "External Sources",
+    "context": "Line 1350: 'docsUrl': 'https://huggingface.co/docs/transformers/model_doc/vit',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "data/models.json",
+    "category": "Research Papers",
+    "context": "Line 1385: 'paperUrl': 'https://arxiv.org/abs/1610.02357',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception",
+    "sourceFile": "data/models.json",
+    "category": "Documentation",
+    "context": "Line 1387: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 20: 'paperUrl': 'https://arxiv.org/abs/1409.1556'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 40: 'paperUrl': 'https://arxiv.org/abs/1512.03385'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 60: 'paperUrl': 'https://arxiv.org/abs/1603.05027'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 80: 'paperUrl': 'https://arxiv.org/abs/1608.06993'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 100: 'paperUrl': 'https://arxiv.org/abs/1704.04861'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 120: 'paperUrl': 'https://arxiv.org/abs/1905.02175'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 140: 'paperUrl': 'https://arxiv.org/abs/1512.00567'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 160: 'paperUrl': 'https://arxiv.org/abs/1610.02357'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 183: 'paperUrl': 'https://arxiv.org/abs/1905.11946'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 203: 'paperUrl': 'https://arxiv.org/abs/1707.07012'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 223: 'paperUrl': 'https://arxiv.org/abs/2010.11929'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 243: 'paperUrl': 'https://arxiv.org/abs/2103.14030'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 263: 'paperUrl': 'https://arxiv.org/abs/2201.03545'"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "data/papers.json",
+    "category": "Research Papers",
+    "context": "Line 283: 'paperUrl': 'https://arxiv.org/abs/2204.01697'"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "doc/ARCHITECTURE.md",
+    "category": "Research Papers",
+    "context": "Line 477: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet",
+    "sourceFile": "doc/PROJECT_REPORT.md",
+    "category": "Documentation",
+    "context": "Line 515: * **Actual**: e.g., `https://www.tensorflow.org/api_docs/python/tf/keras/applications/AlexNet` (Returns 404)."
+  },
+  {
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "sourceFile": "lib/data/alexnet.json",
+    "category": "Research Papers",
+    "context": "Line 11: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "lib/data/convnext.json",
+    "category": "Research Papers",
+    "context": "Line 14: 'paperUrl': 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/densenet121.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/densenet169.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/densenet201.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb0.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb1.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb2.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb3.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb4.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb5.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb6.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/efficientnetb7.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "lib/data/inceptionresnetv2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "lib/data/inceptionv3.json",
+    "category": "Research Papers",
+    "context": "Line 13: 'paperUrl': 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "sourceFile": "lib/data/lenet.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "lib/data/maxvit.json",
+    "category": "Research Papers",
+    "context": "Line 16: 'paperUrl': 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "lib/data/mobilenet.json",
+    "category": "Research Papers",
+    "context": "Line 16: 'paperUrl': 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "lib/data/mobilenetv2.json",
+    "category": "Research Papers",
+    "context": "Line 13: 'paperUrl': 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "lib/data/mobilenetv3large.json",
+    "category": "Research Papers",
+    "context": "Line 19: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "lib/data/mobilenetv3small.json",
+    "category": "Research Papers",
+    "context": "Line 19: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 36: paperUrl: 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 78: paperUrl: 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 138: paperUrl: 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1608.06993",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 200: paperUrl: 'https://arxiv.org/abs/1608.06993',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1704.04861",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 262: paperUrl: 'https://arxiv.org/abs/1704.04861',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1801.04381",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 282: paperUrl: 'https://arxiv.org/abs/1801.04381',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.02175",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 302: paperUrl: 'https://arxiv.org/abs/1905.02175',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.00567",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 344: paperUrl: 'https://arxiv.org/abs/1512.00567',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1602.07261",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 364: paperUrl: 'https://arxiv.org/abs/1602.07261',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 386: paperUrl: 'https://arxiv.org/abs/1610.02357',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1905.11946",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 408: paperUrl: 'https://arxiv.org/abs/1905.11946',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 570: paperUrl: 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 610: paperUrl: 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 630: paperUrl: 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2201.03545",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 650: paperUrl: 'https://arxiv.org/abs/2201.03545',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2204.01697",
+    "sourceFile": "lib/data/model-metadata.ts",
+    "category": "Research Papers",
+    "context": "Line 670: paperUrl: 'https://arxiv.org/abs/2204.01697',"
+  },
+  {
+    "url": "http://json-schema.org/draft-07/schema#",
+    "sourceFile": "lib/data/model.schema.json",
+    "category": "External Sources",
+    "context": "Line 2: '$schema': 'http://json-schema.org/draft-07/schema#',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "lib/data/nasnetlarge.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1707.07012",
+    "sourceFile": "lib/data/nasnetmobile.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1707.07012',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/resnet101.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/resnet101v2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/resnet152.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/resnet152v2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "sourceFile": "lib/data/resnet50.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1512.03385',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1603.05027",
+    "sourceFile": "lib/data/resnet50v2.json",
+    "category": "Research Papers",
+    "context": "Line 12: 'paperUrl': 'https://arxiv.org/abs/1603.05027',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2103.14030",
+    "sourceFile": "lib/data/swin.json",
+    "category": "Research Papers",
+    "context": "Line 16: 'paperUrl': 'https://arxiv.org/abs/2103.14030',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "lib/data/vgg16.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1409.1556",
+    "sourceFile": "lib/data/vgg19.json",
+    "category": "Research Papers",
+    "context": "Line 10: 'paperUrl': 'https://arxiv.org/abs/1409.1556',"
+  },
+  {
+    "url": "https://arxiv.org/abs/2010.11929",
+    "sourceFile": "lib/data/vit.json",
+    "category": "Research Papers",
+    "context": "Line 20: 'paperUrl': 'https://arxiv.org/abs/2010.11929',"
+  },
+  {
+    "url": "https://arxiv.org/abs/1610.02357",
+    "sourceFile": "lib/data/xception.json",
+    "category": "Research Papers",
+    "context": "Line 9: 'paperUrl': 'https://arxiv.org/abs/1610.02357',"
+  }
+]

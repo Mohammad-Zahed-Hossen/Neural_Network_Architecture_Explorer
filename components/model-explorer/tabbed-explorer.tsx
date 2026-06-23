@@ -272,7 +272,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                       <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
                     </a>
                     <a
-                      href={`https://www.tensorflow.org/api_docs/python/tf/keras/applications/${model.name.replace(' ', '')}`}
+                      href={model.docsUrl || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"

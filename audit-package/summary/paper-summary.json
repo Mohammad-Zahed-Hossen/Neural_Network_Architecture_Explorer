@@ -1,0 +1,171 @@
+[
+  {
+    "paperId": "vgg",
+    "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+    "year": 2014,
+    "authors": [
+      "Karen Simonyan",
+      "Andrew Zisserman"
+    ],
+    "modelCount": 2
+  },
+  {
+    "paperId": "resnet",
+    "title": "Deep Residual Learning for Image Recognition",
+    "year": 2015,
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
+    "modelCount": 3
+  },
+  {
+    "paperId": "resnetv2",
+    "title": "Identity Mappings in Deep Residual Networks",
+    "year": 2016,
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
+    "modelCount": 3
+  },
+  {
+    "paperId": "densenet",
+    "title": "Densely Connected Convolutional Networks",
+    "year": 2016,
+    "authors": [
+      "Gao Huang",
+      "Zhuang Liu",
+      "Laurens van der Maaten",
+      "Kilian Q. Weinberger"
+    ],
+    "modelCount": 3
+  },
+  {
+    "paperId": "mobilenet",
+    "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+    "year": 2017,
+    "authors": [
+      "Andrew G. Howard",
+      "Menglong Zhu",
+      "Bo Chen",
+      "Dmitry Kalenichenko",
+      "Weijun Wang",
+      "Tobias Weyand",
+      "Marco Andreetto",
+      "Hartwig Adam"
+    ],
+    "modelCount": 2
+  },
+  {
+    "paperId": "mobilenetv3",
+    "title": "Searching for MobileNetV3",
+    "year": 2019,
+    "authors": [
+      "Andrew Howard",
+      "Mark Sandler",
+      "Grace Chu",
+      "Liang-Chieh Chen",
+      "Bo Chen",
+      "Mingxing Tan",
+      "Weijun Wang",
+      "Yukun Zhu",
+      "Ruoming Peng",
+      "Vijay Vasudevan",
+      "Hartwig Adam"
+    ],
+    "modelCount": 2
+  },
+  {
+    "paperId": "inception",
+    "title": "Rethinking the Inception Architecture for Computer Vision",
+    "year": 2015,
+    "authors": [
+      "Christian Szegedy",
+      "Vincent Vanhoucke",
+      "Sergey Ioffe",
+      "Jonathon Shlens",
+      "Zbigniew Wojna"
+    ],
+    "modelCount": 2
+  },
+  {
+    "paperId": "xception",
+    "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
+    "year": 2016,
+    "authors": [
+      "Fran\u00e7ois Chollet"
+    ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "efficientnet",
+    "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+    "year": 2019,
+    "authors": [
+      "Mingxing Tan",
+      "Quoc V. Le"
+    ],
+    "modelCount": 8
+  },
+  {
+    "paperId": "nasnet",
+    "title": "Learning Transferable Architectures for Scalable Image Recognition",
+    "year": 2017,
+    "authors": [
+      "Barret Zoph",
+      "Vijay Vasudevan",
+      "Jonathon Shlens",
+      "Quoc V. Le"
+    ],
+    "modelCount": 2
+  },
+  {
+    "paperId": "vit",
+    "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+    "year": 2020,
+    "authors": [
+      "Alexey Dosovitskiy",
+      "Lucas Beyer",
+      "et al."
+    ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "swin",
+    "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "year": 2021,
+    "authors": [
+      "Ze Liu",
+      "Yutong Lin",
+      "et al."
+    ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "convnext",
+    "title": "A ConvNet for the 2020s",
+    "year": 2022,
+    "authors": [
+      "Zhuang Liu",
+      "Hanzi Mao",
+      "et al."
+    ],
+    "modelCount": 1
+  },
+  {
+    "paperId": "maxvit",
+    "title": "MaxViT: Multi-Axis Vision Transformer",
+    "year": 2022,
+    "authors": [
+      "Zhengsu Chen",
+      "Jianchao Tan",
+      "et al."
+    ],
+    "modelCount": 1
+  }
+]

@@ -15,7 +15,7 @@
   ],
   "paperUrl": "https://arxiv.org/abs/2204.01697",
   "depth": 32,
-  "totalParameters": 30919420,
+  "totalParameters": 30552616,
   "totalFLOPs": 5600000000,
   "inputShape": {
     "channels": 3,
@@ -40,22 +40,38 @@
         "type": "input",
         "name": "Input Image",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "outputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3 RGB Image"
         },
         "config": {
-          "shape": [224, 224, 3]
+          "shape": [
+            224,
+            224,
+            3
+          ]
         },
         "parameters": {
           "total": 0,
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "RGB image inputs for the MaxViT network.",
@@ -74,17 +90,33 @@
         "type": "conv2d",
         "name": "Stem Conv 1",
         "inputShape": {
-          "dimensions": [null, 224, 224, 3],
+          "dimensions": [
+            null,
+            224,
+            224,
+            3
+          ],
           "description": "224x224x3"
         },
         "outputShape": {
-          "dimensions": [null, 112, 112, 64],
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
           "description": "112x112x64"
         },
         "config": {
           "filters": 64,
-          "kernelSize": [3, 3],
-          "strides": [2, 2],
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
           "padding": "same",
           "useBias": false,
           "activation": "linear"
@@ -93,15 +125,17 @@
           "total": 1728,
           "weights": 1728,
           "biases": 0,
-          "formula": "kernel_h × kernel_w × in_channels × filters",
+          "formula": "kernel_h \u00d7 kernel_w \u00d7 in_channels \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Conv Weights",
-              "expression": "3 × 3 × 3 × 64",
+              "expression": "3 \u00d7 3 \u00d7 3 \u00d7 64",
               "result": 1728,
               "explanation": "Standard 3x3 stride-2 conv downsampling the image to half size (112x112)."
             }
-          ]
+          ],
+          "trainableParameters": 1728,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "First stem convolution downsampling by 2x.",
@@ -120,17 +154,33 @@
         "type": "conv2d",
         "name": "Stem Conv 2",
         "inputShape": {
-          "dimensions": [null, 112, 112, 64],
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
           "description": "112x112x64"
         },
         "outputShape": {
-          "dimensions": [null, 112, 112, 64],
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
           "description": "112x112x64"
         },
         "config": {
           "filters": 64,
-          "kernelSize": [3, 3],
-          "strides": [1, 1],
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
           "padding": "same",
           "useBias": false,
           "activation": "linear"
@@ -139,15 +189,17 @@
           "total": 36864,
           "weights": 36864,
           "biases": 0,
-          "formula": "kernel_h × kernel_w × in_channels × filters",
+          "formula": "kernel_h \u00d7 kernel_w \u00d7 in_channels \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Conv Weights",
-              "expression": "3 × 3 × 64 × 64",
+              "expression": "3 \u00d7 3 \u00d7 64 \u00d7 64",
               "result": 36864,
               "explanation": "Processes features at 112x112 scale, capturing fine local structures."
             }
-          ]
+          ],
+          "trainableParameters": 36864,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Second stem convolution.",
@@ -166,11 +218,21 @@
         "type": "bottleneck",
         "name": "Stage 1 (2x MaxViT Blocks)",
         "inputShape": {
-          "dimensions": [null, 112, 112, 64],
+          "dimensions": [
+            null,
+            112,
+            112,
+            64
+          ],
           "description": "112x112x64"
         },
         "outputShape": {
-          "dimensions": [null, 56, 56, 64],
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
           "description": "56x56x64"
         },
         "config": {
@@ -180,15 +242,17 @@
           "total": 500000,
           "weights": 498000,
           "biases": 2000,
-          "formula": "2 × MaxViTBlock_Params",
+          "formula": "2 \u00d7 MaxViTBlock_Params",
           "calculationSteps": [
             {
               "label": "Stage 1 Weights Stack",
-              "expression": "2 × 249000",
+              "expression": "2 \u00d7 249000",
               "result": 498000,
               "explanation": "Weights of MBConv, Block Attention, and Grid Attention layers across two MaxViT blocks."
             }
-          ]
+          ],
+          "trainableParameters": 500000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "First hybrid stage combining conv and dual attention.",
@@ -207,11 +271,21 @@
         "type": "bottleneck",
         "name": "Stage 2 (2x MaxViT Blocks)",
         "inputShape": {
-          "dimensions": [null, 56, 56, 64],
+          "dimensions": [
+            null,
+            56,
+            56,
+            64
+          ],
           "description": "56x56x64"
         },
         "outputShape": {
-          "dimensions": [null, 28, 28, 128],
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
           "description": "28x28x128"
         },
         "config": {
@@ -221,15 +295,17 @@
           "total": 2000000,
           "weights": 1996000,
           "biases": 4000,
-          "formula": "2 × Stage2Block_Params",
+          "formula": "2 \u00d7 Stage2Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 2 weights",
-              "expression": "2 × 998000",
+              "expression": "2 \u00d7 998000",
               "result": 1996000,
               "explanation": "Dual-attention and convolution parameters mapping 64 channels to 128 channels."
             }
-          ]
+          ],
+          "trainableParameters": 2000000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Stage 2 at 28x28 resolution.",
@@ -248,11 +324,21 @@
         "type": "bottleneck",
         "name": "Stage 3 (6x MaxViT Blocks)",
         "inputShape": {
-          "dimensions": [null, 28, 28, 128],
+          "dimensions": [
+            null,
+            28,
+            28,
+            128
+          ],
           "description": "28x28x128"
         },
         "outputShape": {
-          "dimensions": [null, 14, 14, 256],
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
           "description": "14x14x256"
         },
         "config": {
@@ -262,15 +348,17 @@
           "total": 14000000,
           "weights": 13988000,
           "biases": 12000,
-          "formula": "6 × Stage3Block_Params",
+          "formula": "6 \u00d7 Stage3Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 3 Weights Stack",
-              "expression": "6 × 2331333",
+              "expression": "6 \u00d7 2331333",
               "result": 13988000,
               "explanation": "Parameters of 6 sequential blocks at 256 dimensions, doing deep hybrid visual extraction."
             }
-          ]
+          ],
+          "trainableParameters": 14000000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Deepest extraction stage with 6 blocks.",
@@ -289,11 +377,21 @@
         "type": "bottleneck",
         "name": "Stage 4 (2x MaxViT Blocks)",
         "inputShape": {
-          "dimensions": [null, 14, 14, 256],
+          "dimensions": [
+            null,
+            14,
+            14,
+            256
+          ],
           "description": "14x14x256"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 512],
+          "dimensions": [
+            null,
+            7,
+            7,
+            512
+          ],
           "description": "7x7x512"
         },
         "config": {
@@ -303,15 +401,17 @@
           "total": 13500000,
           "weights": 13494000,
           "biases": 6000,
-          "formula": "2 × Stage4Block_Params",
+          "formula": "2 \u00d7 Stage4Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 4 weights",
-              "expression": "2 × 6747000",
+              "expression": "2 \u00d7 6747000",
               "result": 13494000,
               "explanation": "Parameters of the final 2 blocks operating at 512 hidden channels."
             }
-          ]
+          ],
+          "trainableParameters": 13500000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Final extraction stage at 7x7 resolution.",
@@ -330,30 +430,42 @@
         "type": "layer_norm",
         "name": "Output LayerNorm",
         "inputShape": {
-          "dimensions": [null, 7, 7, 512],
+          "dimensions": [
+            null,
+            7,
+            7,
+            512
+          ],
           "description": "7x7x512"
         },
         "outputShape": {
-          "dimensions": [null, 7, 7, 512],
+          "dimensions": [
+            null,
+            7,
+            7,
+            512
+          ],
           "description": "7x7x512"
         },
         "config": {
           "axis": -1,
-          "epsilon": 1e-6
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1024,
           "weights": 512,
           "biases": 512,
-          "formula": "2 × channels",
+          "formula": "2 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "LN parameters",
-              "expression": "2 × 512",
+              "expression": "2 \u00d7 512",
               "result": 1024,
               "explanation": "Gamma scaling and Beta bias vectors."
             }
-          ]
+          ],
+          "trainableParameters": 1024,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Final normalization before pooling.",
@@ -372,11 +484,19 @@
         "type": "global_average_pooling2d",
         "name": "Global Average Pooling",
         "inputShape": {
-          "dimensions": [null, 7, 7, 512],
+          "dimensions": [
+            null,
+            7,
+            7,
+            512
+          ],
           "description": "7x7x512"
         },
         "outputShape": {
-          "dimensions": [null, 512],
+          "dimensions": [
+            null,
+            512
+          ],
           "description": "512-d Vector"
         },
         "config": {},
@@ -385,7 +505,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Collapses spatial dimensions to 1D vector.",
@@ -404,11 +526,17 @@
         "type": "dense",
         "name": "Classification Head",
         "inputShape": {
-          "dimensions": [null, 512],
+          "dimensions": [
+            null,
+            512
+          ],
           "description": "512"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "config": {
@@ -420,11 +548,11 @@
           "total": 513000,
           "weights": 512000,
           "biases": 1000,
-          "formula": "(channels × classes) + classes",
+          "formula": "(channels \u00d7 classes) + classes",
           "calculationSteps": [
             {
               "label": "Head Weights",
-              "expression": "512 × 1000",
+              "expression": "512 \u00d7 1000",
               "result": 512000,
               "explanation": "Dense mapping weights predicting class categories."
             },
@@ -434,7 +562,9 @@
               "result": 1000,
               "explanation": "Class logits biases."
             }
-          ]
+          ],
+          "trainableParameters": 513000,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Dense logits prediction head.",
@@ -453,11 +583,17 @@
         "type": "output",
         "name": "Output Logits",
         "inputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 logits"
         },
         "outputShape": {
-          "dimensions": [null, 1000],
+          "dimensions": [
+            null,
+            1000
+          ],
           "description": "1000 probabilities"
         },
         "config": {
@@ -470,7 +606,9 @@
           "weights": 0,
           "biases": 0,
           "formula": "None",
-          "calculationSteps": []
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
         },
         "educationalNote": {
           "summary": "Softmax conversion mapping logits to probabilities.",
@@ -608,5 +746,7 @@
         "color": "#F59E0B"
       }
     ]
-  }
+  },
+  "nonTrainableParameters": 0,
+  "trainableParameters": 30552616
 }

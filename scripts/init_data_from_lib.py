@@ -34,6 +34,13 @@ def main():
     
     print(f"Reading existing model definitions from {lib_data_dir}...")
     
+    # Load link registry
+    link_registry_path = os.path.join(out_data_dir, "link_registry.json")
+    link_registry = {}
+    if os.path.exists(link_registry_path):
+        with open(link_registry_path, "r", encoding="utf-8") as rf:
+            link_registry = json.load(rf)
+            
     models_summary = []
     models_raw = {}
     
@@ -59,6 +66,11 @@ def main():
         # 1. Add to models summary list
         # Map values according to the requested data/models.json schema and original ModelMetadata
         category = data.get("category") or get_category_from_id(model_id)
+        
+        registry_entry = link_registry.get(model_id, {})
+        docs_url = registry_entry.get("documentation") or f"https://www.tensorflow.org/api_docs/python/tf/keras/applications/{data.get('name').replace(' ', '')}"
+        paper_url = registry_entry.get("paper") or data.get("paperUrl")
+        
         summary = {
             "id": model_id,
             "name": data.get("name"),
@@ -73,6 +85,8 @@ def main():
             "tags": data.get("tags"),
             "params": data.get("totalParameters"),
             "totalParameters": data.get("totalParameters"),
+            "trainableParameters": data.get("trainableParameters", data.get("totalParameters")),
+            "nonTrainableParameters": data.get("nonTrainableParameters", 0),
             "top1": data.get("top1Accuracy") * 100 if data.get("top1Accuracy", 0) < 1 else data.get("top1Accuracy", 0),
             "top1Accuracy": data.get("top1Accuracy", 0),
             "top5": data.get("top5Accuracy") * 100 if data.get("top5Accuracy", 0) < 1 else data.get("top5Accuracy", 0),
@@ -82,9 +96,9 @@ def main():
             "flops": data.get("totalFLOPs"),
             "totalFLOPs": data.get("totalFLOPs"),
             "depth": data.get("depth"),
-            "paperUrl": data.get("paperUrl"),
+            "paperUrl": paper_url,
             "colorTheme": data.get("colorTheme"),
-            "docsUrl": f"https://www.tensorflow.org/api_docs/python/tf/keras/applications/{data.get('name').replace(' ', '')}",
+            "docsUrl": docs_url,
             "description": data.get("description")
         }
 
@@ -143,6 +157,8 @@ def main():
             "input_shape": [None, 224, 224, 3],
             "output_shape": [None, 1000],
             "num_params": data.get("totalParameters"),
+            "trainableParameters": data.get("trainableParameters", data.get("totalParameters")),
+            "nonTrainableParameters": data.get("nonTrainableParameters", 0),
             "layers": raw_layers
         }
         
