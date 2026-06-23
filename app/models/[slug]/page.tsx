@@ -37,6 +37,7 @@ export default async function ModelPage({ params }: PageProps) {
     
     const oldModelContent = fs.readFileSync(oldModelPath, 'utf8');
     model = JSON.parse(oldModelContent) as NeuralNetworkModel;
+    model.docsUrl = meta.docsUrl;
     
     const graphContent = fs.readFileSync(graphPath, 'utf8');
     graphData = JSON.parse(graphContent);
