@@ -33,7 +33,7 @@
     "flops": 720000000,
     "totalFLOPs": 720000000,
     "depth": 8,
-    "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
     "colorTheme": "#F59E0B",
     "docsUrl": "https://pytorch.org/hub/pytorch_vision_alexnet/",
     "description": "AlexNet is the landmark architecture that won the ImageNet 2012 competition by a massive margin, establishing GPU-accelerated CNNs as the state-of-the-art approach in computer vision."
@@ -42,8 +42,8 @@
     "id": "convnext",
     "name": "ConvNeXt",
     "fullName": "A ConvNet for the 2020s (Tiny)",
-    "family": "Other",
-    "category": "Other",
+    "family": "Transformer",
+    "category": "Transformer",
     "efficiency": "balanced",
     "year": 2022,
     "paperYear": 2022,
@@ -606,7 +606,7 @@
     "releaseYear": 1998,
     "authors": [
       "Yann LeCun",
-      "Léon Bottou",
+      "L\u00e9on Bottou",
       "Yoshua Bengio",
       "Patrick Haffner"
     ],
@@ -629,7 +629,7 @@
     "flops": 340000,
     "totalFLOPs": 340000,
     "depth": 5,
-    "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
     "colorTheme": "#84CC16",
     "docsUrl": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
     "description": "LeNet-5 is the pioneering convolutional neural network that established standard weight sharing, local receptive fields, and subsampling structures to read handwritten digits."
@@ -638,8 +638,8 @@
     "id": "maxvit",
     "name": "MaxViT",
     "fullName": "MaxViT: Multi-Axis Vision Transformer (Tiny)",
-    "family": "Other",
-    "category": "Other",
+    "family": "Transformer",
+    "category": "Transformer",
     "efficiency": "balanced",
     "year": 2022,
     "paperYear": 2022,
@@ -807,7 +807,7 @@
     "flops": 219000000,
     "totalFLOPs": 219000000,
     "depth": 109,
-    "paperUrl": "https://arxiv.org/abs/1905.02175",
+    "paperUrl": "https://arxiv.org/abs/1905.02244",
     "colorTheme": "#00D9FF",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",
     "description": "Larger MobileNetV3 variant optimized for better accuracy. Uses hardware-aware search and squeeze-and-excitation blocks for improved performance."
@@ -856,7 +856,7 @@
     "flops": 65000000,
     "totalFLOPs": 65000000,
     "depth": 66,
-    "paperUrl": "https://arxiv.org/abs/1905.02175",
+    "paperUrl": "https://arxiv.org/abs/1905.02244",
     "colorTheme": "#0891B2",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small",
     "description": "Ultra-lightweight MobileNet variant found through neural architecture search. Ideal for extreme mobile constraints with very small parameter count."
@@ -1186,8 +1186,8 @@
     "id": "swin",
     "name": "Swin Transformer",
     "fullName": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows (Tiny)",
-    "family": "Other",
-    "category": "Other",
+    "family": "Transformer",
+    "category": "Transformer",
     "efficiency": "balanced",
     "year": 2021,
     "paperYear": 2021,
@@ -1306,8 +1306,8 @@
     "id": "vit",
     "name": "ViT",
     "fullName": "An Image is Worth 16x16 Words: Vision Transformer (Base/16)",
-    "family": "Other",
-    "category": "Other",
+    "family": "Transformer",
+    "category": "Transformer",
     "efficiency": "balanced",
     "year": 2020,
     "paperYear": 2020,
@@ -1361,7 +1361,7 @@
     "paperYear": 2016,
     "releaseYear": 2016,
     "authors": [
-      "François Chollet"
+      "Fran\u00e7ois Chollet"
     ],
     "tags": [
       "CNN",

@@ -1,6 +1,6 @@
 {
   "modelName": "Swin Transformer",
-  "architectureFamily": "Other",
+  "architectureFamily": "Transformer",
   "publicationYear": 2021,
   "inputShape": {
     "channels": 3,

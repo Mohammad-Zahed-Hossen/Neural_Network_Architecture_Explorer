@@ -21,6 +21,8 @@ def get_category_from_id(model_id):
         return "NASNet"
     elif model_id_lower.startswith("lenet") or model_id_lower.startswith("alexnet"):
         return "Foundational"
+    elif model_id_lower.startswith("vit") or model_id_lower.startswith("swin") or model_id_lower.startswith("convnext") or model_id_lower.startswith("maxvit"):
+        return "Transformer"
     return "Other"
 
 # Manual metadata for accuracy, FLOPs, memory (MB) which aren't inside tf.keras structures

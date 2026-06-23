@@ -7,7 +7,7 @@ This report compiles a detailed inventory of the neural network architectures, t
 | Model ID | Model Name | Family | Depth | Parameters | FLOPs | MACs (approx) | Top-1 Acc | Top-5 Acc | Layers |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | `alexnet` | **AlexNet** | Foundational | 8 | 62,378,344 | 720,000,000 | 360,000,000 | 57.1% | 80.2% | 13 |
-| `convnext` | **ConvNeXt** | Other | 30 | 28,475,064 | 4,460,000,000 | 2,230,000,000 | 82.1% | 95.9% | 14 |
+| `convnext` | **ConvNeXt** | Transformer | 30 | 28,475,064 | 4,460,000,000 | 2,230,000,000 | 82.1% | 95.9% | 14 |
 | `densenet121` | **DenseNet121** | DenseNet | 121 | 8,062,504 | 2,900,000,000 | 1,450,000,000 | 75.0% | 92.3% | 429 |
 | `densenet169` | **DenseNet169** | DenseNet | 169 | 14,307,880 | 3,400,000,000 | 1,700,000,000 | 75.6% | 92.7% | 597 |
 | `densenet201` | **DenseNet201** | DenseNet | 201 | 20,242,984 | 4,300,000,000 | 2,150,000,000 | 76.9% | 93.5% | 709 |
@@ -22,7 +22,7 @@ This report compiles a detailed inventory of the neural network architectures, t
 | `inceptionresnetv2` | **InceptionResNetV2** | Inception | 164 | 55,873,736 | 13,100,000,000 | 6,550,000,000 | 80.3% | 95.3% | 124 |
 | `inceptionv3` | **InceptionV3** | Inception | 48 | 23,851,784 | 5,600,000,000 | 2,800,000,000 | 77.9% | 93.7% | 90 |
 | `lenet` | **LeNet 5** | Foundational | 5 | 61,706 | 340,000 | 170,000 | 99.2% | 99.8% | 9 |
-| `maxvit` | **MaxViT** | Other | 32 | 30,552,616 | 5,600,000,000 | 2,800,000,000 | 83.6% | 96.6% | 11 |
+| `maxvit` | **MaxViT** | Transformer | 32 | 30,552,616 | 5,600,000,000 | 2,800,000,000 | 83.6% | 96.6% | 11 |
 | `mobilenet` | **MobileNet** | MobileNet | 28 | 4,253,864 | 569,000,000 | 284,500,000 | 70.4% | 89.5% | 84 |
 | `mobilenetv2` | **MobileNetV2** | MobileNet | 53 | 3,538,984 | 300,000,000 | 150,000,000 | 71.8% | 91.0% | 152 |
 | `mobilenetv3large` | **MobileNetV3 Large** | MobileNet | 109 | 5,507,432 | 219,000,000 | 109,500,000 | 75.4% | 92.3% | 169 |
@@ -35,10 +35,10 @@ This report compiles a detailed inventory of the neural network architectures, t
 | `resnet152v2` | **ResNet152V2** | ResNet | 152 | 60,380,648 | 11,300,000,000 | 5,650,000,000 | 78.0% | 94.0% | 563 |
 | `resnet50` | **ResNet50** | ResNet | 50 | 25,610,152 | 4,100,000,000 | 2,050,000,000 | 74.9% | 92.1% | 176 |
 | `resnet50v2` | **ResNet50V2** | ResNet | 50 | 25,613,800 | 4,100,000,000 | 2,050,000,000 | 76.0% | 93.0% | 189 |
-| `swin` | **Swin Transformer** | Other | 36 | 28,474,872 | 4,500,000,000 | 2,250,000,000 | 81.3% | 95.5% | 13 |
+| `swin` | **Swin Transformer** | Transformer | 36 | 28,474,872 | 4,500,000,000 | 2,250,000,000 | 81.3% | 95.5% | 13 |
 | `vgg16` | **VGG16** | VGG | 16 | 138,357,544 | 15,300,000,000 | 7,650,000,000 | 71.3% | 90.1% | 23 |
 | `vgg19` | **VGG19** | VGG | 19 | 143,667,240 | 19,600,000,000 | 9,800,000,000 | 71.5% | 90.3% | 26 |
-| `vit` | **ViT** | Other | 12 | 86,566,120 | 16,800,000,000 | 8,400,000,000 | 77.9% | 94.3% | 17 |
+| `vit` | **ViT** | Transformer | 12 | 86,566,120 | 16,800,000,000 | 8,400,000,000 | 77.9% | 94.3% | 17 |
 | `xception` | **Xception** | Xception | 71 | 22,910,480 | 8,400,000,000 | 4,200,000,000 | 79.0% | 94.5% | 117 |
 
 ## 2. Layer Type Aggregations across Dataset

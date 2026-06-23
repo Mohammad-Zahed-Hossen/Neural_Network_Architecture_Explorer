@@ -2688,10 +2688,10 @@
     "context": "Line 170: 'implementation': 'https://github.com/google-research/maxvit'"
   },
   {
-    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf',"
+    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
   },
   {
     "url": "https://pytorch.org/hub/pytorch_vision_alexnet/",
@@ -2814,10 +2814,10 @@
     "context": "Line 594: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3',"
   },
   {
-    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',"
+    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
   },
   {
     "url": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
@@ -2862,10 +2862,10 @@
     "context": "Line 764: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2',"
   },
   {
-    "url": "https://arxiv.org/abs/1905.02175",
+    "url": "https://arxiv.org/abs/1905.02244",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
+    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02244',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",

@@ -12,7 +12,7 @@
   {
     "modelId": "convnext",
     "name": "ConvNeXt",
-    "family": "Other",
+    "family": "Transformer",
     "year": 2022,
     "totalParameters": 28475064,
     "totalFLOPs": 4460000000,
@@ -162,7 +162,7 @@
   {
     "modelId": "maxvit",
     "name": "MaxViT",
-    "family": "Other",
+    "family": "Transformer",
     "year": 2022,
     "totalParameters": 30552616,
     "totalFLOPs": 5600000000,
@@ -292,7 +292,7 @@
   {
     "modelId": "swin",
     "name": "Swin Transformer",
-    "family": "Other",
+    "family": "Transformer",
     "year": 2021,
     "totalParameters": 28474872,
     "totalFLOPs": 4500000000,
@@ -322,7 +322,7 @@
   {
     "modelId": "vit",
     "name": "ViT",
-    "family": "Other",
+    "family": "Transformer",
     "year": 2020,
     "totalParameters": 86566120,
     "totalFLOPs": 16800000000,

@@ -132,10 +132,10 @@
     "context": "Line 168: 'paper': 'https://arxiv.org/abs/2204.01697',"
   },
   {
-    "url": "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+    "url": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf',"
+    "context": "Line 36: 'paperUrl': 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',"
   },
   {
     "url": "https://arxiv.org/abs/2201.03545",
@@ -168,10 +168,10 @@
     "context": "Line 592: 'paperUrl': 'https://arxiv.org/abs/1512.00567',"
   },
   {
-    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "url": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',"
+    "context": "Line 632: 'paperUrl': 'http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf',"
   },
   {
     "url": "https://arxiv.org/abs/2204.01697",
@@ -192,10 +192,10 @@
     "context": "Line 762: 'paperUrl': 'https://arxiv.org/abs/1801.04381',"
   },
   {
-    "url": "https://arxiv.org/abs/1905.02175",
+    "url": "https://arxiv.org/abs/1905.02244",
     "sourceFile": "data/models.json",
     "category": "Research Papers",
-    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02175',"
+    "context": "Line 810: 'paperUrl': 'https://arxiv.org/abs/1905.02244',"
   },
   {
     "url": "https://arxiv.org/abs/1707.07012",

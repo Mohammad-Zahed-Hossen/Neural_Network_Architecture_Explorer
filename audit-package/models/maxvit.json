@@ -1,6 +1,6 @@
 {
   "modelName": "MaxViT",
-  "architectureFamily": "Other",
+  "architectureFamily": "Transformer",
   "publicationYear": 2022,
   "inputShape": {
     "channels": 3,

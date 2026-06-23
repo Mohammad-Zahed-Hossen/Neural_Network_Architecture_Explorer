@@ -1,6 +1,6 @@
 {
   "modelName": "ViT",
-  "architectureFamily": "Other",
+  "architectureFamily": "Transformer",
   "publicationYear": 2020,
   "inputShape": {
     "channels": 3,
