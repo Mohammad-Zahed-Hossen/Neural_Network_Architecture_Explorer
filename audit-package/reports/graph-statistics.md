@@ -19,16 +19,16 @@ Analyzes neural network graphs as mathematical node-link topologies, mapping siz
 | `efficientnetb5` | 506 | 576 | 71 | 39 | 41 | `224x224` |
 | `efficientnetb6` | 584 | 666 | 83 | 45 | 47 | `224x224` |
 | `efficientnetb7` | 711 | 813 | 103 | 55 | 57 | `600x600` |
-| `inceptionresnetv2` | 124 | 136 | 20 | 0 | 7 | `224x224` |
-| `inceptionv3` | 90 | 94 | 12 | 0 | 5 | `224x224` |
+| `inceptionresnetv2` | 124 | 135 | 20 | 0 | 7 | `224x224` |
+| `inceptionv3` | 90 | 93 | 12 | 0 | 5 | `224x224` |
 | `lenet` | 9 | 8 | 0 | 0 | 3 | `32x32` |
 | `maxvit` | 11 | 10 | 0 | 0 | 6 | `224x224` |
 | `mobilenet` | 84 | 83 | 0 | 0 | 15 | `224x224` |
 | `mobilenetv2` | 152 | 161 | 10 | 0 | 19 | `224x224` |
 | `mobilenetv3large` | 169 | 186 | 18 | 8 | 17 | `224x224` |
 | `mobilenetv3small` | 137 | 151 | 15 | 9 | 13 | `224x224` |
-| `nasnetlarge` | 66 | 85 | 40 | 0 | 21 | `224x224` |
-| `nasnetmobile` | 48 | 61 | 28 | 0 | 15 | `224x224` |
+| `nasnetlarge` | 66 | 84 | 40 | 0 | 21 | `224x224` |
+| `nasnetmobile` | 48 | 60 | 28 | 0 | 15 | `224x224` |
 | `resnet101` | 346 | 378 | 33 | 0 | 35 | `224x224` |
 | `resnet101v2` | 376 | 408 | 33 | 0 | 35 | `224x224` |
 | `resnet152` | 516 | 565 | 50 | 0 | 52 | `224x224` |
@@ -39,7 +39,7 @@ Analyzes neural network graphs as mathematical node-link topologies, mapping siz
 | `vgg16` | 23 | 22 | 0 | 0 | 6 | `224x224` |
 | `vgg19` | 26 | 25 | 0 | 0 | 6 | `224x224` |
 | `vit` | 17 | 18 | 2 | 0 | 4 | `224x224` |
-| `xception` | 117 | 126 | 11 | 0 | 13 | `224x224` |
+| `xception` | 117 | 125 | 11 | 0 | 13 | `224x224` |
 
 ## 2. Residual and Dense Connection Analysis
 

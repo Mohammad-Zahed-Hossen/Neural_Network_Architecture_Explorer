@@ -4,7 +4,7 @@ This document summarizes the results of the Neural Network Architecture Explorer
 
 ## 1. Export Statistics
 
-- **Generation Timestamp**: 2026-06-23T09:54:15.210774Z
+- **Generation Timestamp**: 2026-06-23T10:12:21.003125Z
 - **Total Exported Models**: 34
 - **Total Dataset Layers**: 8,388
 - **Total Parameters Represented**: 1,229,831,438
@@ -12,17 +12,17 @@ This document summarizes the results of the Neural Network Architecture Explorer
 - **Total Links/URLs Extracted**: 567
 - **Total Educational Note Records**: 8372
 - **Total Graph Nodes**: 8388
-- **Total Graph Edges**: 9359
+- **Total Graph Edges**: 9354
 
 ## 2. Extracted Link Categories Summary
 
 | Link Category | Unique URL Occurrences |
 | :--- | :---: |
 | Research Papers | 105 |
-| Documentation | 67 |
+| Documentation | 65 |
 | References | 37 |
 | Educational Resources | 0 |
-| External Sources | 358 |
+| External Sources | 360 |
 
 ## 3. Data Quality & Audit Report
 

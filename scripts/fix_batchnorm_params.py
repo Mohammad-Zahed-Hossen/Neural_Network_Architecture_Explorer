@@ -52,8 +52,8 @@ def process_model_file(file_path):
             
             layer["parameters"] = {
                 "total": 4 * C,
-                "weights": 2 * C,
-                "biases": 2 * C,
+                "weights": C,
+                "biases": C,
                 "trainableParameters": trainable_layer,
                 "nonTrainableParameters": non_trainable_layer,
                 "gamma": C,

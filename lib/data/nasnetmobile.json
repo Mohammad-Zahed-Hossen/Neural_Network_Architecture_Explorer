@@ -158,8 +158,8 @@
         },
         "parameters": {
           "total": 128,
-          "weights": 64,
-          "biases": 64,
+          "weights": 32,
+          "biases": 32,
           "trainableParameters": 64,
           "nonTrainableParameters": 64,
           "gamma": 32,
@@ -2663,12 +2663,6 @@
         "id": "c_last_gap",
         "sourceId": "cell_14_add",
         "targetId": "global_average_pooling2d",
-        "type": "sequential"
-      },
-      {
-        "id": "c_gap_pred",
-        "sourceId": "global_average_pooling2d",
-        "targetId": "parameter_alignment_adjustment",
         "type": "sequential"
       },
       {

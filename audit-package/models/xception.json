@@ -157,8 +157,8 @@
       },
       "parameters": {
         "total": 128,
-        "weights": 64,
-        "biases": 64,
+        "weights": 32,
+        "biases": 32,
         "trainableParameters": 64,
         "nonTrainableParameters": 64,
         "gamma": 32,
@@ -337,8 +337,8 @@
       },
       "parameters": {
         "total": 256,
-        "weights": 128,
-        "biases": 128,
+        "weights": 64,
+        "biases": 64,
         "trainableParameters": 128,
         "nonTrainableParameters": 128,
         "gamma": 64,
@@ -515,8 +515,8 @@
       },
       "parameters": {
         "total": 512,
-        "weights": 256,
-        "biases": 256,
+        "weights": 128,
+        "biases": 128,
         "trainableParameters": 256,
         "nonTrainableParameters": 256,
         "gamma": 128,
@@ -692,8 +692,8 @@
       },
       "parameters": {
         "total": 512,
-        "weights": 256,
-        "biases": 256,
+        "weights": 128,
+        "biases": 128,
         "trainableParameters": 256,
         "nonTrainableParameters": 256,
         "gamma": 128,
@@ -877,8 +877,8 @@
       },
       "parameters": {
         "total": 512,
-        "weights": 256,
-        "biases": 256,
+        "weights": 128,
+        "biases": 128,
         "trainableParameters": 256,
         "nonTrainableParameters": 256,
         "gamma": 128,
@@ -1054,8 +1054,8 @@
       },
       "parameters": {
         "total": 1024,
-        "weights": 512,
-        "biases": 512,
+        "weights": 256,
+        "biases": 256,
         "trainableParameters": 512,
         "nonTrainableParameters": 512,
         "gamma": 256,
@@ -1231,8 +1231,8 @@
       },
       "parameters": {
         "total": 1024,
-        "weights": 512,
-        "biases": 512,
+        "weights": 256,
+        "biases": 256,
         "trainableParameters": 512,
         "nonTrainableParameters": 512,
         "gamma": 256,
@@ -1416,8 +1416,8 @@
       },
       "parameters": {
         "total": 1024,
-        "weights": 512,
-        "biases": 512,
+        "weights": 256,
+        "biases": 256,
         "trainableParameters": 512,
         "nonTrainableParameters": 512,
         "gamma": 256,
@@ -1593,8 +1593,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -1770,8 +1770,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -1955,8 +1955,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -2132,8 +2132,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -2309,8 +2309,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -2486,8 +2486,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -2712,8 +2712,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -2889,8 +2889,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -3066,8 +3066,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -3292,8 +3292,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -3469,8 +3469,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -3646,8 +3646,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -3872,8 +3872,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -4049,8 +4049,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -4226,8 +4226,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -4452,8 +4452,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -4629,8 +4629,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -4806,8 +4806,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -5032,8 +5032,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -5209,8 +5209,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -5386,8 +5386,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -5612,8 +5612,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -5789,8 +5789,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -5966,8 +5966,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -6192,8 +6192,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -6369,8 +6369,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -6546,8 +6546,8 @@
       },
       "parameters": {
         "total": 2912,
-        "weights": 1456,
-        "biases": 1456,
+        "weights": 728,
+        "biases": 728,
         "trainableParameters": 1456,
         "nonTrainableParameters": 1456,
         "gamma": 728,
@@ -6721,9 +6721,7 @@
         "incoming": [
           "block12_add"
         ],
-        "outgoing": [
-          "parameter_alignment_adjustment"
-        ]
+        "outgoing": []
       },
       "educationalNotes": {
         "summary": "GAP averaging channels.",
@@ -6809,9 +6807,7 @@
         "activation": "linear"
       },
       "connections": {
-        "incoming": [
-          "global_average_pooling2d"
-        ],
+        "incoming": [],
         "outgoing": [
           "predictions"
         ]

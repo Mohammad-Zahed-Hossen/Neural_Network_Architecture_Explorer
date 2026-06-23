@@ -42,52 +42,52 @@
     "context": "Line 24: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet50V2",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 29: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2',"
+    "context": "Line 29: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet50V2',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet101",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 34: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101',"
+    "context": "Line 34: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet101',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet101V2",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 39: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2',"
+    "context": "Line 39: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet101V2',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet152",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 44: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152',"
+    "context": "Line 44: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet152',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet152V2",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 49: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2',"
+    "context": "Line 49: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet152V2',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet121",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 54: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121',"
+    "context": "Line 54: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet121',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet169",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 59: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169',"
+    "context": "Line 59: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet169',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet201",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 64: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201',"
+    "context": "Line 64: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet201',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet",
@@ -102,16 +102,16 @@
     "context": "Line 74: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 79: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large',"
+    "context": "Line 79: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small",
     "sourceFile": "data/link_registry.json",
     "category": "Documentation",
-    "context": "Line 84: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small',"
+    "context": "Line 84: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
@@ -198,12 +198,6 @@
     "context": "Line 164: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
-    "sourceFile": "data/link_registry.json",
-    "category": "Documentation",
-    "context": "Line 169: 'documentation': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny',"
-  },
-  {
     "url": "https://pytorch.org/hub/pytorch_vision_alexnet/",
     "sourceFile": "data/models.json",
     "category": "Documentation",
@@ -216,22 +210,22 @@
     "context": "Line 80: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet121",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 120: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121',"
+    "context": "Line 120: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet121',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet169",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 160: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169',"
+    "context": "Line 160: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet169',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet201",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 200: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201',"
+    "context": "Line 200: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet201',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
@@ -300,12 +294,6 @@
     "context": "Line 634: 'docsUrl': 'https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
-    "sourceFile": "data/models.json",
-    "category": "Documentation",
-    "context": "Line 678: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny',"
-  },
-  {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet",
     "sourceFile": "data/models.json",
     "category": "Documentation",
@@ -318,16 +306,16 @@
     "context": "Line 764: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 812: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large',"
+    "context": "Line 812: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 861: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small',"
+    "context": "Line 861: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetLarge",
@@ -342,28 +330,28 @@
     "context": "Line 942: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet101",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 982: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101',"
+    "context": "Line 982: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet101',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet101V2",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 1022: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2',"
+    "context": "Line 1022: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet101V2',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet152",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 1062: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152',"
+    "context": "Line 1062: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet152',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet152V2",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 1102: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2',"
+    "context": "Line 1102: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet152V2',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50",
@@ -372,10 +360,10 @@
     "context": "Line 1142: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50',"
   },
   {
-    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
+    "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet50V2",
     "sourceFile": "data/models.json",
     "category": "Documentation",
-    "context": "Line 1182: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2',"
+    "context": "Line 1182: 'docsUrl': 'https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet50V2',"
   },
   {
     "url": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16",

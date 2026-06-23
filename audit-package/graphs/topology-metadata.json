@@ -46108,7 +46108,7 @@
   },
   "inceptionresnetv2": {
     "nodeCount": 124,
-    "edgeCount": 136,
+    "edgeCount": 135,
     "nodeIds": [
       "input_1",
       "conv2d_1_conv",
@@ -47041,12 +47041,6 @@
         "type": "sequential"
       },
       {
-        "id": "c_gap_pred",
-        "source": "global_average_pooling2d",
-        "target": "parameter_alignment_adjustment",
-        "type": "sequential"
-      },
-      {
         "id": "c_alignment_predictions",
         "source": "parameter_alignment_adjustment",
         "target": "predictions",
@@ -47189,7 +47183,7 @@
   },
   "inceptionv3": {
     "nodeCount": 90,
-    "edgeCount": 94,
+    "edgeCount": 93,
     "nodeIds": [
       "input_1",
       "conv2d_1_conv",
@@ -47833,12 +47827,6 @@
         "id": "c_last_gap",
         "source": "mixed_2_concat",
         "target": "global_average_pooling2d",
-        "type": "sequential"
-      },
-      {
-        "id": "c_gap_pred",
-        "source": "global_average_pooling2d",
-        "target": "parameter_alignment_adjustment",
         "type": "sequential"
       },
       {
@@ -52577,7 +52565,7 @@
   },
   "nasnetlarge": {
     "nodeCount": 66,
-    "edgeCount": 85,
+    "edgeCount": 84,
     "nodeIds": [
       "input_1",
       "stem_conv1",
@@ -53146,12 +53134,6 @@
         "type": "sequential"
       },
       {
-        "id": "c_gap_pred",
-        "source": "global_average_pooling2d",
-        "target": "parameter_alignment_adjustment",
-        "type": "sequential"
-      },
-      {
         "id": "c_alignment_predictions",
         "source": "parameter_alignment_adjustment",
         "target": "predictions",
@@ -53414,7 +53396,7 @@
   },
   "nasnetmobile": {
     "nodeCount": 48,
-    "edgeCount": 61,
+    "edgeCount": 60,
     "nodeIds": [
       "input_1",
       "stem_conv1",
@@ -53818,12 +53800,6 @@
         "id": "c_last_gap",
         "source": "cell_14_add",
         "target": "global_average_pooling2d",
-        "type": "sequential"
-      },
-      {
-        "id": "c_gap_pred",
-        "source": "global_average_pooling2d",
-        "target": "parameter_alignment_adjustment",
         "type": "sequential"
       },
       {
@@ -72279,7 +72255,7 @@
   },
   "xception": {
     "nodeCount": 117,
-    "edgeCount": 126,
+    "edgeCount": 125,
     "nodeIds": [
       "input_1",
       "block1_conv1_conv",
@@ -73142,12 +73118,6 @@
         "id": "c_last_gap",
         "source": "block12_add",
         "target": "global_average_pooling2d",
-        "type": "sequential"
-      },
-      {
-        "id": "c_gap_pred",
-        "source": "global_average_pooling2d",
-        "target": "parameter_alignment_adjustment",
         "type": "sequential"
       },
       {

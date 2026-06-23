@@ -150,8 +150,8 @@
       },
       "parameters": {
         "total": 384,
-        "weights": 192,
-        "biases": 192,
+        "weights": 96,
+        "biases": 96,
         "trainableParameters": 192,
         "nonTrainableParameters": 192,
         "gamma": 96,
@@ -3608,9 +3608,7 @@
         "incoming": [
           "cell_20_add"
         ],
-        "outgoing": [
-          "parameter_alignment_adjustment"
-        ]
+        "outgoing": []
       },
       "educationalNotes": {
         "summary": "GAP averaging channels.",
@@ -3696,9 +3694,7 @@
         "activation": "linear"
       },
       "connections": {
-        "incoming": [
-          "global_average_pooling2d"
-        ],
+        "incoming": [],
         "outgoing": [
           "predictions"
         ]

@@ -117,7 +117,7 @@
     "depth": 121,
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#8B5CF6",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet121",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet121",
     "description": "DenseNet121 connects every layer to all preceding layers in a feed-forward manner. This maximizes feature reuse and avoids redundant parameter mapping, allowing 121 layers to run with only 8M parameters."
   },
   {
@@ -157,7 +157,7 @@
     "depth": 169,
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#7C3AED",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet169",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet169",
     "description": "Deeper 169-layer variant of DenseNet. Balances accuracy improvement with computational cost through dense connections and efficient feature reuse."
   },
   {
@@ -197,7 +197,7 @@
     "depth": 201,
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#6D28D9",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet201",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet201",
     "description": "The largest DenseNet variant with 201 layers. Achieves excellent accuracy through dense feature reuse while maintaining parameter efficiency compared to older architectures."
   },
   {
@@ -675,7 +675,7 @@
     "depth": 32,
     "paperUrl": "https://arxiv.org/abs/2204.01697",
     "colorTheme": "#A855F7",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/maxvit/MaxViTTiny",
+    "docsUrl": "https://huggingface.co/docs/transformers/model_doc/maxvit",
     "description": "MaxViT (Multi-Axis Vision Transformer) is a hybrid backbone combining CNN MBConv blocks with two attention mechanisms: Block Attention (self-attention inside local windows) and Grid Attention (self-attention across a sparse dilated grid). This dual-attention approach achieves global interactions in linear time relative to image size."
   },
   {
@@ -809,7 +809,7 @@
     "depth": 109,
     "paperUrl": "https://arxiv.org/abs/1905.02244",
     "colorTheme": "#00D9FF",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Large",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Large",
     "description": "Larger MobileNetV3 variant optimized for better accuracy. Uses hardware-aware search and squeeze-and-excitation blocks for improved performance."
   },
   {
@@ -858,7 +858,7 @@
     "depth": 66,
     "paperUrl": "https://arxiv.org/abs/1905.02244",
     "colorTheme": "#0891B2",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v3/MobileNetV3Small",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV3Small",
     "description": "Ultra-lightweight MobileNet variant found through neural architecture search. Ideal for extreme mobile constraints with very small parameter count."
   },
   {
@@ -979,7 +979,7 @@
     "depth": 101,
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#059669",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet101",
     "description": "101-layer residual network with even deeper architecture. Stacks bottleneck blocks for computational efficiency while maintaining representational power."
   },
   {
@@ -1019,7 +1019,7 @@
     "depth": 101,
     "paperUrl": "https://arxiv.org/abs/1603.05027",
     "colorTheme": "#22C55E",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet101v2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet101V2",
     "description": "101-layer ResNet V2 with pre-activation structure. Outperforms original ResNet101 and provides a good balance between accuracy and computational cost."
   },
   {
@@ -1059,7 +1059,7 @@
     "depth": 152,
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#047857",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet152",
     "description": "The deepest variant in the original ResNet family with 152 layers. Achieves best accuracy but requires more computational resources. Demonstrates that deeper networks benefit from skip connections."
   },
   {
@@ -1099,7 +1099,7 @@
     "depth": 152,
     "paperUrl": "https://arxiv.org/abs/1603.05027",
     "colorTheme": "#4ADE80",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet152v2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet152V2",
     "description": "The deepest ResNet V2 variant. Achieves state-of-the-art accuracy at the time with improved gradient flow and training dynamics."
   },
   {
@@ -1179,7 +1179,7 @@
     "depth": 50,
     "paperUrl": "https://arxiv.org/abs/1603.05027",
     "colorTheme": "#16A34A",
-    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50v2",
+    "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet50V2",
     "description": "Improved ResNet architecture with pre-activation, improving gradient flow and training stability. Better performance than original ResNet50 with similar parameters."
   },
   {
