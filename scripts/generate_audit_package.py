@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""Deprecated audit archive generator.
+
+The generated audit-package/ directory has been moved out of the active project
+tree. This script is retained only to document how that archive was produced.
+"""
+
 import os
 import json
 import re
@@ -900,3 +906,8 @@ def main():
     
 if __name__ == "__main__":
     main()
+"""Deprecated audit archive generator.
+
+The generated audit-package/ directory has been moved out of the active project
+tree. This script is retained only to document how that archive was produced.
+"""

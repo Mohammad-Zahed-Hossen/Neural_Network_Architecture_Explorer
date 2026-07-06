@@ -3,9 +3,9 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Calendar, Cpu, ArrowRight, Layers, Zap, Tag } from 'lucide-react';
+import { Cpu, ArrowRight, Layers, Zap, Tag } from 'lucide-react';
 import { ModelMetadata } from '@/lib/data/model-metadata';
-import { modelsMetadata } from '@/lib/data/model-metadata';
+import modelsSummary from '@/data/models.json';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import { Badge } from '@/components/ui/badge';
 import { modelCategories } from '@/lib/data/model-categories';
@@ -27,10 +27,10 @@ const efficiencyMap = {
 };
 
 // Compute max values across all models for relative bar scaling
-const maxParams = Math.max(...modelsMetadata.map(m => m.totalParameters));
-const maxDepth = Math.max(...modelsMetadata.map(m => m.depth));
-const maxAccuracy = Math.max(...modelsMetadata.map(m => m.top1Accuracy));
-const maxMemory = Math.max(...modelsMetadata.map(m => m.memoryUsage));
+const maxParams = Math.max(...modelsSummary.map(m => m.totalParameters));
+const maxDepth = Math.max(...modelsSummary.map(m => m.depth));
+const maxAccuracy = Math.max(...modelsSummary.map(m => m.top1Accuracy));
+const maxMemory = Math.max(...modelsSummary.map(m => m.memoryUsage));
 
 
 export default function ModelCard({ model, index }: ModelCardProps) {

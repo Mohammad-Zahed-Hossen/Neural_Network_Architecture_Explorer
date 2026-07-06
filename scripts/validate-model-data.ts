@@ -1,267 +1,190 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { z } from 'zod';
-import { NeuralNetworkModelSchema, ModelSummarySchema } from '../lib/schema/model.schema';
+import { ModelSummarySchema, NeuralNetworkModelSchema } from '../lib/schema/model.schema';
 
 const PROJECT_ROOT = process.cwd();
 const MODELS_JSON_PATH = join(PROJECT_ROOT, 'data/models.json');
-const LIB_DATA_DIR = join(PROJECT_ROOT, 'lib/data');
-const GRAPHS_DIR = join(PROJECT_ROOT, 'data/graphs');
+const CANONICAL_MODELS_DIR = join(PROJECT_ROOT, 'data/models');
 
 interface ValidationReport {
   modelId: string;
-  schemaErrors: string[];
+  summaryErrors: string[];
+  modelErrors: string[];
   missingLayerReferences: string[];
-  fieldMismatches: FieldMismatch[];
-}
-
-interface FieldMismatch {
-  field: string;
-  modelsJsonValue: any;
-  libDataValue: any;
+  fieldMismatches: string[];
 }
 
 function loadJson<T>(path: string): T {
-  try {
-    const content = readFileSync(path, 'utf-8');
-    return JSON.parse(content);
-  } catch (error) {
-    throw new Error(Failed to load : );
-  }
+  const content = readFileSync(path, 'utf-8');
+  return JSON.parse(content) as T;
 }
 
-function validateModelSchema(modelData: unknown, modelId: string): string[] {
+function formatIssues(error: { issues: Array<{ path: PropertyKey[]; message: string }> }): string[] {
+  return error.issues.map((issue) => `${issue.path.map(String).join('.') || '(root)'}: ${issue.message}`);
+}
+
+function checkLayerReferences(model: any): string[] {
   const errors: string[] = [];
-  const result = NeuralNetworkModelSchema.safeParse(modelData);
-  
-  if (!result.success) {
-    result.error.errors.forEach((err) => {
-      errors.push(Path:  - );
-    });
-  }
-  
-  return errors;
-}
+  const layers = model.architecture?.layers ?? [];
+  const layerIds = new Set(layers.map((layer: any) => layer.id));
 
-function checkLayerReferences(graphData: any, libDataLayers: any[], modelId: string): string[] {
-  const errors: string[] = [];
-  const layerIds = new Set(libDataLayers.map((l) => l.id));
-  
-  // Check connections
-  if (graphData.edges) {
-    graphData.edges.forEach((edge: any, index: number) => {
-      if (!layerIds.has(edge.source)) {
-        errors.push(Edge  references missing source layer: );
-      }
-      if (!layerIds.has(edge.target)) {
-        errors.push(Edge  references missing target layer: );
-      }
-    });
+  for (const connection of model.architecture?.connections ?? []) {
+    if (!layerIds.has(connection.sourceId)) {
+      errors.push(`Connection "${connection.id}" references missing source layer "${connection.sourceId}".`);
+    }
+    if (!layerIds.has(connection.targetId)) {
+      errors.push(`Connection "${connection.id}" references missing target layer "${connection.targetId}".`);
+    }
   }
-  
-  // Check groups
-  if (graphData.groups) {
-    graphData.groups.forEach((group: any) => {
-      group.layerIds.forEach((layerId: string) => {
-        if (!layerIds.has(layerId)) {
-          errors.push(Group "" references missing layer: );
-        }
-      });
-    });
-  }
-  
-  return errors;
-}
 
-function compareFields(modelsJsonEntry: any, libDataEntry: any, modelId: string): FieldMismatch[] {
-  const mismatches: FieldMismatch[] = [];
-  
-  // Field name mappings from models.json to lib/data structure
-  const fieldMappings = {
-    params: 'totalParameters',
-    flops: 'totalFLOPs',
-    top1: 'top1Accuracy',
-    top5: 'top5Accuracy',
-    memory_mb: 'memoryUsage',
-  };
-  
-  Object.entries(fieldMappings).forEach(([modelsField, libDataField]) => {
-    const modelsValue = modelsJsonEntry[modelsField];
-    const libDataValue = libDataEntry[libDataField];
-    
-    if (modelsValue !== undefined && libDataValue !== undefined) {
-      // Convert to numbers for comparison
-      const modelsNum = Number(modelsValue);
-      const libDataNum = Number(libDataValue);
-      
-      if (!isNaN(modelsNum) && !isNaN(libDataNum) && Math.abs(modelsNum - libDataNum) > 0.0001) {
-        mismatches.push({
-          field: modelsField,
-          modelsJsonValue: modelsValue,
-          libDataValue: libDataValue,
-        });
+  for (const group of model.architecture?.groups ?? []) {
+    for (const layerId of group.layerIds ?? []) {
+      if (!layerIds.has(layerId)) {
+        errors.push(`Group "${group.id}" references missing layer "${layerId}".`);
       }
     }
+  }
+
+  const layout = model.architecture?.layout;
+  if (layout) {
+    const layoutNodeIds = new Set((layout.nodes ?? []).map((node: any) => node.id));
+
+    for (const edge of layout.edges ?? []) {
+      if (edge.source && !layoutNodeIds.has(edge.source)) {
+        errors.push(`Layout edge "${edge.id}" references missing source node "${edge.source}".`);
+      }
+      if (edge.target && !layoutNodeIds.has(edge.target)) {
+        errors.push(`Layout edge "${edge.id}" references missing target node "${edge.target}".`);
+      }
+    }
+
+    for (const group of layout.groups ?? []) {
+      for (const layerId of group.layerIds ?? []) {
+        if (!layerIds.has(layerId)) {
+          errors.push(`Layout group "${group.id}" references missing layer "${layerId}".`);
+        }
+      }
+    }
+  }
+
+  return errors;
+}
+
+function compareSummaryToModel(summary: any, model: any): string[] {
+  const comparisons: Array<[string, unknown, unknown]> = [
+    ['totalParameters', summary.totalParameters ?? summary.params, model.totalParameters],
+    ['totalFLOPs', summary.totalFLOPs ?? summary.flops, model.totalFLOPs],
+    ['top1Accuracy', summary.top1Accuracy ?? summary.top1 / 100, model.top1Accuracy],
+    ['top5Accuracy', summary.top5Accuracy ?? summary.top5 / 100, model.top5Accuracy],
+    ['memoryUsage', summary.memoryUsage ?? summary.memory_mb, model.memoryUsage],
+    ['depth', summary.depth, model.depth],
+    ['colorTheme', summary.colorTheme, model.colorTheme],
+  ];
+
+  return comparisons.flatMap(([field, summaryValue, modelValue]) => {
+    if (typeof summaryValue === 'number' && typeof modelValue === 'number') {
+      return Math.abs(summaryValue - modelValue) > 0.001
+        ? [`${field}: data/models.json=${summaryValue}, data/models/${summary.id}.json=${modelValue}`]
+        : [];
+    }
+
+    return summaryValue !== modelValue
+      ? [`${field}: data/models.json=${summaryValue}, data/models/${summary.id}.json=${modelValue}`]
+      : [];
   });
-  
-  // Compare depth and colorTheme directly
-  if (modelsJsonEntry.depth !== libDataEntry.depth) {
-    mismatches.push({
-      field: 'depth',
-      modelsJsonValue: modelsJsonEntry.depth,
-      libDataValue: libDataEntry.depth,
-    });
+}
+
+function generateMarkdownReport(reports: ValidationReport[], totalModels: number): string {
+  let md = '# Model Data Validation Report\n\n';
+  md += `Generated: ${new Date().toISOString()}\n`;
+  md += `Total models checked: ${totalModels}\n`;
+  md += `Models with issues: ${reports.length}\n\n`;
+
+  if (reports.length === 0) {
+    md += 'No validation errors found across all canonical model files.\n';
+    return md;
   }
-  
-  if (modelsJsonEntry.colorTheme !== libDataEntry.colorTheme) {
-    mismatches.push({
-      field: 'colorTheme',
-      modelsJsonValue: modelsJsonEntry.colorTheme,
-      libDataValue: libDataEntry.colorTheme,
-    });
+
+  for (const report of reports) {
+    md += `## Model: ${report.modelId}\n\n`;
+
+    for (const [title, entries] of [
+      ['Summary Schema Errors', report.summaryErrors],
+      ['Model Schema Errors', report.modelErrors],
+      ['Missing Layer References', report.missingLayerReferences],
+      ['Summary Field Mismatches', report.fieldMismatches],
+    ] as const) {
+      if (entries.length > 0) {
+        md += `### ${title}\n\n`;
+        for (const entry of entries) {
+          md += `- ${entry}\n`;
+        }
+        md += '\n';
+      }
+    }
+
+    md += '---\n\n';
   }
-  
-  return mismatches;
+
+  return md;
 }
 
 function main() {
-  console.log('Starting model data validation...\n');
-  
-  // Load models.json
-  const modelsSummaries = loadJson<any[]>(MODELS_JSON_PATH);
-  console.log(Loaded  model summaries from data/models.json\n);
-  
+  const summaries = loadJson<any[]>(MODELS_JSON_PATH);
   const reports: ValidationReport[] = [];
-  
-  modelsSummaries.forEach((summary) => {
-    const modelId = summary.id;
+
+  for (const summary of summaries) {
     const report: ValidationReport = {
-      modelId,
-      schemaErrors: [],
+      modelId: summary.id,
+      summaryErrors: [],
+      modelErrors: [],
       missingLayerReferences: [],
       fieldMismatches: [],
     };
-    
-    // Validate lib/data/{id}.json
-    const libDataPath = join(LIB_DATA_DIR, ${modelId}.json);
-    try {
-      const libData = loadJson(libDataPath);
-      report.schemaErrors = validateModelSchema(libData, modelId);
-      
-      // Check data/graphs/{id}.json layer references
-      const graphDataPath = join(GRAPHS_DIR, ${modelId}.json);
-      try {
-        const graphData = loadJson(graphDataPath);
-        if (libData.architecture && libData.architecture.layers) {
-          report.missingLayerReferences = checkLayerReferences(
-            graphData,
-            libData.architecture.layers,
-            modelId
-          );
-        }
-      } catch (error) {
-        report.missingLayerReferences.push(Failed to load graph data: );
-      }
-      
-      // Compare fields
-      report.fieldMismatches = compareFields(summary, libData, modelId);
-    } catch (error) {
-      report.schemaErrors.push(Failed to load lib/data/.json: );
+
+    const normalizedSummary = {
+      ...summary,
+      totalParameters: summary.totalParameters ?? summary.params,
+      totalFLOPs: summary.totalFLOPs ?? summary.flops,
+      top1Accuracy: summary.top1Accuracy ?? summary.top1 / 100,
+      top5Accuracy: summary.top5Accuracy ?? summary.top5 / 100,
+      memoryUsage: summary.memoryUsage ?? summary.memory_mb,
+    };
+
+    const summaryValidation = ModelSummarySchema.safeParse(normalizedSummary);
+    if (!summaryValidation.success) {
+      report.summaryErrors = formatIssues(summaryValidation.error);
     }
-    
-    // Only add report if there are errors
+
+    try {
+      const model = loadJson<any>(join(CANONICAL_MODELS_DIR, `${summary.id}.json`));
+      const modelValidation = NeuralNetworkModelSchema.safeParse(model);
+      if (!modelValidation.success) {
+        report.modelErrors = formatIssues(modelValidation.error);
+      }
+      report.missingLayerReferences = checkLayerReferences(model);
+      report.fieldMismatches = compareSummaryToModel(summary, model);
+    } catch (error) {
+      report.modelErrors.push(`Failed to load data/models/${summary.id}.json: ${error}`);
+    }
+
     if (
-      report.schemaErrors.length > 0 ||
+      report.summaryErrors.length > 0 ||
+      report.modelErrors.length > 0 ||
       report.missingLayerReferences.length > 0 ||
       report.fieldMismatches.length > 0
     ) {
       reports.push(report);
     }
-  });
-  
-  // Generate report
-  console.log('=== VALIDATION REPORT ===\n');
-  
-  if (reports.length === 0) {
-    console.log('✓ No validation errors found across all models!');
-  } else {
-    console.log(Found issues in  model(s):\n);
-    
-    reports.forEach((report) => {
-      console.log(## Model: );
-      
-      if (report.schemaErrors.length > 0) {
-        console.log('\nSchema Errors:');
-        report.schemaErrors.forEach((error) => console.log(  - ));
-      }
-      
-      if (report.missingLayerReferences.length > 0) {
-        console.log('\nMissing Layer References:');
-        report.missingLayerReferences.forEach((ref) => console.log(  - ));
-      }
-      
-      if (report.fieldMismatches.length > 0) {
-        console.log('\nField Mismatches (data/models.json vs lib/data):');
-        report.fieldMismatches.forEach((mismatch) => {
-          console.log(
-              - : models.json=, lib/data=
-          );
-        });
-      }
-      
-      console.log('\n---\n');
-    });
   }
-  
-  // Write report to file
-  const reportPath = join(PROJECT_ROOT, 'scripts/data-validation-report.md');
-  const reportContent = generateMarkdownReport(reports, modelsSummaries.length);
-  writeFileSync(reportPath, reportContent);
-  console.log(\nReport written to: );
-}
 
-function generateMarkdownReport(reports: ValidationReport[], totalModels: number): string {
-  let md = '# Model Data Validation Report\n\n';
-  md += Generated: \n;
-  md += Total models checked: \n;
-  md += Models with issues: \n\n;
-  
-  if (reports.length === 0) {
-    md += '✓ No validation errors found across all models!\n';
-    return md;
+  const reportContent = generateMarkdownReport(reports, summaries.length);
+  writeFileSync(join(PROJECT_ROOT, 'scripts/data-validation-report.md'), reportContent);
+
+  console.log(reportContent);
+  if (reports.length > 0) {
+    process.exitCode = 1;
   }
-  
-  reports.forEach((report) => {
-    md += ## Model: \n\n;
-    
-    if (report.schemaErrors.length > 0) {
-      md += '### Schema Errors\n\n';
-      report.schemaErrors.forEach((error) => {
-        md += - \n;
-      });
-      md += '\n';
-    }
-    
-    if (report.missingLayerReferences.length > 0) {
-      md += '### Missing Layer References\n\n';
-      report.missingLayerReferences.forEach((ref) => {
-        md += - \n;
-      });
-      md += '\n';
-    }
-    
-    if (report.fieldMismatches.length > 0) {
-      md += '### Field Mismatches (data/models.json vs lib/data)\n\n';
-      report.fieldMismatches.forEach((mismatch) => {
-        md += - ****: models.json=\${mismatch.modelsJsonValue}\, lib/data=\${mismatch.libDataValue}\\n;
-      });
-      md += '\n';
-    }
-    
-    md += '---\n\n';
-  });
-  
-  return md;
 }
 
 main();

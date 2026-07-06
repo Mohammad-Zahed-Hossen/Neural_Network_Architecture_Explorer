@@ -1,3 +1,10 @@
+"""Deprecated legacy model processor.
+
+This script documents the old data/models_raw.json processing pipeline. The app
+now reads canonical per-model files from data/models/ through
+lib/data-access/models.ts.
+"""
+
 import os
 import json
 

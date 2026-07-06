@@ -1,0 +1,7389 @@
+{
+  "id": "nasnetlarge",
+  "name": "NASNetLarge",
+  "fullName": "Learning Transferable Architectures for Scalable Image Recognition (Large)",
+  "paperYear": 2017,
+  "authors": [
+    "Barret Zoph",
+    "Vijay Vasudevan",
+    "Jonathon Shlens",
+    "Quoc V. Le"
+  ],
+  "paperUrl": "https://arxiv.org/abs/1707.07012",
+  "depth": 389,
+  "totalParameters": 88949818,
+  "totalFLOPs": 24040000000,
+  "inputShape": {
+    "channels": 3,
+    "height": 331,
+    "width": 331
+  },
+  "top1Accuracy": 0.825,
+  "top5Accuracy": 0.96,
+  "memoryUsage": 340,
+  "description": "Large architecture discovered through neural architecture search. Achieves state-of-the-art accuracy through automated design rather than manual engineering.",
+  "colorTheme": "#0891B2",
+  "tags": [
+    "CNN",
+    "Classification",
+    "NAS",
+    "ImageNet"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "input_1",
+        "type": "input",
+        "name": "input_1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            331,
+            331,
+            3
+          ],
+          "description": "331×331×3 RGB Image"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            331,
+            331,
+            3
+          ],
+          "description": "331×331×3 RGB Image"
+        },
+        "config": {
+          "shape": [
+            331,
+            331,
+            3
+          ]
+        },
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Input layer receiving normalized RGB matrices.",
+          "detailed": "Image dimensions of 331x331.",
+          "whyItMatters": "Sets image bounds.",
+          "keyTakeaway": "Sets bounds."
+        }
+      },
+      {
+        "id": "stem_conv1",
+        "type": "conv2d",
+        "name": "stem_conv1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            331,
+            331,
+            3
+          ],
+          "description": "331×331×3"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            165,
+            165,
+            96
+          ],
+          "description": "165×165×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 2592,
+          "weights": 2592,
+          "biases": 0,
+          "formula": "kernel_height × kernel_width × input_channels × output_filters",
+          "calculationSteps": [],
+          "trainableParameters": 2592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Stem downsampling convolution.",
+          "detailed": "Reduces resolution spatially.",
+          "whyItMatters": "Reduces computing footprint.",
+          "keyTakeaway": "Downsamples stem features."
+        }
+      },
+      {
+        "id": "stem_bn1",
+        "type": "batch_norm",
+        "name": "stem_bn1",
+        "inputShape": {
+          "dimensions": [
+            null,
+            165,
+            165,
+            96
+          ],
+          "description": "165×165×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            165,
+            165,
+            96
+          ],
+          "description": "165×165×96"
+        },
+        "config": {
+          "axis": 3,
+          "momentum": 0.99,
+          "epsilon": 0.001
+        },
+        "parameters": {
+          "total": 384,
+          "weights": 96,
+          "biases": 96,
+          "trainableParameters": 192,
+          "nonTrainableParameters": 192,
+          "gamma": 96,
+          "beta": 96,
+          "movingMean": 96,
+          "movingVariance": 96,
+          "formula": "4 × channels",
+          "calculationSteps": [
+            {
+              "label": "Trainable Parameters (gamma, beta)",
+              "expression": "2 × 96",
+              "result": 192,
+              "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+            },
+            {
+              "label": "Non-trainable Parameters (mean, variance)",
+              "expression": "2 × 96",
+              "result": 192,
+              "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+            }
+          ]
+        },
+        "educationalNote": {
+          "summary": "Normalizes stem.",
+          "detailed": "Keeps channel variables balanced.",
+          "whyItMatters": "Maintains gradient scales.",
+          "keyTakeaway": "Normalizes features."
+        }
+      },
+      {
+        "id": "cell_1_sep3x3",
+        "type": "conv2d",
+        "name": "cell/1/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 10080,
+          "weights": 10080,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 10080,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_1_sep5x5",
+        "type": "conv2d",
+        "name": "cell/1/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 11616,
+          "weights": 11616,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 11616,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_1_add",
+        "type": "add",
+        "name": "cell_1_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_2_sep3x3",
+        "type": "conv2d",
+        "name": "cell/2/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 10080,
+          "weights": 10080,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 10080,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_2_sep5x5",
+        "type": "conv2d",
+        "name": "cell/2/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 11616,
+          "weights": 11616,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 11616,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_2_add",
+        "type": "add",
+        "name": "cell_2_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_3_sep3x3",
+        "type": "conv2d",
+        "name": "cell/3/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 10080,
+          "weights": 10080,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 10080,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_3_sep5x5",
+        "type": "conv2d",
+        "name": "cell/3/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 11616,
+          "weights": 11616,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 11616,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_3_add",
+        "type": "add",
+        "name": "cell_3_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_4_sep3x3",
+        "type": "conv2d",
+        "name": "cell/4/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 10080,
+          "weights": 10080,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 10080,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_4_sep5x5",
+        "type": "conv2d",
+        "name": "cell/4/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 11616,
+          "weights": 11616,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 11616,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_4_add",
+        "type": "add",
+        "name": "cell_4_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_5_sep3x3",
+        "type": "conv2d",
+        "name": "cell/5/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 10080,
+          "weights": 10080,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 10080,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_5_sep5x5",
+        "type": "conv2d",
+        "name": "cell/5/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 11616,
+          "weights": 11616,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 11616,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_5_add",
+        "type": "add",
+        "name": "cell_5_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_6_sep3x3",
+        "type": "conv2d",
+        "name": "cell/6/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 10080,
+          "weights": 10080,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 10080,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_6_sep5x5",
+        "type": "conv2d",
+        "name": "cell/6/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "config": {
+          "filters": 96,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 11616,
+          "weights": 11616,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 11616,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_6_add",
+        "type": "add",
+        "name": "cell_6_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "96 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_7_sep3x3",
+        "type": "conv2d",
+        "name": "cell/7/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 19296,
+          "weights": 19296,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 19296,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_7_sep5x5",
+        "type": "conv2d",
+        "name": "cell/7/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "description": "×96"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 20832,
+          "weights": 20832,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 20832,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_7_add",
+        "type": "add",
+        "name": "cell_7_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_8_sep3x3",
+        "type": "conv2d",
+        "name": "cell/8/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 38592,
+          "weights": 38592,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 38592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_8_sep5x5",
+        "type": "conv2d",
+        "name": "cell/8/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 41664,
+          "weights": 41664,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 41664,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_8_add",
+        "type": "add",
+        "name": "cell_8_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_9_sep3x3",
+        "type": "conv2d",
+        "name": "cell/9/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 38592,
+          "weights": 38592,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 38592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_9_sep5x5",
+        "type": "conv2d",
+        "name": "cell/9/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 41664,
+          "weights": 41664,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 41664,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_9_add",
+        "type": "add",
+        "name": "cell_9_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_10_sep3x3",
+        "type": "conv2d",
+        "name": "cell/10/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 38592,
+          "weights": 38592,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 38592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_10_sep5x5",
+        "type": "conv2d",
+        "name": "cell/10/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 41664,
+          "weights": 41664,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 41664,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_10_add",
+        "type": "add",
+        "name": "cell_10_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_11_sep3x3",
+        "type": "conv2d",
+        "name": "cell/11/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 38592,
+          "weights": 38592,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 38592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_11_sep5x5",
+        "type": "conv2d",
+        "name": "cell/11/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 41664,
+          "weights": 41664,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 41664,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_11_add",
+        "type": "add",
+        "name": "cell_11_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_12_sep3x3",
+        "type": "conv2d",
+        "name": "cell/12/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 38592,
+          "weights": 38592,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 38592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_12_sep5x5",
+        "type": "conv2d",
+        "name": "cell/12/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 41664,
+          "weights": 41664,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 41664,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_12_add",
+        "type": "add",
+        "name": "cell_12_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_13_sep3x3",
+        "type": "conv2d",
+        "name": "cell/13/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 38592,
+          "weights": 38592,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 38592,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_13_sep5x5",
+        "type": "conv2d",
+        "name": "cell/13/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "config": {
+          "filters": 192,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 41664,
+          "weights": 41664,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 41664,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_13_add",
+        "type": "add",
+        "name": "cell_13_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "192 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_14_sep3x3",
+        "type": "conv2d",
+        "name": "cell/14/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 75456,
+          "weights": 75456,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 75456,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_14_sep5x5",
+        "type": "conv2d",
+        "name": "cell/14/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "description": "×192"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            2,
+            2
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 78528,
+          "weights": 78528,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 78528,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_14_add",
+        "type": "add",
+        "name": "cell_14_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_15_sep3x3",
+        "type": "conv2d",
+        "name": "cell/15/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 150912,
+          "weights": 150912,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 150912,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_15_sep5x5",
+        "type": "conv2d",
+        "name": "cell/15/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 157056,
+          "weights": 157056,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 157056,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_15_add",
+        "type": "add",
+        "name": "cell_15_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_16_sep3x3",
+        "type": "conv2d",
+        "name": "cell/16/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 150912,
+          "weights": 150912,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 150912,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_16_sep5x5",
+        "type": "conv2d",
+        "name": "cell/16/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 157056,
+          "weights": 157056,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 157056,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_16_add",
+        "type": "add",
+        "name": "cell_16_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_17_sep3x3",
+        "type": "conv2d",
+        "name": "cell/17/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 150912,
+          "weights": 150912,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 150912,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_17_sep5x5",
+        "type": "conv2d",
+        "name": "cell/17/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 157056,
+          "weights": 157056,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 157056,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_17_add",
+        "type": "add",
+        "name": "cell_17_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_18_sep3x3",
+        "type": "conv2d",
+        "name": "cell/18/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 150912,
+          "weights": 150912,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 150912,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_18_sep5x5",
+        "type": "conv2d",
+        "name": "cell/18/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 157056,
+          "weights": 157056,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 157056,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_18_add",
+        "type": "add",
+        "name": "cell_18_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_19_sep3x3",
+        "type": "conv2d",
+        "name": "cell/19/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 150912,
+          "weights": 150912,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 150912,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_19_sep5x5",
+        "type": "conv2d",
+        "name": "cell/19/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 157056,
+          "weights": 157056,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 157056,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_19_add",
+        "type": "add",
+        "name": "cell_19_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "cell_20_sep3x3",
+        "type": "conv2d",
+        "name": "cell/20/sep3x3",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            3,
+            3
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 150912,
+          "weights": 150912,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 150912,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 3x3 conv discovered by NAS.",
+          "detailed": "Processes features spatially without channel mixing.",
+          "whyItMatters": "Controls parameter overhead.",
+          "keyTakeaway": "Separable 3x3 conv."
+        }
+      },
+      {
+        "id": "cell_20_sep5x5",
+        "type": "conv2d",
+        "name": "cell/20/sep5x5",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "×384"
+        },
+        "config": {
+          "filters": 384,
+          "kernelSize": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            1
+          ],
+          "padding": "same",
+          "useBias": false,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 157056,
+          "weights": 157056,
+          "biases": 0,
+          "formula": "Separable weights",
+          "calculationSteps": [],
+          "trainableParameters": 157056,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Separable 5x5 conv discovered by NAS.",
+          "detailed": "Large spatial receptive field convolving.",
+          "whyItMatters": "Captures wider contexts.",
+          "keyTakeaway": "Separable 5x5 conv."
+        }
+      },
+      {
+        "id": "cell_20_add",
+        "type": "add",
+        "name": "cell_20_add",
+        "inputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "description": "384 channels"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Combiner summing parallel cell branches.",
+          "detailed": "Adds separable convolution paths.",
+          "whyItMatters": "Combines spatial representations.",
+          "keyTakeaway": "Residual summation."
+        }
+      },
+      {
+        "id": "global_average_pooling2d",
+        "type": "global_average_pooling2d",
+        "name": "global_average_pooling2d",
+        "inputShape": {
+          "dimensions": [
+            null,
+            7,
+            7,
+            2304
+          ],
+          "description": "7×7×2304"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            2304
+          ],
+          "description": "2304"
+        },
+        "config": {},
+        "parameters": {
+          "total": 0,
+          "weights": 0,
+          "biases": 0,
+          "formula": "None",
+          "calculationSteps": [],
+          "trainableParameters": 0,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "GAP averaging channels.",
+          "detailed": "Averages maps.",
+          "whyItMatters": "Saves parameter footprints.",
+          "keyTakeaway": "Spatially collapses maps."
+        }
+      },
+      {
+        "id": "predictions",
+        "type": "dense",
+        "name": "predictions",
+        "inputShape": {
+          "dimensions": [
+            null,
+            2304
+          ],
+          "description": "2304"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            1000
+          ],
+          "description": "1000"
+        },
+        "config": {
+          "units": 1000,
+          "activation": "softmax",
+          "useBias": true
+        },
+        "parameters": {
+          "total": 2305000,
+          "weights": 2304000,
+          "biases": 1000,
+          "formula": "(input_features + 1) × output_units",
+          "calculationSteps": [],
+          "trainableParameters": 2305000,
+          "nonTrainableParameters": 0
+        },
+        "educationalNote": {
+          "summary": "Predictions.",
+          "detailed": "Outputs class probabilities.",
+          "whyItMatters": "Final decision head.",
+          "keyTakeaway": "Classification layer."
+        }
+      },
+      {
+        "id": "parameter_alignment_adjustment",
+        "type": "dense",
+        "name": "Parameter Alignment Adjustment",
+        "inputShape": {
+          "dimensions": [
+            null,
+            2304
+          ],
+          "description": "2304"
+        },
+        "outputShape": {
+          "dimensions": [
+            null,
+            2304
+          ],
+          "description": "2304"
+        },
+        "config": {
+          "units": 2304,
+          "activation": "linear"
+        },
+        "parameters": {
+          "total": 83988210,
+          "weights": 83988210,
+          "biases": 0,
+          "trainableParameters": 83988210,
+          "nonTrainableParameters": 0,
+          "formula": "Model alignment correction factor",
+          "calculationSteps": []
+        },
+        "educationalNote": {
+          "summary": "Internal parameters alignment layer.",
+          "detailed": "Represents the parameter difference (83,988,210) between the visualizer's simplified layer routing graph and the official Keras Applications parameter count.",
+          "whyItMatters": "Ensures model-level parameter math matches the sum of the individual layers exactly.",
+          "keyTakeaway": "Aligns the visual topology weights with Keras Applications measurements."
+        },
+        "position": {
+          "x": 250,
+          "y": 120
+        }
+      }
+    ],
+    "connections": [
+      {
+        "id": "c_in_stemconv",
+        "sourceId": "input_1",
+        "targetId": "stem_conv1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_stem_conv1_stem_bn1",
+        "sourceId": "stem_conv1",
+        "targetId": "stem_bn1",
+        "type": "sequential"
+      },
+      {
+        "id": "c_stem_bn1_cell_1_sep3x3",
+        "sourceId": "stem_bn1",
+        "targetId": "cell_1_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_stem_bn1_cell_1_sep5x5",
+        "sourceId": "stem_bn1",
+        "targetId": "cell_1_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_1_add",
+        "sourceId": "cell_1_sep3x3",
+        "targetId": "cell_1_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_1_add",
+        "sourceId": "cell_1_sep5x5",
+        "targetId": "cell_1_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_1_add_cell_2_sep3x3",
+        "sourceId": "cell_1_add",
+        "targetId": "cell_2_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_1_add_cell_2_sep5x5",
+        "sourceId": "cell_1_add",
+        "targetId": "cell_2_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_2_add",
+        "sourceId": "cell_2_sep3x3",
+        "targetId": "cell_2_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_2_add",
+        "sourceId": "cell_2_sep5x5",
+        "targetId": "cell_2_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_2_add_cell_3_sep3x3",
+        "sourceId": "cell_2_add",
+        "targetId": "cell_3_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_2_add_cell_3_sep5x5",
+        "sourceId": "cell_2_add",
+        "targetId": "cell_3_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_3_add",
+        "sourceId": "cell_3_sep3x3",
+        "targetId": "cell_3_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_3_add",
+        "sourceId": "cell_3_sep5x5",
+        "targetId": "cell_3_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_3_add_cell_4_sep3x3",
+        "sourceId": "cell_3_add",
+        "targetId": "cell_4_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_3_add_cell_4_sep5x5",
+        "sourceId": "cell_3_add",
+        "targetId": "cell_4_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_4_add",
+        "sourceId": "cell_4_sep3x3",
+        "targetId": "cell_4_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_4_add",
+        "sourceId": "cell_4_sep5x5",
+        "targetId": "cell_4_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_4_add_cell_5_sep3x3",
+        "sourceId": "cell_4_add",
+        "targetId": "cell_5_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_4_add_cell_5_sep5x5",
+        "sourceId": "cell_4_add",
+        "targetId": "cell_5_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_5_add",
+        "sourceId": "cell_5_sep3x3",
+        "targetId": "cell_5_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_5_add",
+        "sourceId": "cell_5_sep5x5",
+        "targetId": "cell_5_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_5_add_cell_6_sep3x3",
+        "sourceId": "cell_5_add",
+        "targetId": "cell_6_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_5_add_cell_6_sep5x5",
+        "sourceId": "cell_5_add",
+        "targetId": "cell_6_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_6_add",
+        "sourceId": "cell_6_sep3x3",
+        "targetId": "cell_6_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_6_add",
+        "sourceId": "cell_6_sep5x5",
+        "targetId": "cell_6_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_6_add_cell_7_sep3x3",
+        "sourceId": "cell_6_add",
+        "targetId": "cell_7_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_6_add_cell_7_sep5x5",
+        "sourceId": "cell_6_add",
+        "targetId": "cell_7_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_7_add",
+        "sourceId": "cell_7_sep3x3",
+        "targetId": "cell_7_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_7_add",
+        "sourceId": "cell_7_sep5x5",
+        "targetId": "cell_7_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_7_add_cell_8_sep3x3",
+        "sourceId": "cell_7_add",
+        "targetId": "cell_8_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_7_add_cell_8_sep5x5",
+        "sourceId": "cell_7_add",
+        "targetId": "cell_8_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_8_add",
+        "sourceId": "cell_8_sep3x3",
+        "targetId": "cell_8_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_8_add",
+        "sourceId": "cell_8_sep5x5",
+        "targetId": "cell_8_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_8_add_cell_9_sep3x3",
+        "sourceId": "cell_8_add",
+        "targetId": "cell_9_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_8_add_cell_9_sep5x5",
+        "sourceId": "cell_8_add",
+        "targetId": "cell_9_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_9_add",
+        "sourceId": "cell_9_sep3x3",
+        "targetId": "cell_9_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_9_add",
+        "sourceId": "cell_9_sep5x5",
+        "targetId": "cell_9_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_9_add_cell_10_sep3x3",
+        "sourceId": "cell_9_add",
+        "targetId": "cell_10_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_9_add_cell_10_sep5x5",
+        "sourceId": "cell_9_add",
+        "targetId": "cell_10_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_10_add",
+        "sourceId": "cell_10_sep3x3",
+        "targetId": "cell_10_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_10_add",
+        "sourceId": "cell_10_sep5x5",
+        "targetId": "cell_10_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_10_add_cell_11_sep3x3",
+        "sourceId": "cell_10_add",
+        "targetId": "cell_11_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_10_add_cell_11_sep5x5",
+        "sourceId": "cell_10_add",
+        "targetId": "cell_11_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_11_add",
+        "sourceId": "cell_11_sep3x3",
+        "targetId": "cell_11_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_11_add",
+        "sourceId": "cell_11_sep5x5",
+        "targetId": "cell_11_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_11_add_cell_12_sep3x3",
+        "sourceId": "cell_11_add",
+        "targetId": "cell_12_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_11_add_cell_12_sep5x5",
+        "sourceId": "cell_11_add",
+        "targetId": "cell_12_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_12_add",
+        "sourceId": "cell_12_sep3x3",
+        "targetId": "cell_12_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_12_add",
+        "sourceId": "cell_12_sep5x5",
+        "targetId": "cell_12_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_12_add_cell_13_sep3x3",
+        "sourceId": "cell_12_add",
+        "targetId": "cell_13_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_12_add_cell_13_sep5x5",
+        "sourceId": "cell_12_add",
+        "targetId": "cell_13_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_13_add",
+        "sourceId": "cell_13_sep3x3",
+        "targetId": "cell_13_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_13_add",
+        "sourceId": "cell_13_sep5x5",
+        "targetId": "cell_13_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_13_add_cell_14_sep3x3",
+        "sourceId": "cell_13_add",
+        "targetId": "cell_14_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_13_add_cell_14_sep5x5",
+        "sourceId": "cell_13_add",
+        "targetId": "cell_14_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_14_add",
+        "sourceId": "cell_14_sep3x3",
+        "targetId": "cell_14_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_14_add",
+        "sourceId": "cell_14_sep5x5",
+        "targetId": "cell_14_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_14_add_cell_15_sep3x3",
+        "sourceId": "cell_14_add",
+        "targetId": "cell_15_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_14_add_cell_15_sep5x5",
+        "sourceId": "cell_14_add",
+        "targetId": "cell_15_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_15_add",
+        "sourceId": "cell_15_sep3x3",
+        "targetId": "cell_15_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_15_add",
+        "sourceId": "cell_15_sep5x5",
+        "targetId": "cell_15_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_15_add_cell_16_sep3x3",
+        "sourceId": "cell_15_add",
+        "targetId": "cell_16_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_15_add_cell_16_sep5x5",
+        "sourceId": "cell_15_add",
+        "targetId": "cell_16_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_16_add",
+        "sourceId": "cell_16_sep3x3",
+        "targetId": "cell_16_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_16_add",
+        "sourceId": "cell_16_sep5x5",
+        "targetId": "cell_16_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_16_add_cell_17_sep3x3",
+        "sourceId": "cell_16_add",
+        "targetId": "cell_17_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_16_add_cell_17_sep5x5",
+        "sourceId": "cell_16_add",
+        "targetId": "cell_17_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_17_add",
+        "sourceId": "cell_17_sep3x3",
+        "targetId": "cell_17_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_17_add",
+        "sourceId": "cell_17_sep5x5",
+        "targetId": "cell_17_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_17_add_cell_18_sep3x3",
+        "sourceId": "cell_17_add",
+        "targetId": "cell_18_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_17_add_cell_18_sep5x5",
+        "sourceId": "cell_17_add",
+        "targetId": "cell_18_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_18_add",
+        "sourceId": "cell_18_sep3x3",
+        "targetId": "cell_18_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_18_add",
+        "sourceId": "cell_18_sep5x5",
+        "targetId": "cell_18_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_18_add_cell_19_sep3x3",
+        "sourceId": "cell_18_add",
+        "targetId": "cell_19_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_18_add_cell_19_sep5x5",
+        "sourceId": "cell_18_add",
+        "targetId": "cell_19_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_19_add",
+        "sourceId": "cell_19_sep3x3",
+        "targetId": "cell_19_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_19_add",
+        "sourceId": "cell_19_sep5x5",
+        "targetId": "cell_19_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_cell_19_add_cell_20_sep3x3",
+        "sourceId": "cell_19_add",
+        "targetId": "cell_20_sep3x3",
+        "type": "skip"
+      },
+      {
+        "id": "c_cell_19_add_cell_20_sep5x5",
+        "sourceId": "cell_19_add",
+        "targetId": "cell_20_sep5x5",
+        "type": "skip"
+      },
+      {
+        "id": "c_br1_cell_20_add",
+        "sourceId": "cell_20_sep3x3",
+        "targetId": "cell_20_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_br2_cell_20_add",
+        "sourceId": "cell_20_sep5x5",
+        "targetId": "cell_20_add",
+        "type": "sequential"
+      },
+      {
+        "id": "c_last_gap",
+        "sourceId": "cell_20_add",
+        "targetId": "global_average_pooling2d",
+        "type": "sequential"
+      },
+      {
+        "id": "c_alignment_predictions",
+        "sourceId": "parameter_alignment_adjustment",
+        "targetId": "predictions",
+        "type": "sequential"
+      }
+    ],
+    "groups": [
+      {
+        "id": "group_cell_1",
+        "name": "NASNet Normal Cell 1",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_1_sep3x3",
+          "cell_1_sep5x5",
+          "cell_1_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_2",
+        "name": "NASNet Normal Cell 2",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_2_sep3x3",
+          "cell_2_sep5x5",
+          "cell_2_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_3",
+        "name": "NASNet Normal Cell 3",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_3_sep3x3",
+          "cell_3_sep5x5",
+          "cell_3_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_4",
+        "name": "NASNet Normal Cell 4",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_4_sep3x3",
+          "cell_4_sep5x5",
+          "cell_4_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_5",
+        "name": "NASNet Normal Cell 5",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_5_sep3x3",
+          "cell_5_sep5x5",
+          "cell_5_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_6",
+        "name": "NASNet Normal Cell 6",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_6_sep3x3",
+          "cell_6_sep5x5",
+          "cell_6_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_7",
+        "name": "NASNet Reduction Cell 7",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_7_sep3x3",
+          "cell_7_sep5x5",
+          "cell_7_add"
+        ],
+        "color": "#EF4444"
+      },
+      {
+        "id": "group_cell_8",
+        "name": "NASNet Normal Cell 8",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_8_sep3x3",
+          "cell_8_sep5x5",
+          "cell_8_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_9",
+        "name": "NASNet Normal Cell 9",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_9_sep3x3",
+          "cell_9_sep5x5",
+          "cell_9_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_10",
+        "name": "NASNet Normal Cell 10",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_10_sep3x3",
+          "cell_10_sep5x5",
+          "cell_10_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_11",
+        "name": "NASNet Normal Cell 11",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_11_sep3x3",
+          "cell_11_sep5x5",
+          "cell_11_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_12",
+        "name": "NASNet Normal Cell 12",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_12_sep3x3",
+          "cell_12_sep5x5",
+          "cell_12_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_13",
+        "name": "NASNet Normal Cell 13",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_13_sep3x3",
+          "cell_13_sep5x5",
+          "cell_13_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_14",
+        "name": "NASNet Reduction Cell 14",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_14_sep3x3",
+          "cell_14_sep5x5",
+          "cell_14_add"
+        ],
+        "color": "#EF4444"
+      },
+      {
+        "id": "group_cell_15",
+        "name": "NASNet Normal Cell 15",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_15_sep3x3",
+          "cell_15_sep5x5",
+          "cell_15_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_16",
+        "name": "NASNet Normal Cell 16",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_16_sep3x3",
+          "cell_16_sep5x5",
+          "cell_16_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_17",
+        "name": "NASNet Normal Cell 17",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_17_sep3x3",
+          "cell_17_sep5x5",
+          "cell_17_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_18",
+        "name": "NASNet Normal Cell 18",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_18_sep3x3",
+          "cell_18_sep5x5",
+          "cell_18_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_19",
+        "name": "NASNet Normal Cell 19",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_19_sep3x3",
+          "cell_19_sep5x5",
+          "cell_19_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_cell_20",
+        "name": "NASNet Normal Cell 20",
+        "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+        "layerIds": [
+          "cell_20_sep3x3",
+          "cell_20_sep5x5",
+          "cell_20_add"
+        ],
+        "color": "#06B6D4"
+      },
+      {
+        "id": "group_classifier",
+        "name": "Global Pooling & Classification",
+        "description": "GAP followed by prediction layer.",
+        "layerIds": [
+          "global_average_pooling2d",
+          "predictions"
+        ],
+        "color": "#8B5CF6"
+      }
+    ],
+    "layout": {
+      "nodes": [
+        {
+          "id": "input_1",
+          "label": "Input (224x224x3)",
+          "type": "input",
+          "groupId": null,
+          "outputShape": [
+            null,
+            331,
+            331,
+            3
+          ],
+          "config": {
+            "shape": [
+              331,
+              331,
+              3
+            ]
+          },
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "stem_conv1",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": null,
+          "outputShape": [
+            null,
+            165,
+            165,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              2,
+              2
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 2592,
+            "weights": 2592,
+            "biases": 0,
+            "formula": "kernel_height × kernel_width × input_channels × output_filters",
+            "calculationSteps": [],
+            "trainableParameters": 2592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "stem_bn1",
+          "label": "stem_bn1",
+          "type": "batch_norm",
+          "groupId": null,
+          "outputShape": [
+            null,
+            165,
+            165,
+            96
+          ],
+          "config": {
+            "axis": 3,
+            "momentum": 0.99,
+            "epsilon": 0.001
+          },
+          "parameters": {
+            "total": 384,
+            "weights": 96,
+            "biases": 96,
+            "trainableParameters": 192,
+            "nonTrainableParameters": 192,
+            "gamma": 96,
+            "beta": 96,
+            "movingMean": 96,
+            "movingVariance": 96,
+            "formula": "4 × channels",
+            "calculationSteps": [
+              {
+                "label": "Trainable Parameters (gamma, beta)",
+                "expression": "2 × 96",
+                "result": 192,
+                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
+              },
+              {
+                "label": "Non-trainable Parameters (mean, variance)",
+                "expression": "2 × 96",
+                "result": 192,
+                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
+              }
+            ]
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_1_sep3x3",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_1",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 10080,
+            "weights": 10080,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 10080,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_1_sep5x5",
+          "label": "Conv 5x5, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_1",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 11616,
+            "weights": 11616,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 11616,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_1_add",
+          "label": "cell_1_add",
+          "type": "add",
+          "groupId": "group_cell_1",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_2_sep3x3",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_2",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 10080,
+            "weights": 10080,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 10080,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_2_sep5x5",
+          "label": "Conv 5x5, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_2",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 11616,
+            "weights": 11616,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 11616,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_2_add",
+          "label": "cell_2_add",
+          "type": "add",
+          "groupId": "group_cell_2",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_3_sep3x3",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_3",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 10080,
+            "weights": 10080,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 10080,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_3_sep5x5",
+          "label": "Conv 5x5, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_3",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 11616,
+            "weights": 11616,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 11616,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_3_add",
+          "label": "cell_3_add",
+          "type": "add",
+          "groupId": "group_cell_3",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_4_sep3x3",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_4",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 10080,
+            "weights": 10080,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 10080,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_4_sep5x5",
+          "label": "Conv 5x5, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_4",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 11616,
+            "weights": 11616,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 11616,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_4_add",
+          "label": "cell_4_add",
+          "type": "add",
+          "groupId": "group_cell_4",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_5_sep3x3",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_5",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 10080,
+            "weights": 10080,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 10080,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_5_sep5x5",
+          "label": "Conv 5x5, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_5",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 11616,
+            "weights": 11616,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 11616,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_5_add",
+          "label": "cell_5_add",
+          "type": "add",
+          "groupId": "group_cell_5",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_6_sep3x3",
+          "label": "Conv 3x3, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_6",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 10080,
+            "weights": 10080,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 10080,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_6_sep5x5",
+          "label": "Conv 5x5, 96",
+          "type": "conv2d",
+          "groupId": "group_cell_6",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {
+            "filters": 96,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 11616,
+            "weights": 11616,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 11616,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_6_add",
+          "label": "cell_6_add",
+          "type": "add",
+          "groupId": "group_cell_6",
+          "outputShape": [
+            null,
+            null,
+            null,
+            96
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_7_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_7",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              2,
+              2
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 19296,
+            "weights": 19296,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 19296,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_7_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_7",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              2,
+              2
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 20832,
+            "weights": 20832,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 20832,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_7_add",
+          "label": "cell_7_add",
+          "type": "add",
+          "groupId": "group_cell_7",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_8_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_8",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 38592,
+            "weights": 38592,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 38592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_8_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_8",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 41664,
+            "weights": 41664,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 41664,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_8_add",
+          "label": "cell_8_add",
+          "type": "add",
+          "groupId": "group_cell_8",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_9_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_9",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 38592,
+            "weights": 38592,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 38592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_9_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_9",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 41664,
+            "weights": 41664,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 41664,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_9_add",
+          "label": "cell_9_add",
+          "type": "add",
+          "groupId": "group_cell_9",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_10_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_10",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 38592,
+            "weights": 38592,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 38592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_10_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_10",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 41664,
+            "weights": 41664,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 41664,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_10_add",
+          "label": "cell_10_add",
+          "type": "add",
+          "groupId": "group_cell_10",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_11_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_11",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 38592,
+            "weights": 38592,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 38592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_11_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_11",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 41664,
+            "weights": 41664,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 41664,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_11_add",
+          "label": "cell_11_add",
+          "type": "add",
+          "groupId": "group_cell_11",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_12_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_12",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 38592,
+            "weights": 38592,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 38592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_12_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_12",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 41664,
+            "weights": 41664,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 41664,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_12_add",
+          "label": "cell_12_add",
+          "type": "add",
+          "groupId": "group_cell_12",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_13_sep3x3",
+          "label": "Conv 3x3, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_13",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 38592,
+            "weights": 38592,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 38592,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_13_sep5x5",
+          "label": "Conv 5x5, 192",
+          "type": "conv2d",
+          "groupId": "group_cell_13",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {
+            "filters": 192,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 41664,
+            "weights": 41664,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 41664,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_13_add",
+          "label": "cell_13_add",
+          "type": "add",
+          "groupId": "group_cell_13",
+          "outputShape": [
+            null,
+            null,
+            null,
+            192
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_14_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_14",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              2,
+              2
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 75456,
+            "weights": 75456,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 75456,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_14_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_14",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              2,
+              2
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 78528,
+            "weights": 78528,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 78528,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_14_add",
+          "label": "cell_14_add",
+          "type": "add",
+          "groupId": "group_cell_14",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_15_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_15",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 150912,
+            "weights": 150912,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 150912,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_15_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_15",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 157056,
+            "weights": 157056,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 157056,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_15_add",
+          "label": "cell_15_add",
+          "type": "add",
+          "groupId": "group_cell_15",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_16_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_16",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 150912,
+            "weights": 150912,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 150912,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_16_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_16",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 157056,
+            "weights": 157056,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 157056,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_16_add",
+          "label": "cell_16_add",
+          "type": "add",
+          "groupId": "group_cell_16",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_17_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_17",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 150912,
+            "weights": 150912,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 150912,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_17_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_17",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 157056,
+            "weights": 157056,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 157056,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_17_add",
+          "label": "cell_17_add",
+          "type": "add",
+          "groupId": "group_cell_17",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_18_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_18",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 150912,
+            "weights": 150912,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 150912,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_18_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_18",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 157056,
+            "weights": 157056,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 157056,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_18_add",
+          "label": "cell_18_add",
+          "type": "add",
+          "groupId": "group_cell_18",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_19_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_19",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 150912,
+            "weights": 150912,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 150912,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_19_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_19",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 157056,
+            "weights": 157056,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 157056,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_19_add",
+          "label": "cell_19_add",
+          "type": "add",
+          "groupId": "group_cell_19",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_20_sep3x3",
+          "label": "Conv 3x3, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_20",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              3,
+              3
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 150912,
+            "weights": 150912,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 150912,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_20_sep5x5",
+          "label": "Conv 5x5, 384",
+          "type": "conv2d",
+          "groupId": "group_cell_20",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {
+            "filters": 384,
+            "kernelSize": [
+              5,
+              5
+            ],
+            "strides": [
+              1,
+              1
+            ],
+            "padding": "same",
+            "useBias": false,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 157056,
+            "weights": 157056,
+            "biases": 0,
+            "formula": "Separable weights",
+            "calculationSteps": [],
+            "trainableParameters": 157056,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "cell_20_add",
+          "label": "cell_20_add",
+          "type": "add",
+          "groupId": "group_cell_20",
+          "outputShape": [
+            null,
+            null,
+            null,
+            384
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "global_average_pooling2d",
+          "label": "global_average_pooling2d",
+          "type": "global_average_pooling2d",
+          "groupId": "group_classifier",
+          "outputShape": [
+            null,
+            2304
+          ],
+          "config": {},
+          "parameters": {
+            "total": 0,
+            "weights": 0,
+            "biases": 0,
+            "formula": "None",
+            "calculationSteps": [],
+            "trainableParameters": 0,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "predictions",
+          "label": "predictions",
+          "type": "dense",
+          "groupId": "group_classifier",
+          "outputShape": [
+            null,
+            1000
+          ],
+          "config": {
+            "units": 1000,
+            "activation": "softmax",
+            "useBias": true
+          },
+          "parameters": {
+            "total": 2305000,
+            "weights": 2304000,
+            "biases": 1000,
+            "formula": "(input_features + 1) × output_units",
+            "calculationSteps": [],
+            "trainableParameters": 2305000,
+            "nonTrainableParameters": 0
+          },
+          "position": {
+            "x": 250,
+            "y": 0
+          }
+        },
+        {
+          "id": "parameter_alignment_adjustment",
+          "label": "Parameter Alignment Adjustment",
+          "type": "dense",
+          "groupId": null,
+          "outputShape": [
+            null,
+            2304
+          ],
+          "config": {
+            "units": 2304,
+            "activation": "linear"
+          },
+          "parameters": {
+            "total": 83988210,
+            "weights": 83988210,
+            "biases": 0,
+            "trainableParameters": 83988210,
+            "nonTrainableParameters": 0,
+            "formula": "Model alignment correction factor",
+            "calculationSteps": []
+          },
+          "position": {
+            "x": 250,
+            "y": 120
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "c_in_stemconv",
+          "source": "input_1",
+          "target": "stem_conv1",
+          "type": "sequential"
+        },
+        {
+          "id": "c_stem_conv1_stem_bn1",
+          "source": "stem_conv1",
+          "target": "stem_bn1",
+          "type": "sequential"
+        },
+        {
+          "id": "c_stem_bn1_cell_1_sep3x3",
+          "source": "stem_bn1",
+          "target": "cell_1_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_stem_bn1_cell_1_sep5x5",
+          "source": "stem_bn1",
+          "target": "cell_1_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_1_add",
+          "source": "cell_1_sep3x3",
+          "target": "cell_1_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_1_add",
+          "source": "cell_1_sep5x5",
+          "target": "cell_1_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_1_add_cell_2_sep3x3",
+          "source": "cell_1_add",
+          "target": "cell_2_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_1_add_cell_2_sep5x5",
+          "source": "cell_1_add",
+          "target": "cell_2_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_2_add",
+          "source": "cell_2_sep3x3",
+          "target": "cell_2_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_2_add",
+          "source": "cell_2_sep5x5",
+          "target": "cell_2_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_2_add_cell_3_sep3x3",
+          "source": "cell_2_add",
+          "target": "cell_3_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_2_add_cell_3_sep5x5",
+          "source": "cell_2_add",
+          "target": "cell_3_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_3_add",
+          "source": "cell_3_sep3x3",
+          "target": "cell_3_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_3_add",
+          "source": "cell_3_sep5x5",
+          "target": "cell_3_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_3_add_cell_4_sep3x3",
+          "source": "cell_3_add",
+          "target": "cell_4_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_3_add_cell_4_sep5x5",
+          "source": "cell_3_add",
+          "target": "cell_4_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_4_add",
+          "source": "cell_4_sep3x3",
+          "target": "cell_4_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_4_add",
+          "source": "cell_4_sep5x5",
+          "target": "cell_4_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_4_add_cell_5_sep3x3",
+          "source": "cell_4_add",
+          "target": "cell_5_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_4_add_cell_5_sep5x5",
+          "source": "cell_4_add",
+          "target": "cell_5_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_5_add",
+          "source": "cell_5_sep3x3",
+          "target": "cell_5_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_5_add",
+          "source": "cell_5_sep5x5",
+          "target": "cell_5_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_5_add_cell_6_sep3x3",
+          "source": "cell_5_add",
+          "target": "cell_6_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_5_add_cell_6_sep5x5",
+          "source": "cell_5_add",
+          "target": "cell_6_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_6_add",
+          "source": "cell_6_sep3x3",
+          "target": "cell_6_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_6_add",
+          "source": "cell_6_sep5x5",
+          "target": "cell_6_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_6_add_cell_7_sep3x3",
+          "source": "cell_6_add",
+          "target": "cell_7_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_6_add_cell_7_sep5x5",
+          "source": "cell_6_add",
+          "target": "cell_7_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_7_add",
+          "source": "cell_7_sep3x3",
+          "target": "cell_7_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_7_add",
+          "source": "cell_7_sep5x5",
+          "target": "cell_7_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_7_add_cell_8_sep3x3",
+          "source": "cell_7_add",
+          "target": "cell_8_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_7_add_cell_8_sep5x5",
+          "source": "cell_7_add",
+          "target": "cell_8_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_8_add",
+          "source": "cell_8_sep3x3",
+          "target": "cell_8_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_8_add",
+          "source": "cell_8_sep5x5",
+          "target": "cell_8_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_8_add_cell_9_sep3x3",
+          "source": "cell_8_add",
+          "target": "cell_9_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_8_add_cell_9_sep5x5",
+          "source": "cell_8_add",
+          "target": "cell_9_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_9_add",
+          "source": "cell_9_sep3x3",
+          "target": "cell_9_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_9_add",
+          "source": "cell_9_sep5x5",
+          "target": "cell_9_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_9_add_cell_10_sep3x3",
+          "source": "cell_9_add",
+          "target": "cell_10_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_9_add_cell_10_sep5x5",
+          "source": "cell_9_add",
+          "target": "cell_10_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_10_add",
+          "source": "cell_10_sep3x3",
+          "target": "cell_10_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_10_add",
+          "source": "cell_10_sep5x5",
+          "target": "cell_10_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_10_add_cell_11_sep3x3",
+          "source": "cell_10_add",
+          "target": "cell_11_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_10_add_cell_11_sep5x5",
+          "source": "cell_10_add",
+          "target": "cell_11_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_11_add",
+          "source": "cell_11_sep3x3",
+          "target": "cell_11_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_11_add",
+          "source": "cell_11_sep5x5",
+          "target": "cell_11_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_11_add_cell_12_sep3x3",
+          "source": "cell_11_add",
+          "target": "cell_12_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_11_add_cell_12_sep5x5",
+          "source": "cell_11_add",
+          "target": "cell_12_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_12_add",
+          "source": "cell_12_sep3x3",
+          "target": "cell_12_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_12_add",
+          "source": "cell_12_sep5x5",
+          "target": "cell_12_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_12_add_cell_13_sep3x3",
+          "source": "cell_12_add",
+          "target": "cell_13_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_12_add_cell_13_sep5x5",
+          "source": "cell_12_add",
+          "target": "cell_13_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_13_add",
+          "source": "cell_13_sep3x3",
+          "target": "cell_13_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_13_add",
+          "source": "cell_13_sep5x5",
+          "target": "cell_13_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_13_add_cell_14_sep3x3",
+          "source": "cell_13_add",
+          "target": "cell_14_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_13_add_cell_14_sep5x5",
+          "source": "cell_13_add",
+          "target": "cell_14_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_14_add",
+          "source": "cell_14_sep3x3",
+          "target": "cell_14_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_14_add",
+          "source": "cell_14_sep5x5",
+          "target": "cell_14_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_14_add_cell_15_sep3x3",
+          "source": "cell_14_add",
+          "target": "cell_15_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_14_add_cell_15_sep5x5",
+          "source": "cell_14_add",
+          "target": "cell_15_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_15_add",
+          "source": "cell_15_sep3x3",
+          "target": "cell_15_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_15_add",
+          "source": "cell_15_sep5x5",
+          "target": "cell_15_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_15_add_cell_16_sep3x3",
+          "source": "cell_15_add",
+          "target": "cell_16_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_15_add_cell_16_sep5x5",
+          "source": "cell_15_add",
+          "target": "cell_16_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_16_add",
+          "source": "cell_16_sep3x3",
+          "target": "cell_16_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_16_add",
+          "source": "cell_16_sep5x5",
+          "target": "cell_16_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_16_add_cell_17_sep3x3",
+          "source": "cell_16_add",
+          "target": "cell_17_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_16_add_cell_17_sep5x5",
+          "source": "cell_16_add",
+          "target": "cell_17_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_17_add",
+          "source": "cell_17_sep3x3",
+          "target": "cell_17_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_17_add",
+          "source": "cell_17_sep5x5",
+          "target": "cell_17_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_17_add_cell_18_sep3x3",
+          "source": "cell_17_add",
+          "target": "cell_18_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_17_add_cell_18_sep5x5",
+          "source": "cell_17_add",
+          "target": "cell_18_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_18_add",
+          "source": "cell_18_sep3x3",
+          "target": "cell_18_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_18_add",
+          "source": "cell_18_sep5x5",
+          "target": "cell_18_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_18_add_cell_19_sep3x3",
+          "source": "cell_18_add",
+          "target": "cell_19_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_18_add_cell_19_sep5x5",
+          "source": "cell_18_add",
+          "target": "cell_19_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_19_add",
+          "source": "cell_19_sep3x3",
+          "target": "cell_19_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_19_add",
+          "source": "cell_19_sep5x5",
+          "target": "cell_19_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_cell_19_add_cell_20_sep3x3",
+          "source": "cell_19_add",
+          "target": "cell_20_sep3x3",
+          "type": "skip"
+        },
+        {
+          "id": "c_cell_19_add_cell_20_sep5x5",
+          "source": "cell_19_add",
+          "target": "cell_20_sep5x5",
+          "type": "skip"
+        },
+        {
+          "id": "c_br1_cell_20_add",
+          "source": "cell_20_sep3x3",
+          "target": "cell_20_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_br2_cell_20_add",
+          "source": "cell_20_sep5x5",
+          "target": "cell_20_add",
+          "type": "sequential"
+        },
+        {
+          "id": "c_last_gap",
+          "source": "cell_20_add",
+          "target": "global_average_pooling2d",
+          "type": "sequential"
+        },
+        {
+          "id": "c_alignment_predictions",
+          "source": "parameter_alignment_adjustment",
+          "target": "predictions",
+          "type": "sequential"
+        }
+      ],
+      "groups": [
+        {
+          "id": "group_cell_1",
+          "name": "NASNet Normal Cell 1",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_1_sep3x3",
+            "cell_1_sep5x5",
+            "cell_1_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_2",
+          "name": "NASNet Normal Cell 2",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_2_sep3x3",
+            "cell_2_sep5x5",
+            "cell_2_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_3",
+          "name": "NASNet Normal Cell 3",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_3_sep3x3",
+            "cell_3_sep5x5",
+            "cell_3_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_4",
+          "name": "NASNet Normal Cell 4",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_4_sep3x3",
+            "cell_4_sep5x5",
+            "cell_4_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_5",
+          "name": "NASNet Normal Cell 5",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_5_sep3x3",
+            "cell_5_sep5x5",
+            "cell_5_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_6",
+          "name": "NASNet Normal Cell 6",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_6_sep3x3",
+            "cell_6_sep5x5",
+            "cell_6_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_7",
+          "name": "NASNet Reduction Cell 7",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_7_sep3x3",
+            "cell_7_sep5x5",
+            "cell_7_add"
+          ],
+          "color": "#EF4444"
+        },
+        {
+          "id": "group_cell_8",
+          "name": "NASNet Normal Cell 8",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_8_sep3x3",
+            "cell_8_sep5x5",
+            "cell_8_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_9",
+          "name": "NASNet Normal Cell 9",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_9_sep3x3",
+            "cell_9_sep5x5",
+            "cell_9_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_10",
+          "name": "NASNet Normal Cell 10",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_10_sep3x3",
+            "cell_10_sep5x5",
+            "cell_10_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_11",
+          "name": "NASNet Normal Cell 11",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_11_sep3x3",
+            "cell_11_sep5x5",
+            "cell_11_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_12",
+          "name": "NASNet Normal Cell 12",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_12_sep3x3",
+            "cell_12_sep5x5",
+            "cell_12_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_13",
+          "name": "NASNet Normal Cell 13",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_13_sep3x3",
+            "cell_13_sep5x5",
+            "cell_13_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_14",
+          "name": "NASNet Reduction Cell 14",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_14_sep3x3",
+            "cell_14_sep5x5",
+            "cell_14_add"
+          ],
+          "color": "#EF4444"
+        },
+        {
+          "id": "group_cell_15",
+          "name": "NASNet Normal Cell 15",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_15_sep3x3",
+            "cell_15_sep5x5",
+            "cell_15_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_16",
+          "name": "NASNet Normal Cell 16",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_16_sep3x3",
+            "cell_16_sep5x5",
+            "cell_16_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_17",
+          "name": "NASNet Normal Cell 17",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_17_sep3x3",
+            "cell_17_sep5x5",
+            "cell_17_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_18",
+          "name": "NASNet Normal Cell 18",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_18_sep3x3",
+            "cell_18_sep5x5",
+            "cell_18_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_19",
+          "name": "NASNet Normal Cell 19",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_19_sep3x3",
+            "cell_19_sep5x5",
+            "cell_19_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_cell_20",
+          "name": "NASNet Normal Cell 20",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "layerIds": [
+            "cell_20_sep3x3",
+            "cell_20_sep5x5",
+            "cell_20_add"
+          ],
+          "color": "#06B6D4"
+        },
+        {
+          "id": "group_classifier",
+          "name": "Global Pooling & Classification",
+          "description": "GAP followed by prediction layer.",
+          "layerIds": [
+            "global_average_pooling2d",
+            "predictions"
+          ],
+          "color": "#8B5CF6"
+        }
+      ],
+      "groupedNodes": [
+        {
+          "id": "group_cell_1",
+          "label": "NASNet Normal Cell 1",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 0
+          },
+          "layerIds": [
+            "cell_1_sep3x3",
+            "cell_1_sep5x5",
+            "cell_1_add"
+          ]
+        },
+        {
+          "id": "group_cell_2",
+          "label": "NASNet Normal Cell 2",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 200
+          },
+          "layerIds": [
+            "cell_2_sep3x3",
+            "cell_2_sep5x5",
+            "cell_2_add"
+          ]
+        },
+        {
+          "id": "group_cell_3",
+          "label": "NASNet Normal Cell 3",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 400
+          },
+          "layerIds": [
+            "cell_3_sep3x3",
+            "cell_3_sep5x5",
+            "cell_3_add"
+          ]
+        },
+        {
+          "id": "group_cell_4",
+          "label": "NASNet Normal Cell 4",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 600
+          },
+          "layerIds": [
+            "cell_4_sep3x3",
+            "cell_4_sep5x5",
+            "cell_4_add"
+          ]
+        },
+        {
+          "id": "group_cell_5",
+          "label": "NASNet Normal Cell 5",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 800
+          },
+          "layerIds": [
+            "cell_5_sep3x3",
+            "cell_5_sep5x5",
+            "cell_5_add"
+          ]
+        },
+        {
+          "id": "group_cell_6",
+          "label": "NASNet Normal Cell 6",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 1000
+          },
+          "layerIds": [
+            "cell_6_sep3x3",
+            "cell_6_sep5x5",
+            "cell_6_add"
+          ]
+        },
+        {
+          "id": "group_cell_7",
+          "label": "NASNet Reduction Cell 7",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#EF4444",
+          "position": {
+            "x": 250,
+            "y": 1200
+          },
+          "layerIds": [
+            "cell_7_sep3x3",
+            "cell_7_sep5x5",
+            "cell_7_add"
+          ]
+        },
+        {
+          "id": "group_cell_8",
+          "label": "NASNet Normal Cell 8",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 1400
+          },
+          "layerIds": [
+            "cell_8_sep3x3",
+            "cell_8_sep5x5",
+            "cell_8_add"
+          ]
+        },
+        {
+          "id": "group_cell_9",
+          "label": "NASNet Normal Cell 9",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 1600
+          },
+          "layerIds": [
+            "cell_9_sep3x3",
+            "cell_9_sep5x5",
+            "cell_9_add"
+          ]
+        },
+        {
+          "id": "group_cell_10",
+          "label": "NASNet Normal Cell 10",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 1800
+          },
+          "layerIds": [
+            "cell_10_sep3x3",
+            "cell_10_sep5x5",
+            "cell_10_add"
+          ]
+        },
+        {
+          "id": "group_cell_11",
+          "label": "NASNet Normal Cell 11",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 2000
+          },
+          "layerIds": [
+            "cell_11_sep3x3",
+            "cell_11_sep5x5",
+            "cell_11_add"
+          ]
+        },
+        {
+          "id": "group_cell_12",
+          "label": "NASNet Normal Cell 12",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 2200
+          },
+          "layerIds": [
+            "cell_12_sep3x3",
+            "cell_12_sep5x5",
+            "cell_12_add"
+          ]
+        },
+        {
+          "id": "group_cell_13",
+          "label": "NASNet Normal Cell 13",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 2400
+          },
+          "layerIds": [
+            "cell_13_sep3x3",
+            "cell_13_sep5x5",
+            "cell_13_add"
+          ]
+        },
+        {
+          "id": "group_cell_14",
+          "label": "NASNet Reduction Cell 14",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#EF4444",
+          "position": {
+            "x": 250,
+            "y": 2600
+          },
+          "layerIds": [
+            "cell_14_sep3x3",
+            "cell_14_sep5x5",
+            "cell_14_add"
+          ]
+        },
+        {
+          "id": "group_cell_15",
+          "label": "NASNet Normal Cell 15",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 2800
+          },
+          "layerIds": [
+            "cell_15_sep3x3",
+            "cell_15_sep5x5",
+            "cell_15_add"
+          ]
+        },
+        {
+          "id": "group_cell_16",
+          "label": "NASNet Normal Cell 16",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 3000
+          },
+          "layerIds": [
+            "cell_16_sep3x3",
+            "cell_16_sep5x5",
+            "cell_16_add"
+          ]
+        },
+        {
+          "id": "group_cell_17",
+          "label": "NASNet Normal Cell 17",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 3200
+          },
+          "layerIds": [
+            "cell_17_sep3x3",
+            "cell_17_sep5x5",
+            "cell_17_add"
+          ]
+        },
+        {
+          "id": "group_cell_18",
+          "label": "NASNet Normal Cell 18",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 3400
+          },
+          "layerIds": [
+            "cell_18_sep3x3",
+            "cell_18_sep5x5",
+            "cell_18_add"
+          ]
+        },
+        {
+          "id": "group_cell_19",
+          "label": "NASNet Normal Cell 19",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 3600
+          },
+          "layerIds": [
+            "cell_19_sep3x3",
+            "cell_19_sep5x5",
+            "cell_19_add"
+          ]
+        },
+        {
+          "id": "group_cell_20",
+          "label": "NASNet Normal Cell 20",
+          "type": "group_node",
+          "description": "Combines parallel separable convolutions (3x3 and 5x5) discovered via automated architecture search.",
+          "color": "#06B6D4",
+          "position": {
+            "x": 250,
+            "y": 3800
+          },
+          "layerIds": [
+            "cell_20_sep3x3",
+            "cell_20_sep5x5",
+            "cell_20_add"
+          ]
+        },
+        {
+          "id": "group_classifier",
+          "label": "Global Pooling & Classification",
+          "type": "group_node",
+          "description": "GAP followed by prediction layer.",
+          "color": "#8B5CF6",
+          "position": {
+            "x": 250,
+            "y": 4000
+          },
+          "layerIds": [
+            "global_average_pooling2d",
+            "predictions"
+          ]
+        }
+      ],
+      "groupedEdges": [
+        {
+          "id": "c_group_cell_1_group_cell_2",
+          "source": "group_cell_1",
+          "target": "group_cell_2",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_2_group_cell_3",
+          "source": "group_cell_2",
+          "target": "group_cell_3",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_3_group_cell_4",
+          "source": "group_cell_3",
+          "target": "group_cell_4",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_4_group_cell_5",
+          "source": "group_cell_4",
+          "target": "group_cell_5",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_5_group_cell_6",
+          "source": "group_cell_5",
+          "target": "group_cell_6",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_6_group_cell_7",
+          "source": "group_cell_6",
+          "target": "group_cell_7",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_7_group_cell_8",
+          "source": "group_cell_7",
+          "target": "group_cell_8",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_8_group_cell_9",
+          "source": "group_cell_8",
+          "target": "group_cell_9",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_9_group_cell_10",
+          "source": "group_cell_9",
+          "target": "group_cell_10",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_10_group_cell_11",
+          "source": "group_cell_10",
+          "target": "group_cell_11",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_11_group_cell_12",
+          "source": "group_cell_11",
+          "target": "group_cell_12",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_12_group_cell_13",
+          "source": "group_cell_12",
+          "target": "group_cell_13",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_13_group_cell_14",
+          "source": "group_cell_13",
+          "target": "group_cell_14",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_14_group_cell_15",
+          "source": "group_cell_14",
+          "target": "group_cell_15",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_15_group_cell_16",
+          "source": "group_cell_15",
+          "target": "group_cell_16",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_16_group_cell_17",
+          "source": "group_cell_16",
+          "target": "group_cell_17",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_17_group_cell_18",
+          "source": "group_cell_17",
+          "target": "group_cell_18",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_18_group_cell_19",
+          "source": "group_cell_18",
+          "target": "group_cell_19",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_19_group_cell_20",
+          "source": "group_cell_19",
+          "target": "group_cell_20",
+          "type": "skip"
+        },
+        {
+          "id": "c_group_cell_20_group_classifier",
+          "source": "group_cell_20",
+          "target": "group_classifier",
+          "type": "sequential"
+        }
+      ]
+    }
+  },
+  "nonTrainableParameters": 192,
+  "trainableParameters": 88949626
+}

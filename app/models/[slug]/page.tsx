@@ -1,14 +1,12 @@
 import { notFound } from 'next/navigation';
 import TabbedExplorer from '@/components/model-explorer/tabbed-explorer';
-import modelsSummary from '@/data/models.json';
-import { NeuralNetworkModel } from '@/lib/types/model';
-import fs from 'fs';
-import path from 'path';
+import { getModel, getAllModelIds } from '@/lib/data-access/models';
 
 // Generates static parameters during static export build
 export async function generateStaticParams() {
-  return modelsSummary.map(model => ({
-    slug: model.id,
+  const ids = getAllModelIds();
+  return ids.map(id => ({
+    slug: id,
   }));
 }
 
@@ -19,36 +17,22 @@ interface PageProps {
 export default async function ModelPage({ params }: PageProps) {
   const { slug } = await params;
 
-  // Validate the slug matches our known models
-  const meta = modelsSummary.find(m => m.id === slug);
-  if (!meta) {
-    notFound();
-  }
-
-  let model: NeuralNetworkModel | null = null;
-  let graphData = null;
+  let model;
   try {
-    const oldModelPath = path.join(process.cwd(), 'lib', 'data', `${slug}.json`);
-    const graphPath = path.join(process.cwd(), 'data', 'graphs', `${slug}.json`);
-    
-    if (!fs.existsSync(oldModelPath) || !fs.existsSync(graphPath)) {
-      notFound();
-    }
-    
-    const oldModelContent = fs.readFileSync(oldModelPath, 'utf8');
-    model = JSON.parse(oldModelContent) as NeuralNetworkModel;
-    model.docsUrl = meta.docsUrl;
-    
-    const graphContent = fs.readFileSync(graphPath, 'utf8');
-    graphData = JSON.parse(graphContent);
+    model = getModel(slug);
   } catch (error) {
     console.error(`Error loading model ${slug}:`, error);
     notFound();
   }
 
-  if (!model || !graphData) {
-    notFound();
-  }
+  // Extract graph data from architecture.layout while keeping TabbedExplorer's prop shape stable.
+  const graphData = {
+    nodes: model.architecture.layout?.nodes ?? [],
+    edges: model.architecture.layout?.edges ?? [],
+    groups: model.architecture.layout?.groups ?? [],
+    groupedNodes: model.architecture.layout?.groupedNodes ?? [],
+    groupedEdges: model.architecture.layout?.groupedEdges ?? [],
+  };
 
   return <TabbedExplorer model={model} graphData={graphData} />;
 }

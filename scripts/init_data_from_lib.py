@@ -1,3 +1,10 @@
+"""Deprecated legacy data bootstrapper.
+
+This script documents the original pipeline that produced lib/data/*.json,
+data/graphs/*.json, and data/models_raw.json. The app now reads canonical
+per-model files from data/models/ through lib/data-access/models.ts.
+"""
+
 import os
 import json
 import re

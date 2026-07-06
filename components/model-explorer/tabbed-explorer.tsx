@@ -14,8 +14,7 @@ import { cn } from '@/lib/utils/cn';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
-
-
+const MAX_DETAILED_NODES = 100;
 
 // Lazy load the React Flow component for performance and bundler optimizations
 const FlowCanvas = dynamic(() => import('./flow-canvas'), {
@@ -43,13 +42,19 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
   const [showDetailedLayers, setShowDetailedLayers] = useState(false);
   const [hasVisitedTopology, setHasVisitedTopology] = useState(false);
+  const detailedNodeCount = graphData.nodes.length;
+  const isDetailedViewDisabled = detailedNodeCount > MAX_DETAILED_NODES;
+  const detailedPreferenceKey = `nn_showDetailedLayers:${model.id}`;
 
   useEffect(() => {
-    const saved = localStorage.getItem('nn_showDetailedLayers');
+    const saved = localStorage.getItem(detailedPreferenceKey);
     if (saved !== null) {
-      setShowDetailedLayers(saved === 'true');
+      setShowDetailedLayers(saved === 'true' && !isDetailedViewDisabled);
+      return;
     }
-  }, []);
+
+    setShowDetailedLayers(!isDetailedViewDisabled);
+  }, [detailedPreferenceKey, isDetailedViewDisabled]);
 
   useEffect(() => {
     if (activeTab === 'topology') {
@@ -69,7 +74,6 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
   const topologyModel = useMemo(() => {
     // If showDetailedLayers is true, we render individual nodes.
     // Else, we render grouped nodes.
-    const nodes = showDetailedLayers ? graphData.nodes : graphData.groupedNodes;
     const edges = showDetailedLayers ? graphData.edges : graphData.groupedEdges;
     
     return {
@@ -374,14 +378,22 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                   <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
                     <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
                     <button
+                      disabled={isDetailedViewDisabled}
+                      title={
+                        isDetailedViewDisabled
+                          ? `This model has ${detailedNodeCount} layers. Detailed topology is disabled to keep rendering responsive.`
+                          : 'Toggle detailed layer topology'
+                      }
                       onClick={() => {
+                        if (isDetailedViewDisabled) return;
                         const nextVal = !showDetailedLayers;
                         setShowDetailedLayers(nextVal);
-                        localStorage.setItem('nn_showDetailedLayers', String(nextVal));
+                        localStorage.setItem(detailedPreferenceKey, String(nextVal));
                         setSelectedLayerId(null);
                       }}
                       className={cn(
-                        "relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
+                        "relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
+                        isDetailedViewDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
                         showDetailedLayers ? "bg-primary" : "bg-slate-700"
                       )}
                     >

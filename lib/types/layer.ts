@@ -118,10 +118,10 @@ export interface ParameterBreakdown {
 
 export interface EducationalNote {
   summary: string;                    // One-line summary
-  detailed: string;                   // Detailed educational explanation
+  detailed?: string;                  // Detailed educational explanation
   analogy?: string;                   // Real-world analogy for intuition
-  whyItMatters: string;               // Why this layer is important
-  keyTakeaway: string;                // Single key takeaway
+  whyItMatters?: string;              // Why this layer is important
+  keyTakeaway?: string;               // Single key takeaway
 }
 
 export interface Position {
@@ -143,4 +143,3 @@ export interface Layer {
   icon?: string;                      // Name of Lucide icon to display
   layerIds?: string[];                // Layer IDs if this is a grouped layer block
 }
-
