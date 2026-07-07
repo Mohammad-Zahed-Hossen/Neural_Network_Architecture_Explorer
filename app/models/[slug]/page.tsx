@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import TabbedExplorer from '@/components/model-explorer/tabbed-explorer';
-import { getModel, getAllModelIds } from '@/lib/data-access/models';
+import { getAllModelIds } from '@/lib/data-access/models';
+import { getModel } from '@/lib/data-access/models.server';
 
 // Generates static parameters during static export build
 export async function generateStaticParams() {

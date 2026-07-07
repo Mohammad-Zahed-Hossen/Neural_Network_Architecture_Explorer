@@ -6,8 +6,9 @@ import {
   AlignJustify, Key, PlusCircle, GitMerge, 
   HelpCircle, ArrowDown, ChevronDown, ChevronRight, Eye
 } from 'lucide-react';
-import { Layer, LayerType } from '@/lib/types/layer';
+import { Layer, LayerType } from '@/lib/schema/model.schema';
 import { cn } from '@/lib/utils/cn';
+import { layerIconMap, layerStyleMap } from '@/lib/utils/layer-styles';
 import { formatShortNumber } from '@/lib/utils/formatters';
 import { Badge } from '@/components/ui/badge';
 
@@ -27,46 +28,6 @@ interface LayerListProps {
 }
 
 // Icon mappings based on LayerType
-const iconMap: Record<LayerType, ComponentType<{ className?: string }>> = {
-  input: Image,
-  conv2d: Layers,
-  batch_norm: Activity,
-  layer_norm: Activity,
-  attention: Eye,
-  activation: Zap,
-  max_pooling2d: Shrink,
-  average_pooling2d: Shrink,
-  global_average_pooling2d: Shrink,
-  flatten: AlignJustify,
-  dense: Key,
-  dropout: HelpCircle,
-  add: PlusCircle,
-  concatenate: GitMerge,
-  bottleneck: Layers,
-  dense_block: Layers,
-  transition_block: Shrink,
-  output: HelpCircle
-};
-
-// Styling profiles based on LayerType
-const typeStylesMap: Record<string, { border: string; text: string; bg: string; badge: 'default' | 'secondary' | 'outline' | 'success' | 'indigo' | 'primary'; shadow: string }> = {
-  input: { border: 'border-emerald-500/20 hover:border-emerald-500/40', text: 'text-emerald-450', bg: 'bg-emerald-500/[0.02]', badge: 'success', shadow: 'shadow-emerald-500/5' },
-  layer_norm: { border: 'border-slate-500/20 hover:border-slate-500/40', text: 'text-slate-400', bg: 'bg-slate-500/[0.02]', badge: 'secondary', shadow: 'shadow-slate-500/5' },
-  attention: { border: 'border-fuchsia-500/20 hover:border-fuchsia-500/40', text: 'text-fuchsia-400', bg: 'bg-fuchsia-500/[0.02]', badge: 'indigo', shadow: 'shadow-fuchsia-500/5' },
-  conv2d: { border: 'border-cyan-500/20 hover:border-cyan-500/40', text: 'text-cyan-400', bg: 'bg-cyan-500/[0.02]', badge: 'primary', shadow: 'shadow-cyan-500/5' },
-  bottleneck: { border: 'border-blue-500/20 hover:border-blue-500/40', text: 'text-blue-400', bg: 'bg-blue-500/[0.02]', badge: 'primary', shadow: 'shadow-blue-500/5' },
-  dense_block: { border: 'border-blue-500/20 hover:border-blue-500/40', text: 'text-blue-400', bg: 'bg-blue-500/[0.02]', badge: 'primary', shadow: 'shadow-blue-500/5' },
-  batch_norm: { border: 'border-slate-500/20 hover:border-slate-500/40', text: 'text-slate-400', bg: 'bg-slate-500/[0.02]', badge: 'secondary', shadow: 'shadow-slate-500/5' },
-  activation: { border: 'border-pink-500/20 hover:border-pink-500/40', text: 'text-pink-400', bg: 'bg-pink-500/[0.02]', badge: 'outline', shadow: 'shadow-pink-500/5' },
-  max_pooling2d: { border: 'border-amber-500/20 hover:border-amber-500/40', text: 'text-amber-400', bg: 'bg-amber-500/[0.02]', badge: 'secondary', shadow: 'shadow-amber-500/5' },
-  average_pooling2d: { border: 'border-amber-500/20 hover:border-amber-500/40', text: 'text-amber-400', bg: 'bg-amber-500/[0.02]', badge: 'secondary', shadow: 'shadow-amber-500/5' },
-  global_average_pooling2d: { border: 'border-amber-500/20 hover:border-amber-500/40', text: 'text-amber-400', bg: 'bg-amber-500/[0.02]', badge: 'secondary', shadow: 'shadow-amber-500/5' },
-  transition_block: { border: 'border-amber-500/20 hover:border-amber-500/40', text: 'text-amber-400', bg: 'bg-amber-500/[0.02]', badge: 'secondary', shadow: 'shadow-amber-500/5' },
-  flatten: { border: 'border-orange-500/20 hover:border-orange-500/40', text: 'text-orange-400', bg: 'bg-orange-500/[0.02]', badge: 'outline', shadow: 'shadow-orange-500/5' },
-  dense: { border: 'border-violet-500/20 hover:border-violet-500/40', text: 'text-violet-400', bg: 'bg-violet-500/[0.02]', badge: 'indigo', shadow: 'shadow-violet-500/5' },
-  add: { border: 'border-red-500/20 hover:border-red-500/40', text: 'text-red-400', bg: 'bg-red-500/[0.02]', badge: 'outline', shadow: 'shadow-red-500/5' },
-  concatenate: { border: 'border-cyan-500/20 hover:border-cyan-500/40', text: 'text-cyan-400', bg: 'bg-cyan-500/[0.02]', badge: 'outline', shadow: 'shadow-cyan-500/5' }
-};
 
 export default function LayerList({ layers, selectedLayerId, onSelectLayer, groups }: LayerListProps) {
   // Store collapsible state per group ID
@@ -177,8 +138,8 @@ function renderLayerCard(
   onSelectLayer: (id: string | null) => void,
   isAltRow = false
 ) {
-  const Icon = iconMap[layer.type] || HelpCircle;
-  const style = typeStylesMap[layer.type] || {
+  const Icon = layerIconMap[layer.type] || HelpCircle;
+  const style = layerStyleMap[layer.type] || {
     border: 'border-slate-800 hover:border-slate-700',
     text: 'text-slate-350',
     bg: 'bg-slate-900/10',

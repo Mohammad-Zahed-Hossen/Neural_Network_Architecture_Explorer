@@ -1,4 +1,4 @@
-import { ModelCategory } from './model-metadata';
+import { ModelCategory } from '../schema/model.schema';
 import { Network, Zap, Lightbulb, Share2, Layers, Cpu, TrendingUp, Search, History } from 'lucide-react';
 
 export interface CategoryInfo {

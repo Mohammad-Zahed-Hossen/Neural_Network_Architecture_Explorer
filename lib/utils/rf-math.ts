@@ -1,4 +1,4 @@
-import { Layer } from '@/lib/types/layer';
+import { Layer } from '@/lib/schema/model.schema';
 
 export interface LayerRFInfo {
   layerId: string;

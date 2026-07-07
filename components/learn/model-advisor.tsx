@@ -79,19 +79,19 @@ export default function ModelAdvisor() {
       const reasons: string[] = [];
       const tradeOffs: string[] = [];
 
-      const paramsInM = model.params / 1e6;
-      const flopsInG = model.flops / 1e9;
-      const top1 = model.top1;
+      const paramsInM = model.totalParameters / 1e6;
+      const flopsInG = model.totalFLOPs / 1e9;
+      const top1 = model.top1Accuracy * 100;
 
       // 1. Goal constraints scoring
       if (goal === 'accuracy') {
         score += top1 * 0.8; // Heavily reward accuracy
         reasons.push(`Achieves high accuracy (${formatAccuracy(model.top1Accuracy)} Top-1)`);
         
-        if (model.params > 40e6) {
+        if (model.totalParameters > 40e6) {
           tradeOffs.push("High parameter footprint requires more storage");
         }
-        if (model.flops > 10e9) {
+        if (model.totalFLOPs > 10e9) {
           tradeOffs.push("Demanding FLOP count can cause slow CPU execution");
         }
       } else if (goal === 'latency') {
@@ -108,15 +108,15 @@ export default function ModelAdvisor() {
         }
       } else if (goal === 'memory') {
         // Reward low memory usage
-        if (model.memory_mb < 30) {
+        if (model.memoryUsage < 30) {
           score += 40;
-          reasons.push(`Ultra-low memory footprint (${formatMemory(model.memory_mb)})`);
-        } else if (model.memory_mb < 100) {
+          reasons.push(`Ultra-low memory footprint (${formatMemory(model.memoryUsage)})`);
+        } else if (model.memoryUsage < 100) {
           score += 20;
-          reasons.push(`Balanced memory footprints (${formatMemory(model.memory_mb)})`);
+          reasons.push(`Balanced memory footprints (${formatMemory(model.memoryUsage)})`);
         } else {
           score -= 40;
-          tradeOffs.push(`Large memory footprint (${formatMemory(model.memory_mb)}) may exceed edge limits`);
+          tradeOffs.push(`Large memory footprint (${formatMemory(model.memoryUsage)}) may exceed edge limits`);
         }
       } else if (goal === 'education') {
         // Reward classic, representative paradigm models
@@ -140,7 +140,7 @@ export default function ModelAdvisor() {
           reasons.push("Mobile-specific model discovered via architecture search");
         }
 
-        if (model.params > 30e6 || model.memory_mb > 150) {
+        if (model.totalParameters > 30e6 || model.memoryUsage > 150) {
           score -= 40;
           tradeOffs.push("Model package or VRAM size is heavy for mobile runtime bundles");
         }
@@ -156,13 +156,13 @@ export default function ModelAdvisor() {
           reasons.push("Smallest EfficientNet matches embedded CPU bounds");
         }
 
-        if (model.params > 10e6 || model.memory_mb > 50) {
+        if (model.totalParameters > 10e6 || model.memoryUsage > 50) {
           score -= 60;
           tradeOffs.push("Requires too much memory for basic microcontroller nodes");
         }
       } else if (hardware === 'server') {
         // Servers can handle heavy models easily
-        if (model.params > 40e6 || model.id.includes('b6') || model.id.includes('b7')) {
+        if (model.totalParameters > 40e6 || model.id.includes('b6') || model.id.includes('b7')) {
           score += 25;
           reasons.push("Maximizes representation capacity by utilizing high-end GPU threads");
         }

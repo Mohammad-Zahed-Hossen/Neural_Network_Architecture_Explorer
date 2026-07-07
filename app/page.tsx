@@ -5,21 +5,9 @@ import { motion } from 'framer-motion';
 import { Sparkles, BarChart3, Play, Zap, ArrowRight, Layers, GraduationCap, Cpu, Award } from 'lucide-react';
 import Link from 'next/link';
 import ModelCard from '@/components/model-catalog/model-card';
-import modelsSummary from '@/data/models.json';
+import { getModelSummaries } from '@/lib/data-access/models';
 
-// We map our JSON models to match the ModelMetadata type
-const modelsData = modelsSummary.map(m => ({
-  ...m,
-  totalParameters: m.params,
-  totalFLOPs: m.flops,
-  top1Accuracy: m.top1 / 100,
-  top5Accuracy: m.top5 / 100,
-  memoryUsage: m.memory_mb,
-  releaseYear: m.releaseYear,
-  paperYear: m.year,
-  depth: m.depth,
-  colorTheme: m.colorTheme,
-})) as any[];
+const modelsData = getModelSummaries();
 
 export default function Home() {
   // Calculate dynamic stats

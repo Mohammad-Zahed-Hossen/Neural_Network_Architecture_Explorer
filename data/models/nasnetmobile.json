@@ -5352,5 +5352,7 @@
     }
   },
   "nonTrainableParameters": 64,
-  "trainableParameters": 5326500
+  "trainableParameters": 5326500,
+  "family": "NASNet",
+  "category": "NASNet"
 }

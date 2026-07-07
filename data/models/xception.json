@@ -12580,5 +12580,7 @@
     }
   },
   "nonTrainableParameters": 41808,
-  "trainableParameters": 22868672
+  "trainableParameters": 22868672,
+  "family": "Xception",
+  "category": "Xception"
 }

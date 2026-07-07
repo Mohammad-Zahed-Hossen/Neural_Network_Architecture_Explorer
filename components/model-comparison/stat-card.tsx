@@ -1,13 +1,13 @@
 'use client';
 
 import { Award, Zap, HardDrive } from 'lucide-react';
-import { ModelMetadata } from '@/lib/data/model-metadata';
+import { ModelSummary } from '@/lib/schema/model.schema';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils/cn';
 import { formatShortNumber, formatAccuracy } from '@/lib/utils/formatters';
 
 interface StatCardProps {
-  models: ModelMetadata[];
+  models: ModelSummary[];
 }
 
 export default function StatCards({ models }: StatCardProps) {

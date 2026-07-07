@@ -6,14 +6,14 @@ import {
   Calendar, Users, Hash, Tag, Lightbulb, ChevronRight, Gauge, Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { ModelMetadata } from '@/lib/data/model-metadata';
+import { ModelSummary } from '@/lib/schema/model.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import { modelCategories } from '@/lib/data/model-categories';
 import { cn } from '@/lib/utils/cn';
 import * as React from 'react';
 
 interface ComparisonTableProps {
-  models: ModelMetadata[];
+  models: ModelSummary[];
 }
 
 // Architecture paradigm mapping from category (dynamic, not hardcoded to specific IDs)
@@ -80,11 +80,11 @@ interface MetricDef {
   key: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  getValue: (m: ModelMetadata) => string | number;
-  getRawValue: (m: ModelMetadata) => number;
+  getValue: (m: ModelSummary) => string | number;
+  getRawValue: (m: ModelSummary) => number;
   direction: MetricDirection;
   format?: (v: number) => string;
-  colorScale?: (v: number, models: ModelMetadata[]) => string;
+  colorScale?: (v: number, models: ModelSummary[]) => string;
 }
 
 interface SectionHeaderProps {

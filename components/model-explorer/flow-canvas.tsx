@@ -8,12 +8,13 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { NeuralNetworkModel } from '@/lib/types/model';
-import { LayerType } from '@/lib/types/layer';
+import { Connection, GroupedEdge, GroupedNode, Layer, LayerType, NeuralNetworkModel } from '@/lib/schema/model.schema';
 import CustomNode from './custom-node';
 
 interface FlowCanvasProps {
-  model: NeuralNetworkModel;
+  topology:
+    | { mode: 'detailed'; model: NeuralNetworkModel }
+    | { mode: 'grouped'; id: string; groupedNodes: GroupedNode[]; groupedEdges: GroupedEdge[]; colorTheme: string };
   selectedLayerId: string | null;
   onSelectLayer: (id: string | null) => void;
 }
@@ -23,16 +24,51 @@ const nodeTypes = {
   layerNode: CustomNode,
 };
 
-export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: FlowCanvasProps) {
+export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }: FlowCanvasProps) {
   const [mounted, setMounted] = useState(false);
   const [hiddenTypes, setHiddenTypes] = useState<Set<LayerType>>(new Set());
   const reactFlowRef = useRef<ReactFlowInstance | null>(null);
+  const graphId = topology.mode === 'detailed' ? topology.model.id : `${topology.id}:grouped`;
+  const colorTheme = topology.mode === 'detailed' ? topology.model.colorTheme : topology.colorTheme;
+
+  const layers = useMemo<Layer[]>(() => {
+    if (topology.mode === 'detailed') return topology.model.architecture.layers;
+
+    return topology.groupedNodes.map((node) => ({
+      id: node.id,
+      type: 'transition_block',
+      name: node.label,
+      inputShape: { dimensions: [], description: '' },
+      outputShape: { dimensions: [], description: '' },
+      config: {},
+      parameters: { total: 0, weights: 0, biases: 0, formula: '', calculationSteps: [] },
+      educationalNote: {
+        summary: node.description,
+        detailed: node.description,
+        whyItMatters: '',
+        keyTakeaway: '',
+      },
+      position: node.position,
+      layerIds: node.layerIds,
+    }));
+  }, [topology]);
+
+  const connections = useMemo<Connection[]>(() => {
+    if (topology.mode === 'detailed') return topology.model.architecture.connections;
+
+    return topology.groupedEdges.map((edge) => ({
+      id: edge.id,
+      sourceId: edge.source,
+      targetId: edge.target,
+      type: edge.type === 'skip' || edge.type === 'concatenate' || edge.type === 'add' ? edge.type : 'sequential',
+    }));
+  }, [topology]);
 
   const allLayerTypes = useMemo(() => {
     const types = new Set<LayerType>();
-    model.architecture.layers.forEach(l => types.add(l.type));
+    layers.forEach(l => types.add(l.type));
     return Array.from(types);
-  }, [model.architecture.layers]);
+  }, [layers]);
 
   const toggleType = (type: LayerType) => {
     setHiddenTypes(prev => {
@@ -44,7 +80,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
   };
 
   const isVisible = (layerId: string) => {
-    const layer = model.architecture.layers.find(l => l.id === layerId);
+    const layer = layers.find(l => l.id === layerId);
     return layer ? !hiddenTypes.has(layer.type) : true;
   };
 
@@ -61,7 +97,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
 
   // 1. Dynamic Nodes compilation
   const initialNodes: Node[] = useMemo(() => {
-    return model.architecture.layers
+    return layers
       .filter(layer => !hiddenTypes.has(layer.type))
       .map((layer, index) => {
         const isSelected = layer.id === selectedLayerId || 
@@ -85,19 +121,19 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
         };
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model.id, hiddenTypes]);
+  }, [graphId, hiddenTypes, layers, selectedLayerId]);
 
   // 2. Dynamic Edges compilation
   const initialEdges: Edge[] = useMemo(() => {
-    if (!model.architecture.connections) return [];
+    if (!connections) return [];
 
-    return model.architecture.connections
+    return connections
       .filter(conn => isVisible(conn.sourceId) && isVisible(conn.targetId))
       .map((conn) => {
         const isSkip = conn.type === 'skip';
         
-        const srcNode = model.architecture.layers.find(l => l.id === conn.sourceId);
-        const tgtNode = model.architecture.layers.find(l => l.id === conn.targetId);
+        const srcNode = layers.find(l => l.id === conn.sourceId);
+        const tgtNode = layers.find(l => l.id === conn.targetId);
         
         const isSourceSelected = conn.sourceId === selectedLayerId ||
           (srcNode?.layerIds && srcNode.layerIds.includes(selectedLayerId || ''));
@@ -114,7 +150,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
           animated: isSkip || (selectedLayerId !== null && isRelevant),
           style: {
             stroke: isRelevant 
-              ? model.colorTheme 
+              ? colorTheme 
               : (isSkip ? '#c084fc' : 'rgba(100, 116, 139, 0.4)'),
             strokeWidth: isRelevant ? 2.5 : (isSkip ? 1.5 : 1.2),
             strokeDasharray: isSkip ? '5,5' : undefined,
@@ -123,7 +159,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
         };
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model.id, model.colorTheme, hiddenTypes]);
+  }, [graphId, colorTheme, hiddenTypes, connections, layers, selectedLayerId]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -141,7 +177,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
     setNodes(prevNodes => {
       let changed = false;
       const nextNodes = prevNodes.map(node => {
-        const layer = model.architecture.layers.find(l => l.id === node.id);
+        const layer = layers.find(l => l.id === node.id);
         const isSelected = node.id === selectedLayerId || 
           (layer?.layerIds && layer.layerIds.includes(selectedLayerId || ''));
         if (node.data.isSelected !== isSelected) {
@@ -158,16 +194,16 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
       });
       return changed ? nextNodes : prevNodes;
     });
-  }, [selectedLayerId, model.architecture.layers, setNodes]);
+  }, [selectedLayerId, layers, setNodes]);
 
   // Update selection status for edges in-place without rebuilding the array
   useEffect(() => {
     setEdges(prevEdges => {
       let changed = false;
       const nextEdges = prevEdges.map(edge => {
-        const isSkip = model.architecture.connections?.find(c => c.id === edge.id)?.type === 'skip';
-        const srcNode = model.architecture.layers.find(l => l.id === edge.source);
-        const tgtNode = model.architecture.layers.find(l => l.id === edge.target);
+        const isSkip = connections?.find(c => c.id === edge.id)?.type === 'skip';
+        const srcNode = layers.find(l => l.id === edge.source);
+        const tgtNode = layers.find(l => l.id === edge.target);
         
         const isSourceSelected = edge.source === selectedLayerId ||
           (srcNode?.layerIds && srcNode.layerIds.includes(selectedLayerId || ''));
@@ -177,7 +213,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
         const isRelevant = isSourceSelected || isTargetSelected;
         const newAnimated = isSkip || (selectedLayerId !== null && isRelevant);
         const newStroke = isRelevant 
-          ? model.colorTheme 
+          ? colorTheme 
           : (isSkip ? '#c084fc' : 'rgba(100, 116, 139, 0.4)');
         const newStrokeWidth = isRelevant ? 2.5 : (isSkip ? 1.5 : 1.2);
 
@@ -204,7 +240,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
       });
       return changed ? nextEdges : prevEdges;
     });
-  }, [selectedLayerId, model.colorTheme, model.architecture.connections, model.architecture.layers, setEdges]);
+  }, [selectedLayerId, colorTheme, connections, layers, setEdges]);
 
   const onInit = (instance: ReactFlowInstance) => {
     reactFlowRef.current = instance;
@@ -220,7 +256,7 @@ export default function FlowCanvas({ model, selectedLayerId, onSelectLayer }: Fl
         flowInstance.fitView({ padding: 0.15, duration: 800 });
       }, 100);
     }
-  }, [model.id, hiddenTypes]);
+  }, [graphId, hiddenTypes]);
 
   if (!mounted) {
     return (

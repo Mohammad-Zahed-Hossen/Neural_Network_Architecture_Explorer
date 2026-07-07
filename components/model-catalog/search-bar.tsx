@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ChevronDown } from 'lucide-react';
-import { ModelMetadata, EfficiencyLevel } from '@/lib/data/model-metadata';
+import { ModelSummary, EfficiencyLevel } from '@/lib/schema/model.schema';
 import { getEras } from '@/lib/utils/filter-models';
 
 interface SearchBarProps {
@@ -11,7 +11,7 @@ interface SearchBarProps {
   onEfficiencyFilter: (levels: EfficiencyLevel[]) => void;
   onEraFilter: (eras: string[]) => void;
   totalResults?: number;
-  models: ModelMetadata[];
+  models: ModelSummary[];
 }
 
 export default function SearchBar({

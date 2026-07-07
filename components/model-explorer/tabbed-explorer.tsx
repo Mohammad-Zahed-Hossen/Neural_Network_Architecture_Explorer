@@ -6,7 +6,7 @@ import {
   ArrowLeft, BookOpen, Layers, Cpu, Award, HardDrive, 
   ExternalLink, ListFilter, Network, Compass
 } from 'lucide-react';
-import { NeuralNetworkModel } from '@/lib/types/model';
+import { NeuralNetworkModel } from '@/lib/schema/model.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import LayerList from './layer-list';
 import InspectorPanel from './inspector-panel';
@@ -69,45 +69,6 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
   const selectedLayer = useMemo(() => {
     return layers.find(l => l.id === selectedLayerId) || null;
   }, [layers, selectedLayerId]);
-
-  // Construct a model version of graphs data with coordinates & group details
-  const topologyModel = useMemo(() => {
-    // If showDetailedLayers is true, we render individual nodes.
-    // Else, we render grouped nodes.
-    const edges = showDetailedLayers ? graphData.edges : graphData.groupedEdges;
-    
-    return {
-      ...model,
-      architecture: {
-        ...model.architecture,
-        layers: showDetailedLayers 
-          ? layers 
-          : graphData.groupedNodes.map(gn => ({
-              id: gn.id,
-              type: 'transition_block', // Use this type style mapping for group blocks
-              name: gn.label,
-              inputShape: { dimensions: [], description: '' },
-              outputShape: { dimensions: [], description: '' },
-              config: {},
-              parameters: { total: 0, weights: 0, biases: 0, formula: '', calculationSteps: [] },
-              educationalNote: {
-                summary: gn.description,
-                detailed: gn.description,
-                whyItMatters: '',
-                keyTakeaway: ''
-              },
-              position: gn.position,
-              layerIds: gn.layerIds
-            })),
-        connections: edges.map(e => ({
-          id: e.id,
-          sourceId: e.source,
-          targetId: e.target,
-          type: e.type
-        }))
-      }
-    } as unknown as NeuralNetworkModel;
-  }, [model, graphData, showDetailedLayers, layers]);
 
   return (
     <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative pb-12 overflow-x-hidden">
@@ -254,7 +215,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                     {model.description}
                   </p>
                   <p className="text-sm text-[#9ca3af] leading-relaxed">
-                    This model is classified under the <strong className="text-[#e5e7eb]">{(model as any).category || (model as any).family || 'CNN'}</strong> family. 
+                    This model is classified under the <strong className="text-[#e5e7eb]">{model.category}</strong> family. 
                     It operates with a layer depth of <strong className="text-[#e5e7eb]">{model.depth}</strong>, 
 
                     consuming around <strong className="text-[#e5e7eb]">{formatMemory(model.memoryUsage)}</strong> inference RAM 
@@ -411,7 +372,17 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                   {/* Flow Graph container */}
                   <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
                     <FlowCanvas
-                      model={topologyModel}
+                      topology={
+                        showDetailedLayers
+                          ? { mode: 'detailed', model }
+                          : {
+                              mode: 'grouped',
+                              id: model.id,
+                              groupedNodes: graphData.groupedNodes,
+                              groupedEdges: graphData.groupedEdges,
+                              colorTheme: model.colorTheme,
+                            }
+                      }
                       selectedLayerId={selectedLayerId}
                       onSelectLayer={setSelectedLayerId}
                     />

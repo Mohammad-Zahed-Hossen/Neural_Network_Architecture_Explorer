@@ -1913,5 +1913,7 @@
     }
   },
   "nonTrainableParameters": 0,
-  "trainableParameters": 86566120
+  "trainableParameters": 86566120,
+  "family": "Transformer",
+  "category": "Transformer"
 }

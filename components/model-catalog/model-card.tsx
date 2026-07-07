@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Cpu, ArrowRight, Layers, Zap, Tag } from 'lucide-react';
-import { ModelMetadata } from '@/lib/data/model-metadata';
+import { ModelSummary } from '@/lib/schema/model.schema';
 import modelsSummary from '@/data/models.json';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import { Badge } from '@/components/ui/badge';
@@ -16,7 +16,7 @@ import {
 } from '@/lib/utils/colors';
 
 interface ModelCardProps {
-  model: ModelMetadata;
+  model: ModelSummary;
   index: number;
 }
 

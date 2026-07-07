@@ -48076,5 +48076,7 @@
     }
   },
   "nonTrainableParameters": 83648,
-  "trainableParameters": 7978856
+  "trainableParameters": 7978856,
+  "family": "DenseNet",
+  "category": "DenseNet"
 }

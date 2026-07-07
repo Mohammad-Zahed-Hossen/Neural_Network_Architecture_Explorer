@@ -1653,5 +1653,7 @@
     }
   },
   "nonTrainableParameters": 0,
-  "trainableParameters": 62378344
+  "trainableParameters": 62378344,
+  "family": "Foundational",
+  "category": "Foundational"
 }

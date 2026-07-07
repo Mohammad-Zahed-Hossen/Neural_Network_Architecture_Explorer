@@ -3725,5 +3725,7 @@
     }
   },
   "nonTrainableParameters": 0,
-  "trainableParameters": 143667240
+  "trainableParameters": 143667240,
+  "family": "VGG",
+  "category": "VGG"
 }

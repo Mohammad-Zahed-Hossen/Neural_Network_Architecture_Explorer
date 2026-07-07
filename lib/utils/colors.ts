@@ -1,10 +1,10 @@
-import { ModelMetadata } from '@/lib/data/model-metadata';
+import { ModelSummary } from '@/lib/schema/model.schema';
 import { modelCategories } from '@/lib/data/model-categories';
 
 /**
  * Get theme color for a model based on its category
  */
-export function getModelThemeColor(model: ModelMetadata): string {
+export function getModelThemeColor(model: ModelSummary): string {
   // Use the category-based color if available
   const category = modelCategories[model.category];
   if (category) {
@@ -17,7 +17,7 @@ export function getModelThemeColor(model: ModelMetadata): string {
 /**
  * Get background color for a model based on its category
  */
-export function getModelBgColor(model: ModelMetadata): string {
+export function getModelBgColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     return category.bgColor;
@@ -29,7 +29,7 @@ export function getModelBgColor(model: ModelMetadata): string {
 /**
  * Get border color for a model based on its category
  */
-export function getModelBorderColor(model: ModelMetadata): string {
+export function getModelBorderColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     return category.borderColor;
@@ -40,7 +40,7 @@ export function getModelBorderColor(model: ModelMetadata): string {
 /**
  * Get hover border color for a model
  */
-export function getModelBorderHoverColor(model: ModelMetadata): string {
+export function getModelBorderHoverColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     // Extract the base color and create a darker/more opaque version
@@ -62,7 +62,7 @@ export function getModelBorderHoverColor(model: ModelMetadata): string {
 /**
  * Get shadow color for a model on hover
  */
-export function getModelShadowColor(model: ModelMetadata): string {
+export function getModelShadowColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     const shadowMap: Record<string, string> = {
@@ -83,7 +83,7 @@ export function getModelShadowColor(model: ModelMetadata): string {
 /**
  * Get button background color for a model
  */
-export function getModelButtonBgColor(model: ModelMetadata): string {
+export function getModelButtonBgColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     const btnMap: Record<string, string> = {
@@ -104,7 +104,7 @@ export function getModelButtonBgColor(model: ModelMetadata): string {
 /**
  * Get icon background color for a model
  */
-export function getModelIconBgColor(model: ModelMetadata): string {
+export function getModelIconBgColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     const iconBgMap: Record<string, string> = {
@@ -125,7 +125,7 @@ export function getModelIconBgColor(model: ModelMetadata): string {
 /**
  * Get glow background color for a model card
  */
-export function getModelGlowColor(model: ModelMetadata): string {
+export function getModelGlowColor(model: ModelSummary): string {
   const category = modelCategories[model.category];
   if (category) {
     const glowMap: Record<string, string> = {

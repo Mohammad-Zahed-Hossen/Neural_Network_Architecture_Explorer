@@ -7,8 +7,9 @@ import {
   ArrowRight, Image, Zap, Shrink, AlignJustify, Key, 
   PlusCircle, GitMerge, Award, BarChart3, Eye
 } from 'lucide-react';
-import { Layer, LayerType, Conv2DConfig, PoolingConfig, DenseConfig, BatchNormConfig, DropoutConfig, ConcatenateConfig, BottleneckConfig, LayerConfig, InputConfig, ActivationConfig } from '@/lib/types/layer';
+import { Layer, LayerType, Conv2DConfig, PoolingConfig, DenseConfig, BatchNormConfig, DropoutConfig, ConcatenateConfig, BottleneckConfig, LayerConfig, InputConfig, ActivationConfig } from '@/lib/schema/model.schema';
 import { cn } from '@/lib/utils/cn';
+import { layerIconMap, layerStyleMap } from '@/lib/utils/layer-styles';
 import { formatNumber, formatShortNumber } from '@/lib/utils/formatters';
 import { Badge } from '@/components/ui/badge';
 
@@ -19,142 +20,6 @@ interface InspectorPanelProps {
 }
 
 // Icon mappings based on LayerType
-const iconMap: Record<LayerType, ComponentType<{ className?: string }>> = {
-  input: Image,
-  conv2d: Layers,
-  batch_norm: Activity,
-  layer_norm: Activity,
-  attention: Eye,
-  activation: Zap,
-  max_pooling2d: Shrink,
-  average_pooling2d: Shrink,
-  global_average_pooling2d: Shrink,
-  flatten: AlignJustify,
-  dense: Key,
-  dropout: HelpCircle,
-  add: PlusCircle,
-  concatenate: GitMerge,
-  bottleneck: Layers,
-  dense_block: Layers,
-  transition_block: Shrink,
-  output: HelpCircle
-};
-
-// Styling profiles based on LayerType for visual coherence
-const typeStylesMap: Record<string, { border: string; text: string; bg: string; badge: 'default' | 'secondary' | 'outline' | 'success' | 'indigo' | 'primary'; accentBg: string }> = {
-  input: {
-    border: 'border-emerald-500/20',
-    text: 'text-emerald-400',
-    bg: 'bg-emerald-500/[0.02]',
-    badge: 'success',
-    accentBg: 'bg-emerald-500/10'
-  },
-  layer_norm: {
-    border: 'border-slate-500/20',
-    text: 'text-slate-400',
-    bg: 'bg-slate-500/[0.02]',
-    badge: 'secondary',
-    accentBg: 'bg-slate-500/10'
-  },
-  attention: {
-    border: 'border-fuchsia-500/20',
-    text: 'text-fuchsia-400',
-    bg: 'bg-fuchsia-500/[0.02]',
-    badge: 'indigo',
-    accentBg: 'bg-fuchsia-500/10'
-  },
-  conv2d: {
-    border: 'border-blue-500/20',
-    text: 'text-blue-400',
-    bg: 'bg-blue-500/[0.02]',
-    badge: 'primary',
-    accentBg: 'bg-blue-500/10'
-  },
-  bottleneck: {
-    border: 'border-blue-500/20',
-    text: 'text-blue-400',
-    bg: 'bg-blue-500/[0.02]',
-    badge: 'primary',
-    accentBg: 'bg-blue-500/10'
-  },
-  dense_block: {
-    border: 'border-blue-500/20',
-    text: 'text-blue-400',
-    bg: 'bg-blue-500/[0.02]',
-    badge: 'primary',
-    accentBg: 'bg-blue-500/10'
-  },
-  batch_norm: {
-    border: 'border-slate-500/20',
-    text: 'text-slate-400',
-    bg: 'bg-slate-500/[0.02]',
-    badge: 'secondary',
-    accentBg: 'bg-slate-500/10'
-  },
-  activation: {
-    border: 'border-pink-500/20',
-    text: 'text-pink-400',
-    bg: 'bg-pink-500/[0.02]',
-    badge: 'outline',
-    accentBg: 'bg-pink-500/10'
-  },
-  max_pooling2d: {
-    border: 'border-amber-500/20',
-    text: 'text-amber-400',
-    bg: 'bg-amber-500/[0.02]',
-    badge: 'secondary',
-    accentBg: 'bg-amber-500/10'
-  },
-  average_pooling2d: {
-    border: 'border-amber-500/20',
-    text: 'text-amber-400',
-    bg: 'bg-amber-500/[0.02]',
-    badge: 'secondary',
-    accentBg: 'bg-amber-500/10'
-  },
-  global_average_pooling2d: {
-    border: 'border-amber-500/20',
-    text: 'text-amber-400',
-    bg: 'bg-amber-500/[0.02]',
-    badge: 'secondary',
-    accentBg: 'bg-amber-500/10'
-  },
-  transition_block: {
-    border: 'border-amber-500/20',
-    text: 'text-amber-400',
-    bg: 'bg-amber-500/[0.02]',
-    badge: 'secondary',
-    accentBg: 'bg-amber-500/10'
-  },
-  flatten: {
-    border: 'border-orange-500/20',
-    text: 'text-orange-400',
-    bg: 'bg-orange-500/[0.02]',
-    badge: 'outline',
-    accentBg: 'bg-orange-500/10'
-  },
-  dense: {
-    border: 'border-violet-500/20',
-    text: 'text-violet-400',
-    bg: 'bg-violet-500/[0.02]',
-    badge: 'indigo',
-    accentBg: 'bg-violet-500/10'
-  },
-  add: {
-    border: 'border-red-500/20',
-    text: 'text-red-400',
-    bg: 'bg-red-500/[0.02]',
-    badge: 'outline',
-    accentBg: 'bg-red-500/10'
-  },
-  concatenate: {
-    border: 'border-cyan-500/20',
-    text: 'text-cyan-400',
-    bg: 'bg-cyan-500/[0.02]',
-    badge: 'outline',
-    accentBg: 'bg-cyan-500/10'
-  }
-};
 
 function CollapsibleSection({ 
   title, 
@@ -261,8 +126,8 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
     );
   }
 
-  const Icon = iconMap[layer.type] || HelpCircle;
-  const styles = typeStylesMap[layer.type] || {
+  const Icon = layerIconMap[layer.type] || HelpCircle;
+  const styles = layerStyleMap[layer.type] || {
     border: 'border-slate-700',
     text: 'text-slate-300',
     bg: 'bg-slate-800/10',

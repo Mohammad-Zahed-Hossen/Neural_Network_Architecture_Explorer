@@ -5,11 +5,11 @@ import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend
 } from 'recharts';
-import { ModelMetadata } from '@/lib/data/model-metadata';
+import { ModelSummary } from '@/lib/schema/model.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 
 interface ComparisonChartProps {
-  models: ModelMetadata[];
+  models: ModelSummary[];
   activeMetric: 'parameters' | 'depth' | 'accuracy' | 'memory' | 'flops';
 }
 

@@ -72,11 +72,11 @@ function checkLayerReferences(model: any): string[] {
 
 function compareSummaryToModel(summary: any, model: any): string[] {
   const comparisons: Array<[string, unknown, unknown]> = [
-    ['totalParameters', summary.totalParameters ?? summary.params, model.totalParameters],
-    ['totalFLOPs', summary.totalFLOPs ?? summary.flops, model.totalFLOPs],
-    ['top1Accuracy', summary.top1Accuracy ?? summary.top1 / 100, model.top1Accuracy],
-    ['top5Accuracy', summary.top5Accuracy ?? summary.top5 / 100, model.top5Accuracy],
-    ['memoryUsage', summary.memoryUsage ?? summary.memory_mb, model.memoryUsage],
+    ['totalParameters', summary.totalParameters, model.totalParameters],
+    ['totalFLOPs', summary.totalFLOPs, model.totalFLOPs],
+    ['top1Accuracy', summary.top1Accuracy, model.top1Accuracy],
+    ['top5Accuracy', summary.top5Accuracy, model.top5Accuracy],
+    ['memoryUsage', summary.memoryUsage, model.memoryUsage],
     ['depth', summary.depth, model.depth],
     ['colorTheme', summary.colorTheme, model.colorTheme],
   ];
@@ -142,16 +142,7 @@ function main() {
       fieldMismatches: [],
     };
 
-    const normalizedSummary = {
-      ...summary,
-      totalParameters: summary.totalParameters ?? summary.params,
-      totalFLOPs: summary.totalFLOPs ?? summary.flops,
-      top1Accuracy: summary.top1Accuracy ?? summary.top1 / 100,
-      top5Accuracy: summary.top5Accuracy ?? summary.top5 / 100,
-      memoryUsage: summary.memoryUsage ?? summary.memory_mb,
-    };
-
-    const summaryValidation = ModelSummarySchema.safeParse(normalizedSummary);
+    const summaryValidation = ModelSummarySchema.safeParse(summary);
     if (!summaryValidation.success) {
       report.summaryErrors = formatIssues(summaryValidation.error);
     }

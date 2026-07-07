@@ -7,7 +7,7 @@ import Link from 'next/link';
 import ModelGrid from '@/components/model-catalog/model-grid';
 import CategoryTabs from '@/components/model-catalog/category-tabs';
 import SearchBar from '@/components/model-catalog/search-bar';
-import { ModelCategory, EfficiencyLevel } from '@/lib/data/model-metadata';
+import { ModelCategory, EfficiencyLevel } from '@/lib/schema/model.schema';
 import { filterModels } from '@/lib/utils/filter-models';
 import { getModelSummaries } from '@/lib/data-access/models';
 

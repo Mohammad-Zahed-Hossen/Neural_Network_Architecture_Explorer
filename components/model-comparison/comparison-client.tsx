@@ -6,7 +6,7 @@ import {
   ArrowLeft, Cpu, Layers, Award, HardDrive, BarChart3, 
   Search, X, ChevronDown, ChevronUp, Check, RefreshCw, Filter, SlidersHorizontal
 } from 'lucide-react';
-import { ModelMetadata, ModelCategory } from '@/lib/data/model-metadata';
+import { ModelSummary, ModelCategory } from '@/lib/schema/model.schema';
 import StatCards from './stat-card';
 import ComparisonTable from './comparison-table';
 import { cn } from '@/lib/utils/cn';
@@ -23,7 +23,7 @@ const ComparisonCharts = dynamic(() => import('./comparison-chart'), {
 });
 
 interface ComparisonClientProps {
-  models: ModelMetadata[];
+  models: ModelSummary[];
 }
 
 type MetricType = 'parameters' | 'depth' | 'accuracy' | 'memory' | 'flops';
@@ -72,7 +72,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
 
   // Group models by category
   const modelsByCategory = useMemo(() => {
-    const groups: Record<string, ModelMetadata[]> = {};
+    const groups: Record<string, ModelSummary[]> = {};
     models.forEach(model => {
       if (!groups[model.category]) {
         groups[model.category] = [];
@@ -85,7 +85,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
   // Filter based on selector search query
   const filteredGroups = useMemo(() => {
     if (!selectorSearch) return modelsByCategory;
-    const filtered: Record<string, ModelMetadata[]> = {};
+    const filtered: Record<string, ModelSummary[]> = {};
     Object.entries(modelsByCategory).forEach(([category, list]) => {
       const match = list.filter(m => 
         m.name.toLowerCase().includes(selectorSearch.toLowerCase()) ||

@@ -38508,5 +38508,7 @@
     }
   },
   "nonTrainableParameters": 87296,
-  "trainableParameters": 12233232
+  "trainableParameters": 12233232,
+  "family": "EfficientNet",
+  "category": "EfficientNet"
 }

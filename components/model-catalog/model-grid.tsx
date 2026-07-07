@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ModelMetadata } from '@/lib/data/model-metadata';
+import { ModelSummary } from '@/lib/schema/model.schema';
 import ModelCard from './model-card';
 
 interface ModelGridProps {
-  models: ModelMetadata[];
+  models: ModelSummary[];
   isLoading?: boolean;
 }
 

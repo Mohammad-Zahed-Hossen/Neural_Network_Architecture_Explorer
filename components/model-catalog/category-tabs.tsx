@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ModelCategory } from '@/lib/data/model-metadata';
+import { ModelCategory } from '@/lib/schema/model.schema';
 import { modelCategories, categoryOrder } from '@/lib/data/model-categories';
 
 interface CategoryTabsProps {

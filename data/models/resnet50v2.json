@@ -22183,5 +22183,7 @@
     }
   },
   "nonTrainableParameters": 45440,
-  "trainableParameters": 25568360
+  "trainableParameters": 25568360,
+  "family": "ResNet",
+  "category": "ResNet"
 }

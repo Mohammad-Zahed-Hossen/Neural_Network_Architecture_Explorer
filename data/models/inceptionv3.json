@@ -10133,5 +10133,7 @@
     }
   },
   "nonTrainableParameters": 3712,
-  "trainableParameters": 23848072
+  "trainableParameters": 23848072,
+  "family": "Inception",
+  "category": "Inception"
 }

@@ -18141,5 +18141,7 @@
     }
   },
   "nonTrainableParameters": 34112,
-  "trainableParameters": 3504872
+  "trainableParameters": 3504872,
+  "family": "MobileNet",
+  "category": "MobileNet"
 }

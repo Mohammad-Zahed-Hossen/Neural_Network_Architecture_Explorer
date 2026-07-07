@@ -1,4 +1,4 @@
-import { ModelMetadata, ModelCategory, EfficiencyLevel } from '@/lib/data/model-metadata';
+import { ModelSummary, ModelCategory, EfficiencyLevel } from '@/lib/schema/model.schema';
 
 export interface FilterCriteria {
   searchQuery?: string;
@@ -13,7 +13,7 @@ export interface FilterCriteria {
 /**
  * Filter models based on multiple criteria
  */
-export function filterModels(models: ModelMetadata[], criteria: FilterCriteria): ModelMetadata[] {
+export function filterModels(models: ModelSummary[], criteria: FilterCriteria): ModelSummary[] {
   return models.filter(model => {
     // Search query filter (searches name, fullName, description)
     if (criteria.searchQuery) {
@@ -59,7 +59,7 @@ export function filterModels(models: ModelMetadata[], criteria: FilterCriteria):
 /**
  * Get unique categories from a list of models
  */
-export function getCategories(models: ModelMetadata[]): ModelCategory[] {
+export function getCategories(models: ModelSummary[]): ModelCategory[] {
   const categories = new Set<ModelCategory>();
   models.forEach(model => categories.add(model.category));
   return Array.from(categories);
@@ -68,7 +68,7 @@ export function getCategories(models: ModelMetadata[]): ModelCategory[] {
 /**
  * Get unique efficiency levels from a list of models
  */
-export function getEfficiencyLevels(models: ModelMetadata[]): EfficiencyLevel[] {
+export function getEfficiencyLevels(models: ModelSummary[]): EfficiencyLevel[] {
   const levels = new Set<EfficiencyLevel>();
   models.forEach(model => levels.add(model.efficiency));
   return Array.from(levels);
@@ -77,7 +77,7 @@ export function getEfficiencyLevels(models: ModelMetadata[]): EfficiencyLevel[] 
 /**
  * Get year range from a list of models
  */
-export function getYearRange(models: ModelMetadata[]): { min: number; max: number } {
+export function getYearRange(models: ModelSummary[]): { min: number; max: number } {
   let min = Infinity;
   let max = -Infinity;
 
@@ -106,7 +106,7 @@ export function getEra(year: number): string {
 /**
  * Get models grouped by era
  */
-export function getEras(models: ModelMetadata[]): Set<string> {
+export function getEras(models: ModelSummary[]): Set<string> {
   const eras = new Set<string>();
   models.forEach(model => {
     const year = model.releaseYear || model.paperYear;
