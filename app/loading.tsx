@@ -5,7 +5,7 @@ import { Network } from 'lucide-react';
 
 export default function RootLoading() {
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020612] text-foreground select-none">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background text-foreground select-none">
       {/* Background Grid Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.02] pointer-events-none" 

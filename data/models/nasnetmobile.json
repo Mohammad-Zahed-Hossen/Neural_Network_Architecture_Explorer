@@ -2842,31 +2842,7 @@
       "nodes": [
         {
           "id": "input_1",
-          "label": "Input (224x224x3)",
-          "type": "input",
           "groupId": null,
-          "outputShape": [
-            null,
-            224,
-            224,
-            3
-          ],
-          "config": {
-            "shape": [
-              224,
-              224,
-              3
-            ]
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -2874,38 +2850,7 @@
         },
         {
           "id": "stem_conv1",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": null,
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 864,
-            "weights": 864,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × input_channels × output_filters",
-            "calculationSteps": [],
-            "trainableParameters": 864,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -2913,46 +2858,7 @@
         },
         {
           "id": "stem_bn1",
-          "label": "stem_bn1",
-          "type": "batch_norm",
           "groupId": null,
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 128,
-            "weights": 32,
-            "biases": 32,
-            "trainableParameters": 64,
-            "nonTrainableParameters": 64,
-            "gamma": 32,
-            "beta": 32,
-            "movingMean": 32,
-            "movingVariance": 32,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 32",
-                "result": 64,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 32",
-                "result": 64,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -2960,38 +2866,7 @@
         },
         {
           "id": "cell_1_sep3x3",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": "group_cell_1",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1312,
-            "weights": 1312,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1312,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -2999,38 +2874,7 @@
         },
         {
           "id": "cell_1_sep5x5",
-          "label": "Conv 5x5, 32",
-          "type": "conv2d",
           "groupId": "group_cell_1",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1824,
-            "weights": 1824,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1824,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3038,25 +2882,7 @@
         },
         {
           "id": "cell_1_add",
-          "label": "cell_1_add",
-          "type": "add",
           "groupId": "group_cell_1",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3064,38 +2890,7 @@
         },
         {
           "id": "cell_2_sep3x3",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": "group_cell_2",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1312,
-            "weights": 1312,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1312,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3103,38 +2898,7 @@
         },
         {
           "id": "cell_2_sep5x5",
-          "label": "Conv 5x5, 32",
-          "type": "conv2d",
           "groupId": "group_cell_2",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1824,
-            "weights": 1824,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1824,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3142,25 +2906,7 @@
         },
         {
           "id": "cell_2_add",
-          "label": "cell_2_add",
-          "type": "add",
           "groupId": "group_cell_2",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3168,38 +2914,7 @@
         },
         {
           "id": "cell_3_sep3x3",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": "group_cell_3",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1312,
-            "weights": 1312,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1312,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3207,38 +2922,7 @@
         },
         {
           "id": "cell_3_sep5x5",
-          "label": "Conv 5x5, 32",
-          "type": "conv2d",
           "groupId": "group_cell_3",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1824,
-            "weights": 1824,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1824,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3246,25 +2930,7 @@
         },
         {
           "id": "cell_3_add",
-          "label": "cell_3_add",
-          "type": "add",
           "groupId": "group_cell_3",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3272,38 +2938,7 @@
         },
         {
           "id": "cell_4_sep3x3",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": "group_cell_4",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1312,
-            "weights": 1312,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1312,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3311,38 +2946,7 @@
         },
         {
           "id": "cell_4_sep5x5",
-          "label": "Conv 5x5, 32",
-          "type": "conv2d",
           "groupId": "group_cell_4",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1824,
-            "weights": 1824,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 1824,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3350,25 +2954,7 @@
         },
         {
           "id": "cell_4_add",
-          "label": "cell_4_add",
-          "type": "add",
           "groupId": "group_cell_4",
-          "outputShape": [
-            null,
-            null,
-            null,
-            32
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3376,38 +2962,7 @@
         },
         {
           "id": "cell_5_sep3x3",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "group_cell_5",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 2336,
-            "weights": 2336,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 2336,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3415,38 +2970,7 @@
         },
         {
           "id": "cell_5_sep5x5",
-          "label": "Conv 5x5, 64",
-          "type": "conv2d",
           "groupId": "group_cell_5",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 2848,
-            "weights": 2848,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 2848,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3454,25 +2978,7 @@
         },
         {
           "id": "cell_5_add",
-          "label": "cell_5_add",
-          "type": "add",
           "groupId": "group_cell_5",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3480,38 +2986,7 @@
         },
         {
           "id": "cell_6_sep3x3",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "group_cell_6",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4672,
-            "weights": 4672,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 4672,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3519,38 +2994,7 @@
         },
         {
           "id": "cell_6_sep5x5",
-          "label": "Conv 5x5, 64",
-          "type": "conv2d",
           "groupId": "group_cell_6",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 5696,
-            "weights": 5696,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 5696,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3558,25 +3002,7 @@
         },
         {
           "id": "cell_6_add",
-          "label": "cell_6_add",
-          "type": "add",
           "groupId": "group_cell_6",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3584,38 +3010,7 @@
         },
         {
           "id": "cell_7_sep3x3",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "group_cell_7",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4672,
-            "weights": 4672,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 4672,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3623,38 +3018,7 @@
         },
         {
           "id": "cell_7_sep5x5",
-          "label": "Conv 5x5, 64",
-          "type": "conv2d",
           "groupId": "group_cell_7",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 5696,
-            "weights": 5696,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 5696,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3662,25 +3026,7 @@
         },
         {
           "id": "cell_7_add",
-          "label": "cell_7_add",
-          "type": "add",
           "groupId": "group_cell_7",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3688,38 +3034,7 @@
         },
         {
           "id": "cell_8_sep3x3",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "group_cell_8",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4672,
-            "weights": 4672,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 4672,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3727,38 +3042,7 @@
         },
         {
           "id": "cell_8_sep5x5",
-          "label": "Conv 5x5, 64",
-          "type": "conv2d",
           "groupId": "group_cell_8",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 5696,
-            "weights": 5696,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 5696,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3766,25 +3050,7 @@
         },
         {
           "id": "cell_8_add",
-          "label": "cell_8_add",
-          "type": "add",
           "groupId": "group_cell_8",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3792,38 +3058,7 @@
         },
         {
           "id": "cell_9_sep3x3",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "group_cell_9",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4672,
-            "weights": 4672,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 4672,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3831,38 +3066,7 @@
         },
         {
           "id": "cell_9_sep5x5",
-          "label": "Conv 5x5, 64",
-          "type": "conv2d",
           "groupId": "group_cell_9",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 5696,
-            "weights": 5696,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 5696,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3870,25 +3074,7 @@
         },
         {
           "id": "cell_9_add",
-          "label": "cell_9_add",
-          "type": "add",
           "groupId": "group_cell_9",
-          "outputShape": [
-            null,
-            null,
-            null,
-            64
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3896,38 +3082,7 @@
         },
         {
           "id": "cell_10_sep3x3",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_cell_10",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 8768,
-            "weights": 8768,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 8768,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3935,38 +3090,7 @@
         },
         {
           "id": "cell_10_sep5x5",
-          "label": "Conv 5x5, 128",
-          "type": "conv2d",
           "groupId": "group_cell_10",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 9792,
-            "weights": 9792,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 9792,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -3974,25 +3098,7 @@
         },
         {
           "id": "cell_10_add",
-          "label": "cell_10_add",
-          "type": "add",
           "groupId": "group_cell_10",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4000,38 +3106,7 @@
         },
         {
           "id": "cell_11_sep3x3",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_cell_11",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 17536,
-            "weights": 17536,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 17536,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4039,38 +3114,7 @@
         },
         {
           "id": "cell_11_sep5x5",
-          "label": "Conv 5x5, 128",
-          "type": "conv2d",
           "groupId": "group_cell_11",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 19584,
-            "weights": 19584,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 19584,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4078,25 +3122,7 @@
         },
         {
           "id": "cell_11_add",
-          "label": "cell_11_add",
-          "type": "add",
           "groupId": "group_cell_11",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4104,38 +3130,7 @@
         },
         {
           "id": "cell_12_sep3x3",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_cell_12",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 17536,
-            "weights": 17536,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 17536,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4143,38 +3138,7 @@
         },
         {
           "id": "cell_12_sep5x5",
-          "label": "Conv 5x5, 128",
-          "type": "conv2d",
           "groupId": "group_cell_12",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 19584,
-            "weights": 19584,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 19584,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4182,25 +3146,7 @@
         },
         {
           "id": "cell_12_add",
-          "label": "cell_12_add",
-          "type": "add",
           "groupId": "group_cell_12",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4208,38 +3154,7 @@
         },
         {
           "id": "cell_13_sep3x3",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_cell_13",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 17536,
-            "weights": 17536,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 17536,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4247,38 +3162,7 @@
         },
         {
           "id": "cell_13_sep5x5",
-          "label": "Conv 5x5, 128",
-          "type": "conv2d",
           "groupId": "group_cell_13",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 19584,
-            "weights": 19584,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 19584,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4286,25 +3170,7 @@
         },
         {
           "id": "cell_13_add",
-          "label": "cell_13_add",
-          "type": "add",
           "groupId": "group_cell_13",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4312,38 +3178,7 @@
         },
         {
           "id": "cell_14_sep3x3",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_cell_14",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 17536,
-            "weights": 17536,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 17536,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4351,38 +3186,7 @@
         },
         {
           "id": "cell_14_sep5x5",
-          "label": "Conv 5x5, 128",
-          "type": "conv2d",
           "groupId": "group_cell_14",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 19584,
-            "weights": 19584,
-            "biases": 0,
-            "formula": "Separable weights",
-            "calculationSteps": [],
-            "trainableParameters": 19584,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4390,25 +3194,7 @@
         },
         {
           "id": "cell_14_add",
-          "label": "cell_14_add",
-          "type": "add",
           "groupId": "group_cell_14",
-          "outputShape": [
-            null,
-            null,
-            null,
-            128
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4416,23 +3202,7 @@
         },
         {
           "id": "global_average_pooling2d",
-          "label": "global_average_pooling2d",
-          "type": "global_average_pooling2d",
           "groupId": "group_classifier",
-          "outputShape": [
-            null,
-            768
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4440,27 +3210,7 @@
         },
         {
           "id": "predictions",
-          "label": "predictions",
-          "type": "dense",
           "groupId": "group_classifier",
-          "outputShape": [
-            null,
-            1000
-          ],
-          "config": {
-            "units": 1000,
-            "activation": "softmax",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 769000,
-            "weights": 768000,
-            "biases": 1000,
-            "formula": "(input_features + 1) × output_units",
-            "calculationSteps": [],
-            "trainableParameters": 769000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -4468,26 +3218,7 @@
         },
         {
           "id": "parameter_alignment_adjustment",
-          "label": "Parameter Alignment Adjustment",
-          "type": "dense",
           "groupId": null,
-          "outputShape": [
-            null,
-            768
-          ],
-          "config": {
-            "units": 768,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4330332,
-            "weights": 4330332,
-            "biases": 0,
-            "trainableParameters": 4330332,
-            "nonTrainableParameters": 0,
-            "formula": "Model alignment correction factor",
-            "calculationSteps": []
-          },
           "position": {
             "x": 250,
             "y": 120

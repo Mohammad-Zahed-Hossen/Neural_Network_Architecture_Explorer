@@ -5704,31 +5704,7 @@
       "nodes": [
         {
           "id": "input_1",
-          "label": "Input (224x224x3)",
-          "type": "input",
           "groupId": null,
-          "outputShape": [
-            null,
-            224,
-            224,
-            3
-          ],
-          "config": {
-            "shape": [
-              224,
-              224,
-              3
-            ]
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -5736,45 +5712,7 @@
         },
         {
           "id": "conv1",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": "group_stem",
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 864,
-            "weights": 864,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Kernel Weights",
-                "expression": "3 × 3 × 3 × 32",
-                "result": 864,
-                "explanation": "32 convolutional filters of size 3x3 convolving over 3 RGB channels. Stride 2 downsamples output to 112x112."
-              }
-            ],
-            "trainableParameters": 864,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 150
@@ -5782,46 +5720,7 @@
         },
         {
           "id": "conv1_bn",
-          "label": "conv1_bn",
-          "type": "batch_norm",
           "groupId": "group_stem",
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 128,
-            "weights": 32,
-            "biases": 32,
-            "trainableParameters": 64,
-            "nonTrainableParameters": 64,
-            "gamma": 32,
-            "beta": 32,
-            "movingMean": 32,
-            "movingVariance": 32,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 32",
-                "result": 64,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 32",
-                "result": 64,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 300
@@ -5829,27 +5728,7 @@
         },
         {
           "id": "conv1_relu",
-          "label": "conv1_relu",
-          "type": "activation",
           "groupId": "group_stem",
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 450
@@ -5857,45 +5736,7 @@
         },
         {
           "id": "conv_dw_1",
-          "label": "Conv 3x3, 32",
-          "type": "conv2d",
           "groupId": "group_block_1",
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "filters": 32,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 288,
-            "weights": 288,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 32",
-                "result": 288,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 288,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 600
@@ -5903,46 +5744,7 @@
         },
         {
           "id": "conv_dw_1_bn",
-          "label": "conv_dw_1_bn",
-          "type": "batch_norm",
           "groupId": "group_block_1",
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 128,
-            "weights": 32,
-            "biases": 32,
-            "trainableParameters": 64,
-            "nonTrainableParameters": 64,
-            "gamma": 32,
-            "beta": 32,
-            "movingMean": 32,
-            "movingVariance": 32,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 32",
-                "result": 64,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 32",
-                "result": 64,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 750
@@ -5950,27 +5752,7 @@
         },
         {
           "id": "conv_dw_1_relu",
-          "label": "conv_dw_1_relu",
-          "type": "activation",
           "groupId": "group_block_1",
-          "outputShape": [
-            null,
-            112,
-            112,
-            32
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 900
@@ -5978,45 +5760,7 @@
         },
         {
           "id": "conv_pw_1",
-          "label": "Conv 1x1, 64",
-          "type": "conv2d",
           "groupId": "group_block_1",
-          "outputShape": [
-            null,
-            112,
-            112,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 2048,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "32 × 64",
-                "result": 2048,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 2048,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1050
@@ -6024,46 +5768,7 @@
         },
         {
           "id": "conv_pw_1_bn",
-          "label": "conv_pw_1_bn",
-          "type": "batch_norm",
           "groupId": "group_block_1",
-          "outputShape": [
-            null,
-            112,
-            112,
-            64
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 256,
-            "weights": 64,
-            "biases": 64,
-            "trainableParameters": 128,
-            "nonTrainableParameters": 128,
-            "gamma": 64,
-            "beta": 64,
-            "movingMean": 64,
-            "movingVariance": 64,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 64",
-                "result": 128,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 64",
-                "result": 128,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 1200
@@ -6071,27 +5776,7 @@
         },
         {
           "id": "conv_pw_1_relu",
-          "label": "conv_pw_1_relu",
-          "type": "activation",
           "groupId": "group_block_1",
-          "outputShape": [
-            null,
-            112,
-            112,
-            64
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1350
@@ -6099,45 +5784,7 @@
         },
         {
           "id": "conv_dw_2",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "group_block_2",
-          "outputShape": [
-            null,
-            56,
-            56,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 576,
-            "weights": 576,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 64",
-                "result": 576,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 576,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1500
@@ -6145,46 +5792,7 @@
         },
         {
           "id": "conv_dw_2_bn",
-          "label": "conv_dw_2_bn",
-          "type": "batch_norm",
           "groupId": "group_block_2",
-          "outputShape": [
-            null,
-            56,
-            56,
-            64
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 256,
-            "weights": 64,
-            "biases": 64,
-            "trainableParameters": 128,
-            "nonTrainableParameters": 128,
-            "gamma": 64,
-            "beta": 64,
-            "movingMean": 64,
-            "movingVariance": 64,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 64",
-                "result": 128,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 64",
-                "result": 128,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 1650
@@ -6192,27 +5800,7 @@
         },
         {
           "id": "conv_dw_2_relu",
-          "label": "conv_dw_2_relu",
-          "type": "activation",
           "groupId": "group_block_2",
-          "outputShape": [
-            null,
-            56,
-            56,
-            64
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1800
@@ -6220,45 +5808,7 @@
         },
         {
           "id": "conv_pw_2",
-          "label": "Conv 1x1, 128",
-          "type": "conv2d",
           "groupId": "group_block_2",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 8192,
-            "weights": 8192,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "64 × 128",
-                "result": 8192,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 8192,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1950
@@ -6266,46 +5816,7 @@
         },
         {
           "id": "conv_pw_2_bn",
-          "label": "conv_pw_2_bn",
-          "type": "batch_norm",
           "groupId": "group_block_2",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 512,
-            "weights": 128,
-            "biases": 128,
-            "trainableParameters": 256,
-            "nonTrainableParameters": 256,
-            "gamma": 128,
-            "beta": 128,
-            "movingMean": 128,
-            "movingVariance": 128,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 2100
@@ -6313,27 +5824,7 @@
         },
         {
           "id": "conv_pw_2_relu",
-          "label": "conv_pw_2_relu",
-          "type": "activation",
           "groupId": "group_block_2",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 2250
@@ -6341,45 +5832,7 @@
         },
         {
           "id": "conv_dw_3",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_block_3",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1152,
-            "weights": 1152,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 128",
-                "result": 1152,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 1152,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 2400
@@ -6387,46 +5840,7 @@
         },
         {
           "id": "conv_dw_3_bn",
-          "label": "conv_dw_3_bn",
-          "type": "batch_norm",
           "groupId": "group_block_3",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 512,
-            "weights": 128,
-            "biases": 128,
-            "trainableParameters": 256,
-            "nonTrainableParameters": 256,
-            "gamma": 128,
-            "beta": 128,
-            "movingMean": 128,
-            "movingVariance": 128,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 2550
@@ -6434,27 +5848,7 @@
         },
         {
           "id": "conv_dw_3_relu",
-          "label": "conv_dw_3_relu",
-          "type": "activation",
           "groupId": "group_block_3",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 2700
@@ -6462,45 +5856,7 @@
         },
         {
           "id": "conv_pw_3",
-          "label": "Conv 1x1, 128",
-          "type": "conv2d",
           "groupId": "group_block_3",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 16384,
-            "weights": 16384,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "128 × 128",
-                "result": 16384,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 16384,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 2850
@@ -6508,46 +5864,7 @@
         },
         {
           "id": "conv_pw_3_bn",
-          "label": "conv_pw_3_bn",
-          "type": "batch_norm",
           "groupId": "group_block_3",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 512,
-            "weights": 128,
-            "biases": 128,
-            "trainableParameters": 256,
-            "nonTrainableParameters": 256,
-            "gamma": 128,
-            "beta": 128,
-            "movingMean": 128,
-            "movingVariance": 128,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 3000
@@ -6555,27 +5872,7 @@
         },
         {
           "id": "conv_pw_3_relu",
-          "label": "conv_pw_3_relu",
-          "type": "activation",
           "groupId": "group_block_3",
-          "outputShape": [
-            null,
-            56,
-            56,
-            128
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 3150
@@ -6583,45 +5880,7 @@
         },
         {
           "id": "conv_dw_4",
-          "label": "Conv 3x3, 128",
-          "type": "conv2d",
           "groupId": "group_block_4",
-          "outputShape": [
-            null,
-            28,
-            28,
-            128
-          ],
-          "config": {
-            "filters": 128,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1152,
-            "weights": 1152,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 128",
-                "result": 1152,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 1152,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 3300
@@ -6629,46 +5888,7 @@
         },
         {
           "id": "conv_dw_4_bn",
-          "label": "conv_dw_4_bn",
-          "type": "batch_norm",
           "groupId": "group_block_4",
-          "outputShape": [
-            null,
-            28,
-            28,
-            128
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 512,
-            "weights": 128,
-            "biases": 128,
-            "trainableParameters": 256,
-            "nonTrainableParameters": 256,
-            "gamma": 128,
-            "beta": 128,
-            "movingMean": 128,
-            "movingVariance": 128,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 128",
-                "result": 256,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 3450
@@ -6676,27 +5896,7 @@
         },
         {
           "id": "conv_dw_4_relu",
-          "label": "conv_dw_4_relu",
-          "type": "activation",
           "groupId": "group_block_4",
-          "outputShape": [
-            null,
-            28,
-            28,
-            128
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 3600
@@ -6704,45 +5904,7 @@
         },
         {
           "id": "conv_pw_4",
-          "label": "Conv 1x1, 256",
-          "type": "conv2d",
           "groupId": "group_block_4",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "filters": 256,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 32768,
-            "weights": 32768,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "128 × 256",
-                "result": 32768,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 32768,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 3750
@@ -6750,46 +5912,7 @@
         },
         {
           "id": "conv_pw_4_bn",
-          "label": "conv_pw_4_bn",
-          "type": "batch_norm",
           "groupId": "group_block_4",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 1024,
-            "weights": 256,
-            "biases": 256,
-            "trainableParameters": 512,
-            "nonTrainableParameters": 512,
-            "gamma": 256,
-            "beta": 256,
-            "movingMean": 256,
-            "movingVariance": 256,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 3900
@@ -6797,27 +5920,7 @@
         },
         {
           "id": "conv_pw_4_relu",
-          "label": "conv_pw_4_relu",
-          "type": "activation",
           "groupId": "group_block_4",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 4050
@@ -6825,45 +5928,7 @@
         },
         {
           "id": "conv_dw_5",
-          "label": "Conv 3x3, 256",
-          "type": "conv2d",
           "groupId": "group_block_5",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "filters": 256,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 2304,
-            "weights": 2304,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 256",
-                "result": 2304,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 2304,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 4200
@@ -6871,46 +5936,7 @@
         },
         {
           "id": "conv_dw_5_bn",
-          "label": "conv_dw_5_bn",
-          "type": "batch_norm",
           "groupId": "group_block_5",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 1024,
-            "weights": 256,
-            "biases": 256,
-            "trainableParameters": 512,
-            "nonTrainableParameters": 512,
-            "gamma": 256,
-            "beta": 256,
-            "movingMean": 256,
-            "movingVariance": 256,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 4350
@@ -6918,27 +5944,7 @@
         },
         {
           "id": "conv_dw_5_relu",
-          "label": "conv_dw_5_relu",
-          "type": "activation",
           "groupId": "group_block_5",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 4500
@@ -6946,45 +5952,7 @@
         },
         {
           "id": "conv_pw_5",
-          "label": "Conv 1x1, 256",
-          "type": "conv2d",
           "groupId": "group_block_5",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "filters": 256,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 65536,
-            "weights": 65536,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "256 × 256",
-                "result": 65536,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 65536,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 4650
@@ -6992,46 +5960,7 @@
         },
         {
           "id": "conv_pw_5_bn",
-          "label": "conv_pw_5_bn",
-          "type": "batch_norm",
           "groupId": "group_block_5",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 1024,
-            "weights": 256,
-            "biases": 256,
-            "trainableParameters": 512,
-            "nonTrainableParameters": 512,
-            "gamma": 256,
-            "beta": 256,
-            "movingMean": 256,
-            "movingVariance": 256,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 4800
@@ -7039,27 +5968,7 @@
         },
         {
           "id": "conv_pw_5_relu",
-          "label": "conv_pw_5_relu",
-          "type": "activation",
           "groupId": "group_block_5",
-          "outputShape": [
-            null,
-            28,
-            28,
-            256
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 4950
@@ -7067,45 +5976,7 @@
         },
         {
           "id": "conv_dw_6",
-          "label": "Conv 3x3, 256",
-          "type": "conv2d",
           "groupId": "group_block_6",
-          "outputShape": [
-            null,
-            14,
-            14,
-            256
-          ],
-          "config": {
-            "filters": 256,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 2304,
-            "weights": 2304,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 256",
-                "result": 2304,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 2304,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 5100
@@ -7113,46 +5984,7 @@
         },
         {
           "id": "conv_dw_6_bn",
-          "label": "conv_dw_6_bn",
-          "type": "batch_norm",
           "groupId": "group_block_6",
-          "outputShape": [
-            null,
-            14,
-            14,
-            256
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 1024,
-            "weights": 256,
-            "biases": 256,
-            "trainableParameters": 512,
-            "nonTrainableParameters": 512,
-            "gamma": 256,
-            "beta": 256,
-            "movingMean": 256,
-            "movingVariance": 256,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 256",
-                "result": 512,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 5250
@@ -7160,27 +5992,7 @@
         },
         {
           "id": "conv_dw_6_relu",
-          "label": "conv_dw_6_relu",
-          "type": "activation",
           "groupId": "group_block_6",
-          "outputShape": [
-            null,
-            14,
-            14,
-            256
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 5400
@@ -7188,45 +6000,7 @@
         },
         {
           "id": "conv_pw_6",
-          "label": "Conv 1x1, 512",
-          "type": "conv2d",
           "groupId": "group_block_6",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 131072,
-            "weights": 131072,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "256 × 512",
-                "result": 131072,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 131072,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 5550
@@ -7234,46 +6008,7 @@
         },
         {
           "id": "conv_pw_6_bn",
-          "label": "conv_pw_6_bn",
-          "type": "batch_norm",
           "groupId": "group_block_6",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 5700
@@ -7281,27 +6016,7 @@
         },
         {
           "id": "conv_pw_6_relu",
-          "label": "conv_pw_6_relu",
-          "type": "activation",
           "groupId": "group_block_6",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 5850
@@ -7309,45 +6024,7 @@
         },
         {
           "id": "conv_dw_7",
-          "label": "Conv 3x3, 512",
-          "type": "conv2d",
           "groupId": "group_block_7",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4608,
-            "weights": 4608,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 512",
-                "result": 4608,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 4608,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 6000
@@ -7355,46 +6032,7 @@
         },
         {
           "id": "conv_dw_7_bn",
-          "label": "conv_dw_7_bn",
-          "type": "batch_norm",
           "groupId": "group_block_7",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 6150
@@ -7402,27 +6040,7 @@
         },
         {
           "id": "conv_dw_7_relu",
-          "label": "conv_dw_7_relu",
-          "type": "activation",
           "groupId": "group_block_7",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 6300
@@ -7430,45 +6048,7 @@
         },
         {
           "id": "conv_pw_7",
-          "label": "Conv 1x1, 512",
-          "type": "conv2d",
           "groupId": "group_block_7",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 262144,
-            "weights": 262144,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "512 × 512",
-                "result": 262144,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 262144,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 6450
@@ -7476,46 +6056,7 @@
         },
         {
           "id": "conv_pw_7_bn",
-          "label": "conv_pw_7_bn",
-          "type": "batch_norm",
           "groupId": "group_block_7",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 6600
@@ -7523,27 +6064,7 @@
         },
         {
           "id": "conv_pw_7_relu",
-          "label": "conv_pw_7_relu",
-          "type": "activation",
           "groupId": "group_block_7",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 6750
@@ -7551,45 +6072,7 @@
         },
         {
           "id": "conv_dw_8",
-          "label": "Conv 3x3, 512",
-          "type": "conv2d",
           "groupId": "group_block_8",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4608,
-            "weights": 4608,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 512",
-                "result": 4608,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 4608,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 6900
@@ -7597,46 +6080,7 @@
         },
         {
           "id": "conv_dw_8_bn",
-          "label": "conv_dw_8_bn",
-          "type": "batch_norm",
           "groupId": "group_block_8",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 7050
@@ -7644,27 +6088,7 @@
         },
         {
           "id": "conv_dw_8_relu",
-          "label": "conv_dw_8_relu",
-          "type": "activation",
           "groupId": "group_block_8",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 7200
@@ -7672,45 +6096,7 @@
         },
         {
           "id": "conv_pw_8",
-          "label": "Conv 1x1, 512",
-          "type": "conv2d",
           "groupId": "group_block_8",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 262144,
-            "weights": 262144,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "512 × 512",
-                "result": 262144,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 262144,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 7350
@@ -7718,46 +6104,7 @@
         },
         {
           "id": "conv_pw_8_bn",
-          "label": "conv_pw_8_bn",
-          "type": "batch_norm",
           "groupId": "group_block_8",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 7500
@@ -7765,27 +6112,7 @@
         },
         {
           "id": "conv_pw_8_relu",
-          "label": "conv_pw_8_relu",
-          "type": "activation",
           "groupId": "group_block_8",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 7650
@@ -7793,45 +6120,7 @@
         },
         {
           "id": "conv_dw_9",
-          "label": "Conv 3x3, 512",
-          "type": "conv2d",
           "groupId": "group_block_9",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4608,
-            "weights": 4608,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 512",
-                "result": 4608,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 4608,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 7800
@@ -7839,46 +6128,7 @@
         },
         {
           "id": "conv_dw_9_bn",
-          "label": "conv_dw_9_bn",
-          "type": "batch_norm",
           "groupId": "group_block_9",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 7950
@@ -7886,27 +6136,7 @@
         },
         {
           "id": "conv_dw_9_relu",
-          "label": "conv_dw_9_relu",
-          "type": "activation",
           "groupId": "group_block_9",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 8100
@@ -7914,45 +6144,7 @@
         },
         {
           "id": "conv_pw_9",
-          "label": "Conv 1x1, 512",
-          "type": "conv2d",
           "groupId": "group_block_9",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 262144,
-            "weights": 262144,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "512 × 512",
-                "result": 262144,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 262144,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 8250
@@ -7960,46 +6152,7 @@
         },
         {
           "id": "conv_pw_9_bn",
-          "label": "conv_pw_9_bn",
-          "type": "batch_norm",
           "groupId": "group_block_9",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 8400
@@ -8007,27 +6160,7 @@
         },
         {
           "id": "conv_pw_9_relu",
-          "label": "conv_pw_9_relu",
-          "type": "activation",
           "groupId": "group_block_9",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 8550
@@ -8035,45 +6168,7 @@
         },
         {
           "id": "conv_dw_10",
-          "label": "Conv 3x3, 512",
-          "type": "conv2d",
           "groupId": "group_block_10",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4608,
-            "weights": 4608,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 512",
-                "result": 4608,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 4608,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 8700
@@ -8081,46 +6176,7 @@
         },
         {
           "id": "conv_dw_10_bn",
-          "label": "conv_dw_10_bn",
-          "type": "batch_norm",
           "groupId": "group_block_10",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 8850
@@ -8128,27 +6184,7 @@
         },
         {
           "id": "conv_dw_10_relu",
-          "label": "conv_dw_10_relu",
-          "type": "activation",
           "groupId": "group_block_10",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 9000
@@ -8156,45 +6192,7 @@
         },
         {
           "id": "conv_pw_10",
-          "label": "Conv 1x1, 512",
-          "type": "conv2d",
           "groupId": "group_block_10",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 262144,
-            "weights": 262144,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "512 × 512",
-                "result": 262144,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 262144,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 9150
@@ -8202,46 +6200,7 @@
         },
         {
           "id": "conv_pw_10_bn",
-          "label": "conv_pw_10_bn",
-          "type": "batch_norm",
           "groupId": "group_block_10",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 9300
@@ -8249,27 +6208,7 @@
         },
         {
           "id": "conv_pw_10_relu",
-          "label": "conv_pw_10_relu",
-          "type": "activation",
           "groupId": "group_block_10",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 9450
@@ -8277,45 +6216,7 @@
         },
         {
           "id": "conv_dw_11",
-          "label": "Conv 3x3, 512",
-          "type": "conv2d",
           "groupId": "group_block_11",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4608,
-            "weights": 4608,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 512",
-                "result": 4608,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 4608,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 9600
@@ -8323,46 +6224,7 @@
         },
         {
           "id": "conv_dw_11_bn",
-          "label": "conv_dw_11_bn",
-          "type": "batch_norm",
           "groupId": "group_block_11",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 9750
@@ -8370,27 +6232,7 @@
         },
         {
           "id": "conv_dw_11_relu",
-          "label": "conv_dw_11_relu",
-          "type": "activation",
           "groupId": "group_block_11",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 9900
@@ -8398,45 +6240,7 @@
         },
         {
           "id": "conv_pw_11",
-          "label": "Conv 1x1, 512",
-          "type": "conv2d",
           "groupId": "group_block_11",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 262144,
-            "weights": 262144,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "512 × 512",
-                "result": 262144,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 262144,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 10050
@@ -8444,46 +6248,7 @@
         },
         {
           "id": "conv_pw_11_bn",
-          "label": "conv_pw_11_bn",
-          "type": "batch_norm",
           "groupId": "group_block_11",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 10200
@@ -8491,27 +6256,7 @@
         },
         {
           "id": "conv_pw_11_relu",
-          "label": "conv_pw_11_relu",
-          "type": "activation",
           "groupId": "group_block_11",
-          "outputShape": [
-            null,
-            14,
-            14,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 10350
@@ -8519,45 +6264,7 @@
         },
         {
           "id": "conv_dw_12",
-          "label": "Conv 3x3, 512",
-          "type": "conv2d",
           "groupId": "group_block_12",
-          "outputShape": [
-            null,
-            3,
-            3,
-            512
-          ],
-          "config": {
-            "filters": 512,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 4608,
-            "weights": 4608,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 512",
-                "result": 4608,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 4608,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 10500
@@ -8565,46 +6272,7 @@
         },
         {
           "id": "conv_dw_12_bn",
-          "label": "conv_dw_12_bn",
-          "type": "batch_norm",
           "groupId": "group_block_12",
-          "outputShape": [
-            null,
-            3,
-            3,
-            512
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 2048,
-            "weights": 512,
-            "biases": 512,
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 1024,
-            "gamma": 512,
-            "beta": 512,
-            "movingMean": 512,
-            "movingVariance": 512,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 10650
@@ -8612,27 +6280,7 @@
         },
         {
           "id": "conv_dw_12_relu",
-          "label": "conv_dw_12_relu",
-          "type": "activation",
           "groupId": "group_block_12",
-          "outputShape": [
-            null,
-            3,
-            3,
-            512
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 10800
@@ -8640,45 +6288,7 @@
         },
         {
           "id": "conv_pw_12",
-          "label": "Conv 1x1, 1024",
-          "type": "conv2d",
           "groupId": "group_block_12",
-          "outputShape": [
-            null,
-            3,
-            3,
-            1024
-          ],
-          "config": {
-            "filters": 1024,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 524288,
-            "weights": 524288,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "512 × 1024",
-                "result": 524288,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 524288,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 10950
@@ -8686,46 +6296,7 @@
         },
         {
           "id": "conv_pw_12_bn",
-          "label": "conv_pw_12_bn",
-          "type": "batch_norm",
           "groupId": "group_block_12",
-          "outputShape": [
-            null,
-            3,
-            3,
-            1024
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 4096,
-            "weights": 1024,
-            "biases": 1024,
-            "trainableParameters": 2048,
-            "nonTrainableParameters": 2048,
-            "gamma": 1024,
-            "beta": 1024,
-            "movingMean": 1024,
-            "movingVariance": 1024,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 1024",
-                "result": 2048,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 1024",
-                "result": 2048,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 11100
@@ -8733,27 +6304,7 @@
         },
         {
           "id": "conv_pw_12_relu",
-          "label": "conv_pw_12_relu",
-          "type": "activation",
           "groupId": "group_block_12",
-          "outputShape": [
-            null,
-            3,
-            3,
-            1024
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 11250
@@ -8761,45 +6312,7 @@
         },
         {
           "id": "conv_dw_13",
-          "label": "Conv 3x3, 1024",
-          "type": "conv2d",
           "groupId": "group_block_13",
-          "outputShape": [
-            null,
-            7,
-            7,
-            1024
-          ],
-          "config": {
-            "filters": 1024,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 9216,
-            "weights": 9216,
-            "biases": 0,
-            "formula": "kernel_height × kernel_width × channels",
-            "calculationSteps": [
-              {
-                "label": "Depthwise weights",
-                "expression": "3 × 3 × 1024",
-                "result": 9216,
-                "explanation": "Applies one independent 3x3 filter per channel, separating spatial convolutions from channel mixing."
-              }
-            ],
-            "trainableParameters": 9216,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 11400
@@ -8807,46 +6320,7 @@
         },
         {
           "id": "conv_dw_13_bn",
-          "label": "conv_dw_13_bn",
-          "type": "batch_norm",
           "groupId": "group_block_13",
-          "outputShape": [
-            null,
-            7,
-            7,
-            1024
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 4096,
-            "weights": 1024,
-            "biases": 1024,
-            "trainableParameters": 2048,
-            "nonTrainableParameters": 2048,
-            "gamma": 1024,
-            "beta": 1024,
-            "movingMean": 1024,
-            "movingVariance": 1024,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 1024",
-                "result": 2048,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 1024",
-                "result": 2048,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 11550
@@ -8854,27 +6328,7 @@
         },
         {
           "id": "conv_dw_13_relu",
-          "label": "conv_dw_13_relu",
-          "type": "activation",
           "groupId": "group_block_13",
-          "outputShape": [
-            null,
-            7,
-            7,
-            1024
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 11700
@@ -8882,45 +6336,7 @@
         },
         {
           "id": "conv_pw_13",
-          "label": "Conv 1x1, 1024",
-          "type": "conv2d",
           "groupId": "group_block_13",
-          "outputShape": [
-            null,
-            7,
-            7,
-            1024
-          ],
-          "config": {
-            "filters": 1024,
-            "kernelSize": [
-              1,
-              1
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1048576,
-            "weights": 1048576,
-            "biases": 0,
-            "formula": "input_channels × output_filters",
-            "calculationSteps": [
-              {
-                "label": "Pointwise weights",
-                "expression": "1024 × 1024",
-                "result": 1048576,
-                "explanation": "Combines spatial activations across channels."
-              }
-            ],
-            "trainableParameters": 1048576,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 11850
@@ -8928,46 +6344,7 @@
         },
         {
           "id": "conv_pw_13_bn",
-          "label": "conv_pw_13_bn",
-          "type": "batch_norm",
           "groupId": "group_block_13",
-          "outputShape": [
-            null,
-            7,
-            7,
-            1024
-          ],
-          "config": {
-            "axis": 3,
-            "momentum": 0.99,
-            "epsilon": 0.001
-          },
-          "parameters": {
-            "total": 4096,
-            "weights": 1024,
-            "biases": 1024,
-            "trainableParameters": 2048,
-            "nonTrainableParameters": 2048,
-            "gamma": 1024,
-            "beta": 1024,
-            "movingMean": 1024,
-            "movingVariance": 1024,
-            "formula": "4 × channels",
-            "calculationSteps": [
-              {
-                "label": "Trainable Parameters (gamma, beta)",
-                "expression": "2 × 1024",
-                "result": 2048,
-                "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
-              },
-              {
-                "label": "Non-trainable Parameters (mean, variance)",
-                "expression": "2 × 1024",
-                "result": 2048,
-                "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
-              }
-            ]
-          },
           "position": {
             "x": 250,
             "y": 12000
@@ -8975,27 +6352,7 @@
         },
         {
           "id": "conv_pw_13_relu",
-          "label": "conv_pw_13_relu",
-          "type": "activation",
           "groupId": "group_block_13",
-          "outputShape": [
-            null,
-            7,
-            7,
-            1024
-          ],
-          "config": {
-            "activation": "relu"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 12150
@@ -9003,23 +6360,7 @@
         },
         {
           "id": "global_average_pooling2d",
-          "label": "global_average_pooling2d",
-          "type": "global_average_pooling2d",
           "groupId": "group_classifier",
-          "outputShape": [
-            null,
-            1024
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 12300
@@ -9027,40 +6368,7 @@
         },
         {
           "id": "predictions",
-          "label": "predictions",
-          "type": "dense",
           "groupId": "group_classifier",
-          "outputShape": [
-            null,
-            1000
-          ],
-          "config": {
-            "units": 1000,
-            "activation": "softmax",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 1025000,
-            "weights": 1024000,
-            "biases": 1000,
-            "formula": "(input_features + 1) × output_units",
-            "calculationSteps": [
-              {
-                "label": "Weights",
-                "expression": "1024 × 1000",
-                "result": 1024000,
-                "explanation": "Fully connected mapping weights."
-              },
-              {
-                "label": "Biases",
-                "expression": "1000",
-                "result": 1000,
-                "explanation": "One learnable bias parameter per output class."
-              }
-            ],
-            "trainableParameters": 1025000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 12450

@@ -750,31 +750,7 @@
       "nodes": [
         {
           "id": "input_1",
-          "label": "Input (224x224x3)",
-          "type": "input",
           "groupId": "stem",
-          "outputShape": [
-            null,
-            224,
-            224,
-            3
-          ],
-          "config": {
-            "shape": [
-              224,
-              224,
-              3
-            ]
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -782,45 +758,7 @@
         },
         {
           "id": "stem_conv1",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "stem",
-          "outputShape": [
-            null,
-            112,
-            112,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 1728,
-            "weights": 1728,
-            "biases": 0,
-            "formula": "kernel_h × kernel_w × in_channels × filters",
-            "calculationSteps": [
-              {
-                "label": "Conv Weights",
-                "expression": "3 × 3 × 3 × 64",
-                "result": 1728,
-                "explanation": "Standard 3x3 stride-2 conv downsampling the image to half size (112x112)."
-              }
-            ],
-            "trainableParameters": 1728,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 150
@@ -828,45 +766,7 @@
         },
         {
           "id": "stem_conv2",
-          "label": "Conv 3x3, 64",
-          "type": "conv2d",
           "groupId": "stem",
-          "outputShape": [
-            null,
-            112,
-            112,
-            64
-          ],
-          "config": {
-            "filters": 64,
-            "kernelSize": [
-              3,
-              3
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "same",
-            "useBias": false,
-            "activation": "linear"
-          },
-          "parameters": {
-            "total": 36864,
-            "weights": 36864,
-            "biases": 0,
-            "formula": "kernel_h × kernel_w × in_channels × filters",
-            "calculationSteps": [
-              {
-                "label": "Conv Weights",
-                "expression": "3 × 3 × 64 × 64",
-                "result": 36864,
-                "explanation": "Processes features at 112x112 scale, capturing fine local structures."
-              }
-            ],
-            "trainableParameters": 36864,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 300
@@ -874,34 +774,7 @@
         },
         {
           "id": "stage1_blocks",
-          "label": "Stage 1 (2x MaxViT Blocks)",
-          "type": "bottleneck",
           "groupId": "stage_1",
-          "outputShape": [
-            null,
-            56,
-            56,
-            64
-          ],
-          "config": {
-            "expansion": 2
-          },
-          "parameters": {
-            "total": 500000,
-            "weights": 498000,
-            "biases": 2000,
-            "formula": "2 × MaxViTBlock_Params",
-            "calculationSteps": [
-              {
-                "label": "Stage 1 Weights Stack",
-                "expression": "2 × 249000",
-                "result": 498000,
-                "explanation": "Weights of MBConv, Block Attention, and Grid Attention layers across two MaxViT blocks."
-              }
-            ],
-            "trainableParameters": 500000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 450
@@ -909,34 +782,7 @@
         },
         {
           "id": "stage2_blocks",
-          "label": "Stage 2 (2x MaxViT Blocks)",
-          "type": "bottleneck",
           "groupId": "stage_2",
-          "outputShape": [
-            null,
-            28,
-            28,
-            128
-          ],
-          "config": {
-            "expansion": 2
-          },
-          "parameters": {
-            "total": 2000000,
-            "weights": 1996000,
-            "biases": 4000,
-            "formula": "2 × Stage2Block_Params",
-            "calculationSteps": [
-              {
-                "label": "Stage 2 weights",
-                "expression": "2 × 998000",
-                "result": 1996000,
-                "explanation": "Dual-attention and convolution parameters mapping 64 channels to 128 channels."
-              }
-            ],
-            "trainableParameters": 2000000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 600
@@ -944,34 +790,7 @@
         },
         {
           "id": "stage3_blocks",
-          "label": "Stage 3 (6x MaxViT Blocks)",
-          "type": "bottleneck",
           "groupId": "stage_3",
-          "outputShape": [
-            null,
-            14,
-            14,
-            256
-          ],
-          "config": {
-            "expansion": 6
-          },
-          "parameters": {
-            "total": 14000000,
-            "weights": 13988000,
-            "biases": 12000,
-            "formula": "6 × Stage3Block_Params",
-            "calculationSteps": [
-              {
-                "label": "Stage 3 Weights Stack",
-                "expression": "6 × 2331333",
-                "result": 13988000,
-                "explanation": "Parameters of 6 sequential blocks at 256 dimensions, doing deep hybrid visual extraction."
-              }
-            ],
-            "trainableParameters": 14000000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 750
@@ -979,34 +798,7 @@
         },
         {
           "id": "stage4_blocks",
-          "label": "Stage 4 (2x MaxViT Blocks)",
-          "type": "bottleneck",
           "groupId": "stage_4",
-          "outputShape": [
-            null,
-            7,
-            7,
-            512
-          ],
-          "config": {
-            "expansion": 2
-          },
-          "parameters": {
-            "total": 13500000,
-            "weights": 13494000,
-            "biases": 6000,
-            "formula": "2 × Stage4Block_Params",
-            "calculationSteps": [
-              {
-                "label": "Stage 4 weights",
-                "expression": "2 × 6747000",
-                "result": 13494000,
-                "explanation": "Parameters of the final 2 blocks operating at 512 hidden channels."
-              }
-            ],
-            "trainableParameters": 13500000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 900
@@ -1014,35 +806,7 @@
         },
         {
           "id": "norm_out",
-          "label": "Output LayerNorm",
-          "type": "layer_norm",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            7,
-            7,
-            512
-          ],
-          "config": {
-            "axis": -1,
-            "epsilon": 0.000001
-          },
-          "parameters": {
-            "total": 1024,
-            "weights": 512,
-            "biases": 512,
-            "formula": "2 × channels",
-            "calculationSteps": [
-              {
-                "label": "LN parameters",
-                "expression": "2 × 512",
-                "result": 1024,
-                "explanation": "Gamma scaling and Beta bias vectors."
-              }
-            ],
-            "trainableParameters": 1024,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1050
@@ -1050,23 +814,7 @@
         },
         {
           "id": "avg_pool",
-          "label": "Global Average Pooling",
-          "type": "global_average_pooling2d",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            512
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1200
@@ -1074,40 +822,7 @@
         },
         {
           "id": "head",
-          "label": "Classification Head",
-          "type": "dense",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            1000
-          ],
-          "config": {
-            "units": 1000,
-            "activation": "linear",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 513000,
-            "weights": 512000,
-            "biases": 1000,
-            "formula": "(channels × classes) + classes",
-            "calculationSteps": [
-              {
-                "label": "Head Weights",
-                "expression": "512 × 1000",
-                "result": 512000,
-                "explanation": "Dense mapping weights predicting class categories."
-              },
-              {
-                "label": "Biases",
-                "expression": "1000",
-                "result": 1000,
-                "explanation": "Class logits biases."
-              }
-            ],
-            "trainableParameters": 513000,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1350
@@ -1115,27 +830,7 @@
         },
         {
           "id": "output",
-          "label": "Output Logits",
-          "type": "output",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            1000
-          ],
-          "config": {
-            "units": 1000,
-            "activation": "softmax",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1500

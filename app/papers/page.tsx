@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 import papersData from '@/data/papers.json';
 import modelsSummary from '@/data/models.json';
+import PageBackground from '@/components/layout/page-background';
 
 interface Paper {
   id: string;
@@ -71,9 +72,7 @@ export default function PaperKnowledgeCenter() {
 
   return (
     <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
-      {/* Background glowing lights */}
-      <div className="absolute top-0 left-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-primary z-0" />
-      <div className="absolute bottom-20 right-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-indigo-500 z-0" />
+      <PageBackground variant="primary-indigo" />
 
       <section className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 w-full flex-1 flex flex-col gap-8">
         
@@ -123,29 +122,30 @@ export default function PaperKnowledgeCenter() {
                       : 'border-border/25 bg-slate-950/20 hover:border-border/40'
                   }`}
                 >
-                  {/* Card Main Block Header */}
-                  <div 
-                    onClick={() => setActivePaperId(isSelected ? null : paper.id)}
-                    className="p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
-                  >
-                    <div className="space-y-2 flex-1">
-                      <div className="flex flex-wrap items-center gap-2 text-[10px] font-bold text-slate-500">
-                        <span className="flex items-center gap-1 bg-slate-900 border border-border/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                          <Calendar className="h-3 w-3 text-primary" />
-                          {paper.year}
-                        </span>
-                        <span className="flex items-center gap-1 bg-slate-900 border border-border/20 px-2 py-0.5 rounded-full uppercase tracking-wider max-w-[120px] sm:max-w-[200px] truncate" title={paper.authors.join(', ')}>
-                          <Users className="h-3 w-3 text-primary" />
-                          {paper.authors[0]} et al.
-                        </span>
-                      </div>
-                      <h2 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug group-hover:text-primary transition-colors">
-                        {paper.title}
-                      </h2>
-                      <p className="text-xs text-slate-400 font-medium line-clamp-2 md:line-clamp-1 leading-relaxed">
-                        Contribution: {paper.contribution}
-                      </p>
-                    </div>
+                   {/* Card Main Block Header */}
+                   <button 
+                     type="button"
+                     onClick={() => setActivePaperId(isSelected ? null : paper.id)}
+                     className="p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 text-left w-full hover:bg-slate-900/10 transition-colors rounded-t-3xl"
+                   >
+                     <div className="space-y-2 flex-1">
+                       <div className="flex flex-wrap items-center gap-2 text-[10px] font-bold text-slate-500">
+                         <span className="flex items-center gap-1 bg-slate-900 border border-border/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                           <Calendar className="h-3 w-3 text-primary" />
+                           {paper.year}
+                         </span>
+                         <span className="flex items-center gap-1 bg-slate-900 border border-border/20 px-2 py-0.5 rounded-full uppercase tracking-wider max-w-[120px] sm:max-w-[200px] truncate" title={paper.authors.join(', ')}>
+                           <Users className="h-3 w-3 text-primary" />
+                           {paper.authors[0]} et al.
+                         </span>
+                       </div>
+                       <h2 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug transition-colors">
+                         {paper.title}
+                       </h2>
+                       <p className="text-xs text-slate-400 font-medium line-clamp-2 md:line-clamp-1 leading-relaxed">
+                         Contribution: {paper.contribution}
+                       </p>
+                     </div>
 
                     {/* Toggle expand button indicator */}
                     <div className="flex items-center gap-3 shrink-0 self-end md:self-auto">
@@ -163,8 +163,7 @@ export default function PaperKnowledgeCenter() {
                         {isSelected ? 'Hide Details' : 'View Details'}
                       </button>
                     </div>
-                  </div>
-
+                  </button>
                   {/* Expandable Body */}
                   <AnimatePresence>
                     {isSelected && (

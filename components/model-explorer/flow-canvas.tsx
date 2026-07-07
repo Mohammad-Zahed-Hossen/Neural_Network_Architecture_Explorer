@@ -34,23 +34,51 @@ export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }:
   const layers = useMemo<Layer[]>(() => {
     if (topology.mode === 'detailed') return topology.model.architecture.layers;
 
-    return topology.groupedNodes.map((node) => ({
-      id: node.id,
-      type: 'transition_block',
-      name: node.label,
-      inputShape: { dimensions: [], description: '' },
-      outputShape: { dimensions: [], description: '' },
-      config: {},
-      parameters: { total: 0, weights: 0, biases: 0, formula: '', calculationSteps: [] },
-      educationalNote: {
-        summary: node.description,
-        detailed: node.description,
-        whyItMatters: '',
-        keyTakeaway: '',
-      },
-      position: node.position,
-      layerIds: node.layerIds,
-    }));
+    // Grouped mode: ensure any fields that must come from the canonical Layer
+    // definition are sourced from architecture.layers via id.
+    // We only trust layout/group metadata for groupId/position and layerIds.
+    const architectureLayers = topology.mode === 'grouped'
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ? (topology as any).model?.architecture?.layers ?? []
+      : [];
+
+    return topology.groupedNodes.flatMap((groupNode) => {
+      const canonicalLayersById = new Map(
+        (architectureLayers as Layer[]).map((l) => [l.id, l] as const)
+      );
+
+      return groupNode.layerIds.map((layerId) => {
+        const canonical = canonicalLayersById.get(layerId);
+
+        if (canonical) {
+          return {
+            ...canonical,
+            // Group id + position come from the layout/group node,
+            // while everything else comes from the canonical layer.
+            position: groupNode.position,
+          };
+        }
+
+        // Fallback (should not happen if data is consistent)
+        return {
+          id: layerId,
+          type: 'transition_block',
+          name: groupNode.label,
+          inputShape: { dimensions: [], description: '' },
+          outputShape: { dimensions: [], description: '' },
+          config: {},
+          parameters: { total: 0, weights: 0, biases: 0, formula: '', calculationSteps: [] },
+          educationalNote: {
+            summary: groupNode.description,
+            detailed: groupNode.description,
+            whyItMatters: '',
+            keyTakeaway: '',
+          },
+          position: groupNode.position,
+          layerIds: groupNode.layerIds,
+        } satisfies Layer;
+      });
+    });
   }, [topology]);
 
   const connections = useMemo<Connection[]>(() => {

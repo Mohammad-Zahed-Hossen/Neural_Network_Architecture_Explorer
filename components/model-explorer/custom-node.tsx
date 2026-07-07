@@ -38,7 +38,7 @@ function CustomNode({ data }: CustomNodeProps) {
   };
 
   const isInput = data.type === 'input';
-  const isOutput = data.id === 'predictions';
+  const isOutput = data.type === 'output';
   const hasParams = data.parametersTotal > 0;
 
   return (

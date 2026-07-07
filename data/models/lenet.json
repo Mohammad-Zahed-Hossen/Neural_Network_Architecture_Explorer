@@ -632,31 +632,7 @@
       "nodes": [
         {
           "id": "input_1",
-          "label": "Input (224x224x3)",
-          "type": "input",
           "groupId": "stem",
-          "outputShape": [
-            null,
-            32,
-            32,
-            1
-          ],
-          "config": {
-            "shape": [
-              32,
-              32,
-              1
-            ]
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 0
@@ -664,51 +640,7 @@
         },
         {
           "id": "conv2d_1",
-          "label": "Conv 5x5, 6",
-          "type": "conv2d",
           "groupId": "stem",
-          "outputShape": [
-            null,
-            28,
-            28,
-            6
-          ],
-          "config": {
-            "filters": 6,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": true,
-            "activation": "tanh"
-          },
-          "parameters": {
-            "total": 156,
-            "weights": 150,
-            "biases": 6,
-            "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
-            "calculationSteps": [
-              {
-                "label": "Kernel Weights",
-                "expression": "5 × 5 × 1 × 6",
-                "result": 150,
-                "explanation": "6 filters of size 5x5 operating over 1 input channel."
-              },
-              {
-                "label": "Biases",
-                "expression": "6",
-                "result": 6,
-                "explanation": "One trainable bias per filter."
-              }
-            ],
-            "trainableParameters": 156,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 150
@@ -716,35 +648,7 @@
         },
         {
           "id": "avg_pool_1",
-          "label": "Average Pool 1 (S2)",
-          "type": "average_pooling2d",
           "groupId": "stem",
-          "outputShape": [
-            null,
-            14,
-            14,
-            6
-          ],
-          "config": {
-            "poolSize": [
-              2,
-              2
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "valid"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 300
@@ -752,51 +656,7 @@
         },
         {
           "id": "conv2d_2",
-          "label": "Conv 5x5, 16",
-          "type": "conv2d",
           "groupId": "feature_extract",
-          "outputShape": [
-            null,
-            10,
-            10,
-            16
-          ],
-          "config": {
-            "filters": 16,
-            "kernelSize": [
-              5,
-              5
-            ],
-            "strides": [
-              1,
-              1
-            ],
-            "padding": "valid",
-            "useBias": true,
-            "activation": "tanh"
-          },
-          "parameters": {
-            "total": 2416,
-            "weights": 2400,
-            "biases": 16,
-            "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
-            "calculationSteps": [
-              {
-                "label": "Kernel Weights",
-                "expression": "5 × 5 × 6 × 16",
-                "result": 2400,
-                "explanation": "16 filters of size 5x5 operating over 6 input channels."
-              },
-              {
-                "label": "Biases",
-                "expression": "16",
-                "result": 16,
-                "explanation": "One trainable bias per filter."
-              }
-            ],
-            "trainableParameters": 2416,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 450
@@ -804,35 +664,7 @@
         },
         {
           "id": "avg_pool_2",
-          "label": "Average Pool 2 (S4)",
-          "type": "average_pooling2d",
           "groupId": "feature_extract",
-          "outputShape": [
-            null,
-            5,
-            5,
-            16
-          ],
-          "config": {
-            "poolSize": [
-              2,
-              2
-            ],
-            "strides": [
-              2,
-              2
-            ],
-            "padding": "valid"
-          },
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 600
@@ -840,23 +672,7 @@
         },
         {
           "id": "flatten_1",
-          "label": "Flatten",
-          "type": "flatten",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            400
-          ],
-          "config": {},
-          "parameters": {
-            "total": 0,
-            "weights": 0,
-            "biases": 0,
-            "formula": "None",
-            "calculationSteps": [],
-            "trainableParameters": 0,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 750
@@ -864,40 +680,7 @@
         },
         {
           "id": "dense_1",
-          "label": "Fully Connected 1 (F5)",
-          "type": "dense",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            120
-          ],
-          "config": {
-            "units": 120,
-            "activation": "tanh",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 48120,
-            "weights": 48000,
-            "biases": 120,
-            "formula": "(input_units + 1) × output_units",
-            "calculationSteps": [
-              {
-                "label": "Weights",
-                "expression": "400 × 120",
-                "result": 48000,
-                "explanation": "Weight matrix connecting 400 input features to 120 units."
-              },
-              {
-                "label": "Biases",
-                "expression": "120",
-                "result": 120,
-                "explanation": "One trainable bias per unit."
-              }
-            ],
-            "trainableParameters": 48120,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 900
@@ -905,40 +688,7 @@
         },
         {
           "id": "dense_2",
-          "label": "Fully Connected 2 (F6)",
-          "type": "dense",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            84
-          ],
-          "config": {
-            "units": 84,
-            "activation": "tanh",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 10164,
-            "weights": 10080,
-            "biases": 84,
-            "formula": "(input_units + 1) × output_units",
-            "calculationSteps": [
-              {
-                "label": "Weights",
-                "expression": "120 × 84",
-                "result": 10080,
-                "explanation": "Connections from 120 features to 84 units."
-              },
-              {
-                "label": "Biases",
-                "expression": "84",
-                "result": 84,
-                "explanation": "One trainable bias per unit."
-              }
-            ],
-            "trainableParameters": 10164,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1050
@@ -946,40 +696,7 @@
         },
         {
           "id": "output",
-          "label": "Output Classes",
-          "type": "output",
           "groupId": "classifier",
-          "outputShape": [
-            null,
-            10
-          ],
-          "config": {
-            "units": 10,
-            "activation": "softmax",
-            "useBias": true
-          },
-          "parameters": {
-            "total": 850,
-            "weights": 840,
-            "biases": 10,
-            "formula": "(input_units + 1) × output_units",
-            "calculationSteps": [
-              {
-                "label": "Weights",
-                "expression": "84 × 10",
-                "result": 840,
-                "explanation": "Connections from 84 features to 10 final classes."
-              },
-              {
-                "label": "Biases",
-                "expression": "10",
-                "result": 10,
-                "explanation": "One bias per class."
-              }
-            ],
-            "trainableParameters": 850,
-            "nonTrainableParameters": 0
-          },
           "position": {
             "x": 250,
             "y": 1200

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import evolutionData from '@/data/evolution.json';
+import PageBackground from '@/components/layout/page-background';
 
 interface EvolutionNode {
   id: string;
@@ -20,6 +21,7 @@ interface EvolutionNode {
   advantages: string[];
   limitations: string[];
   legacy: string;
+  exampleModelId?: string;
 }
 
 export default function EvolutionTimeline() {
@@ -48,9 +50,7 @@ export default function EvolutionTimeline() {
 
   return (
     <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
-      {/* Dynamic ambient background glow */}
-      <div className="absolute top-10 left-1/4 w-[600px] h-[600px] rounded-full bg-cyan-500/5 filter blur-[150px] pointer-events-none z-0" />
-      <div className="absolute bottom-20 right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/5 filter blur-[150px] pointer-events-none z-0" />
+      <PageBackground variant="cyan-purple" />
 
       <section className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 w-full">
         {/* Page Header */}
@@ -76,7 +76,7 @@ export default function EvolutionTimeline() {
 
           {/* Timeline Nodes */}
           <div className="space-y-12 relative z-10">
-            {evolutionData.map((node: EvolutionNode, index) => {
+            {(evolutionData as EvolutionNode[]).map((node, index) => {
               const isEven = index % 2 === 0;
               const isExpanded = expandedNode === node.id;
 
@@ -125,9 +125,9 @@ export default function EvolutionTimeline() {
 
                       <h2 className="text-xl font-black text-white tracking-tight mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <span>{node.name}</span>
-                        {node.id !== 'vit' && node.id !== 'convnext' && (
+                        {node.exampleModelId && (
                           <Link 
-                            href={`/models/${node.id === 'vgg' ? 'vgg16' : node.id === 'resnet' ? 'resnet50' : node.id === 'densenet' ? 'densenet121' : node.id === 'mobilenet' ? 'mobilenet' : node.id === 'efficientnet' ? 'efficientnetb0' : node.id}`}
+                            href={`/models/${node.exampleModelId}`}
                             className="inline-flex items-center gap-1 text-[10px] font-bold text-primary/80 hover:text-primary hover:underline transition-all shrink-0 self-start sm:self-auto"
                           >
                             Interactive Explorer <ArrowUpRight className="h-3 w-3" />

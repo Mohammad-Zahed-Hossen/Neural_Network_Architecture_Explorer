@@ -4,20 +4,27 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Layers, Zap, Network, GraduationCap, Award } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ModelAdvisor from '@/components/learn/model-advisor';
+import PageBackground from '@/components/layout/page-background';
 
 export default function Learn() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<'paths' | 'advisor'>('paths');
 
+  // Read initial tab from URL on mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const tabParam = params.get('tab');
-      if (tabParam === 'advisor' || tabParam === 'paths') {
-        setActiveTab(tabParam as any);
-      }
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'advisor' || tabParam === 'paths') {
+      setActiveTab(tabParam);
     }
-  }, []);
+  }, [searchParams]);
+
+  const handleTabChange = (tab: 'paths' | 'advisor') => {
+    setActiveTab(tab);
+    router.replace(`/learn?tab=${tab}`);
+  };
 
   const learningPaths = [
     {
@@ -61,9 +68,7 @@ export default function Learn() {
 
   return (
     <div className="relative flex flex-col flex-1 bg-background grid-bg pb-16 overflow-x-hidden">
-      {/* Background ambient glow */}
-      <div className="absolute top-10 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/5 filter blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-[500px] h-[500px] rounded-full bg-purple-500/5 filter blur-[150px] pointer-events-none" />
+      <PageBackground variant="blue-purple" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 w-full">
         {/* Header */}
@@ -80,7 +85,7 @@ export default function Learn() {
         {/* Navigation Tabs */}
         <div className="flex items-center gap-1.5 sm:gap-2 bg-[#020617] border border-[#1f2937] rounded-2xl p-1 select-none max-w-md mb-10 shadow-lg w-full">
           <button
-            onClick={() => setActiveTab('paths')}
+            onClick={() => handleTabChange('paths')}
             className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
               activeTab === 'paths'
                 ? "bg-primary text-slate-950 border-primary font-black shadow-md shadow-primary/10"
@@ -92,7 +97,7 @@ export default function Learn() {
             <span className="hidden min-[380px]:inline">Learning Roadmaps</span>
           </button>
           <button
-            onClick={() => setActiveTab('advisor')}
+            onClick={() => handleTabChange('advisor')}
             className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
               activeTab === 'advisor'
                 ? "bg-primary text-slate-950 border-primary font-black shadow-md shadow-primary/10"
