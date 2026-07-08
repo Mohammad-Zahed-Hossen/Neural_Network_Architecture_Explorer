@@ -7,7 +7,9 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     resolveAlias: {
-      '~@': './',
+      '@': {
+        '(.*)$': './$1',
+      },
     },
   },
   webpack: (config) => {
