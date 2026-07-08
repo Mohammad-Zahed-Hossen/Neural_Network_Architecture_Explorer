@@ -5,7 +5,15 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  turbopack: {},
+  turbopack: {
+    resolveAlias: {
+      '~@': './',
+    },
+  },
+  webpack: (config) => {
+    config.resolve.alias['@'] = './';
+    return config;
+  },
 };
 
 export default nextConfig;
