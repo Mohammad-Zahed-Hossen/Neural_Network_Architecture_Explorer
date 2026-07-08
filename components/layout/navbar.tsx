@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Compass, GitCommit, Zap } from 'lucide-react';
@@ -8,64 +8,82 @@ import { cn } from '@/lib/utils/cn';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
 
+// Static navigation structure - defined once at module scope
+// The `active` boolean is derived separately in the component to avoid recreating the array on every render
+const STATIC_NAV_GROUPS: Array<{
+  label: string;
+  href?: string;
+  icon: React.ComponentType<{ className?: string }>;
+  items?: Array<{ href: string; label: string; icon: React.ComponentType<{ className?: string }> }>;
+}> = [
+  {
+    label: 'Home',
+    href: '/',
+    icon: Home,
+  },
+  {
+    label: 'Explore',
+    icon: Network,
+    items: [
+      { href: '/catalog', label: 'Catalog', icon: Network },
+      { href: '/compare', label: 'Compare', icon: BarChart3 },
+      { href: '/evolution', label: 'Evolution', icon: History },
+      { href: '/research-map', label: 'Research Map', icon: Compass },
+      { href: '/architecture-patterns', label: 'Patterns', icon: GitCommit },
+    ],
+  },
+  {
+    label: 'Learn',
+    icon: BookOpen,
+    items: [
+      { href: '/papers', label: 'Papers', icon: GraduationCap },
+      { href: '/learn', label: 'Learn', icon: BookOpen },
+    ],
+  },
+  {
+    label: 'Tools',
+    icon: Compass,
+    items: [
+      { href: '/concepts/receptive-field', label: 'Receptive Field Explorer', icon: Compass },
+      { href: '/concepts/training-dynamics', label: 'Training Dynamics', icon: Zap },
+    ],
+  },
+];
+
+// Derived type with active state
+type NavGroupWithActive = {
+  label: string;
+  href?: string;
+  icon: React.ComponentType<{ className?: string }>;
+  active?: boolean;
+  items?: Array<{ href: string; label: string; icon: React.ComponentType<{ className?: string }>; active?: boolean }>;
+};
+
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const shouldReduceMotion = useReducedMotionPreference();
 
-  // Grouped navigation structure - one level of items per group
-  // Note: Nested items (items?: NavItem[]) intentionally deferred until a second nav level is actually needed.
-  // The type currently only supports single-level dropdowns to avoid false confidence about scalability.
-  type NavItem = {
-    href: string;
-    label: string;
-    icon: React.ComponentType<{ className?: string }>;
-    active: boolean;
-  };
-
-  type NavGroup = {
-    label: string;
-    icon: React.ComponentType<{ className?: string }>;
-    href?: string;
-    active?: boolean;
-    items?: NavItem[];
-  };
-
-  const navGroups: NavGroup[] = [
-    {
-      label: 'Home',
-      href: '/',
-      icon: Home,
-      active: pathname === '/',
-    },
-    {
-      label: 'Explore',
-      icon: Network,
-      items: [
-        { href: '/catalog', label: 'Catalog', icon: Network, active: pathname === '/catalog' || pathname.startsWith('/models/') },
-        { href: '/compare', label: 'Compare', icon: BarChart3, active: pathname === '/compare' },
-        { href: '/evolution', label: 'Evolution', icon: History, active: pathname === '/evolution' },
-        { href: '/research-map', label: 'Research Map', icon: Compass, active: pathname === '/research-map' },
-        { href: '/architecture-patterns', label: 'Patterns', icon: GitCommit, active: pathname === '/architecture-patterns' },
-      ],
-    },
-    {
-      label: 'Learn',
-      icon: BookOpen,
-      items: [
-        { href: '/papers', label: 'Papers', icon: GraduationCap, active: pathname === '/papers' },
-        { href: '/learn', label: 'Learn', icon: BookOpen, active: pathname === '/learn' },
-      ],
-    },
-    {
-      label: 'Tools',
-      icon: Compass,
-      items: [
-        { href: '/concepts/receptive-field', label: 'Receptive Field Explorer', icon: Compass, active: pathname === '/concepts/receptive-field' },
-        { href: '/concepts/training-dynamics', label: 'Training Dynamics', icon: Zap, active: pathname === '/concepts/training-dynamics' },
-      ],
-    },
-  ];
+  // Derive active state from pathname - this is the only part that changes on navigation
+  const navGroups: NavGroupWithActive[] = useMemo(() => {
+    return STATIC_NAV_GROUPS.map(group => {
+      if (group.href) {
+        // Single link (Home)
+        return {
+          ...group,
+          active: pathname === group.href,
+        };
+      }
+      // Group with items
+      return {
+        ...group,
+        items: group.items?.map(item => ({
+          ...item,
+          active: pathname === item.href || (item.href === '/catalog' && pathname.startsWith('/models/')),
+        })),
+      };
+    });
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#1f2937] bg-[#020617]/90 backdrop-blur-md">
@@ -142,42 +160,42 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Navigation Links */}
-  <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-           {navGroups.map((group) => {
-             if (group.href) {
-               // Single link (Home)
-               const Icon = group.icon;
-               return (
-                 <Link
-                   key={group.href}
-                   href={group.href}
-                   className={cn(
-                     "relative flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-medium transition-all duration-300",
-                     group.active
-                       ? "text-[#020617] bg-[#22d3ee] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.2)]"
-                       : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617] border border-transparent"
-                   )}
-                 >
-                   <Icon className="h-4 w-4" />
-                   <span>{group.label}</span>
-                 </Link>
-               );
-             }
-             // Group with dropdown
-             const GroupIcon = group.icon;
-             return (
-               <div key={group.label} className="relative group">
-                 <button
-                   className={cn(
-                     "relative flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-medium transition-all duration-300",
-                     group.items?.some(item => item.active)
-                       ? "text-[#020617] bg-[#22d3ee] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.2)]"
-                       : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617] border border-transparent"
-                   )}
-                 >
-                   <GroupIcon className="h-4 w-4" />
-                   <span>{group.label}</span>
-                 </button>
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          {navGroups.map((group) => {
+            if (group.href) {
+              // Single link (Home)
+              const Icon = group.icon;
+              return (
+                <Link
+                  key={group.href}
+                  href={group.href}
+                  className={cn(
+                    "relative flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-medium transition-all duration-300",
+                    group.active
+                      ? "text-[#020617] bg-[#22d3ee] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.2)]"
+                      : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617] border border-transparent"
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span>{group.label}</span>
+                </Link>
+              );
+            }
+            // Group with dropdown
+            const GroupIcon = group.icon;
+            return (
+              <div key={group.label} className="relative group">
+                <button
+                  className={cn(
+                    "relative flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-medium transition-all duration-300",
+                    group.items?.some(item => item.active)
+                      ? "text-[#020617] bg-[#22d3ee] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.2)]"
+                      : "text-[#9ca3af] hover:text-[#e5e7eb] hover:bg-[#020617] border border-transparent"
+                  )}
+                >
+                  <GroupIcon className="h-4 w-4" />
+                  <span>{group.label}</span>
+                </button>
                 <div className="absolute top-full left-0 mt-2 w-48 bg-slate-950/95 backdrop-blur-lg border border-border/30 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   {group.items?.map((item) => {
                     const ItemIcon = item.icon;

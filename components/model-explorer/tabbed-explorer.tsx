@@ -6,7 +6,7 @@ import {
   ArrowLeft, ArrowRight, BookOpen, 
   ExternalLink, ListFilter, Network, Compass
 } from 'lucide-react';
-import { NeuralNetworkModel, GroupedNode, GroupedEdge, LayerGroup } from '@/lib/schema/model.schema';
+import { NeuralNetworkModel, GroupedNode, GroupedEdge, LayerGroup, Layer } from '@/lib/schema/model.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import LayerList from './layer-list';
 import InspectorPanel from './inspector-panel';
@@ -28,8 +28,29 @@ const FlowCanvas = dynamic(() => import('./flow-canvas'), {
   ),
 });
 
+// Overview data - only the fields needed for the Overview tab
+interface ModelOverview {
+  id: string;
+  name: string;
+  fullName: string;
+  description: string;
+  category: string;
+  colorTheme: string;
+  paperYear: number;
+  authors: string[];
+  paperUrl: string;
+  docsUrl?: string;
+  totalParameters: number;
+  depth: number;
+  memoryUsage: number;
+  totalFLOPs: number;
+  top1Accuracy: number;
+  top5Accuracy: number;
+}
+
 interface TabbedExplorerProps {
-  model: NeuralNetworkModel;
+  overview: ModelOverview;
+  layers: Layer[];
   graphData: {
     nodes: unknown[];
     edges: unknown[];
@@ -39,13 +60,13 @@ interface TabbedExplorerProps {
   };
 }
 
-export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps) {
+export default function TabbedExplorer({ overview, layers, graphData }: TabbedExplorerProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'layers' | 'topology'>('overview');
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotionPreference();
   const detailedNodeCount = graphData.nodes.length;
   const isDetailedViewDisabled = detailedNodeCount > MAX_DETAILED_NODES;
-  const detailedPreferenceKey = `nn_showDetailedLayers:${model.id}`;
+  const detailedPreferenceKey = `nn_showDetailedLayers:${overview.id}`;
 
   // Initialize showDetailedLayers from localStorage (client-side only)
   const [showDetailedLayers, setShowDetailedLayers] = useState(() => {
@@ -62,8 +83,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
   // Derived state: has visited topology if currently on topology tab
   const hasVisitedTopology = activeTab === 'topology';
 
-  const layers = model.architecture.layers;
-  const totalParams = model.totalParameters;
+  const totalParams = overview.totalParameters;
 
   // Selected layer for inspector panel
   const selectedLayer = useMemo(() => {
@@ -75,7 +95,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
       {/* Dynamic Background Glow Overlay matching model theme */}
       <div 
         className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full filter blur-[150px] pointer-events-none opacity-10 z-0"
-        style={{ backgroundColor: model.colorTheme }}
+        style={{ backgroundColor: overview.colorTheme }}
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 flex flex-col gap-6">
@@ -94,14 +114,14 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
         <div className="flex flex-col gap-4">
           <div>
             <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-              {model.name}
+              {overview.name}
               <span 
                 className="inline-block w-2.5 h-2.5 rounded-full" 
-                style={{ backgroundColor: model.colorTheme }} 
+                style={{ backgroundColor: overview.colorTheme }} 
               />
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 mt-1 font-medium italic">
-              {model.fullName}
+              {overview.fullName}
             </p>
           </div>
 
@@ -112,22 +132,22 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
               <div>
                 <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Publication Reference</span>
                 <span className="text-sm font-extrabold text-slate-200 block">
-                  {model.paperYear} - {model.authors[0]}{model.authors.length > 1 ? ` & ${model.authors[1]}` : ''}
+                  {overview.paperYear} - {overview.authors[0]}{overview.authors.length > 1 ? ` & ${overview.authors[1]}` : ''}
                 </span>
-                <span className="text-[10px] text-slate-500 font-semibold truncate block max-w-xs mt-0.5" title={model.authors.join(', ')}>
-                  By {model.authors.slice(0, 3).join(', ')}{model.authors.length > 3 ? ' et al.' : ''}
+                <span className="text-[10px] text-slate-500 font-semibold truncate block max-w-xs mt-0.5" title={overview.authors.join(', ')}>
+                  By {overview.authors.slice(0, 3).join(', ')}{overview.authors.length > 3 ? ' et al.' : ''}
                 </span>
               </div>
               <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
                 <Link
-                  href={`/papers#${model.id}`}
+                  href={`/papers#${overview.id}`}
                   className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:text-primary-hover transition-colors"
                 >
                   View Paper Summary <BookOpen className="h-3 w-3" />
                 </Link>
                 <span className="text-slate-700 text-xs font-light">|</span>
                 <a
-                  href={model.paperUrl}
+                  href={overview.paperUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-400 hover:text-slate-200 transition-colors"
@@ -140,15 +160,15 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
             {/* Card 2: Parameters and Layers */}
             <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-center min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
               <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Complexity & Depth</span>
-              <span className="text-sm font-extrabold text-slate-200 block">{formatShortNumber(model.totalParameters)} params</span>
-              <span className="text-[10px] text-slate-450 font-semibold mt-0.5 block">{model.depth} network layers</span>
+              <span className="text-sm font-extrabold text-slate-200 block">{formatShortNumber(overview.totalParameters)} params</span>
+              <span className="text-[10px] text-slate-450 font-semibold mt-0.5 block">{overview.depth} network layers</span>
             </div>
 
             {/* Card 3: Accuracy and Memory */}
             <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-center min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
               <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Accuracy & Footprint</span>
-              <span className="text-sm font-extrabold text-slate-200 block">{formatAccuracy(model.top1Accuracy)} Top-1 Acc</span>
-              <span className="text-[10px] text-slate-455 font-semibold mt-0.5 block">{formatMemory(model.memoryUsage)} VRAM footprint</span>
+              <span className="text-sm font-extrabold text-slate-200 block">{formatAccuracy(overview.top1Accuracy)} Top-1 Acc</span>
+              <span className="text-[10px] text-slate-455 font-semibold mt-0.5 block">{formatMemory(overview.memoryUsage)} VRAM footprint</span>
             </div>
           </div>
         </div>
@@ -216,14 +236,13 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                     Architecture Idea & Design Philosophy
                   </h2>
                   <p className="text-sm text-[#9ca3af] leading-relaxed">
-                    {model.description}
+                    {overview.description}
                   </p>
                   <p className="text-sm text-[#9ca3af] leading-relaxed">
-                    This model is classified under the <strong className="text-[#e5e7eb]">{model.category}</strong> family. 
-                    It operates with a layer depth of <strong className="text-[#e5e7eb]">{model.depth}</strong>, 
-
-                    consuming around <strong className="text-[#e5e7eb]">{formatMemory(model.memoryUsage)}</strong> inference RAM 
-                    with a computational complexity of <strong className="text-[#e5e7eb]">{(model.totalFLOPs / 1e9).toFixed(1)} GFLOPs</strong>.
+                    This model is classified under the <strong className="text-[#e5e7eb]">{overview.category}</strong> family. 
+                    It operates with a layer depth of <strong className="text-[#e5e7eb]">{overview.depth}</strong>, 
+                    consuming around <strong className="text-[#e5e7eb]">{formatMemory(overview.memoryUsage)}</strong> inference RAM 
+                    with a computational complexity of <strong className="text-[#e5e7eb]">{(overview.totalFLOPs / 1e9).toFixed(1)} GFLOPs</strong>.
                   </p>
                 </div>
 
@@ -232,7 +251,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                    <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                      <a
-                       href={model.paperUrl}
+                       href={overview.paperUrl}
                        target="_blank"
                        rel="noopener noreferrer"
                        className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
@@ -240,9 +259,9 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                        <span className="text-[#9ca3af]">Read Research Publication</span>
                        <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
                      </a>
-                     {model.docsUrl ? (
+                     {overview.docsUrl ? (
                        <a
-                         href={model.docsUrl}
+                         href={overview.docsUrl}
                          target="_blank"
                          rel="noopener noreferrer"
                          className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
@@ -257,185 +276,185 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                      )}
                    </div>
                  </div>
-              </div>
+               </div>
 
-              {/* Architectural Metrics sidebar */}
-              <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-6">
-                <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider border-b border-[#1f2937] pb-2">Hardware & Accuracy Benchmarks</h3>
-                
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-xs font-semibold mb-1">
-                      <span className="text-[#6b7280]">Top-1 ImageNet Accuracy</span>
-                      <span className="text-[#e5e7eb] font-bold">{formatAccuracy(model.top1Accuracy)}</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
-                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${model.top1Accuracy * 100}%` }} />
-                    </div>
-                  </div>
+               {/* Architectural Metrics sidebar */}
+               <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-6">
+                 <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider border-b border-[#1f2937] pb-2">Hardware & Accuracy Benchmarks</h3>
+                 
+                 <div className="space-y-4">
+                   <div>
+                     <div className="flex justify-between text-xs font-semibold mb-1">
+                       <span className="text-[#6b7280]">Top-1 ImageNet Accuracy</span>
+                       <span className="text-[#e5e7eb] font-bold">{formatAccuracy(overview.top1Accuracy)}</span>
+                     </div>
+                     <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
+                       <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${overview.top1Accuracy * 100}%` }} />
+                     </div>
+                   </div>
 
-                  <div>
-                    <div className="flex justify-between text-xs font-semibold mb-1">
-                      <span className="text-[#6b7280]">Top-5 ImageNet Accuracy</span>
-                      <span className="text-[#e5e7eb] font-bold">{formatAccuracy(model.top5Accuracy)}</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
-                      <div className="h-full bg-teal-500 rounded-full" style={{ width: `${model.top5Accuracy * 100}%` }} />
-                    </div>
-                  </div>
+                   <div>
+                     <div className="flex justify-between text-xs font-semibold mb-1">
+                       <span className="text-[#6b7280]">Top-5 ImageNet Accuracy</span>
+                       <span className="text-[#e5e7eb] font-bold">{formatAccuracy(overview.top5Accuracy)}</span>
+                     </div>
+                     <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
+                       <div className="h-full bg-teal-500 rounded-full" style={{ width: `${overview.top5Accuracy * 100}%` }} />
+                     </div>
+                   </div>
 
-                  <div className="pt-2 border-t border-[#1f2937] grid grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Parameters size</span>
-                      <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatShortNumber(model.totalParameters)}</span>
-                    </div>
-                    <div>
-                      <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Inference Ram</span>
-                      <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatMemory(model.memoryUsage)}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+                   <div className="pt-2 border-t border-[#1f2937] grid grid-cols-2 gap-3 text-xs">
+                     <div>
+                       <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Parameters size</span>
+                       <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatShortNumber(overview.totalParameters)}</span>
+                     </div>
+                     <div>
+                       <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Inference Ram</span>
+                       <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatMemory(overview.memoryUsage)}</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </motion.div>
+           </div>
 
            {/* Layers Panel */}
-          <div className={activeTab === 'layers' ? "block" : "hidden"}>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={activeTab === 'layers' ? { opacity: 1 } : {}}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-              className="flex flex-col lg:flex-row gap-6 items-stretch"
-            >
-              {/* Layers List */}
-              <div className="flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] max-h-[600px] overflow-y-auto pr-1 scrollbar-thin">
-                <div className="flex items-center justify-between mb-4 border-b border-[#1f2937] pb-2">
-                  <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-extrabold">
-                    Layer Stack Directory ({layers.length} Total Layers)
-                  </span>
-                  <Link
-                    href={`/concepts/receptive-field?model=${model.id}`}
-                    className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:text-blue-300 transition-colors"
-                  >
-                    Visualize Receptive Field Growth <ArrowRight className="h-3 w-3" />
-                  </Link>
-                </div>
-                <LayerList
-                  layers={layers}
-                  selectedLayerId={selectedLayerId}
-                  onSelectLayer={setSelectedLayerId}
-                  groups={graphData.groups}
-                />
-              </div>
+           <div className={activeTab === 'layers' ? "block" : "hidden"}>
+             <motion.div 
+               initial={{ opacity: 0 }}
+               animate={activeTab === 'layers' ? { opacity: 1 } : {}}
+               transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
+               className="flex flex-col lg:flex-row gap-6 items-stretch"
+             >
+               {/* Layers List */}
+               <div className="flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] max-h-[600px] overflow-y-auto pr-1 scrollbar-thin">
+                 <div className="flex items-center justify-between mb-4 border-b border-[#1f2937] pb-2">
+                   <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-extrabold">
+                     Layer Stack Directory ({layers.length} Total Layers)
+                   </span>
+                   <Link
+                     href={`/concepts/receptive-field?model=${overview.id}`}
+                     className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:text-blue-300 transition-colors"
+                   >
+                     Visualize Receptive Field Growth <ArrowRight className="h-3 w-3" />
+                   </Link>
+                 </div>
+                 <LayerList
+                   layers={layers}
+                   selectedLayerId={selectedLayerId}
+                   onSelectLayer={setSelectedLayerId}
+                   groups={graphData.groups}
+                 />
+               </div>
 
-              {/* Inspector panel - Desktop only (lg+) */}
-              <div className="hidden lg:block w-full lg:w-[420px] shrink-0">
-                <InspectorPanel
-                  layer={selectedLayer}
-                  onClose={() => setSelectedLayerId(null)}
-                  totalModelParameters={totalParams}
-                />
-              </div>
-            </motion.div>
-            
-            {/* Inspector Sheet - Mobile only (< lg) */}
-            <InspectorSheet
-              layer={selectedLayer}
-              onClose={() => setSelectedLayerId(null)}
-              totalModelParameters={totalParams}
-            />
-          </div>
+               {/* Inspector panel - Desktop only (lg+) */}
+               <div className="hidden lg:block w-full lg:w-[420px] shrink-0">
+                 <InspectorPanel
+                   layer={selectedLayer}
+                   onClose={() => setSelectedLayerId(null)}
+                   totalModelParameters={totalParams}
+                 />
+               </div>
+             </motion.div>
+             
+             {/* Inspector Sheet - Mobile only (< lg) */}
+             <InspectorSheet
+               layer={selectedLayer}
+               onClose={() => setSelectedLayerId(null)}
+               totalModelParameters={totalParams}
+             />
+           </div>
 
-          {/* Topology Panel */}
-          <div className={activeTab === 'topology' ? "block" : "hidden"}>
-            {hasVisitedTopology && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={activeTab === 'topology' ? { opacity: 1 } : {}}
-                transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-                className="flex flex-col gap-4"
-              >
-                {/* Controls bar */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-0 bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-                  <div className="flex items-center gap-2">
-                    <Network className="h-4.5 w-4.5 text-primary" />
-                    <span className="text-xs font-bold text-white tracking-tight">Interactive Topology Layout</span>
-                  </div>
-                  
-                  {/* Node Level toggle switch */}
-                  <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
-                    <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
-                    <button
-                      disabled={isDetailedViewDisabled}
-                      title={
-                        isDetailedViewDisabled
-                          ? `This model has ${detailedNodeCount} layers. Detailed topology is disabled to keep rendering responsive.`
-                          : 'Toggle detailed layer topology'
-                      }
-                      onClick={() => {
-                        if (isDetailedViewDisabled) return;
-                        const nextVal = !showDetailedLayers;
-                        setShowDetailedLayers(nextVal);
-                        localStorage.setItem(detailedPreferenceKey, String(nextVal));
-                        setSelectedLayerId(null);
-                      }}
-                      className={cn(
-                        "relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none p-2.5",
-                        isDetailedViewDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-                        showDetailedLayers ? "bg-primary" : "bg-slate-700"
-                      )}
-                    >
-                      <span
-                        className={cn(
-                          "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out",
-                          showDetailedLayers ? "translate-x-4" : "translate-x-0"
-                        )}
-                      />
-                    </button>
-                  </div>
-                </div>
+           {/* Topology Panel */}
+           <div className={activeTab === 'topology' ? "block" : "hidden"}>
+             {hasVisitedTopology && (
+               <motion.div 
+                 initial={{ opacity: 0 }}
+                 animate={activeTab === 'topology' ? { opacity: 1 } : {}}
+                 transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
+                 className="flex flex-col gap-4"
+               >
+                 {/* Controls bar */}
+                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-0 bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+                   <div className="flex items-center gap-2">
+                     <Network className="h-4.5 w-4.5 text-primary" />
+                     <span className="text-xs font-bold text-white tracking-tight">Interactive Topology Layout</span>
+                   </div>
+                   
+                   {/* Node Level toggle switch */}
+                   <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+                     <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
+                     <button
+                       disabled={isDetailedViewDisabled}
+                       title={
+                         isDetailedViewDisabled
+                           ? `This model has ${detailedNodeCount} layers. Detailed topology is disabled to keep rendering responsive.`
+                           : 'Toggle detailed layer topology'
+                       }
+                       onClick={() => {
+                         if (isDetailedViewDisabled) return;
+                         const nextVal = !showDetailedLayers;
+                         setShowDetailedLayers(nextVal);
+                         localStorage.setItem(detailedPreferenceKey, String(nextVal));
+                         setSelectedLayerId(null);
+                       }}
+                       className={cn(
+                         "relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none p-2.5",
+                         isDetailedViewDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+                         showDetailedLayers ? "bg-primary" : "bg-slate-700"
+                       )}
+                     >
+                       <span
+                         className={cn(
+                           "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out",
+                           showDetailedLayers ? "translate-x-4" : "translate-x-0"
+                         )}
+                       />
+                     </button>
+                   </div>
+                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-6 items-stretch h-auto lg:h-[600px]">
-                  {/* Flow Graph container */}
-                  <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
-                    <FlowCanvas
-                      topology={
-                        showDetailedLayers
-                          ? { mode: 'detailed', model }
-                          : {
-                              mode: 'grouped',
-                              id: model.id,
-                              groupedNodes: graphData.groupedNodes,
-                              groupedEdges: graphData.groupedEdges,
-                              colorTheme: model.colorTheme,
-                            }
-                      }
-                      selectedLayerId={selectedLayerId}
-                      onSelectLayer={setSelectedLayerId}
-                    />
-                  </div>
+                 <div className="flex flex-col lg:flex-row gap-6 items-stretch h-auto lg:h-[600px]">
+                   {/* Flow Graph container */}
+                   <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
+                     <FlowCanvas
+                       topology={
+                         showDetailedLayers
+                           ? { mode: 'detailed', model: { ...overview, architecture: { layers, connections: [], groups: graphData.groups } } as NeuralNetworkModel }
+                           : {
+                               mode: 'grouped',
+                               id: overview.id,
+                               groupedNodes: graphData.groupedNodes,
+                               groupedEdges: graphData.groupedEdges,
+                               colorTheme: overview.colorTheme,
+                             }
+                       }
+                       selectedLayerId={selectedLayerId}
+                       onSelectLayer={setSelectedLayerId}
+                     />
+                   </div>
 
-                  {/* Side inspector panel - Desktop only (lg+) */}
-                  <div className="hidden lg:block w-full lg:w-[420px] lg:h-full lg:shrink-0">
-                    <InspectorPanel
-                      layer={selectedLayer}
-                      onClose={() => setSelectedLayerId(null)}
-                      totalModelParameters={totalParams}
-                    />
-                  </div>
-                </div>
-                
-                {/* Inspector Sheet - Mobile only (< lg) */}
-                <InspectorSheet
-                  layer={selectedLayer}
-                  onClose={() => setSelectedLayerId(null)}
-                  totalModelParameters={totalParams}
-                />
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+                   {/* Side inspector panel - Desktop only (lg+) */}
+                   <div className="hidden lg:block w-full lg:w-[420px] lg:h-full lg:shrink-0">
+                     <InspectorPanel
+                       layer={selectedLayer}
+                       onClose={() => setSelectedLayerId(null)}
+                       totalModelParameters={totalParams}
+                     />
+                   </div>
+                 </div>
+                 
+                 {/* Inspector Sheet - Mobile only (< lg) */}
+                 <InspectorSheet
+                   layer={selectedLayer}
+                   onClose={() => setSelectedLayerId(null)}
+                   totalModelParameters={totalParams}
+                 />
+               </motion.div>
+             )}
+           </div>
+         </div>
+       </div>
+     </div>
+   );
+   }

@@ -51,6 +51,27 @@ export default async function ModelPage({ params }: PageProps) {
     groupedEdges: model.architecture.layout?.groupedEdges ?? [],
   };
 
+  // Create a minimal overview object for the Overview tab - avoids serializing the full model
+  // (up to 1.26MB for resnet152) into client component props when only scalar fields are needed.
+  const overview = {
+    id: model.id,
+    name: model.name,
+    fullName: model.fullName,
+    description: model.description,
+    category: model.category,
+    colorTheme: model.colorTheme,
+    paperYear: model.paperYear,
+    authors: model.authors,
+    paperUrl: model.paperUrl,
+    docsUrl: model.docsUrl,
+    totalParameters: model.totalParameters,
+    depth: model.depth,
+    memoryUsage: model.memoryUsage,
+    totalFLOPs: model.totalFLOPs,
+    top1Accuracy: model.top1Accuracy,
+    top5Accuracy: model.top5Accuracy,
+  };
+
   // Breadcrumb schema for structured data
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -83,7 +104,7 @@ export default async function ModelPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <TabbedExplorer model={model} graphData={graphData} />
+      <TabbedExplorer overview={overview} layers={model.architecture.layers} graphData={graphData} />
     </>
   );
 }

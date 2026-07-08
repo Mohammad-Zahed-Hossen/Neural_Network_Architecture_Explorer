@@ -124,12 +124,12 @@ export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }:
   };
 
   // 1. Dynamic Nodes compilation
+  // Note: isSelected is set to false here; the in-place selection sync effect further down
+  // is the only place selection state should be applied to avoid defeating memo() on CustomNode.
   const initialNodes: Node[] = useMemo(() => {
     return layers
       .filter(layer => !hiddenTypes.has(layer.type))
       .map((layer, index) => {
-        const isSelected = layer.id === selectedLayerId || 
-          (layer.layerIds && layer.layerIds.includes(selectedLayerId || ''));
         return {
           id: layer.id,
           type: 'layerNode',
@@ -143,15 +143,18 @@ export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }:
             type: layer.type,
             outputShape: formatShape(layer.outputShape.dimensions),
             parametersTotal: layer.parameters.total,
-            isSelected,
+            isSelected: false,
             educationalSummary: layer.educationalNote.summary,
           },
         };
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphId, hiddenTypes, layers, selectedLayerId]);
+  }, [graphId, hiddenTypes, layers]);
 
   // 2. Dynamic Edges compilation
+  // Note: isRelevant/isSelected values are set to their "nothing selected" defaults here;
+  // the in-place selection sync effect further down is the only place selection state
+  // should be applied to avoid defeating memo() on CustomNode.
   const initialEdges: Edge[] = useMemo(() => {
     if (!connections) return [];
 
@@ -159,35 +162,23 @@ export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }:
       .filter(conn => isVisible(conn.sourceId) && isVisible(conn.targetId))
       .map((conn) => {
         const isSkip = conn.type === 'skip';
-        
-        const srcNode = layers.find(l => l.id === conn.sourceId);
-        const tgtNode = layers.find(l => l.id === conn.targetId);
-        
-        const isSourceSelected = conn.sourceId === selectedLayerId ||
-          (srcNode?.layerIds && srcNode.layerIds.includes(selectedLayerId || ''));
-        const isTargetSelected = conn.targetId === selectedLayerId ||
-          (tgtNode?.layerIds && tgtNode.layerIds.includes(selectedLayerId || ''));
-          
-        const isRelevant = isSourceSelected || isTargetSelected;
 
         return {
           id: conn.id,
           source: conn.sourceId,
           target: conn.targetId,
           type: 'smoothstep',
-          animated: isSkip || (selectedLayerId !== null && isRelevant),
+          animated: isSkip,
           style: {
-            stroke: isRelevant 
-              ? colorTheme 
-              : (isSkip ? '#c084fc' : 'rgba(100, 116, 139, 0.4)'),
-            strokeWidth: isRelevant ? 2.5 : (isSkip ? 1.5 : 1.2),
+            stroke: isSkip ? '#c084fc' : 'rgba(100, 116, 139, 0.4)',
+            strokeWidth: isSkip ? 1.5 : 1.2,
             strokeDasharray: isSkip ? '5,5' : undefined,
             transition: 'stroke 0.3s, stroke-width 0.3s',
           },
         };
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphId, colorTheme, hiddenTypes, connections, layers, selectedLayerId]);
+  }, [graphId, colorTheme, hiddenTypes, connections, layers]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);

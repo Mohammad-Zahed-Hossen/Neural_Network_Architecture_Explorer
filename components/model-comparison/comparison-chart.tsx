@@ -1,6 +1,6 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
+import { useSyncExternalStore, useMemo } from 'react';
 import { 
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend
@@ -27,35 +27,37 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
     () => false
   );
 
-  // 1. Prepare BarChart Data based on active metric
-  const barChartData = models.map((model) => {
-    let value = 0;
-    let formattedValue = '';
+  // 1. Prepare BarChart Data based on active metric - memoized to avoid recomputation on resize
+  const barChartData = useMemo(() => {
+    return models.map((model) => {
+      let value = 0;
+      let formattedValue = '';
 
-    if (activeMetric === 'parameters') {
-      value = model.totalParameters;
-      formattedValue = formatShortNumber(model.totalParameters);
-    } else if (activeMetric === 'depth') {
-      value = model.depth;
-      formattedValue = `${model.depth} Layers`;
-    } else if (activeMetric === 'accuracy') {
-      value = model.top1Accuracy * 100; // in percentage
-      formattedValue = formatAccuracy(model.top1Accuracy);
-    } else if (activeMetric === 'memory') {
-      value = model.memoryUsage;
-      formattedValue = formatMemory(model.memoryUsage);
-    } else if (activeMetric === 'flops') {
-      value = model.totalFLOPs;
-      formattedValue = formatShortNumber(model.totalFLOPs) + ' FLOPs';
-    }
+      if (activeMetric === 'parameters') {
+        value = model.totalParameters;
+        formattedValue = formatShortNumber(model.totalParameters);
+      } else if (activeMetric === 'depth') {
+        value = model.depth;
+        formattedValue = `${model.depth} Layers`;
+      } else if (activeMetric === 'accuracy') {
+        value = model.top1Accuracy * 100; // in percentage
+        formattedValue = formatAccuracy(model.top1Accuracy);
+      } else if (activeMetric === 'memory') {
+        value = model.memoryUsage;
+        formattedValue = formatMemory(model.memoryUsage);
+      } else if (activeMetric === 'flops') {
+        value = model.totalFLOPs;
+        formattedValue = formatShortNumber(model.totalFLOPs) + ' FLOPs';
+      }
 
-    return {
-      name: model.name,
-      value,
-      formattedValue,
-      color: model.colorTheme,
-    };
-  });
+      return {
+        name: model.name,
+        value,
+        formattedValue,
+        color: model.colorTheme,
+      };
+    });
+  }, [models, activeMetric]);
 
   // Helper formatter for YAxis labels
   const formatYAxis = (val: number) => {
@@ -71,41 +73,43 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
     return val.toString();
   };
 
-  // 2. Prepare RadarChart Data dynamically from the first 3 models
-  const radarModels = models.slice(0, 3);
-  const maxParamsRadar = Math.max(...models.map(m => m.totalParameters));
-  const maxMemoryRadar = Math.max(...models.map(m => m.memoryUsage));
-  const maxFLOPsRadar = Math.max(...models.map(m => m.totalFLOPs));
-  const maxDepthRadar = Math.max(...models.map(m => m.depth));
-  const maxAccuracyRadar = Math.max(...models.map(m => m.top1Accuracy));
+  // 2. Prepare RadarChart Data dynamically from the first 3 models - memoized to avoid recomputation on resize
+  const radarChartData = useMemo(() => {
+    const radarModels = models.slice(0, 3);
+    const maxParamsRadar = Math.max(...models.map(m => m.totalParameters));
+    const maxMemoryRadar = Math.max(...models.map(m => m.memoryUsage));
+    const maxFLOPsRadar = Math.max(...models.map(m => m.totalFLOPs));
+    const maxDepthRadar = Math.max(...models.map(m => m.depth));
+    const maxAccuracyRadar = Math.max(...models.map(m => m.top1Accuracy));
 
-  const radarChartData = [
-    {
-      subject: 'Accuracy (Top-1)',
-      ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((m.top1Accuracy / maxAccuracyRadar) * 100)])),
-      fullMark: 100
-    },
-    {
-      subject: 'Weight Compactness',
-      ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.totalParameters / maxParamsRadar) * 100)])),
-      fullMark: 100
-    },
-    {
-      subject: 'VRAM Efficiency',
-      ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.memoryUsage / maxMemoryRadar) * 100)])),
-      fullMark: 100
-    },
-    {
-      subject: 'Compute Efficiency',
-      ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.totalFLOPs / maxFLOPsRadar) * 100)])),
-      fullMark: 100
-    },
-    {
-      subject: 'Structural Depth',
-      ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.depth / maxDepthRadar) * 100)])),
-      fullMark: 100
-    }
-  ];
+    return [
+      {
+        subject: 'Accuracy (Top-1)',
+        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((m.top1Accuracy / maxAccuracyRadar) * 100)])),
+        fullMark: 100
+      },
+      {
+        subject: 'Weight Compactness',
+        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.totalParameters / maxParamsRadar) * 100)])),
+        fullMark: 100
+      },
+      {
+        subject: 'VRAM Efficiency',
+        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.memoryUsage / maxMemoryRadar) * 100)])),
+        fullMark: 100
+      },
+      {
+        subject: 'Compute Efficiency',
+        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.totalFLOPs / maxFLOPsRadar) * 100)])),
+        fullMark: 100
+      },
+      {
+        subject: 'Structural Depth',
+        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.depth / maxDepthRadar) * 100)])),
+        fullMark: 100
+      }
+    ];
+  }, [models]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
@@ -176,9 +180,9 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
           <h3 className="text-sm font-extrabold text-white tracking-tight uppercase">
             Model Trade-offs & Efficiency Index
           </h3>
-          <p className="text-[11px] text-slate-500 font-semibold mt-1">
-            Normalized scale (0-100). Higher scores mean &quot;better/more efficient&quot; in that metric.
-          </p>
+           <p className="text-[11px] text-slate-500 font-semibold mt-1">
+             Normalized scale (0-100). Higher scores mean &quot;better/more efficient&quot; in that metric.
+           </p>
         </div>
 
         <div className="w-full h-[285px] mt-6 select-none font-sans text-[10px] sm:text-xs">
@@ -200,7 +204,7 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
                 axisLine={false}
               />
               
-              {radarModels.map((model) => (
+              {models.slice(0, 3).map((model) => (
                 <Radar 
                   key={model.id}
                   name={model.name} 

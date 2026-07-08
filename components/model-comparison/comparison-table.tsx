@@ -11,6 +11,7 @@ import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/for
 import { modelCategories } from '@/lib/data/model-categories';
 import { cn } from '@/lib/utils/cn';
 import * as React from 'react';
+import { useMemo } from 'react';
 
 interface ComparisonTableProps {
   models: ModelSummary[];
@@ -111,110 +112,119 @@ const SectionHeader = ({ icon: Icon, label, colSpan, children, className }: Sect
   </tr>
 );
 
-export default function ComparisonTable({ models }: ComparisonTableProps) {
-  const metrics: MetricDef[] = [
-    {
-      key: 'top1',
-      label: 'Top-1 ImageNet Accuracy',
-      icon: Award,
-      getValue: (m) => formatAccuracy(m.top1Accuracy),
-      getRawValue: (m) => m.top1Accuracy,
-      direction: 'higher',
-      format: (v) => formatAccuracy(v),
-      colorScale: (v, ms) => {
-        const max = Math.max(...ms.map(m => m.top1Accuracy));
-        return v === max ? 'text-emerald-400' : 'text-slate-200';
-      }
-    },
-    {
-      key: 'top5',
-      label: 'Top-5 ImageNet Accuracy',
-      icon: Award,
-      getValue: (m) => formatAccuracy(m.top5Accuracy),
-      getRawValue: (m) => m.top5Accuracy,
-      direction: 'higher',
-      format: (v) => formatAccuracy(v),
-      colorScale: (v, ms) => {
-        const max = Math.max(...ms.map(m => m.top5Accuracy));
-        return v === max ? 'text-emerald-400' : 'text-slate-200';
-      }
-    },
-    {
-      key: 'params',
-      label: 'Total Parameters',
-      icon: Hash,
-      getValue: (m) => formatShortNumber(m.totalParameters),
-      getRawValue: (m) => m.totalParameters,
-      direction: 'lower',
-      format: (v) => formatShortNumber(v),
-      colorScale: (v, ms) => {
-        const min = Math.min(...ms.map(m => m.totalParameters));
-        return v === min ? 'text-emerald-400' : 'text-slate-200';
-      }
-    },
-    {
-      key: 'memory',
-      label: 'GPU Memory Footprint',
-      icon: HardDrive,
-      getValue: (m) => formatMemory(m.memoryUsage),
-      getRawValue: (m) => m.memoryUsage,
-      direction: 'lower',
-      format: (v) => formatMemory(v),
-      colorScale: (v, ms) => {
-        const min = Math.min(...ms.map(m => m.memoryUsage));
-        return v === min ? 'text-emerald-400' : 'text-slate-200';
-      }
-    },
-    {
-      key: 'flops',
-      label: 'Computation Cost (FLOPs)',
-      icon: Zap,
-      getValue: (m) => formatShortNumber(m.totalFLOPs) + ' FLOPs',
-      getRawValue: (m) => m.totalFLOPs,
-      direction: 'lower',
-      format: (v) => formatShortNumber(v) + ' FLOPs',
-      colorScale: (v, ms) => {
-        const min = Math.min(...ms.map(m => m.totalFLOPs));
-        return v === min ? 'text-emerald-400' : 'text-slate-200';
-      }
-    },
-    {
-      key: 'depth',
-      label: 'Network Layer Depth',
-      icon: Layers,
-      getValue: (m) => m.depth,
-      getRawValue: (m) => m.depth,
-      direction: 'neutral',
-      format: (v) => `${v} layers`,
-      colorScale: (v, ms) => {
-        const min = Math.min(...ms.map(m => m.depth));
-        const max = Math.max(...ms.map(m => m.depth));
-        if (v === min) return 'text-blue-400';
-        if (v === max) return 'text-amber-400';
-        return 'text-slate-200';
-      }
-    },
-  ];
-
-  // Determine winners for each metric
-  const winners = new Map<string, string>();
-  metrics.forEach(metric => {
-    if (metric.direction === 'higher') {
-      const best = [...models].sort((a, b) => metric.getRawValue(b) - metric.getRawValue(a))[0];
-      if (best) winners.set(metric.key, best.id);
-    } else if (metric.direction === 'lower') {
-      const best = [...models].sort((a, b) => metric.getRawValue(a) - metric.getRawValue(b))[0];
-      if (best) winners.set(metric.key, best.id);
+// Static metrics definition - hoisted to module scope to avoid recreation on every render
+const METRICS: MetricDef[] = [
+  {
+    key: 'top1',
+    label: 'Top-1 ImageNet Accuracy',
+    icon: Award,
+    getValue: (m) => formatAccuracy(m.top1Accuracy),
+    getRawValue: (m) => m.top1Accuracy,
+    direction: 'higher',
+    format: (v) => formatAccuracy(v),
+    colorScale: (v, ms) => {
+      const max = Math.max(...ms.map(m => m.top1Accuracy));
+      return v === max ? 'text-emerald-400' : 'text-slate-200';
     }
-  });
+  },
+  {
+    key: 'top5',
+    label: 'Top-5 ImageNet Accuracy',
+    icon: Award,
+    getValue: (m) => formatAccuracy(m.top5Accuracy),
+    getRawValue: (m) => m.top5Accuracy,
+    direction: 'higher',
+    format: (v) => formatAccuracy(v),
+    colorScale: (v, ms) => {
+      const max = Math.max(...ms.map(m => m.top5Accuracy));
+      return v === max ? 'text-emerald-400' : 'text-slate-200';
+    }
+  },
+  {
+    key: 'params',
+    label: 'Total Parameters',
+    icon: Hash,
+    getValue: (m) => formatShortNumber(m.totalParameters),
+    getRawValue: (m) => m.totalParameters,
+    direction: 'lower',
+    format: (v) => formatShortNumber(v),
+    colorScale: (v, ms) => {
+      const min = Math.min(...ms.map(m => m.totalParameters));
+      return v === min ? 'text-emerald-400' : 'text-slate-200';
+    }
+  },
+  {
+    key: 'memory',
+    label: 'GPU Memory Footprint',
+    icon: HardDrive,
+    getValue: (m) => formatMemory(m.memoryUsage),
+    getRawValue: (m) => m.memoryUsage,
+    direction: 'lower',
+    format: (v) => formatMemory(v),
+    colorScale: (v, ms) => {
+      const min = Math.min(...ms.map(m => m.memoryUsage));
+      return v === min ? 'text-emerald-400' : 'text-slate-200';
+    }
+  },
+  {
+    key: 'flops',
+    label: 'Computation Cost (FLOPs)',
+    icon: Zap,
+    getValue: (m) => formatShortNumber(m.totalFLOPs) + ' FLOPs',
+    getRawValue: (m) => m.totalFLOPs,
+    direction: 'lower',
+    format: (v) => formatShortNumber(v) + ' FLOPs',
+    colorScale: (v, ms) => {
+      const min = Math.min(...ms.map(m => m.totalFLOPs));
+      return v === min ? 'text-emerald-400' : 'text-slate-200';
+    }
+  },
+  {
+    key: 'depth',
+    label: 'Network Layer Depth',
+    icon: Layers,
+    getValue: (m) => m.depth,
+    getRawValue: (m) => m.depth,
+    direction: 'neutral',
+    format: (v) => `${v} layers`,
+    colorScale: (v, ms) => {
+      const min = Math.min(...ms.map(m => m.depth));
+      const max = Math.max(...ms.map(m => m.depth));
+      if (v === min) return 'text-blue-400';
+      if (v === max) return 'text-amber-400';
+      return 'text-slate-200';
+    }
+  },
+];
+
+export default function ComparisonTable({ models }: ComparisonTableProps) {
+  // Compute min/max/winner once per models change, not redundantly in each render
+  const metricStats = useMemo(() => {
+    const stats = new Map<string, { min: number; max: number; winnerId?: string }>();
+    for (const metric of METRICS) {
+      const values = models.map(m => metric.getRawValue(m));
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      let winnerId: string | undefined;
+      if (metric.direction === 'higher') {
+        const best = [...models].sort((a, b) => metric.getRawValue(b) - metric.getRawValue(a))[0];
+        winnerId = best?.id;
+      } else if (metric.direction === 'lower') {
+        const best = [...models].sort((a, b) => metric.getRawValue(a) - metric.getRawValue(b))[0];
+        winnerId = best?.id;
+      }
+      stats.set(metric.key, { min, max, winnerId });
+    }
+    return stats;
+  }, [models]);
 
   return (
     <div className="space-y-6">
       {/* Metric Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {metrics.map((metric) => {
-          const winnerId = winners.get(metric.key);
-          const winner = models.find(m => m.id === winnerId);
+        {METRICS.map((metric) => {
+          const stats = metricStats.get(metric.key)!;
+          const winner = models.find(m => m.id === stats.winnerId);
           const Icon = metric.icon;
           
           return (
@@ -244,17 +254,15 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               <div className="px-5 py-3 space-y-2.5">
                 {models.map((model) => {
                   const rawValue = metric.getRawValue(model);
-                  const isWinner = model.id === winnerId;
-                  const maxVal = Math.max(...models.map(m => metric.getRawValue(m)));
-                  const minVal = Math.min(...models.map(m => metric.getRawValue(m)));
-                  const range = maxVal - minVal || 1;
+                  const isWinner = model.id === stats.winnerId;
+                  const range = stats.max - stats.min || 1;
                   
                   // Bar percentage: for higher=better, max=100%; for lower=better, min=100%
                   let barPct = 0;
                   if (metric.direction === 'higher') {
-                    barPct = ((rawValue - minVal) / range) * 100;
+                    barPct = ((rawValue - stats.min) / range) * 100;
                   } else if (metric.direction === 'lower') {
-                    barPct = ((maxVal - rawValue) / range) * 100;
+                    barPct = ((stats.max - rawValue) / range) * 100;
                   } else {
                     barPct = 50; // neutral
                   }
@@ -400,8 +408,8 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               {/* Performance Metrics Section */}
               <SectionHeader icon={BarChart3} label="Performance Metrics" colSpan={1 + models.length} />
               
-              {metrics.slice(0, 2).map((metric) => {
-                const winnerId = winners.get(metric.key);
+              {METRICS.slice(0, 2).map((metric) => {
+                const stats = metricStats.get(metric.key)!;
                 const Icon = metric.icon;
                 return (
                   <tr key={metric.key} className="hover:bg-slate-900/10 transition-colors group/row">
@@ -415,12 +423,10 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                       </div>
                     </td>
                     {models.map((model) => {
-                      const isWinner = model.id === winnerId;
+                      const isWinner = model.id === stats.winnerId;
                       const raw = metric.getRawValue(model);
-                      const max = Math.max(...models.map(m => metric.getRawValue(m)));
-                      const min = Math.min(...models.map(m => metric.getRawValue(m)));
-                      const range = max - min || 1;
-                      const pct = ((raw - min) / range) * 100;
+                      const range = stats.max - stats.min || 1;
+                      const pct = ((raw - stats.min) / range) * 100;
                       
                       return (
                         <td 
@@ -459,9 +465,9 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
 
               {/* Efficiency Metrics Section */}
               <SectionHeader icon={Gauge} label="Efficiency & Resource Overhead" colSpan={1 + models.length} />
-               
-              {metrics.slice(2).map((metric) => {
-                const winnerId = winners.get(metric.key);
+              
+              {METRICS.slice(2).map((metric) => {
+                const stats = metricStats.get(metric.key)!;
                 const Icon = metric.icon;
                 return (
                   <tr key={metric.key} className="hover:bg-slate-900/10 transition-colors group/row">
@@ -475,15 +481,13 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                       </div>
                     </td>
                     {models.map((model) => {
-                      const isWinner = model.id === winnerId;
+                      const isWinner = model.id === stats.winnerId;
                       const raw = metric.getRawValue(model);
-                      const max = Math.max(...models.map(m => metric.getRawValue(m)));
-                      const min = Math.min(...models.map(m => metric.getRawValue(m)));
-                      const range = max - min || 1;
+                      const range = stats.max - stats.min || 1;
                       // For lower=better, invert the bar
                       const barPct = metric.direction === 'lower' 
-                        ? ((max - raw) / range) * 100 
-                        : ((raw - min) / range) * 100;
+                        ? ((stats.max - raw) / range) * 100 
+                        : ((raw - stats.min) / range) * 100;
                       
                       return (
                         <td 
@@ -522,7 +526,7 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
 
                {/* Architecture Design Section - Table View (md+) */}
                <SectionHeader icon={Lightbulb} label="Architecture Design Characteristics" colSpan={1 + models.length} className="hidden md:table-row" />
-               
+                
                <tr className="hover:bg-slate-900/10 transition-colors hidden md:table-row">
                  <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
                    <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">

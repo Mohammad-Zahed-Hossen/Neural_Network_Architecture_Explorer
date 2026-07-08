@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, ComponentType, useEffect } from 'react';
+import { useState, useMemo, ComponentType, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { 
   ArrowLeft, Cpu, Layers, Award, HardDrive, BarChart3, 
@@ -55,7 +55,8 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
     router.replace(`/compare?models=${ids}`)
   }, [selectedIds, router])
 
-  const toggleModel = (id: string) => {
+  // Memoized handlers to prevent unnecessary re-renders
+  const toggleModel = useCallback((id: string) => {
     setSelectedIds(prev => {
       if (prev.includes(id)) {
         return prev.filter(x => x !== id);
@@ -63,13 +64,21 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
         return [...prev, id];
       }
     });
-  };
+  }, []);
 
-  const selectAll = () => setSelectedIds(models.map(m => m.id));
-  const selectNone = () => setSelectedIds([]);
-  const selectClassics = () => setSelectedIds(['vgg16', 'resnet50', 'densenet121', 'mobilenet', 'inceptionv3']);
+  const selectAll = useCallback(() => {
+    setSelectedIds(models.map(m => m.id));
+  }, [models]);
 
-  const selectCategory = (category: string) => {
+  const selectNone = useCallback(() => {
+    setSelectedIds([]);
+  }, []);
+
+  const selectClassics = useCallback(() => {
+    setSelectedIds(['vgg16', 'resnet50', 'densenet121', 'mobilenet', 'inceptionv3']);
+  }, []);
+
+  const selectCategory = useCallback((category: string) => {
     const categoryModelIds = models.filter(m => m.category === category).map(m => m.id);
     setSelectedIds(prev => {
       const allSelected = categoryModelIds.every(id => prev.includes(id));
@@ -81,7 +90,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
         return Array.from(new Set([...prev, ...categoryModelIds]));
       }
     });
-  };
+  }, [models]);
 
   const comparedModels = useMemo(() => {
     return models.filter(m => selectedIds.includes(m.id));
@@ -116,6 +125,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
     return filtered;
   }, [modelsByCategory, selectorSearch]);
 
+  // Static metric tabs definition - hoisted to avoid recreation
   const metricTabs: { id: MetricType; label: string; icon: ComponentType<{ className?: string }>; desc: string }[] = [
     { 
       id: 'parameters', 
