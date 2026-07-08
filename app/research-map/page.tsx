@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { 
-  GraduationCap, BookOpen, Layers, Calendar, 
-  Tag, AlertCircle, Link2, ArrowRight
+  GraduationCap, Layers, Calendar, 
+  AlertCircle, Link2, ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import papersData from '@/data/papers.json';
 import modelsSummary from '@/data/models.json';
@@ -67,7 +68,18 @@ const FOUNDATIONAL_PAPERS = [
 const ALL_PAPERS = [...FOUNDATIONAL_PAPERS, ...papersData];
 
 export default function ResearchMap() {
-  const [selectedPaperId, setSelectedPaperId] = useState<string>('resnet');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // Initialize selected paper from URL
+  const [selectedPaperId, setSelectedPaperId] = useState<string>(() => {
+    return searchParams.get('paper') || 'resnet';
+  });
+
+  // Sync selected paper to URL
+  useEffect(() => {
+    router.replace(`/research-map?paper=${selectedPaperId}`)
+  }, [selectedPaperId, router])
 
   // Selected paper object
   const activePaper = useMemo(() => {
@@ -252,6 +264,7 @@ export default function ResearchMap() {
 }
 
 // Small inline icons helpers to avoid extra module imports
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function CheckCircleIcon(props: any) {
   return (
     <svg

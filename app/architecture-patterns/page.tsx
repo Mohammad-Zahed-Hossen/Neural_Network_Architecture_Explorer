@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { 
   GitCommit, Network, Split, Scaling, Cpu, 
-  Sparkles, CheckCircle2, AlertTriangle, ArrowRight, HelpCircle,
+  Sparkles, CheckCircle2, AlertTriangle, ArrowRight,
   ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import modelsSummary from '@/data/models.json';
 
 interface PatternInfo {
@@ -159,7 +159,7 @@ const PATTERNS: PatternInfo[] = [
         'Scales exceptionally well with massive datasets, outperforming traditional CNNs.'
       ],
       cons: [
-        'Lacks convolution\'s spatial inductive bias (translation invariance, locality), requiring large-scale pretraining to perform well.',
+        "Lacks convolution's spatial inductive bias (translation invariance, locality), requiring large-scale pretraining to perform well.",
         'Standard global attention scales quadratically with image size ($O(H^2 W^2)$).'
       ]
     },
@@ -168,7 +168,18 @@ const PATTERNS: PatternInfo[] = [
 ];
 
 export default function ArchitecturePatterns() {
-  const [selectedPattern, setSelectedPattern] = useState<string>('residual');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // Initialize selected pattern from URL
+  const [selectedPattern, setSelectedPattern] = useState<string>(() => {
+    return searchParams.get('pattern') || 'residual';
+  });
+
+  // Sync selected pattern to URL
+  useEffect(() => {
+    router.replace(`/architecture-patterns?pattern=${selectedPattern}`)
+  }, [selectedPattern, router])
 
   const activePattern = PATTERNS.find(p => p.id === selectedPattern) || PATTERNS[0];
   const Icon = activePattern.icon;

@@ -7,7 +7,6 @@ import { Cpu, ArrowRight, Layers, Zap, Tag } from 'lucide-react';
 import { ModelSummary } from '@/lib/schema/model.schema';
 import modelsSummary from '@/data/models.json';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
-import { Badge } from '@/components/ui/badge';
 import { modelCategories } from '@/lib/data/model-categories';
 import {
   getModelThemeColor,

@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   History, Calendar, AlertTriangle, Lightbulb, 
-  CheckCircle2, XCircle, ArrowUpRight, Network, 
-  HelpCircle, Compass, ChevronDown, ChevronUp
+  CheckCircle2, XCircle, ArrowUpRight, 
+  Compass, ChevronDown, ChevronUp
 } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import evolutionData from '@/data/evolution.json';
 import PageBackground from '@/components/layout/page-background';
 
@@ -25,7 +26,20 @@ interface EvolutionNode {
 }
 
 export default function EvolutionTimeline() {
-  const [expandedNode, setExpandedNode] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // Initialize expanded node from URL
+  const [expandedNode, setExpandedNode] = useState<string | null>(() => {
+    return searchParams.get('node') || null;
+  });
+
+  // Sync expanded node to URL
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (expandedNode) params.set('node', expandedNode)
+    router.replace(`/evolution?${params.toString()}`)
+  }, [expandedNode, router])
 
   const toggleExpand = (id: string) => {
     setExpandedNode(expandedNode === id ? null : id);
@@ -160,7 +174,7 @@ export default function EvolutionTimeline() {
                           <span className="text-[10px] text-slate-450 font-bold uppercase tracking-wider block mb-1">
                             Key Intuition
                           </span>
-                          <p className="text-slate-300 italic leading-relaxed">"{node.keyIdea}"</p>
+                          <p className="text-slate-300 italic leading-relaxed">&ldquo;{node.keyIdea}&rdquo;</p>
                         </div>
                       </div>
 

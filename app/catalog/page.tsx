@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo, useEffect } from 'react';
 import { Network, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import ModelGrid from '@/components/model-catalog/model-grid';
 import CategoryTabs from '@/components/model-catalog/category-tabs';
 import SearchBar from '@/components/model-catalog/search-bar';
@@ -15,10 +15,26 @@ import { getModelSummaries } from '@/lib/data-access/models';
 const modelsData = getModelSummaries();
 
 export default function Catalog() {
-  const [selectedCategory, setSelectedCategory] = useState<ModelCategory | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  const [selectedCategory, setSelectedCategory] = useState<ModelCategory | null>(() => {
+    const categoryParam = searchParams.get('category')
+    return categoryParam as ModelCategory || null
+  });
+  const [searchQuery, setSearchQuery] = useState(() => {
+    return searchParams.get('q') || ''
+  });
   const [selectedEfficiency, setSelectedEfficiency] = useState<EfficiencyLevel[]>([]);
   const [selectedEras, setSelectedEras] = useState<string[]>([]);
+
+  // Sync state to URL
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (selectedCategory) params.set('category', selectedCategory)
+    if (searchQuery) params.set('q', searchQuery)
+    router.replace(`/catalog?${params.toString()}`)
+  }, [selectedCategory, searchQuery, router])
 
   // Filter models based on all criteria
   const filteredModels = useMemo(() => {

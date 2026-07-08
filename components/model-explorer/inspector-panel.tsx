@@ -2,10 +2,9 @@
 
 import { useState, ComponentType } from 'react';
 import { 
-  X, Layers, HelpCircle, Activity, Info, 
+  X, Layers, HelpCircle, Info, 
   Lightbulb, Calculator, Settings, ChevronDown, ChevronUp,
-  ArrowRight, Image, Zap, Shrink, AlignJustify, Key, 
-  PlusCircle, GitMerge, Award, BarChart3, Eye
+  ArrowRight, Award, Activity
 } from 'lucide-react';
 import { Layer, LayerType, Conv2DConfig, PoolingConfig, DenseConfig, BatchNormConfig, DropoutConfig, ConcatenateConfig, BottleneckConfig, LayerConfig, InputConfig, ActivationConfig } from '@/lib/schema/model.schema';
 import { cn } from '@/lib/utils/cn';

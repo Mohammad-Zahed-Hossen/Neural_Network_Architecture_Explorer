@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
-import { z } from 'zod';
 import { NeuralNetworkModelSchema } from '../lib/schema/model.schema';
 
 const PROJECT_ROOT = process.cwd();
@@ -13,21 +12,46 @@ const CHANGELOG_PATH = join(PROJECT_ROOT, 'scripts/data-merge-changelog.md');
 interface Conflict {
   modelId: string;
   field: string;
-  libDataValue: any;
-  modelsJsonValue: any;
-  resolvedValue: any;
+  libDataValue: unknown;
+  modelsJsonValue: unknown;
+  resolvedValue: unknown;
 }
 
-function loadJson(path: string): any {
+interface GraphData {
+  nodes: unknown[];
+  edges: unknown[];
+  groups: unknown[];
+  groupedNodes: unknown[];
+  groupedEdges: unknown[];
+}
+
+interface ModelSummary {
+  id: string;
+  totalParameters: number;
+  totalFLOPs: number;
+  top1Accuracy: number;
+  top5Accuracy: number;
+  depth: number;
+  colorTheme: string;
+  memoryUsage: number;
+}
+
+interface MergedModel extends Record<string, unknown> {
+  architecture?: {
+    layout?: GraphData;
+  };
+}
+
+function loadJson<T = unknown>(path: string): T {
   try {
     const content = readFileSync(path, 'utf-8');
-    return JSON.parse(content);
+    return JSON.parse(content) as T;
   } catch (error) {
     throw new Error(`Failed to load ${path}: ${error}`);
   }
 }
 
-function writeJson(path: string, data: any): void {
+function writeJson(path: string, data: unknown): void {
   writeFileSync(path, JSON.stringify(data, null, 2), 'utf-8');
 }
 
@@ -39,29 +63,29 @@ function main() {
   console.log(`Created output directory: ${OUTPUT_DIR}\n`);
   
   // Load models.json
-  const modelsSummaries = loadJson(MODELS_JSON_PATH) as any[];
+  const modelsSummaries = loadJson<ModelSummary[]>(MODELS_JSON_PATH);
   console.log(`Loaded ${modelsSummaries.length} model summaries from data/models.json\n`);
-  
+
   const conflicts: Conflict[] = [];
   let successCount = 0;
   let errorCount = 0;
-  
-  modelsSummaries.forEach((summary: any) => {
+
+  modelsSummaries.forEach((summary) => {
     const modelId = summary.id;
     console.log(`Processing model: ${modelId}`);
-    
+
     try {
       // Load lib/data/{id}.json
       const libDataPath = join(LIB_DATA_DIR, `${modelId}.json`);
-      const libData = loadJson(libDataPath);
-      
+      const libData = loadJson<Record<string, unknown>>(libDataPath);
+
       // Load data/graphs/{id}.json
       const graphDataPath = join(GRAPHS_DIR, `${modelId}.json`);
-      const graphData = loadJson(graphDataPath);
-      
+      const graphData = loadJson<GraphData>(graphDataPath);
+
       // Merge: start with lib/data structure
-      const merged = { ...libData };
-      
+      const merged = { ...libData } as MergedModel;
+
       // Resolve conflicts by preferring data/models.json values
       const fieldMappings = {
         totalParameters: summary.totalParameters,
@@ -72,7 +96,7 @@ function main() {
         colorTheme: summary.colorTheme,
         memoryUsage: summary.memoryUsage,
       };
-      
+
       Object.entries(fieldMappings).forEach(([field, modelsValue]) => {
         const libValue = merged[field];
         if (libValue !== undefined && libValue !== modelsValue) {
@@ -86,7 +110,7 @@ function main() {
           merged[field] = modelsValue;
         }
       });
-      
+
       // Add layout info from graphs under architecture.layout
       if (merged.architecture) {
         merged.architecture.layout = {

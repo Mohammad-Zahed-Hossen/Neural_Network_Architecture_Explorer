@@ -1,10 +1,9 @@
 'use client';
 
-import { memo, ComponentType } from 'react';
+import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { 
-  Layers, Image, Activity, Zap, Shrink, 
-  AlignJustify, Key, HelpCircle, PlusCircle, GitMerge, Eye
+  HelpCircle,
 } from 'lucide-react';
 import { LayerType } from '@/lib/schema/model.schema';
 import { cn } from '@/lib/utils/cn';

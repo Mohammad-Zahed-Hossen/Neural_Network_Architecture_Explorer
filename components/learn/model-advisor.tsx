@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Award, Zap, ArrowRight, RotateCcw, CheckCircle2,
+  ArrowRight, RotateCcw, CheckCircle2,
   ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
@@ -79,7 +79,6 @@ export default function ModelAdvisor() {
       const reasons: string[] = [];
       const tradeOffs: string[] = [];
 
-      const paramsInM = model.totalParameters / 1e6;
       const flopsInG = model.totalFLOPs / 1e9;
       const top1 = model.top1Accuracy * 100;
 
@@ -197,7 +196,7 @@ export default function ModelAdvisor() {
 
     // Sort by match score descending
     return scored.sort((a, b) => b.matchScore - a.matchScore).slice(0, 4);
-  }, [showResults, selections, questions.length]);
+  }, [showResults, selections]);
 
   // Questions configuration accessor
   const currentQuestion = questions[currentStep] || questions[0];

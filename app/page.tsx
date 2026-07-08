@@ -2,14 +2,17 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, BarChart3, Play, Zap, ArrowRight, Layers, GraduationCap, Cpu, Award } from 'lucide-react';
+import { Sparkles, BarChart3, Play, Zap, ArrowRight, Layers, Cpu, Award } from 'lucide-react';
 import Link from 'next/link';
 import ModelCard from '@/components/model-catalog/model-card';
 import { getModelSummaries } from '@/lib/data-access/models';
+import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
 
 const modelsData = getModelSummaries();
 
 export default function Home() {
+  const shouldReduceMotion = useReducedMotionPreference();
+
   // Calculate dynamic stats
   const stats = useMemo(() => {
     const totalParams = modelsData.reduce((sum, m) => sum + m.totalParameters, 0);
@@ -35,7 +38,7 @@ export default function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
       },
     },
   };
@@ -45,7 +48,7 @@ export default function Home() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+      transition: { duration: shouldReduceMotion ? 0 : 0.6, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 

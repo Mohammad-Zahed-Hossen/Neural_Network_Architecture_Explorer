@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, ComponentType } from 'react';
+import { useState, useMemo, ComponentType, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   ArrowLeft, Cpu, Layers, Award, HardDrive, BarChart3, 
@@ -11,6 +11,7 @@ import StatCards from './stat-card';
 import ComparisonTable from './comparison-table';
 import { cn } from '@/lib/utils/cn';
 import { modelCategories } from '@/lib/data/model-categories';
+import { useSearchParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 const ComparisonCharts = dynamic(() => import('./comparison-chart'), {
@@ -29,14 +30,30 @@ interface ComparisonClientProps {
 type MetricType = 'parameters' | 'depth' | 'accuracy' | 'memory' | 'flops';
 
 export default function ComparisonClient({ models }: ComparisonClientProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
   const [activeMetric, setActiveMetric] = useState<MetricType>('parameters');
   
   // Default selection: a subset of classic models representing different families
-  const [selectedIds, setSelectedIds] = useState<string[]>([
-    'vgg16', 'resnet50', 'densenet121', 'mobilenet', 'inceptionv3'
-  ]);
+  // Initialize from URL params if available
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const modelsParam = searchParams.get('models')
+    if (modelsParam) {
+      const ids = modelsParam.split(',')
+      // Only include valid model IDs
+      return ids.filter(id => models.some(m => m.id === id))
+    }
+    return ['vgg16', 'resnet50', 'densenet121', 'mobilenet', 'inceptionv3']
+  });
   const [isSelectorOpen, setIsSelectorOpen] = useState(true);
   const [selectorSearch, setSelectorSearch] = useState('');
+
+  // Sync selections to URL
+  useEffect(() => {
+    const ids = selectedIds.join(',')
+    router.replace(`/compare?models=${ids}`)
+  }, [selectedIds, router])
 
   const toggleModel = (id: string) => {
     setSelectedIds(prev => {

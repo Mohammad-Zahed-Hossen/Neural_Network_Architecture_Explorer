@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   GraduationCap, Search, ExternalLink, Calendar, 
-  Users, Award, HelpCircle, CheckCircle2, AlertOctagon, 
+  Users, Award, CheckCircle2, AlertOctagon, 
   History, ArrowRight, BookOpen
 } from 'lucide-react';
 import Link from 'next/link';
@@ -123,9 +123,17 @@ export default function PaperKnowledgeCenter() {
                   }`}
                 >
                    {/* Card Main Block Header */}
-                   <button 
-                     type="button"
+                   <div
+                     role="button"
+                     tabIndex={0}
+                     aria-expanded={isSelected}
                      onClick={() => setActivePaperId(isSelected ? null : paper.id)}
+                     onKeyDown={(e) => {
+                       if (e.key === 'Enter' || e.key === ' ') {
+                         e.preventDefault();
+                         setActivePaperId(isSelected ? null : paper.id);
+                       }
+                     }}
                      className="p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 text-left w-full hover:bg-slate-900/10 transition-colors rounded-t-3xl"
                    >
                      <div className="space-y-2 flex-1">
@@ -159,11 +167,18 @@ export default function PaperKnowledgeCenter() {
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
-                      <button className="text-xs font-bold text-primary bg-primary/5 hover:bg-primary/10 border border-primary/15 rounded-xl px-4 py-2 hover:border-primary/25 cursor-pointer">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActivePaperId(isSelected ? null : paper.id);
+                        }}
+                        className="text-xs font-bold text-primary bg-primary/5 hover:bg-primary/10 border border-primary/15 rounded-xl px-4 py-2 hover:border-primary/25 cursor-pointer"
+                      >
                         {isSelected ? 'Hide Details' : 'View Details'}
                       </button>
                     </div>
-                  </button>
+                  </div>
                   {/* Expandable Body */}
                   <AnimatePresence>
                     {isSelected && (

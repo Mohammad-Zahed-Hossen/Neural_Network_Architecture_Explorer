@@ -1,12 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Zap, AlertOctagon, HelpCircle, Activity, 
-  ArrowLeft, RefreshCw, Play, Pause, Layers
+  Activity, Zap,
+  RefreshCw, Play, Pause
 } from 'lucide-react';
-import Link from 'next/link';
 
 interface ConceptInfo {
   id: string;
@@ -92,7 +90,7 @@ export default function TrainingDynamicsVisualizer() {
     window.addEventListener('resize', handleResize);
 
     let animationId: number;
-    let particles: Array<{
+    const particles: Array<{
       x: number;
       y: number;
       speed: number;
@@ -294,7 +292,6 @@ export default function TrainingDynamicsVisualizer() {
           const startX = nodes[nodes.length - 1].x;
           const startY = nodes[nodes.length - 1].y;
           const endX = targetNode.x;
-          const endY = targetNode.y;
 
           // Interpolate coordinate along bezier curve
           p.alpha -= 0.003; // Slowly fade

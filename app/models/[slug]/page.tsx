@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import TabbedExplorer from '@/components/model-explorer/tabbed-explorer';
 import { getAllModelIds } from '@/lib/data-access/models';
 import { getModel } from '@/lib/data-access/models.server';
@@ -13,6 +14,21 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const model = getModel(slug);
+  
+  return {
+    title: `${model.name} - Neural Network Architecture Explorer`,
+    description: `Explore ${model.fullName}. ${model.description}`,
+    openGraph: {
+      title: `${model.name} - Neural Network Architecture Explorer`,
+      description: model.description,
+      url: `https://neuralnetworkarchitecture.com/models/${slug}`,
+    },
+  };
 }
 
 export default async function ModelPage({ params }: PageProps) {
@@ -35,5 +51,39 @@ export default async function ModelPage({ params }: PageProps) {
     groupedEdges: model.architecture.layout?.groupedEdges ?? [],
   };
 
-  return <TabbedExplorer model={model} graphData={graphData} />;
+  // Breadcrumb schema for structured data
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://neuralnetworkarchitecture.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Catalog',
+        item: 'https://neuralnetworkarchitecture.com/catalog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: model.name,
+        item: `https://neuralnetworkarchitecture.com/models/${slug}`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <TabbedExplorer model={model} graphData={graphData} />
+    </>
+  );
 }

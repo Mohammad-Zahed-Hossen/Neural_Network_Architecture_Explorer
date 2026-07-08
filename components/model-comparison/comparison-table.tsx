@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { 
   ExternalLink, ArrowRight, Trophy, Info, Cpu, Layers, Award, HardDrive, BarChart3, 
-  Calendar, Users, Hash, Tag, Lightbulb, ChevronRight, Gauge, Zap
+  Calendar, Users, Hash, Lightbulb, ChevronRight, Gauge, Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ModelSummary } from '@/lib/schema/model.schema';
@@ -59,7 +59,7 @@ function getBlockPrimitive(category: string, tags: string[]): string {
   return primitives[category] || 'Custom Block Primitive';
 }
 
-function getBreakthrough(category: string, tags: string[]): string {
+function getBreakthrough(category: string): string {
   const breakthroughs: Record<string, string> = {
     'VGG': 'Homogeneous 3×3 kernels demonstrate that depth matters more than width.',
     'ResNet': 'Skip connections let identity gradients flow, solving the vanishing gradient degradation.',
@@ -92,10 +92,11 @@ interface SectionHeaderProps {
   label: string;
   colSpan: number;
   children?: React.ReactNode;
+  className?: string;
 }
 
-const SectionHeader = ({ icon: Icon, label, colSpan, children }: SectionHeaderProps) => (
-  <tr className="bg-slate-900/40 border-y border-border/10">
+const SectionHeader = ({ icon: Icon, label, colSpan, children, className }: SectionHeaderProps) => (
+  <tr className={cn("bg-slate-900/40 border-y border-border/10", className)}>
     <td colSpan={colSpan} className="sticky left-0 px-6 py-3 bg-[#0c142d] border-r border-border/20 z-10">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -111,14 +112,6 @@ const SectionHeader = ({ icon: Icon, label, colSpan, children }: SectionHeaderPr
 );
 
 export default function ComparisonTable({ models }: ComparisonTableProps) {
-  // Compute metric definitions
-  const maxParams = Math.max(...models.map(m => m.totalParameters));
-  const maxFLOPs = Math.max(...models.map(m => m.totalFLOPs));
-  const maxMemory = Math.max(...models.map(m => m.memoryUsage));
-  const maxDepth = Math.max(...models.map(m => m.depth));
-  const maxTop1 = Math.max(...models.map(m => m.top1Accuracy));
-  const maxTop5 = Math.max(...models.map(m => m.top5Accuracy));
-
   const metrics: MetricDef[] = [
     {
       key: 'top1',
@@ -385,26 +378,6 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
               <tr className="hover:bg-slate-900/10 transition-colors">
                 <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
                   <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
-                    <Tag className="h-3.5 w-3.5 text-slate-500" />
-                    Tags
-                  </div>
-                </td>
-                {models.map((model) => (
-                  <td key={model.id} className="p-4">
-                    <div className="flex flex-wrap gap-1">
-                      {model.tags.slice(0, 4).map(tag => (
-                        <span key={tag} className="text-[9px] font-semibold text-slate-400 bg-slate-800/40 border border-border/20 px-1.5 py-0.5 rounded">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                ))}
-              </tr>
-
-              <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
                     <ExternalLink className="h-3.5 w-3.5 text-slate-500" />
                     Research Paper
                   </div>
@@ -486,7 +459,7 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
 
               {/* Efficiency Metrics Section */}
               <SectionHeader icon={Gauge} label="Efficiency & Resource Overhead" colSpan={1 + models.length} />
-              
+               
               {metrics.slice(2).map((metric) => {
                 const winnerId = winners.get(metric.key);
                 const Icon = metric.icon;
@@ -547,66 +520,66 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                 );
               })}
 
-              {/* Architecture Design Section */}
-              <SectionHeader icon={Lightbulb} label="Architecture Design Characteristics" colSpan={1 + models.length} />
-              
-              <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
-                    <Cpu className="h-3.5 w-3.5 text-slate-500" />
-                    Architectural Paradigm
-                  </div>
-                </td>
-                {models.map((model) => (
-                  <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
-                    {getArchitecturalParadigm(model.category, model.tags)}
-                  </td>
-                ))}
-              </tr>
+               {/* Architecture Design Section - Table View (md+) */}
+               <SectionHeader icon={Lightbulb} label="Architecture Design Characteristics" colSpan={1 + models.length} className="hidden md:table-row" />
+               
+               <tr className="hover:bg-slate-900/10 transition-colors hidden md:table-row">
+                 <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                   <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                     <Cpu className="h-3.5 w-3.5 text-slate-500" />
+                     Architectural Paradigm
+                   </div>
+                 </td>
+                 {models.map((model) => (
+                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
+                     {getArchitecturalParadigm(model.category, model.tags)}
+                   </td>
+                 ))}
+               </tr>
 
-              <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
-                    <Layers className="h-3.5 w-3.5 text-slate-500" />
-                    Primary Block Primitive
-                  </div>
-                </td>
-                {models.map((model) => (
-                  <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
-                    {getBlockPrimitive(model.category, model.tags)}
-                  </td>
-                ))}
-              </tr>
+               <tr className="hover:bg-slate-900/10 transition-colors hidden md:table-row">
+                 <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                   <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                     <Layers className="h-3.5 w-3.5 text-slate-500" />
+                     Primary Block Primitive
+                   </div>
+                 </td>
+                 {models.map((model) => (
+                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed">
+                     {getBlockPrimitive(model.category, model.tags)}
+                   </td>
+                 ))}
+               </tr>
 
-              <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
-                    <Lightbulb className="h-3.5 w-3.5 text-slate-500" />
-                    Key Breakthrough
-                  </div>
-                </td>
-                {models.map((model) => (
-                  <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed italic">
-                    {getBreakthrough(model.category, model.tags)}
-                  </td>
-                ))}
-              </tr>
+               <tr className="hover:bg-slate-900/10 transition-colors hidden md:table-row">
+                 <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                   <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                     <Lightbulb className="h-3.5 w-3.5 text-slate-500" />
+                     Key Breakthrough
+                   </div>
+                 </td>
+                 {models.map((model) => (
+                   <td key={model.id} className="p-4 font-semibold text-slate-200 text-[11px] leading-relaxed italic">
+                     {getBreakthrough(model.category)}
+                   </td>
+                 ))}
+               </tr>
 
-              <tr className="hover:bg-slate-900/10 transition-colors">
-                <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
-                    <Info className="h-3.5 w-3.5 text-slate-500" />
-                    Description
-                  </div>
-                </td>
-                {models.map((model) => (
-                  <td key={model.id} className="p-4 font-medium text-slate-300 text-[11px] leading-relaxed">
-                    {model.description}
-                  </td>
-                ))}
-              </tr>
+               <tr className="hover:bg-slate-900/10 transition-colors hidden md:table-row">
+                 <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
+                   <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400">
+                     <Info className="h-3.5 w-3.5 text-slate-500" />
+                     Description
+                   </div>
+                 </td>
+                 {models.map((model) => (
+                   <td key={model.id} className="p-4 font-medium text-slate-300 text-[11px] leading-relaxed">
+                     {model.description}
+                   </td>
+                 ))}
+               </tr>
 
-              {/* Quick Actions Row */}
+               {/* Quick Actions Row */}
               <tr className="bg-slate-950/40 divide-y divide-border/5">
                 <td className="sticky left-0 z-20 p-4 pl-5 bg-[#090f23] border-r border-border/20">
                   <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
@@ -630,6 +603,36 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Architecture Design Section - Mobile Card View (below md) */}
+      <div className="md:hidden">
+        {models.map((model) => (
+          <div key={model.id} className="bg-slate-950/30 border border-border/30 rounded-2xl p-4 mb-4 last:mb-0">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: model.colorTheme }} />
+              <span className="text-sm font-extrabold text-white">{model.name}</span>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-1">Architectural Paradigm</span>
+                <span className="text-xs text-slate-200 leading-relaxed">{getArchitecturalParadigm(model.category, model.tags)}</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-1">Primary Block Primitive</span>
+                <span className="text-xs text-slate-200 leading-relaxed">{getBlockPrimitive(model.category, model.tags)}</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-1">Key Breakthrough</span>
+                <span className="text-xs text-slate-200 leading-relaxed italic">{getBreakthrough(model.category)}</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-1">Description</span>
+                <span className="text-xs text-slate-300 leading-relaxed">{model.description}</span>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,17 +1,19 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
-  ArrowLeft, BookOpen, Layers, Cpu, Award, HardDrive, 
+  ArrowLeft, ArrowRight, BookOpen, 
   ExternalLink, ListFilter, Network, Compass
 } from 'lucide-react';
-import { NeuralNetworkModel } from '@/lib/schema/model.schema';
+import { NeuralNetworkModel, GroupedNode, GroupedEdge, LayerGroup } from '@/lib/schema/model.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import LayerList from './layer-list';
 import InspectorPanel from './inspector-panel';
+import InspectorSheet from './inspector-sheet';
 import { cn } from '@/lib/utils/cn';
 import { motion } from 'framer-motion';
+import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
 import dynamic from 'next/dynamic';
 
 const MAX_DETAILED_NODES = 100;
@@ -29,38 +31,36 @@ const FlowCanvas = dynamic(() => import('./flow-canvas'), {
 interface TabbedExplorerProps {
   model: NeuralNetworkModel;
   graphData: {
-    nodes: any[];
-    edges: any[];
-    groups: any[];
-    groupedNodes: any[];
-    groupedEdges: any[];
+    nodes: unknown[];
+    edges: unknown[];
+    groups: LayerGroup[];
+    groupedNodes: GroupedNode[];
+    groupedEdges: GroupedEdge[];
   };
 }
 
 export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'layers' | 'topology'>('overview');
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
-  const [showDetailedLayers, setShowDetailedLayers] = useState(false);
-  const [hasVisitedTopology, setHasVisitedTopology] = useState(false);
+  const shouldReduceMotion = useReducedMotionPreference();
   const detailedNodeCount = graphData.nodes.length;
   const isDetailedViewDisabled = detailedNodeCount > MAX_DETAILED_NODES;
   const detailedPreferenceKey = `nn_showDetailedLayers:${model.id}`;
 
-  useEffect(() => {
-    const saved = localStorage.getItem(detailedPreferenceKey);
-    if (saved !== null) {
-      setShowDetailedLayers(saved === 'true' && !isDetailedViewDisabled);
-      return;
+  // Initialize showDetailedLayers from localStorage (client-side only)
+  const [showDetailedLayers, setShowDetailedLayers] = useState(() => {
+    // This runs on client only, so localStorage is available
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(detailedPreferenceKey);
+      if (saved !== null) {
+        return saved === 'true';
+      }
     }
+    return false;
+  });
 
-    setShowDetailedLayers(!isDetailedViewDisabled);
-  }, [detailedPreferenceKey, isDetailedViewDisabled]);
-
-  useEffect(() => {
-    if (activeTab === 'topology') {
-      setHasVisitedTopology(true);
-    }
-  }, [activeTab]);
+  // Derived state: has visited topology if currently on topology tab
+  const hasVisitedTopology = activeTab === 'topology';
 
   const layers = model.architecture.layers;
   const totalParams = model.totalParameters;
@@ -157,6 +157,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
         <div className="flex bg-slate-900/40 border border-border/25 rounded-2xl p-1 backdrop-blur-md shrink-0">
           <button
             onClick={() => setActiveTab('overview')}
+            aria-label="Overview"
             className={cn(
               "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'overview'
@@ -169,6 +170,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
           </button>
           <button
             onClick={() => setActiveTab('layers')}
+            aria-label="Layers List"
             className={cn(
               "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'layers'
@@ -182,6 +184,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
           </button>
           <button
             onClick={() => setActiveTab('topology')}
+            aria-label="Topology Graph"
             className={cn(
               "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'topology'
@@ -202,6 +205,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={activeTab === 'overview' ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
               className="grid grid-cols-1 lg:grid-cols-3 gap-6"
             >
               {/* Key Concept card */}
@@ -223,30 +227,36 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                   </p>
                 </div>
 
-                {/* External links */}
-                <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
-                  <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <a
-                      href={model.paperUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
-                    >
-                      <span className="text-[#9ca3af]">Read Research Publication</span>
-                      <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
-                    </a>
-                    <a
-                      href={model.docsUrl || '#'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
-                    >
-                      <span className="text-[#9ca3af]">Keras API Documentation</span>
-                      <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
-                    </a>
-                  </div>
-                </div>
+                 {/* External links */}
+                 <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
+                   <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                     <a
+                       href={model.paperUrl}
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
+                     >
+                       <span className="text-[#9ca3af]">Read Research Publication</span>
+                       <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
+                     </a>
+                     {model.docsUrl ? (
+                       <a
+                         href={model.docsUrl}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
+                       >
+                         <span className="text-[#9ca3af]">Keras API Documentation</span>
+                         <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
+                       </a>
+                     ) : (
+                       <span className="flex items-center justify-center p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] text-xs italic">
+                         <span className="text-slate-500">Documentation unavailable</span>
+                       </span>
+                     )}
+                   </div>
+                 </div>
               </div>
 
               {/* Architectural Metrics sidebar */}
@@ -289,18 +299,27 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
             </motion.div>
           </div>
 
-          {/* Layers Panel */}
+           {/* Layers Panel */}
           <div className={activeTab === 'layers' ? "block" : "hidden"}>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={activeTab === 'layers' ? { opacity: 1 } : {}}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
               className="flex flex-col lg:flex-row gap-6 items-stretch"
             >
               {/* Layers List */}
               <div className="flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] max-h-[600px] overflow-y-auto pr-1 scrollbar-thin">
-                <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-extrabold block mb-4 border-b border-[#1f2937] pb-2">
-                  Layer Stack Directory ({layers.length} Total Layers)
-                </span>
+                <div className="flex items-center justify-between mb-4 border-b border-[#1f2937] pb-2">
+                  <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-extrabold">
+                    Layer Stack Directory ({layers.length} Total Layers)
+                  </span>
+                  <Link
+                    href={`/concepts/receptive-field?model=${model.id}`}
+                    className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:text-blue-300 transition-colors"
+                  >
+                    Visualize Receptive Field Growth <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
                 <LayerList
                   layers={layers}
                   selectedLayerId={selectedLayerId}
@@ -309,8 +328,8 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                 />
               </div>
 
-              {/* Inspector panel */}
-              <div className="w-full lg:w-[420px] shrink-0">
+              {/* Inspector panel - Desktop only (lg+) */}
+              <div className="hidden lg:block w-full lg:w-[420px] shrink-0">
                 <InspectorPanel
                   layer={selectedLayer}
                   onClose={() => setSelectedLayerId(null)}
@@ -318,6 +337,13 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                 />
               </div>
             </motion.div>
+            
+            {/* Inspector Sheet - Mobile only (< lg) */}
+            <InspectorSheet
+              layer={selectedLayer}
+              onClose={() => setSelectedLayerId(null)}
+              totalModelParameters={totalParams}
+            />
           </div>
 
           {/* Topology Panel */}
@@ -326,6 +352,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={activeTab === 'topology' ? { opacity: 1 } : {}}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
                 className="flex flex-col gap-4"
               >
                 {/* Controls bar */}
@@ -353,7 +380,7 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                         setSelectedLayerId(null);
                       }}
                       className={cn(
-                        "relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
+                        "relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none p-2.5",
                         isDetailedViewDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
                         showDetailedLayers ? "bg-primary" : "bg-slate-700"
                       )}
@@ -388,8 +415,8 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                     />
                   </div>
 
-                  {/* Side inspector panel */}
-                  <div className="w-full lg:w-[420px] lg:h-full lg:shrink-0">
+                  {/* Side inspector panel - Desktop only (lg+) */}
+                  <div className="hidden lg:block w-full lg:w-[420px] lg:h-full lg:shrink-0">
                     <InspectorPanel
                       layer={selectedLayer}
                       onClose={() => setSelectedLayerId(null)}
@@ -397,6 +424,13 @@ export default function TabbedExplorer({ model, graphData }: TabbedExplorerProps
                     />
                   </div>
                 </div>
+                
+                {/* Inspector Sheet - Mobile only (< lg) */}
+                <InspectorSheet
+                  layer={selectedLayer}
+                  onClose={() => setSelectedLayerId(null)}
+                  totalModelParameters={totalParams}
+                />
               </motion.div>
             )}
           </div>

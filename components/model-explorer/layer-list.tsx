@@ -1,12 +1,10 @@
 'use client';
 
-import { ComponentType, useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { 
-  Layers, Image, Activity, Zap, Shrink, 
-  AlignJustify, Key, PlusCircle, GitMerge, 
-  HelpCircle, ArrowDown, ChevronDown, ChevronRight, Eye
+  HelpCircle, ArrowDown, ChevronDown, ChevronRight
 } from 'lucide-react';
-import { Layer, LayerType } from '@/lib/schema/model.schema';
+import { Layer } from '@/lib/schema/model.schema';
 import { cn } from '@/lib/utils/cn';
 import { layerIconMap, layerStyleMap } from '@/lib/utils/layer-styles';
 import { formatShortNumber } from '@/lib/utils/formatters';
@@ -30,30 +28,27 @@ interface LayerListProps {
 // Icon mappings based on LayerType
 
 export default function LayerList({ layers, selectedLayerId, onSelectLayer, groups }: LayerListProps) {
-  // Store collapsible state per group ID
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  // Store collapsible state per group ID - initialize with first group expanded if available
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() => {
+    if (groups && groups.length > 0) {
+      return { [groups[0].id]: true };
+    }
+    return {};
+  });
 
-  // Auto-expand group containing selected layer
-  useEffect(() => {
-    if (selectedLayerId && groups) {
-      const activeGroup = groups.find(g => g.layerIds.includes(selectedLayerId));
-      if (activeGroup) {
+  // Auto-expand group containing selected layer - use callback to avoid effect
+  const handleLayerSelect = useCallback((id: string | null) => {
+    onSelectLayer(id);
+    if (id && groups) {
+      const activeGroup = groups.find(g => g.layerIds.includes(id));
+      if (activeGroup && !expandedGroups[activeGroup.id]) {
         setExpandedGroups(prev => ({
           ...prev,
           [activeGroup.id]: true
         }));
       }
     }
-  }, [selectedLayerId, groups]);
-
-  // Initial setup: expand input stem by default
-  useEffect(() => {
-    if (groups && groups.length > 0 && Object.keys(expandedGroups).length === 0) {
-      setExpandedGroups({
-        [groups[0].id]: true
-      });
-    }
-  }, [groups, expandedGroups]);
+  }, [onSelectLayer, groups, expandedGroups]);
 
   const toggleGroup = (groupId: string) => {
     setExpandedGroups(prev => ({
@@ -68,7 +63,7 @@ export default function LayerList({ layers, selectedLayerId, onSelectLayer, grou
       <div className="flex flex-col gap-2 py-2">
         {layers.map((layer, index) => (
           <div key={layer.id} className="w-full">
-            {renderLayerCard(layer, selectedLayerId, onSelectLayer)}
+            {renderLayerCard(layer, selectedLayerId, handleLayerSelect)}
             {index < layers.length - 1 && renderConnectionArrow()}
           </div>
         ))}
@@ -78,7 +73,7 @@ export default function LayerList({ layers, selectedLayerId, onSelectLayer, grou
 
   return (
     <div className="flex flex-col gap-4 py-2">
-      {groups.map((group, groupIdx) => {
+       {groups.map((group) => {
         const groupLayers = layers.filter(l => group.layerIds.includes(l.id));
         if (groupLayers.length === 0) return null;
 
@@ -119,7 +114,7 @@ export default function LayerList({ layers, selectedLayerId, onSelectLayer, grou
               <div className="p-3 bg-slate-950/10 divide-y divide-border/5 space-y-1">
                 {groupLayers.map((layer, idx) => (
                   <div key={layer.id} className="pt-2 first:pt-0">
-                    {renderLayerCard(layer, selectedLayerId, onSelectLayer, idx % 2 === 1)}
+                    {renderLayerCard(layer, selectedLayerId, handleLayerSelect, idx % 2 === 1)}
                   </div>
                 ))}
               </div>

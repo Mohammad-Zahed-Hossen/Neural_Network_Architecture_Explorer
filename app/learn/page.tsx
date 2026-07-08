@@ -1,25 +1,25 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Layers, Zap, Network, GraduationCap, Award } from 'lucide-react';
+import { ArrowRight, BookOpen, Layers, Zap, Network, Award, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ModelAdvisor from '@/components/learn/model-advisor';
 import PageBackground from '@/components/layout/page-background';
+import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
 
 export default function Learn() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'paths' | 'advisor'>('paths');
-
-  // Read initial tab from URL on mount
-  useEffect(() => {
+  const [activeTab, setActiveTab] = useState<'paths' | 'advisor'>(() => {
     const tabParam = searchParams.get('tab');
     if (tabParam === 'advisor' || tabParam === 'paths') {
-      setActiveTab(tabParam);
+      return tabParam;
     }
-  }, [searchParams]);
+    return 'paths';
+  });
+  const shouldReduceMotion = useReducedMotionPreference();
 
   const handleTabChange = (tab: 'paths' | 'advisor') => {
     setActiveTab(tab);
@@ -121,7 +121,7 @@ export default function Learn() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : idx * 0.1 }}
                   className="bg-slate-950/20 border border-border/30 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-border/50 transition-all duration-300 h-full flex flex-col"
                 >
                   <div 
@@ -178,7 +178,7 @@ export default function Learn() {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.4 }}
           >
             <ModelAdvisor />
           </motion.div>

@@ -19,7 +19,48 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Neural Network Architecture Explorer",
   description: "An interactive, educational platform to inspect, compare, and animate classic neural network architectures (VGG16, ResNet50, DenseNet121) layer-by-layer.",
+  metadataBase: new URL('https://neuralnetworkarchitecture.com'),
+  openGraph: {
+    title: "Neural Network Architecture Explorer",
+    description: "Interactive deep learning architecture visualization and comparison tool",
+    url: 'https://neuralnetworkarchitecture.com',
+    siteName: 'NeuralExplorer',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Neural Network Architecture Explorer",
+    description: "Interactive deep learning architecture visualization",
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'NeuralExplorer',
+  description: 'Interactive deep learning architecture visualization platform',
+  url: 'https://neuralnetworkarchitecture.com',
+  logo: 'https://neuralnetworkarchitecture.com/logo.png',
+}
 
 export default function RootLayout({
   children,
@@ -32,6 +73,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body 
         className="min-h-full flex flex-col bg-background text-foreground relative" 
         suppressHydrationWarning

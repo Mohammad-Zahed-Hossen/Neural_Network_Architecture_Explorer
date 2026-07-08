@@ -56,7 +56,7 @@ const FOUNDATIONAL_PAPERS = [
 const ALL_PAPERS = [...FOUNDATIONAL_PAPERS, ...papersData];
 
 // Custom Paper Node Component for React Flow (memoized to prevent redundant renders)
-const PaperNode = memo(function PaperNode({ data }: { data: any }) {
+const PaperNode = memo(function PaperNode({ data }: { data: Record<string, unknown> }) {
   const colorMap: Record<string, string> = {
     Foundational: 'border-lime-500/30 text-lime-400 bg-lime-500/[0.02]',
     VGG: 'border-blue-500/30 text-blue-400 bg-blue-500/[0.02]',
@@ -70,7 +70,7 @@ const PaperNode = memo(function PaperNode({ data }: { data: any }) {
     Transformer: 'border-fuchsia-500/30 text-fuchsia-400 bg-fuchsia-500/[0.02]'
   };
 
-  const styleClass = colorMap[data.category] || 'border-slate-700 text-slate-300 bg-slate-800/10';
+  const styleClass = colorMap[(data.category as string) || ''] || 'border-slate-700 text-slate-300 bg-slate-800/10';
 
   return (
     <div className={`p-3 rounded-xl border w-[190px] transition-all duration-300 glass-card bg-slate-950/90 cursor-pointer ${
@@ -80,16 +80,16 @@ const PaperNode = memo(function PaperNode({ data }: { data: any }) {
     }`}>
       {/* Top Tag row */}
       <div className="flex items-center justify-between text-[8px] font-extrabold uppercase tracking-wider">
-        <span className={data.isSelected ? 'text-[#22d3ee]' : styleClass.split(' ')[1]}>{data.category}</span>
-        <span className="text-slate-500">{data.year}</span>
+        <span className={data.isSelected ? 'text-[#22d3ee]' : styleClass.split(' ')[1]}>{(data.category as string) ?? ''}</span>
+        <span className="text-slate-500">{(data.year as number) ?? ''}</span>
       </div>
 
       {/* Title */}
-      <h3 className="text-xs font-black text-slate-100 truncate mt-1.5" title={data.title}>
-        {data.name}
+      <h3 className="text-xs font-black text-slate-100 truncate mt-1.5" title={(data.title as string) ?? ''}>
+        {(data.name as string) ?? ''}
       </h3>
-      <p className="text-[9px] text-slate-500 font-bold truncate mt-0.5" title={data.authors.join(', ')}>
-        {data.authors[0]} et al.
+      <p className="text-[9px] text-slate-500 font-bold truncate mt-0.5" title={((data.authors as string[]) ?? []).join(', ')}>
+        {((data.authors as string[]) ?? [])[0] ?? ''} et al.
       </p>
 
       {/* Handles */}

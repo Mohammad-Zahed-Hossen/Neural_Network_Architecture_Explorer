@@ -3,14 +3,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Compass, Info, Sliders, Play, Layers, 
-  HelpCircle, ChevronRight, Eye, Grid
+  Compass, Info, Layers,
+  ChevronRight, Grid
 } from 'lucide-react';
-import Link from 'next/link';
 import modelsSummary from '@/data/models.json';
-import { calculateReceptiveFields, LayerRFInfo } from '@/lib/utils/rf-math';
+import { calculateReceptiveFields } from '@/lib/utils/rf-math';
+import { NeuralNetworkModel } from '@/lib/schema/model.schema';
 
 // Code-split dynamic loaders for all models' detailed configurations
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const modelLoaders: Record<string, () => Promise<any>> = {
   lenet: () => import('@/data/models/lenet.json'),
   alexnet: () => import('@/data/models/alexnet.json'),
@@ -50,14 +51,11 @@ const modelLoaders: Record<string, () => Promise<any>> = {
 
 export default function ReceptiveFieldExplorer() {
   const [selectedModelId, setSelectedModelId] = useState('resnet50');
-  const [modelData, setModelData] = useState<any | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [modelData, setModelData] = useState<NeuralNetworkModel | null>(null);
   const [activeLayerIndex, setActiveLayerIndex] = useState<number>(-1);
-  const [showDetailedInfo, setShowDetailedInfo] = useState(true);
 
   // Load selected model layers dynamically
   useEffect(() => {
-    setIsLoading(true);
     const loader = modelLoaders[selectedModelId];
     if (loader) {
       loader()
@@ -65,10 +63,12 @@ export default function ReceptiveFieldExplorer() {
           setModelData(data.default || data);
           setActiveLayerIndex(0);
         })
-        .catch((err) => console.error('Failed to dynamically load model json:', err))
-        .finally(() => setIsLoading(false));
+        .catch((err) => console.error('Failed to dynamically load model json:', err));
     }
   }, [selectedModelId]);
+
+  // Derived loading state - true when modelData is null but we have a selected model
+  const isLoading = modelData === null && selectedModelId !== '';
 
   // Calculate RF growth
   const rfData = useMemo(() => {
@@ -212,7 +212,7 @@ export default function ReceptiveFieldExplorer() {
                 How Receptive Field Grows
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                Early convolutional layers look at small, local patches (e.g. edges, shapes). As signals flow through strided convolutions or pooling layers, the stride scales the size of subsequent layers' kernels in the input space, causing the receptive field to expand exponentially.
+                Early convolutional layers look at small, local patches (e.g. edges, shapes). As signals flow through strided convolutions or pooling layers, the stride scales the size of subsequent layers&#39; kernels in the input space, causing the receptive field to expand exponentially.
               </p>
             </div>
           </div>

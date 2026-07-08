@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
 import { 
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend
@@ -14,26 +14,18 @@ interface ComparisonChartProps {
 }
 
 export default function ComparisonCharts({ models, activeMetric }: ComparisonChartProps) {
-  const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
   // Avoid hydration mismatch for SVGs rendered by Recharts
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-    setIsMobile(window.innerWidth < 640);
-    const handleResize = () => setIsMobile(window.innerWidth < 640);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="w-full h-[350px] bg-slate-900/10 rounded-2xl border border-border/30 flex items-center justify-center animate-pulse">
-        <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">Loading interactive charts...</span>
-      </div>
-    );
-  }
+  // Using useSyncExternalStore pattern (React 19 recommended) for external system sync
+  const isMobile = useSyncExternalStore(
+    (callback) => {
+      const handleResize = () => callback();
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    },
+    () => window.innerWidth < 640,
+    () => false
+  );
 
   // 1. Prepare BarChart Data based on active metric
   const barChartData = models.map((model) => {
@@ -169,8 +161,8 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
                 }}
               />
               <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-                {barChartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} opacity={0.85} />
+                {barChartData.map((entry) => (
+                  <Cell key={`cell-${entry.name}`} fill={entry.color} opacity={0.85} />
                 ))}
               </Bar>
             </BarChart>
@@ -208,7 +200,7 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
                 axisLine={false}
               />
               
-              {radarModels.map((model, idx) => (
+              {radarModels.map((model) => (
                 <Radar 
                   key={model.id}
                   name={model.name} 

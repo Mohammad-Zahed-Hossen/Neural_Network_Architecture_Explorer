@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { ModelSummarySchema, NeuralNetworkModelSchema } from '../lib/schema/model.schema';
+import { ModelSummarySchema, NeuralNetworkModelSchema, ModelSummary, NeuralNetworkModel } from '../lib/schema/model.schema';
 
 const PROJECT_ROOT = process.cwd();
 const MODELS_JSON_PATH = join(PROJECT_ROOT, 'data/models.json');
@@ -23,10 +23,10 @@ function formatIssues(error: { issues: Array<{ path: PropertyKey[]; message: str
   return error.issues.map((issue) => `${issue.path.map(String).join('.') || '(root)'}: ${issue.message}`);
 }
 
-function checkLayerReferences(model: any): string[] {
+function checkLayerReferences(model: NeuralNetworkModel): string[] {
   const errors: string[] = [];
   const layers = model.architecture?.layers ?? [];
-  const layerIds = new Set(layers.map((layer: any) => layer.id));
+  const layerIds = new Set(layers.map((layer) => layer.id));
 
   for (const connection of model.architecture?.connections ?? []) {
     if (!layerIds.has(connection.sourceId)) {
@@ -47,7 +47,7 @@ function checkLayerReferences(model: any): string[] {
 
   const layout = model.architecture?.layout;
   if (layout) {
-    const layoutNodeIds = new Set((layout.nodes ?? []).map((node: any) => node.id));
+    const layoutNodeIds = new Set((layout.nodes ?? []).map((node) => node.id));
 
     for (const edge of layout.edges ?? []) {
       if (edge.source && !layoutNodeIds.has(edge.source)) {
@@ -70,7 +70,7 @@ function checkLayerReferences(model: any): string[] {
   return errors;
 }
 
-function compareSummaryToModel(summary: any, model: any): string[] {
+function compareSummaryToModel(summary: ModelSummary, model: NeuralNetworkModel): string[] {
   const comparisons: Array<[string, unknown, unknown]> = [
     ['totalParameters', summary.totalParameters, model.totalParameters],
     ['totalFLOPs', summary.totalFLOPs, model.totalFLOPs],
@@ -130,7 +130,7 @@ function generateMarkdownReport(reports: ValidationReport[], totalModels: number
 }
 
 function main() {
-  const summaries = loadJson<any[]>(MODELS_JSON_PATH);
+  const summaries = loadJson<ModelSummary[]>(MODELS_JSON_PATH);
   const reports: ValidationReport[] = [];
 
   for (const summary of summaries) {
@@ -148,7 +148,7 @@ function main() {
     }
 
     try {
-      const model = loadJson<any>(join(CANONICAL_MODELS_DIR, `${summary.id}.json`));
+      const model = loadJson<NeuralNetworkModel>(join(CANONICAL_MODELS_DIR, `${summary.id}.json`));
       const modelValidation = NeuralNetworkModelSchema.safeParse(model);
       if (!modelValidation.success) {
         report.modelErrors = formatIssues(modelValidation.error);

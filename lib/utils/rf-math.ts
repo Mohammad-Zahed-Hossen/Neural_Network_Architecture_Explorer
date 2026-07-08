@@ -27,12 +27,12 @@ export function calculateReceptiveFields(layers: Layer[]): LayerRFInfo[] {
 
     // Extract kernel/pool size and strides based on layer type
     if (layer.type === 'conv2d') {
-      const config = layer.config as any;
+      const config = layer.config as Record<string, unknown> as { kernelSize?: [number, number]; strides?: [number, number]; padding?: 'same' | 'valid' };
       k = config.kernelSize || [3, 3];
       s = config.strides || [1, 1];
       pad = config.padding || 'same';
     } else if (layer.type === 'max_pooling2d' || layer.type === 'average_pooling2d') {
-      const config = layer.config as any;
+      const config = layer.config as Record<string, unknown> as { poolSize?: [number, number]; strides?: [number, number]; padding?: 'same' | 'valid' };
       k = config.poolSize || [2, 2];
       s = config.strides || [2, 2];
       pad = config.padding || 'valid';
