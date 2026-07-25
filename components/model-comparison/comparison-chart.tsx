@@ -73,48 +73,67 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
     return val.toString();
   };
 
-  // 2. Prepare RadarChart Data dynamically from the first 3 models - memoized to avoid recomputation on resize
+  // Helper for logarithmic min-max normalization: S = 100 * (1 - (ln(v) - ln(min)) / (ln(max) - ln(min)))
+  // Logarithmic scaling is mathematically required because FLOPs and Parameter counts span over 5 orders of magnitude (340K to 83B FLOPs).
+  // Linear scaling compresses all medium/small models to ~90-99% efficiency.
+  const calcLogScore = (val: number, minVal: number, maxVal: number) => {
+    if (maxVal <= minVal || val <= 0) return 100;
+    const logVal = Math.log(val);
+    const logMin = Math.log(Math.max(1, minVal));
+    const logMax = Math.log(maxVal);
+    if (logMax <= logMin) return 100;
+    const norm = (logVal - logMin) / (logMax - logMin);
+    return Math.max(0, Math.min(100, Math.round((1 - norm) * 100)));
+  };
+
+  // 2. Prepare RadarChart Data dynamically from all active compared models (up to 4)
   const radarChartData = useMemo(() => {
-    const radarModels = models.slice(0, 3);
-    const maxParamsRadar = Math.max(...models.map(m => m.totalParameters));
-    const maxMemoryRadar = Math.max(...models.map(m => m.memoryUsage));
-    const maxFLOPsRadar = Math.max(...models.map(m => m.totalFLOPs));
-    const maxDepthRadar = Math.max(...models.map(m => m.depth));
-    const maxAccuracyRadar = Math.max(...models.map(m => m.top1Accuracy));
+    const radarModels = models.slice(0, 4);
+    const minParams = Math.min(...models.map(m => m.totalParameters));
+    const maxParams = Math.max(...models.map(m => m.totalParameters));
+    const minMemory = Math.min(...models.map(m => m.memoryUsage));
+    const maxMemory = Math.max(...models.map(m => m.memoryUsage));
+    const minFLOPs = Math.min(...models.map(m => m.totalFLOPs));
+    const maxFLOPs = Math.max(...models.map(m => m.totalFLOPs));
+    const minDepth = Math.min(...models.map(m => m.depth));
+    const maxDepth = Math.max(...models.map(m => m.depth));
+    const maxAccuracy = Math.max(...models.map(m => m.top1Accuracy));
 
     return [
       {
         subject: 'Accuracy (Top-1)',
-        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((m.top1Accuracy / maxAccuracyRadar) * 100)])),
+        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((m.top1Accuracy / (maxAccuracy || 1)) * 100)])),
         fullMark: 100
       },
       {
         subject: 'Weight Compactness',
-        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.totalParameters / maxParamsRadar) * 100)])),
+        ...Object.fromEntries(radarModels.map(m => [m.name, calcLogScore(m.totalParameters, minParams, maxParams)])),
         fullMark: 100
       },
       {
         subject: 'VRAM Efficiency',
-        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.memoryUsage / maxMemoryRadar) * 100)])),
+        ...Object.fromEntries(radarModels.map(m => [m.name, calcLogScore(m.memoryUsage, minMemory, maxMemory)])),
         fullMark: 100
       },
       {
         subject: 'Compute Efficiency',
-        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.totalFLOPs / maxFLOPsRadar) * 100)])),
+        ...Object.fromEntries(radarModels.map(m => [m.name, calcLogScore(m.totalFLOPs, minFLOPs, maxFLOPs)])),
         fullMark: 100
       },
       {
         subject: 'Structural Depth',
-        ...Object.fromEntries(radarModels.map(m => [m.name, Math.round((1 - m.depth / maxDepthRadar) * 100)])),
+        ...Object.fromEntries(radarModels.map(m => [m.name, calcLogScore(m.depth, minDepth, maxDepth)])),
         fullMark: 100
       }
     ];
   }, [models]);
 
+  const chartHeight = isMobile ? 240 : 280;
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
       {/* 1. Bar Chart Card */}
-      <div className="bg-slate-950/20 border border-border/30 rounded-2xl p-5 backdrop-blur-md flex flex-col justify-between min-h-[400px]">
+      <div className="bg-slate-950/20 border border-border/30 rounded-2xl p-4 sm:p-5 backdrop-blur-md flex flex-col justify-between min-h-[340px]">
         <div>
           <h3 className="text-sm font-extrabold text-white tracking-tight uppercase">
             {activeMetric === 'parameters' ? 'Parameter Counts' :
@@ -127,8 +146,8 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
           </p>
         </div>
 
-        <div className="w-full h-[280px] mt-6 select-none font-sans text-xs">
-          <ResponsiveContainer width="99%" height={280}>
+        <div className="w-full h-[240px] mt-4 select-none font-sans text-xs">
+          <ResponsiveContainer width="99%" height={chartHeight}>
             <BarChart data={barChartData} margin={{ top: 10, right: 10, left: -25, bottom: 5 }}>
               <XAxis 
                 dataKey="name" 
@@ -185,9 +204,9 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
            </p>
         </div>
 
-        <div className="w-full h-[285px] mt-6 select-none font-sans text-[10px] sm:text-xs">
-          <ResponsiveContainer width="99%" height={285}>
-            <RadarChart cx="50%" cy="50%" outerRadius={isMobile ? "52%" : "75%"} data={radarChartData}>
+        <div className="w-full h-[240px] mt-4 select-none font-sans text-[10px] sm:text-xs">
+          <ResponsiveContainer width="99%" height={chartHeight}>
+            <RadarChart cx="50%" cy="50%" outerRadius={isMobile ? "48%" : "72%"} data={radarChartData}>
               <PolarGrid stroke="rgba(255,255,255,0.06)" />
               <PolarAngleAxis 
                 dataKey="subject" 
@@ -204,7 +223,7 @@ export default function ComparisonCharts({ models, activeMetric }: ComparisonCha
                 axisLine={false}
               />
               
-              {models.slice(0, 3).map((model) => (
+              {models.slice(0, 4).map((model) => (
                 <Radar 
                   key={model.id}
                   name={model.name} 

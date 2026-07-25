@@ -89,14 +89,14 @@ export default function Learn() {
     <div className="relative flex flex-col flex-1 bg-background grid-bg pb-16 overflow-x-hidden">
       <PageBackground variant="blue-purple" />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 w-full">
         {/* Header */}
-        <div className="flex flex-col gap-1 border-b border-border/10 pb-6 mb-8">
-          <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <GraduationCap className="h-8 w-8 text-primary" />
+        <div className="flex flex-col gap-1 border-b border-border/10 pb-4 sm:pb-5 mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
             Study Paths & Advisor
           </h1>
-          <p className="text-sm text-slate-400 font-medium">
+          <p className="text-[11px] sm:text-xs text-slate-400 font-medium leading-snug">
             Learn standard deep learning design paradigms or find the perfect architecture matching your hardware.
           </p>
         </div>

@@ -170,7 +170,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
       {/* Decorative ambient glowing overlay in center */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.06] bg-primary z-0" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 flex flex-col gap-6">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 sm:py-5 w-full flex-1 flex flex-col gap-4 sm:gap-5">
         {/* Navigation Breadcrumb */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
@@ -203,12 +203,12 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
         </div>
 
         {/* Heading */}
-        <div className="flex flex-col gap-1 border-b border-border/10 pb-6">
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+        <div className="flex flex-col gap-1 border-b border-border/10 pb-4 sm:pb-5">
+          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2.5">
             Model Comparison
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-primary" />
           </h1>
-          <p className="text-sm text-slate-450 font-medium">
+          <p className="text-[11px] sm:text-xs text-slate-450 font-medium leading-snug">
             Analyze hardware constraints, topological depths, and accuracy trade-offs across classic Convolutional Network generations.
           </p>
         </div>
@@ -402,7 +402,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
             {/* 2. Interactive Charts & Toggle Workspace */}
             <div className="flex flex-col gap-5 mt-3">
               {/* Tab Metric Selectors */}
-              <div className="flex md:grid md:grid-cols-5 overflow-x-auto scroll-fade-x md:overflow-x-visible gap-2 bg-slate-900/35 border border-border/20 rounded-2xl p-2 backdrop-blur-md scrollbar-none">
+              <div className="flex md:grid md:grid-cols-5 overflow-x-auto scroll-fade-x md:overflow-x-visible gap-1.5 bg-slate-900/35 border border-border/20 rounded-2xl p-1.5 backdrop-blur-md scrollbar-none">
                 {metricTabs.map((tab) => {
                   const TabIcon = tab.icon;
                   const isActive = activeMetric === tab.id;
@@ -411,7 +411,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
                       key={tab.id}
                       onClick={() => setActiveMetric(tab.id)}
                       className={cn(
-                        "flex-1 flex-shrink-0 min-w-[150px] md:min-w-0 min-h-[44px] flex items-center gap-2.5 rounded-xl p-3 border transition-all duration-300 text-left cursor-pointer focus:outline-none",
+                        "flex-1 flex-shrink-0 min-w-[136px] md:min-w-0 min-h-[40px] flex items-center gap-2 rounded-xl p-2.5 border transition-all duration-300 text-left cursor-pointer focus:outline-none",
                         isActive 
                           ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]" 
                           : "bg-transparent border-[#1f2937] text-[#9ca3af] hover:text-[#e5e7eb] hover:border-[#22d3ee]/30"

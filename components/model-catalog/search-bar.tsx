@@ -154,18 +154,18 @@ export default function SearchBar({
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.1 }}
-      className="mb-6 space-y-3"
+      className="mb-4 space-y-2.5"
     >
       {/* Search Input Bar */}
       <div className="relative" role="search">
         <div className="relative flex items-center">
-          <Search className="absolute left-4 h-5 w-5 text-slate-500 pointer-events-none" />
+          <Search className="absolute left-3 h-4 w-4 text-slate-500 pointer-events-none" />
           <input
             type="text"
             placeholder="Search by name, alias (ResNet, ViT, NAS), pattern (Residual, Attention), or component..."
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="w-full pl-11 pr-12 py-3 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 placeholder-slate-500 text-xs font-medium focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all min-h-[44px]"
+            className="w-full pl-9 pr-10 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 placeholder-slate-500 text-xs font-medium focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all min-h-[40px]"
             aria-label="Search neural network architectures"
           />
           {searchQuery && (
@@ -174,7 +174,7 @@ export default function SearchBar({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               onClick={handleClearSearch}
-              className="absolute right-1 text-slate-400 hover:text-slate-200 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+              className="absolute right-1 text-slate-400 hover:text-slate-200 transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer"
               aria-label="Clear search query"
             >
               <X className="h-5 w-5" />
@@ -191,7 +191,7 @@ export default function SearchBar({
           onClick={() => setShowFilters(!showFilters)}
           aria-expanded={showFilters}
           aria-label="Toggle educational search filters"
-          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors min-h-[44px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg px-1"
+          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors min-h-[40px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg px-1"
         >
           <ChevronDown className={`h-4 w-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
           <span>Educational Filters</span>
@@ -223,7 +223,7 @@ export default function SearchBar({
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="bg-[#020617] border border-[#1f2937] rounded-xl p-4 space-y-4">
+            <div className="bg-[#020617] border border-[#1f2937] rounded-xl p-3 space-y-3">
               
               {/* Pattern Filter */}
               <div>

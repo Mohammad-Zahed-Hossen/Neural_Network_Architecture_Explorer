@@ -41,14 +41,14 @@ export default function Catalog() {
       <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-primary z-0" />
 
       {/* Model Catalog Section */}
-      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 w-full">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8 border-b border-border/10 pb-4 sm:pb-6">
+      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-7 lg:py-9 w-full">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 border-b border-border/10 pb-3 sm:pb-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white mb-1.5 sm:mb-2 flex items-center gap-2">
-              <Network className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
+            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white mb-1 sm:mb-1.5 flex items-center gap-2">
+              <Network className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               Explore Models Catalog
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium">Browse and filter {modelsData.length} architectures by family category, architectural pattern, deployment target, hardware efficiency, and historical era.</p>
+            <p className="text-[11px] sm:text-xs text-slate-500 font-medium leading-snug">Browse and filter {modelsData.length} architectures by family category, architectural pattern, deployment target, hardware efficiency, and historical era.</p>
           </div>
           <Link
             href="/compare"
@@ -92,7 +92,7 @@ export default function Catalog() {
       />
 
       {/* Continue Learning section */}
-      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 lg:pb-10">
+      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-5 sm:pb-7 lg:pb-9">
         <ContinueLearning
           items={[
             { title: 'Guided Learning Paths', type: 'learn', href: '/learn', description: 'Follow structured beginner, intermediate, and advanced curricula.' },

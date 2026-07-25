@@ -12,6 +12,7 @@ import { getModelSummaries } from '@/lib/data-access/models';
 import ContinueLearning from '@/components/ui/continue-learning';
 import { searchEntities } from '@/lib/search/search-engine';
 import { enrichModelEntity } from '@/lib/search/metadata-enrichment';
+import MathFormula from '@/components/ui/math-formula';
 
 interface PatternInfo {
   id: string;
@@ -200,15 +201,15 @@ export default function ArchitecturePatterns() {
       <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-[#22d3ee] z-0" />
       <div className="absolute bottom-0 left-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-purple-500 z-0" />
 
-      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 w-full flex-1 flex flex-col gap-8">
+      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-7 lg:py-9 w-full flex-1 flex flex-col gap-4 sm:gap-6">
         
         {/* Header */}
-        <div className="flex flex-col gap-2 border-b border-border/10 pb-6">
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <Network className="h-8 w-8 text-[#22d3ee]" />
+        <div className="flex flex-col gap-1.5 border-b border-border/10 pb-4 sm:pb-5">
+          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <Network className="h-7 w-7 sm:h-8 sm:w-8 text-[#22d3ee]" />
             Architecture Design Patterns Library
           </h1>
-          <p className="text-sm text-slate-400 font-medium max-w-3xl leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-slate-400 font-medium max-w-3xl leading-snug">
             Master the core design blocks that transfer across hundreds of deep learning networks. Shift from memorizing model names to understanding routing motifs.
           </p>
         </div>
@@ -280,9 +281,9 @@ export default function ArchitecturePatterns() {
               </div>
 
               {/* Mathematical Equation Box */}
-              <div className="bg-slate-950 border border-border/40 rounded-xl p-4 font-mono text-center text-xs sm:text-sm font-black text-primary select-all shadow-inner relative overflow-hidden group overflow-x-auto scrollbar-none">
-                <div className="absolute top-1 left-2 text-[8px] text-slate-500 font-extrabold uppercase tracking-widest">Formal Equation</div>
-                <div className="py-2.5 tracking-wide text-[#22d3ee]">{activePattern.math}</div>
+              <div className="space-y-1">
+                <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest block">Formal Equation</span>
+                <MathFormula formula={activePattern.math} />
               </div>
 
               {/* Concept description boxes */}

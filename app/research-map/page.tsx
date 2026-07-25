@@ -22,51 +22,7 @@ const ResearchFlow = dynamic(() => import('@/components/research-map/research-fl
   ),
 });
 
-// Local fallbacks for foundational papers not present in papers.json
-const FOUNDATIONAL_PAPERS = [
-  {
-    id: "lenet",
-    modelIds: ["lenet"],
-    title: "Gradient-Based Learning Applied to Document Recognition",
-    authors: ["Yann LeCun", "Léon Bottou", "Yoshua Bengio", "Patrick Haffner"],
-    year: 1998,
-    contribution: "Introduced Convolutional Neural Networks (CNNs), weight sharing, local receptive fields, and pooling layer concepts.",
-    problem: "Early pattern recognition methods relied on manual feature extraction and fully connected layers which blew up parameters and ignored spatial features.",
-    strengths: [
-      "Pioneered convolutions and subsampling grids",
-      "Successfully deployed for reading bank checks globally"
-    ],
-    weaknesses: [
-      "Constrained by 1990s CPU compute power, limits depth to 5 layers",
-      "Saturating activations (tanh/sigmoid) restricted layer backpropagation"
-    ],
-    legacy: "Formulated the foundational core blocks of all modern computer vision systems.",
-    relevance: "Historically critical; LeNet-5 is the 'Hello World' architecture of Deep Learning.",
-    paperUrl: "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf"
-  },
-  {
-    id: "alexnet",
-    modelIds: ["alexnet"],
-    title: "ImageNet Classification with Deep Convolutional Neural Networks",
-    authors: ["Alex Krizhevsky", "Ilya Sutskever", "Geoffrey E. Hinton"],
-    year: 2012,
-    contribution: "Pioneered GPU-accelerated deep CNN training, ReLU activations, and dropout regularization, winning ImageNet 2012.",
-    problem: "Traditional computer vision algorithms stalled at ~26% error rate on ImageNet; deeper networks were too slow to train on CPUs.",
-    strengths: [
-      "Achieved massive 10%+ accuracy jump over shallow algorithms",
-      "Popularized ReLU activation function, speeding up training 6x"
-    ],
-    weaknesses: [
-      "Prone to overfitting (required heavy Dropout and Data Augmentation)",
-      "Ad-hoc layout decisions lacked homogeneous design guidelines"
-    ],
-    legacy: "Sparked the modern Deep Learning and AI boom, establishing GPU acceleration as the industry standard.",
-    relevance: "Pioneered the core layers (ReLU, MaxPool, Dropout, Dense) used in modern CNN training pipelines.",
-    paperUrl: "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf"
-  }
-];
-
-const ALL_PAPERS = [...FOUNDATIONAL_PAPERS, ...papersData];
+const ALL_PAPERS = papersData;
 
 export default function ResearchMap() {
   const searchParams = useSearchParams();
@@ -97,15 +53,15 @@ export default function ResearchMap() {
       <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-[#22d3ee] z-0" />
       <div className="absolute bottom-0 left-0 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none opacity-[0.05] bg-purple-500 z-0" />
 
-      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 w-full flex-1 flex flex-col gap-8">
+      <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-7 lg:py-9 w-full flex-1 flex flex-col gap-4 sm:gap-6">
         
         {/* Header */}
-        <div className="flex flex-col gap-2 border-b border-border/10 pb-6">
-          <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <GraduationCap className="h-8 w-8 text-[#22d3ee]" />
+        <div className="flex flex-col gap-1.5 border-b border-border/10 pb-4 sm:pb-5">
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-[#22d3ee]" />
             Architecture Evolution Research Map
           </h1>
-          <p className="text-sm text-slate-400 font-medium max-w-3xl leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-slate-400 font-medium max-w-3xl leading-snug">
             Trace the evolutionary lineage of deep learning backbones. Select nodes in the Directed Acyclic Graph (DAG) to inspect paper breakthroughs, core problem formulations, and modern relevance.
           </p>
         </div>

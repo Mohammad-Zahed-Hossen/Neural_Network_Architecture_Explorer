@@ -24,8 +24,8 @@ export default function ModelGrid({
 
   if (isLoading) {
     return (
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
@@ -126,12 +126,12 @@ export default function ModelGrid({
 
   return (
     <motion.div
-      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
         {models.map((model, index) => (
           <motion.div key={model.id} variants={itemVariants} custom={index} className="h-full">
             <ModelCard model={model} index={index} />

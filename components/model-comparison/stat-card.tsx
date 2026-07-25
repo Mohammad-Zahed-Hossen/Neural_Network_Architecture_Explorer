@@ -72,20 +72,20 @@ export default function StatCards({ models }: StatCardProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
       {highlights.map((card, i) => {
         const Icon = card.icon;
         return (
           <div 
             key={i}
             className={cn(
-              "p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[160px] glass-card shadow-[0_4px_12px_rgba(0,0,0,0.15)]",
+              "p-3.5 sm:p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[130px] glass-card shadow-[0_4px_12px_rgba(0,0,0,0.15)]",
               card.borderClass
             )}
           >
             {/* Top Row: Icon & Badge */}
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-[10px] text-slate-500 uppercase tracking-widest font-extrabold font-sans">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[9px] text-slate-500 uppercase tracking-widest font-extrabold font-sans">
                 {card.title}
               </span>
               <Badge variant={card.badge} className="text-[9px] py-0 px-2 uppercase font-extrabold tracking-wider">
@@ -94,24 +94,24 @@ export default function StatCards({ models }: StatCardProps) {
             </div>
 
             {/* Middle Row: Big Value */}
-            <div className="my-3.5">
+            <div className="my-2">
               <div className="flex items-baseline gap-1.5">
-                <span className={cn("text-3xl font-black tracking-tight", card.textClass)}>
+                <span className={cn("text-2xl sm:text-3xl font-black tracking-tight", card.textClass)}>
                   {card.value}
                 </span>
-                <span className="text-xs text-slate-400 font-bold font-sans">
+                <span className="text-[11px] text-slate-400 font-bold font-sans">
                   {card.modelName}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-1 font-semibold leading-relaxed">
+              <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-semibold leading-relaxed">
                 {card.subtitle}
               </p>
             </div>
 
             {/* Bottom Row: Explanation */}
-            <div className="flex items-center gap-1.5 border-t border-border/10 pt-2.5 mt-2">
-              <Icon className="h-3.5 w-3.5 text-slate-500" />
-              <span className="text-[10px] text-slate-500 font-medium">
+            <div className="flex items-center gap-1.5 border-t border-border/10 pt-2 mt-1.5">
+              <Icon className="h-3 w-3 text-slate-500" />
+              <span className="text-[9px] text-slate-500 font-medium">
                 {card.explanation}
               </span>
             </div>

@@ -14,6 +14,7 @@ import {
   getModelIconBgColor,
 } from '@/lib/utils/colors';
 import { getModelRelationships } from '@/lib/data/relationships';
+import { memo } from 'react';
 
 interface ModelCardProps {
   model: ModelSummary;
@@ -33,7 +34,7 @@ const maxAccuracy = Math.max(...allModels.map(m => m.top1Accuracy));
 const maxMemory = Math.max(...allModels.map(m => m.memoryUsage));
 
 
-export default function ModelCard({ model, index }: ModelCardProps) {
+function ModelCard({ model, index }: ModelCardProps) {
   const theme = getModelThemeColor(model);
   const category = modelCategories[model.category];
   const efficiency = efficiencyMap[model.efficiency];
@@ -79,10 +80,10 @@ export default function ModelCard({ model, index }: ModelCardProps) {
       <div className={`absolute top-0 right-0 w-32 h-32 rounded-full filter blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${glowColor}`} />
 
       {/* Header Container */}
-      <div className="p-6 pb-4 flex-1 flex flex-col justify-between">
+      <div className="p-3 sm:p-4 pb-2.5 flex-1 flex flex-col justify-between">
         <div>
           {/* Metadata Row */}
-          <div className="flex items-center justify-between mb-3 text-xs font-extrabold uppercase tracking-wider">
+          <div className="flex items-center justify-between mb-1.5 text-[10px] font-extrabold uppercase tracking-wider">
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className={category?.textColor || 'text-slate-400'}>{model.category}</span>
               <span className="text-slate-700 font-bold font-sans">•</span>
@@ -90,7 +91,7 @@ export default function ModelCard({ model, index }: ModelCardProps) {
               <span className="text-slate-700 font-bold font-sans">•</span>
               <span className="text-slate-400">{model.releaseYear || model.paperYear}</span>
             </div>
-            <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
+            <span className={`text-[9px] px-2 py-0.5 rounded-full border ${
               rel.difficulty === 'Beginner'
                 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                 : rel.difficulty === 'Intermediate'
@@ -102,45 +103,45 @@ export default function ModelCard({ model, index }: ModelCardProps) {
           </div>
 
           {/* Title */}
-          <div className="flex items-start gap-3.5 mb-3.5">
-            <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${iconBg} transition-transform group-hover:scale-105 duration-300`}>
-              <Cpu className={`h-5.5 w-5.5 ${theme}`} />
+          <div className="flex items-start gap-2.5 mb-2">
+            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${iconBg} transition-transform group-hover:scale-105 duration-300`}>
+              <Cpu className={`h-4.5 w-4.5 ${theme}`} />
             </div>
             <div>
-              <h3 className={`text-lg font-black tracking-tight text-[#e5e7eb] group-hover:${theme} transition-colors line-clamp-1`}>
+              <h3 className={`text-sm font-extrabold tracking-tight text-[#e5e7eb] group-hover:${theme} transition-colors line-clamp-1`}>
                 {model.name}
               </h3>
-              <p className="text-xs text-slate-400 line-clamp-1 font-bold mt-0.5" title={model.authors.join(', ')}>
+              <p className="text-[10px] text-slate-400 line-clamp-1 font-bold mt-0.5" title={model.authors.join(', ')}>
                 {model.authors[0]} et al.
               </p>
             </div>
           </div>
 
           {/* Short Description */}
-          <p className="text-xs text-[#9ca3af] leading-relaxed min-h-[55px] line-clamp-3">
+          <p className="text-xs text-slate-350 leading-relaxed min-h-[38px] line-clamp-2 font-normal mt-1">
             {model.description}
           </p>
         </div>
 
         {/* Educational Relationship Badges */}
         {((rel.patterns && rel.patterns.length > 0) || (rel.papers && rel.papers.paperPageAnchor)) && (
-          <div className="mt-4 -mx-6 px-6 py-2 bg-slate-900/30 border-t border-b border-white/[0.04] flex flex-wrap items-center gap-1.5 text-[11px] font-semibold">
+          <div className="mt-2.5 -mx-3 sm:-mx-4 px-3 sm:px-4 py-1 bg-slate-900/30 border-t border-b border-white/[0.04] flex flex-wrap items-center gap-1 text-[9px] font-semibold">
             {rel.patterns && rel.patterns.slice(0, 2).map(pat => (
               <Link
                 key={pat.id}
                 href={pat.href}
-                className="px-2 py-0.5 rounded-md bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/20 hover:bg-[#22d3ee]/20 transition-colors flex items-center gap-1"
+                className="px-1.5 py-0.5 rounded-md bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/20 hover:bg-[#22d3ee]/20 transition-colors flex items-center gap-1"
               >
-                <span className="text-[10px] uppercase font-bold text-slate-500">Pattern:</span>
+                <span className="text-[9px] uppercase font-bold text-slate-500">Pattern:</span>
                 <span>{pat.name.split(' (')[0]}</span>
               </Link>
             ))}
             {rel.papers && rel.papers.paperPageAnchor && (
               <Link
                 href={rel.papers.paperPageAnchor}
-                className="px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/20 transition-colors flex items-center gap-1"
+                className="px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/20 transition-colors flex items-center gap-1"
               >
-                <span className="text-[10px] uppercase font-bold text-slate-500">Paper:</span>
+                <span className="text-[9px] uppercase font-bold text-slate-500">Paper:</span>
                 <span>{model.authors[0]} ({model.releaseYear || model.paperYear})</span>
               </Link>
             )}
@@ -148,13 +149,13 @@ export default function ModelCard({ model, index }: ModelCardProps) {
         )}
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1 mt-4">
+        <div className="flex flex-wrap gap-1 mt-2.5">
           {orderedTags.map(tag => (
             <span 
               key={tag} 
-              className="text-xs font-extrabold text-[#9ca3af] bg-[#020617]/50 border border-white/5 px-2.5 py-1 rounded-md flex items-center gap-1 uppercase tracking-wide min-h-[28px]"
+              className="text-[10px] font-extrabold text-[#9ca3af] bg-[#020617]/50 border border-white/5 px-2 py-0.5 rounded-md flex items-center gap-1 uppercase tracking-wide"
             >
-              <Tag className="h-3 w-3 text-[#6b7280]" />
+              <Tag className="h-2.5 w-2.5 text-[#6b7280]" />
               {tag}
             </span>
           ))}
@@ -162,55 +163,55 @@ export default function ModelCard({ model, index }: ModelCardProps) {
       </div>
 
       {/* Stats Section in a 2x2 Grid */}
-      <div className="px-6 py-4 border-t border-white/5 bg-slate-950/40 grid grid-cols-2 gap-3.5 shrink-0">
+      <div className="px-3 sm:px-4 py-2.5 border-t border-white/5 bg-slate-950/40 grid grid-cols-2 gap-2 shrink-0">
         {/* PARAMS */}
-        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-2.5 flex flex-col justify-center">
-          <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block">Params</span>
-          <span className="text-xs font-black text-slate-200 mt-0.5">{formatShortNumber(model.totalParameters)}</span>
-          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1.5">
+        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-1.5 flex flex-col justify-center">
+          <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block">Params</span>
+          <span className="text-[10px] font-black text-slate-200 mt-0.5">{formatShortNumber(model.totalParameters)}</span>
+          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1">
             <div className="h-full rounded-full" style={{ backgroundColor: model.colorTheme, width: `${paramPct}%` }} />
           </div>
         </div>
 
         {/* TOP-1 ACCURACY */}
-        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-2.5 flex flex-col justify-center">
-          <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block">Accuracy</span>
-          <span className="text-xs font-black text-emerald-400 mt-0.5">{formatAccuracy(model.top1Accuracy)}</span>
-          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1.5">
+        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-1.5 flex flex-col justify-center">
+          <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block">Accuracy</span>
+          <span className="text-[10px] font-black text-emerald-400 mt-0.5">{formatAccuracy(model.top1Accuracy)}</span>
+          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1">
             <div className="h-full rounded-full bg-emerald-500" style={{ width: `${accPct}%` }} />
           </div>
         </div>
 
         {/* MEMORY */}
-        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-2.5 flex flex-col justify-center">
-          <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block">Memory</span>
-          <span className="text-xs font-black text-amber-400 mt-0.5">{formatMemory(model.memoryUsage)}</span>
-          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1.5">
+        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-1.5 flex flex-col justify-center">
+          <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block">Memory</span>
+          <span className="text-[10px] font-black text-amber-400 mt-0.5">{formatMemory(model.memoryUsage)}</span>
+          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1">
             <div className="h-full rounded-full bg-amber-500" style={{ width: `${memPct}%` }} />
           </div>
         </div>
 
         {/* DEPTH */}
-        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-2.5 flex flex-col justify-center">
-          <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block">Depth</span>
-          <span className="text-xs font-black text-slate-200 mt-0.5">{model.depth} layers</span>
-          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1.5">
+        <div className="bg-slate-900/5 border border-white/[0.03] rounded-xl p-1.5 flex flex-col justify-center">
+          <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block">Depth</span>
+          <span className="text-[10px] font-black text-slate-200 mt-0.5">{model.depth} layers</span>
+          <div className="h-1 w-full bg-slate-900/50 rounded-full overflow-hidden mt-1">
             <div className="h-full rounded-full bg-slate-500" style={{ width: `${depthPct}%` }} />
           </div>
         </div>
       </div>
 
       {/* Card Action Footer */}
-      <div className="mt-auto p-6 pt-4 border-t border-white/5 flex items-center justify-between shrink-0 bg-slate-950/20 gap-3">
+      <div className="mt-auto p-3 sm:p-4 pt-2.5 border-t border-white/5 flex items-center justify-between shrink-0 bg-slate-950/20 gap-2">
         <Link
           href={`/compare?models=${model.id}`}
-          className="min-h-[44px] text-xs font-extrabold text-slate-400 hover:text-white transition-all flex items-center gap-1 cursor-pointer bg-transparent hover:bg-slate-900/40 px-3.5 rounded-xl uppercase tracking-wider"
+          className="min-h-[44px] text-[10px] font-extrabold text-slate-400 hover:text-white transition-all flex items-center gap-1 cursor-pointer bg-transparent hover:bg-slate-900/40 px-2.5 rounded-xl uppercase tracking-wider"
         >
           Compare
         </Link>
         <Link
           href={`/models/${model.id}`}
-          className="min-h-[44px] flex items-center gap-1.5 px-5 text-xs font-extrabold rounded-xl bg-[#22d3ee] text-[#020617] hover:bg-[#06b6d4] transition-all duration-300 shadow-md shadow-cyan-500/10 cursor-pointer uppercase tracking-wider shrink-0"
+          className="min-h-[44px] flex items-center gap-1.5 px-3.5 text-[10px] font-extrabold rounded-xl bg-[#22d3ee] text-[#020617] hover:bg-[#06b6d4] transition-all duration-300 shadow-md shadow-cyan-500/10 cursor-pointer uppercase tracking-wider shrink-0"
         >
           <span>Explore</span>
           <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -219,3 +220,5 @@ export default function ModelCard({ model, index }: ModelCardProps) {
     </motion.div>
   );
 }
+
+export default memo(ModelCard);

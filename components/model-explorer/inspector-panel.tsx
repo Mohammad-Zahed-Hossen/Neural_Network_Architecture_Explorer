@@ -71,55 +71,56 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
   // Empty Placeholder state
   if (!layer) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-8 text-center bg-slate-950/30 border border-border/30 rounded-2xl h-[calc(100vh-280px)] min-h-[550px] backdrop-blur-md overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-8 text-center bg-slate-950/40 border border-border/30 rounded-2xl h-full min-h-[550px] backdrop-blur-md overflow-y-auto shadow-xl">
         <div className="relative mb-5 shrink-0">
-          <div className="absolute inset-0 bg-primary/10 rounded-full filter blur-xl animate-pulse" />
-          <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-slate-900 text-slate-400">
-            <Layers className="h-6 w-6 text-primary/70" />
+          <div className="absolute inset-0 bg-primary/20 rounded-full filter blur-xl animate-pulse" />
+          <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/30 bg-slate-900 text-primary shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+            <Layers className="h-7 w-7 text-primary" />
           </div>
         </div>
         
-        <h3 className="text-base font-extrabold text-white tracking-tight shrink-0">Inspect Architecture Details</h3>
+        <h3 className="text-base font-extrabold text-white tracking-tight shrink-0">Inspect Layer Details</h3>
         <p className="text-xs text-slate-400 mt-2 max-w-md leading-relaxed shrink-0">
-          Click any layer in the sequence to see its configuration, shape changes, and parameter counts.
+          Select any layer from <strong className="text-slate-200 font-bold">Topology Graph</strong> or <strong className="text-slate-200 font-bold">Layers List</strong> to inspect configuration, shape transformations, and parameter math.
         </p>
 
-        {/* 3-Column Grid */}
+        {/* 3-Column Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 gap-3 w-full mt-6 border-t border-border/10 pt-6">
-          <div className="flex flex-col items-center sm:items-start lg:items-center xl:items-start p-3 rounded-xl bg-slate-900/30 border border-border/10 text-center sm:text-left lg:text-center xl:text-left hover:border-primary/20 transition-all duration-300">
+          <div className="flex flex-col items-center sm:items-start lg:items-center xl:items-start p-3 rounded-xl bg-slate-900/40 border border-border/10 text-center sm:text-left lg:text-center xl:text-left hover:border-primary/30 transition-all duration-300">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-2 shrink-0">
               <Settings className="h-3.5 w-3.5" />
             </div>
-            <h4 className="text-[10px] font-extrabold text-slate-200 tracking-wide uppercase">Layer settings</h4>
-            <p className="text-[10px] text-slate-500 mt-1 leading-normal font-medium">
-              Kernel size, stride, padding, and activation for the selected layer.
+            <h4 className="text-[10px] font-extrabold text-slate-200 tracking-wide uppercase">Hyperparameters</h4>
+            <p className="text-[10px] text-slate-400 mt-1 leading-normal font-medium">
+              Kernel size, strides, padding, and activation formulas.
             </p>
           </div>
 
-          <div className="flex flex-col items-center sm:items-start lg:items-center xl:items-start p-3 rounded-xl bg-slate-900/30 border border-border/10 text-center sm:text-left lg:text-center xl:text-left hover:border-primary/20 transition-all duration-300">
+          <div className="flex flex-col items-center sm:items-start lg:items-center xl:items-start p-3 rounded-xl bg-slate-900/40 border border-border/10 text-center sm:text-left lg:text-center xl:text-left hover:border-primary/30 transition-all duration-300">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-2 shrink-0">
               <Calculator className="h-3.5 w-3.5" />
             </div>
-            <h4 className="text-[10px] font-extrabold text-slate-200 tracking-wide uppercase">Parameter math</h4>
-            <p className="text-[10px] text-slate-500 mt-1 leading-normal font-medium">
-              Exact weight and bias counts, with the formula used.
+            <h4 className="text-[10px] font-extrabold text-slate-200 tracking-wide uppercase">Parameter Math</h4>
+            <p className="text-[10px] text-slate-400 mt-1 leading-normal font-medium">
+              Exact weight & bias split with step-by-step arithmetic.
             </p>
           </div>
 
-          <div className="flex flex-col items-center sm:items-start lg:items-center xl:items-start p-3 rounded-xl bg-slate-900/30 border border-border/10 text-center sm:text-left lg:text-center xl:text-left hover:border-primary/20 transition-all duration-300">
+          <div className="flex flex-col items-center sm:items-start lg:items-center xl:items-start p-3 rounded-xl bg-slate-900/40 border border-border/10 text-center sm:text-left lg:text-center xl:text-left hover:border-primary/30 transition-all duration-300">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 mb-2 shrink-0">
               <Lightbulb className="h-3.5 w-3.5" />
             </div>
-            <h4 className="text-[10px] font-extrabold text-slate-200 tracking-wide uppercase">Intuition & context</h4>
-            <p className="text-[10px] text-slate-500 mt-1 leading-normal font-medium">
-              Short explanations and everyday analogies to build intuition.
+            <h4 className="text-[10px] font-extrabold text-slate-200 tracking-wide uppercase">Intuition & Notes</h4>
+            <p className="text-[10px] text-slate-400 mt-1 leading-normal font-medium">
+              Real-world analogies, functional purpose, and takeaways.
             </p>
           </div>
         </div>
 
         {/* Tip Indicator */}
-        <p className="text-[10px] text-slate-500 font-semibold italic mt-6 shrink-0">
-          Tip: Click layers in the Topology Graph or Layers List to update the details panel.
+        <p className="text-[10px] text-slate-500 font-semibold italic mt-6 shrink-0 flex items-center gap-1">
+          <Info className="h-3 w-3 text-slate-500" />
+          Click any layer on the canvas or layer list to open inspection view.
         </p>
       </div>
     );
@@ -130,7 +131,7 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
     border: 'border-slate-700',
     text: 'text-slate-300',
     bg: 'bg-slate-800/10',
-    badge: 'default',
+    badge: 'default' as const,
     accentBg: 'bg-slate-800/20'
   };
 
@@ -139,19 +140,18 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
     ? Math.round((layer.parameters.total / totalModelParameters) * 100) 
     : 0;
 
-  // Formatting shapes
   const formatShape = (dims: (number | null)[]) => {
     const clean = dims.filter(d => d !== null);
     return clean.length > 0 ? clean.join(' × ') : 'Flat';
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-slate-950/30 border border-border/30 rounded-2xl h-[calc(100vh-280px)] min-h-[550px] backdrop-blur-md overflow-hidden relative">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-border/20 p-4 shrink-0 bg-slate-950/40">
+    <div className="flex-1 flex flex-col bg-slate-950/50 border border-border/30 rounded-2xl h-full min-h-[550px] backdrop-blur-md overflow-hidden relative shadow-2xl">
+      {/* Sticky Inspector Header */}
+      <div className="sticky top-0 z-20 flex items-center justify-between border-b border-border/20 p-4 shrink-0 bg-slate-950/95 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className={cn(
-            "flex h-9 w-9 items-center justify-center rounded-lg border border-slate-750",
+            "flex h-9 w-9 items-center justify-center rounded-lg border border-slate-700/80 shadow-md",
             styles.accentBg,
             styles.text
           )}>
@@ -161,16 +161,17 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
             <div className="flex items-center gap-2">
               <h3 className="font-extrabold text-white text-sm tracking-tight">{layer.name}</h3>
               <Badge variant={styles.badge} className="text-[9px] py-0 px-1.5 uppercase font-bold tracking-wider">
-                {layer.type === 'conv2d' ? 'Conv2D' : layer.type.replace('_', ' ')}
+                {layer.type === 'conv2d' ? 'Conv2D' : layer.type.replace(/_/g, ' ')}
               </Badge>
             </div>
-            <p className="text-[10px] text-slate-500 font-medium">Layer Inspector</p>
+            <p className="text-[10px] text-slate-400 font-mono mt-0.5">ID: {layer.id}</p>
           </div>
         </div>
 
         <button 
           onClick={onClose}
-          className="text-slate-400 hover:text-white hover:bg-slate-900/60 p-1.5 rounded-lg transition-all border border-transparent hover:border-border/30 cursor-pointer"
+          className="text-slate-400 hover:text-white hover:bg-slate-900 p-1.5 rounded-lg transition-all border border-transparent hover:border-border/30 cursor-pointer"
+          title="Close Inspector"
         >
           <X className="h-4 w-4" />
         </button>
@@ -331,9 +332,9 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
 
         {/* Educational Note insights */}
         <CollapsibleSection title="Educational Guide" icon={Lightbulb} defaultOpen={true}>
-          <div className="space-y-4">
+          <div className="space-y-3.5">
             {/* Main detailed text */}
-            <div className="space-y-1.5">
+            <div className="p-3 bg-slate-900/60 border border-border/15 rounded-xl">
               <p className="text-xs text-slate-300 leading-relaxed font-medium">
                 {layer.educationalNote.detailed}
               </p>
@@ -341,12 +342,12 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
 
             {/* Analogy Box */}
             {layer.educationalNote.analogy && (
-              <div className="border border-amber-500/15 bg-amber-500/[0.01] rounded-xl p-3.5 space-y-1">
+              <div className="border border-amber-500/30 bg-amber-950/20 rounded-xl p-3.5 space-y-1 shadow-sm">
                 <div className="flex items-center gap-1.5 text-amber-400">
-                  <Lightbulb className="h-4 w-4 shrink-0" />
+                  <Lightbulb className="h-4 w-4 shrink-0 text-amber-400" />
                   <span className="text-[10px] font-extrabold uppercase tracking-wider">Concept Analogy</span>
                 </div>
-                <p className="text-xs text-slate-350 italic leading-relaxed font-medium pl-0.5">
+                <p className="text-xs text-amber-100/90 italic leading-relaxed font-medium pl-0.5">
                   &ldquo;{layer.educationalNote.analogy}&rdquo;
                 </p>
               </div>
@@ -354,24 +355,24 @@ export default function InspectorPanel({ layer, onClose, totalModelParameters = 
 
             {/* Why it matters Box */}
             {layer.educationalNote.whyItMatters && (
-              <div className="border border-blue-500/15 bg-blue-500/[0.01] rounded-xl p-3.5 space-y-1">
+              <div className="border border-blue-500/30 bg-blue-950/20 rounded-xl p-3.5 space-y-1 shadow-sm">
                 <div className="flex items-center gap-1.5 text-blue-400">
-                  <Activity className="h-4 w-4 shrink-0" />
+                  <Activity className="h-4 w-4 shrink-0 text-blue-400" />
                   <span className="text-[10px] font-extrabold uppercase tracking-wider">Why It Matters</span>
                 </div>
-                <p className="text-xs text-slate-350 leading-relaxed font-medium pl-0.5">
+                <p className="text-xs text-blue-100/90 leading-relaxed font-medium pl-0.5">
                   {layer.educationalNote.whyItMatters}
                 </p>
               </div>
             )}
 
             {/* Key Takeaway Box */}
-            <div className="border border-emerald-500/15 bg-emerald-500/[0.01] rounded-xl p-3.5 space-y-1">
+            <div className="border border-emerald-500/30 bg-emerald-950/20 rounded-xl p-3.5 space-y-1 shadow-sm">
               <div className="flex items-center gap-1.5 text-emerald-400">
-                <Award className="h-4 w-4 shrink-0" />
+                <Award className="h-4 w-4 shrink-0 text-emerald-400" />
                 <span className="text-[10px] font-extrabold uppercase tracking-wider">Key Takeaway</span>
               </div>
-              <p className="text-xs text-slate-350 leading-relaxed font-medium pl-0.5">
+              <p className="text-xs text-emerald-100/90 leading-relaxed font-medium pl-0.5">
                 {layer.educationalNote.keyTakeaway}
               </p>
             </div>

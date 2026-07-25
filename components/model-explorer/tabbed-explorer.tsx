@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   ArrowLeft, ArrowRight, BookOpen, 
-  ExternalLink, ListFilter, Network, Compass
+  ExternalLink, ListFilter, Network, Compass,
+  Layers, Info, Sparkles, X, Activity, HelpCircle
 } from 'lucide-react';
 import { NeuralNetworkModel, GroupedNode, GroupedEdge, LayerGroup, Layer } from '@/lib/schema/model.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
@@ -24,8 +25,9 @@ const MAX_DETAILED_NODES = 100;
 const FlowCanvas = dynamic(() => import('./flow-canvas'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-400 bg-slate-950/20 rounded-2xl flex items-center justify-center animate-pulse border border-border/20">
-      <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">Mounting interactive topology graph...</span>
+    <div className="w-full h-full min-h-[400px] bg-slate-950/20 rounded-2xl flex flex-col items-center justify-center animate-pulse border border-border/20 gap-2">
+      <Network className="h-8 w-8 text-primary/40 animate-spin" />
+      <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Mounting interactive topology graph...</span>
     </div>
   ),
 });
@@ -65,14 +67,15 @@ interface TabbedExplorerProps {
 export default function TabbedExplorer({ overview, layers, graphData }: TabbedExplorerProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'layers' | 'topology'>('overview');
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
+  const [showLegend, setShowLegend] = useState(false);
   const shouldReduceMotion = useReducedMotionPreference();
   const detailedNodeCount = graphData.nodes.length;
   const isDetailedViewDisabled = detailedNodeCount > MAX_DETAILED_NODES;
   const detailedPreferenceKey = `nn_showDetailedLayers:${overview.id}`;
+  const helperDismissKey = `nn_topology_helper_dismissed`;
 
   // Initialize showDetailedLayers from localStorage (client-side only)
   const [showDetailedLayers, setShowDetailedLayers] = useState(() => {
-    // This runs on client only, so localStorage is available
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(detailedPreferenceKey);
       if (saved !== null) {
@@ -82,9 +85,22 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
     return false;
   });
 
-  // Derived state: has visited topology if currently on topology tab
-  const hasVisitedTopology = activeTab === 'topology';
+  // Educational quick tips helper dismissal
+  const [hideTopologyTips, setHideTopologyTips] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(helperDismissKey) === 'true';
+    }
+    return false;
+  });
 
+  const dismissTips = () => {
+    setHideTopologyTips(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(helperDismissKey, 'true');
+    }
+  };
+
+  const hasVisitedTopology = activeTab === 'topology';
   const totalParams = overview.totalParameters;
 
   // Selected layer for inspector panel
@@ -96,16 +112,16 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
     <div className="flex-1 flex flex-col w-full bg-background mesh-gradient relative pb-12 overflow-x-hidden">
       {/* Dynamic Background Glow Overlay matching model theme */}
       <div 
-        className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full filter blur-[150px] pointer-events-none opacity-10 z-0"
+        className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full filter blur-[160px] pointer-events-none opacity-10 z-0"
         style={{ backgroundColor: overview.colorTheme }}
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 flex flex-col gap-6">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 flex flex-col gap-4 sm:gap-6">
         {/* Navigation Breadcrumbs */}
         <div className="flex items-center">
           <Link
             href="/catalog"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-slate-900/50 border border-border/30 rounded-xl px-3.5 py-1.5 transition-all"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-slate-900/50 border border-border/30 rounded-xl px-3.5 py-1.5 transition-all shadow-sm"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to Catalog
@@ -113,37 +129,37 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
         </div>
 
         {/* Model Title & Description Header */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <div>
-            <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
               {overview.name}
               <span 
-                className="inline-block w-2.5 h-2.5 rounded-full" 
+                className="inline-block w-2.5 h-2.5 rounded-full shadow-[0_0_10px_currentColor]" 
                 style={{ backgroundColor: overview.colorTheme }} 
               />
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1 font-medium italic">
+            <p className="text-xs text-slate-400 mt-0.5 font-medium italic">
               {overview.fullName}
             </p>
           </div>
 
-          {/* New 3-Card Group metadata */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* 3-Card Group metadata */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Card 1: Publication info */}
-            <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-between min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+            <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-3 flex flex-col justify-between min-h-[90px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
               <div>
-                <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Publication Reference</span>
+                <span className="text-[11px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Publication Reference</span>
                 <span className="text-sm font-extrabold text-slate-200 block">
                   {overview.paperYear} - {overview.authors[0]}{overview.authors.length > 1 ? ` & ${overview.authors[1]}` : ''}
                 </span>
-                <span className="text-xs text-slate-400 font-semibold truncate block max-w-xs mt-0.5" title={overview.authors.join(', ')}>
+                <span className="text-[11px] text-slate-400 font-semibold truncate block max-w-xs mt-0.5" title={overview.authors.join(', ')}>
                   By {overview.authors.slice(0, 3).join(', ')}{overview.authors.length > 3 ? ' et al.' : ''}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-3 items-center">
+              <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-2 items-center">
                 <Link
                   href={`/papers#${overview.id}`}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:text-primary-hover transition-colors min-h-[32px]"
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:text-primary-hover transition-colors min-h-[32px]"
                 >
                   View Paper Summary <BookOpen className="h-3.5 w-3.5" />
                 </Link>
@@ -160,30 +176,30 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             </div>
 
             {/* Card 2: Parameters and Layers */}
-            <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-center min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-              <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Complexity & Depth</span>
+            <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-3 flex flex-col justify-center min-h-[90px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+              <span className="text-[11px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Complexity & Depth</span>
               <span className="text-sm font-extrabold text-slate-200 block">{formatShortNumber(overview.totalParameters)} params</span>
-              <span className="text-xs text-slate-400 font-semibold mt-0.5 block">{overview.depth} network layers</span>
+              <span className="text-[11px] text-slate-400 font-semibold mt-0.5 block">{overview.depth} network layers</span>
             </div>
 
             {/* Card 3: Accuracy and Memory */}
-            <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-center min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-              <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Accuracy & Footprint</span>
+            <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-3 flex flex-col justify-center min-h-[90px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+              <span className="text-[11px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Accuracy & Footprint</span>
               <span className="text-sm font-extrabold text-slate-200 block">{formatAccuracy(overview.top1Accuracy)} Top-1 Acc</span>
-              <span className="text-xs text-slate-400 font-semibold mt-0.5 block">{formatMemory(overview.memoryUsage)} VRAM footprint</span>
+              <span className="text-[11px] text-slate-400 font-semibold mt-0.5 block">{formatMemory(overview.memoryUsage)} VRAM footprint</span>
             </div>
           </div>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex bg-slate-900/40 border border-border/25 rounded-2xl p-1 backdrop-blur-md shrink-0">
+        <div className="flex bg-slate-900/50 border border-border/30 rounded-2xl p-1 backdrop-blur-md shrink-0 shadow-lg">
           <button
             onClick={() => setActiveTab('overview')}
             aria-label="Overview"
             className={cn(
               "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'overview'
-                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
+                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_15px_rgba(34,211,238,0.3)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
             )}
           >
@@ -196,7 +212,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             className={cn(
               "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'layers'
-                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
+                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_15px_rgba(34,211,238,0.3)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
             )}
           >
@@ -210,7 +226,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             className={cn(
               "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'topology'
-                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
+                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_15px_rgba(34,211,238,0.3)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
             )}
           >
@@ -220,8 +236,8 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
           </button>
         </div>
 
-        {/* Workspace Panels */}
-        <div className="relative flex-1 min-h-[450px]">
+        {/* Workspace Panels Container (Desktop standard height: 75-82vh) */}
+        <div className="relative flex-1 min-h-[550px]">
           {/* Overview Panel */}
           <div className={activeTab === 'overview' ? "block" : "hidden"}>
             <motion.div 
@@ -231,16 +247,16 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
               className="grid grid-cols-1 lg:grid-cols-3 gap-6"
             >
               {/* Key Concept card */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
-                  <h2 className="text-lg font-bold text-[#e5e7eb] tracking-tight flex items-center gap-2">
-                    <Compass className="h-5 w-5 text-[#22d3ee]" />
+              <div className="lg:col-span-2 space-y-4">
+                <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 sm:p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-3">
+                  <h2 className="text-base sm:text-lg font-bold text-[#e5e7eb] tracking-tight flex items-center gap-2">
+                    <Compass className="h-4 w-4 sm:h-5 sm:w-5 text-[#22d3ee]" />
                     Architecture Idea & Design Philosophy
                   </h2>
-                  <p className="text-sm text-[#9ca3af] leading-relaxed">
+                  <p className="text-[11px] sm:text-sm text-[#9ca3af] leading-snug">
                     {overview.description}
                   </p>
-                  <p className="text-sm text-[#9ca3af] leading-relaxed">
+                  <p className="text-[11px] sm:text-sm text-[#9ca3af] leading-snug">
                     This model is classified under the <strong className="text-[#e5e7eb]">{overview.category}</strong> family. 
                     It operates with a layer depth of <strong className="text-[#e5e7eb]">{overview.depth}</strong>, 
                     consuming around <strong className="text-[#e5e7eb]">{formatMemory(overview.memoryUsage)}</strong> inference RAM 
@@ -249,8 +265,8 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
                 </div>
 
                 {/* External links */}
-                <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
-                  <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
+                <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 sm:p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-3">
+                  <h3 className="text-[11px] sm:text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <a
                       href={overview.paperUrl}
@@ -281,8 +297,8 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
               </div>
 
               {/* Architectural Metrics sidebar */}
-              <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-6">
-                <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider border-b border-[#1f2937] pb-2">Hardware & Accuracy Benchmarks</h3>
+              <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 sm:p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
+                <h3 className="text-[11px] sm:text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider border-b border-[#1f2937] pb-2">Hardware & Accuracy Benchmarks</h3>
                 
                 <div className="space-y-4">
                   <div>
@@ -319,7 +335,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
               </div>
             </motion.div>
 
-            {/* Model Relationships & Educational Flow (Patterns, Concepts, Lineage, Related Models, Compare, Continue Learning) */}
+            {/* Model Relationships */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={activeTab === 'overview' ? { opacity: 1, y: 0 } : {}}
@@ -332,17 +348,17 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             </motion.div>
            </div>
 
-           {/* Layers Panel */}
+           {/* Layers Panel - Desktop IDE height */}
            <div className={activeTab === 'layers' ? "block" : "hidden"}>
              <motion.div 
                initial={{ opacity: 0 }}
                animate={activeTab === 'layers' ? { opacity: 1 } : {}}
                transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-               className="flex flex-col lg:flex-row gap-6 items-stretch"
+               className="flex flex-col lg:flex-row gap-6 items-stretch lg:h-[calc(80vh-140px)] lg:min-h-[620px] lg:max-h-[900px]"
              >
                {/* Layers List */}
-               <div className="flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] max-h-[600px] overflow-y-auto pr-1 scrollbar-thin">
-                 <div className="flex items-center justify-between mb-4 border-b border-[#1f2937] pb-2">
+               <div className="flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)] h-[550px] lg:h-full overflow-y-auto pr-1 scrollbar-thin">
+                 <div className="flex items-center justify-between mb-4 border-b border-[#1f2937] pb-2 shrink-0">
                    <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-extrabold">
                      Layer Stack Directory ({layers.length} Total Layers)
                    </span>
@@ -362,7 +378,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
                </div>
 
                {/* Inspector panel - Desktop only (lg+) */}
-               <div className="hidden lg:block w-full lg:w-[420px] shrink-0">
+               <div className="hidden lg:block w-full lg:w-[420px] lg:h-full shrink-0">
                  <InspectorPanel
                    layer={selectedLayer}
                    onClose={() => setSelectedLayerId(null)}
@@ -379,58 +395,168 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
              />
            </div>
 
-           {/* Topology Panel */}
+           {/* Topology Panel - IDE workspace layout */}
            <div className={activeTab === 'topology' ? "block" : "hidden"}>
              {hasVisitedTopology && (
                <motion.div 
                  initial={{ opacity: 0 }}
                  animate={activeTab === 'topology' ? { opacity: 1 } : {}}
                  transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-                 className="flex flex-col gap-4"
+                 className="flex flex-col gap-4 lg:h-[calc(82vh-140px)] lg:min-h-[640px] lg:max-h-[920px]"
                >
-                 {/* Controls bar */}
-                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-0 bg-[#020617] border border-[#1f2937] p-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-                   <div className="flex items-center gap-2">
-                     <Network className="h-4.5 w-4.5 text-primary" />
-                     <span className="text-xs font-bold text-white tracking-tight">Interactive Topology Layout</span>
+                 {/* Structured Topology Context Header */}
+                 <div className="bg-[#020617] border border-[#1f2937] p-4 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-3 shrink-0">
+                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-border/15 pb-3">
+                     <div>
+                       <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight flex items-center gap-2">
+                         <Network className="h-4.5 w-4.5 text-primary" />
+                         Topology Explorer
+                         <span className="text-[10px] font-mono bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-md font-bold uppercase">
+                           {showDetailedLayers ? 'Detailed View' : 'Grouped View'}
+                         </span>
+                       </h2>
+                       <p className="text-xs text-slate-400 font-medium mt-0.5">
+                         Visual representation of tensor data flow and computational blocks through {overview.name}.
+                       </p>
+                     </div>
+
+                     {/* Segmented View Control Switch */}
+                     <div className="flex flex-col items-start md:items-end gap-1.5 shrink-0">
+                       <div className="inline-flex p-1 bg-slate-950 rounded-xl border border-slate-800">
+                         <button
+                           onClick={() => {
+                             setShowDetailedLayers(false);
+                             localStorage.setItem(detailedPreferenceKey, 'false');
+                             setSelectedLayerId(null);
+                           }}
+                           className={cn(
+                             "px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5",
+                             !showDetailedLayers 
+                               ? "bg-primary text-slate-950 shadow-md" 
+                               : "text-slate-400 hover:text-slate-200"
+                           )}
+                         >
+                           <Layers className="h-3.5 w-3.5" />
+                           Grouped Architecture
+                         </button>
+                         <button
+                           disabled={isDetailedViewDisabled}
+                           title={
+                             isDetailedViewDisabled
+                               ? `This model has ${detailedNodeCount} layers. Detailed view is disabled to maintain 60fps rendering responsiveness.`
+                               : 'Switch to detailed layer execution view'
+                           }
+                           onClick={() => {
+                             if (isDetailedViewDisabled) return;
+                             setShowDetailedLayers(true);
+                             localStorage.setItem(detailedPreferenceKey, 'true');
+                             setSelectedLayerId(null);
+                           }}
+                           className={cn(
+                             "px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5",
+                             isDetailedViewDisabled ? "cursor-not-allowed opacity-50 text-slate-600" : "cursor-pointer",
+                             showDetailedLayers 
+                               ? "bg-primary text-slate-950 shadow-md" 
+                               : "text-slate-400 hover:text-slate-200"
+                           )}
+                         >
+                           <Activity className="h-3.5 w-3.5" />
+                           Detailed Layer View
+                         </button>
+                       </div>
+                       
+                       <p className="text-[10px] text-slate-400 font-medium">
+                         {!showDetailedLayers 
+                           ? "Grouped: Shows macro architectural blocks and stage logic."
+                           : "Detailed: Shows every individual layer execution step."}
+                       </p>
+                     </div>
                    </div>
-                   
-                   {/* Node Level toggle switch */}
-                   <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
-                     <span className="text-[10px] text-slate-550 font-bold uppercase">Show detailed layers</span>
-                     <button
-                       disabled={isDetailedViewDisabled}
-                       title={
-                         isDetailedViewDisabled
-                           ? `This model has ${detailedNodeCount} layers. Detailed topology is disabled to keep rendering responsive.`
-                           : 'Toggle detailed layer topology'
-                       }
-                       onClick={() => {
-                         if (isDetailedViewDisabled) return;
-                         const nextVal = !showDetailedLayers;
-                         setShowDetailedLayers(nextVal);
-                         localStorage.setItem(detailedPreferenceKey, String(nextVal));
-                         setSelectedLayerId(null);
-                       }}
-                       className={cn(
-                         "relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none p-2.5",
-                         isDetailedViewDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-                         showDetailedLayers ? "bg-primary" : "bg-slate-700"
-                       )}
+
+                   {/* Compact Metadata & Visual Legend Bar */}
+                   <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                     <div className="flex items-center gap-2 text-slate-400 font-mono text-[11px]">
+                       <span>Visible Nodes: <strong className="text-slate-200">{showDetailedLayers ? detailedNodeCount : graphData.groupedNodes.length}</strong></span>
+                       <span className="text-slate-700">•</span>
+                       <span>Edges: <strong className="text-slate-200">{graphData.groupedEdges.length}</strong></span>
+                       <span className="text-slate-700">•</span>
+                       <span>Depth: <strong className="text-slate-200">{overview.depth} layers</strong></span>
+                     </div>
+
+                     <div className="flex items-center gap-2">
+                       <button
+                         onClick={() => setShowLegend(!showLegend)}
+                         className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-slate-200 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg transition-colors"
+                       >
+                         <HelpCircle className="h-3 w-3 text-primary" />
+                         {showLegend ? 'Hide Legend' : 'View Graph Legend'}
+                       </button>
+                     </div>
+                   </div>
+
+                   {/* Expandable Visual Legend */}
+                   {showLegend && (
+                     <motion.div 
+                       initial={{ opacity: 0, height: 0 }}
+                       animate={{ opacity: 1, height: 'auto' }}
+                       exit={{ opacity: 0, height: 0 }}
+                       className="pt-2 border-t border-border/10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-[10px]"
                      >
-                       <span
-                         className={cn(
-                           "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out",
-                           showDetailedLayers ? "translate-x-4" : "translate-x-0"
-                         )}
-                       />
-                     </button>
-                   </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                         <span className="text-slate-300 font-bold">Input Stem</span>
+                       </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-2 h-2 rounded-full bg-blue-500" />
+                         <span className="text-slate-300 font-bold">Convolution</span>
+                       </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-2 h-2 rounded-full bg-amber-500" />
+                         <span className="text-slate-300 font-bold">Pooling Block</span>
+                       </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-2 h-2 rounded-full bg-purple-500" />
+                         <span className="text-slate-300 font-bold">Dense / FC</span>
+                       </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-2 h-2 rounded-full bg-red-500" />
+                         <span className="text-slate-300 font-bold">Add / Concat</span>
+                       </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-4 h-0.5 bg-slate-400" />
+                         <span className="text-slate-300 font-bold">Sequential Flow</span>
+                       </div>
+                       <div className="flex items-center gap-1.5 bg-slate-950/60 p-1.5 rounded border border-border/10">
+                         <span className="w-4 h-0.5 border-t border-dashed border-purple-400" />
+                         <span className="text-purple-300 font-bold">Residual Skip</span>
+                       </div>
+                     </motion.div>
+                   )}
                  </div>
 
-                 <div className="flex flex-col lg:flex-row gap-6 items-stretch h-auto lg:h-[600px]">
+                 {/* Educational Quick Tips Helper Banner */}
+                 {!hideTopologyTips && (
+                   <div className="bg-gradient-to-r from-primary/10 via-blue-500/10 to-transparent border border-primary/20 p-3 rounded-xl flex items-center justify-between gap-3 text-xs shrink-0">
+                     <div className="flex items-center gap-2">
+                       <Sparkles className="h-4 w-4 text-primary shrink-0" />
+                       <span className="text-slate-200 font-semibold">
+                         <strong>Tips:</strong> Click any node to inspect • Drag canvas to pan • Scroll wheel to zoom • Press <em>Fit View</em> to center.
+                       </span>
+                     </div>
+                     <button
+                       onClick={dismissTips}
+                       className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-900 transition-colors shrink-0"
+                       title="Dismiss tip"
+                     >
+                       <X className="h-3.5 w-3.5" />
+                     </button>
+                   </div>
+                 )}
+
+                 {/* Interactive Canvas & Inspector Split Workspace */}
+                 <div className="flex flex-col lg:flex-row gap-6 items-stretch flex-1 min-h-[480px]">
                    {/* Flow Graph container */}
-                   <div className="h-[400px] sm:h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
+                   <div className="h-[480px] lg:h-full lg:flex-1 bg-[#020617] border border-[#1f2937] rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)] relative">
                      <FlowCanvas
                        topology={
                          showDetailedLayers
@@ -466,9 +592,9 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
                  />
                </motion.div>
              )}
-           </div>
-         </div>
-       </div>
-     </div>
-   );
-   }
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+}

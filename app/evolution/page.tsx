@@ -35,12 +35,17 @@ export default function EvolutionTimeline() {
     return searchParams.get('node') || null;
   });
 
-  // Sync expanded node to URL
+  // Sync expanded node to URL query parameter without triggering full Next.js router re-renders
   useEffect(() => {
-    const params = new URLSearchParams()
-    if (expandedNode) params.set('node', expandedNode)
-    router.replace(`/evolution?${params.toString()}`)
-  }, [expandedNode, router])
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (expandedNode) {
+      url.searchParams.set('node', expandedNode);
+    } else {
+      url.searchParams.delete('node');
+    }
+    window.history.replaceState({}, '', url.toString());
+  }, [expandedNode]);
 
   const toggleExpand = (id: string) => {
     setExpandedNode(expandedNode === id ? null : id);
@@ -67,14 +72,14 @@ export default function EvolutionTimeline() {
     <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
       <PageBackground variant="cyan-purple" />
 
-      <section className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <section className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 w-full">
         {/* Page Header */}
-        <div className="flex flex-col gap-2 border-b border-border/10 pb-6 mb-12">
-          <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <History className="h-8 w-8 text-primary animate-float" />
+        <div className="flex flex-col gap-1.5 border-b border-border/10 pb-4 sm:pb-5 mb-8 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <History className="h-7 w-7 sm:h-8 sm:w-8 text-primary animate-float" />
             Architecture Evolution Timeline
           </h1>
-          <p className="text-sm text-slate-400 font-medium max-w-2xl leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-slate-400 font-medium max-w-2xl leading-snug">
             Trace the lineage of deep visual models. Discover the computational bottlenecks, breakthrough innovations, and legacies that shaped the transition from early CNNs to modern transformers.
           </p>
         </div>
@@ -90,7 +95,7 @@ export default function EvolutionTimeline() {
           <div className="hidden md:block absolute left-[9px] md:left-1/2 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary via-indigo-500 to-purple-500/20 transform -translate-x-[1px] z-0" />
 
           {/* Timeline Nodes */}
-          <div className="space-y-12 relative z-10 border-l-2 border-primary/20 md:border-l-0 pl-4 md:pl-0">
+          <div className="space-y-8 sm:space-y-12 relative z-10 border-l-2 border-primary/20 md:border-l-0 pl-4 md:pl-0">
             {(evolutionData as EvolutionNode[]).map((node, index) => {
               const isEven = index % 2 === 0;
               const isExpanded = expandedNode === node.id;
@@ -138,7 +143,7 @@ export default function EvolutionTimeline() {
                         </button>
                       </div>
 
-                      <h2 className="text-xl font-black text-white tracking-tight mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <h2 className="text-lg sm:text-xl font-black text-white tracking-tight mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <span>{node.name}</span>
                         {node.exampleModelId && (
                           <Link 

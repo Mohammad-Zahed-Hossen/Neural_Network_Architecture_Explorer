@@ -114,11 +114,11 @@ body {
 
 /* Responsive typography scaling fallbacks */
 h1 {
-  font-size: clamp(1.8rem, 5vw + 1rem, 3.5rem);
+  font-size: clamp(1.4rem, 3.5vw + 0.6rem, 2.5rem);
 }
 
 h2 {
-  font-size: clamp(1.3rem, 3vw + 0.8rem, 2.2rem);
+  font-size: clamp(1.1rem, 2.2vw + 0.5rem, 1.75rem);
 }
 
 /* Mobile Usability & Accessibility Foundations */

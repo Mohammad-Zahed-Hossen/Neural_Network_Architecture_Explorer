@@ -9,51 +9,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import papersData from '@/data/papers.json';
 
-// Local fallbacks for foundational papers not present in papers.json
-const FOUNDATIONAL_PAPERS = [
-  {
-    id: "lenet",
-    modelIds: ["lenet"],
-    title: "Gradient-Based Learning Applied to Document Recognition",
-    authors: ["Yann LeCun", "Léon Bottou", "Yoshua Bengio", "Patrick Haffner"],
-    year: 1998,
-    contribution: "Introduced Convolutional Neural Networks (CNNs), weight sharing, local receptive fields, and pooling layer concepts.",
-    problem: "Early pattern recognition methods relied on manual feature extraction and fully connected layers which blew up parameters and ignored spatial features.",
-    strengths: [
-      "Pioneered convolutions and subsampling grids",
-      "Successfully deployed for reading bank checks globally"
-    ],
-    weaknesses: [
-      "Constrained by 1990s CPU compute power, limits depth to 5 layers",
-      "Saturating activations (tanh/sigmoid) restricted layer backpropagation"
-    ],
-    legacy: "Formulated the foundational core blocks of all modern computer vision systems.",
-    relevance: "Historically critical; LeNet-5 is the 'Hello World' architecture of Deep Learning.",
-    paperUrl: "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf"
-  },
-  {
-    id: "alexnet",
-    modelIds: ["alexnet"],
-    title: "ImageNet Classification with Deep Convolutional Neural Networks",
-    authors: ["Alex Krizhevsky", "Ilya Sutskever", "Geoffrey E. Hinton"],
-    year: 2012,
-    contribution: "Pioneered GPU-accelerated deep CNN training, ReLU activations, and dropout regularization, winning ImageNet 2012.",
-    problem: "Traditional computer vision algorithms stalled at ~26% error rate on ImageNet; deeper networks were too slow to train on CPUs.",
-    strengths: [
-      "Achieved massive 10%+ accuracy jump over shallow algorithms",
-      "Popularized ReLU activation function, speeding up training 6x"
-    ],
-    weaknesses: [
-      "Prone to overfitting (required heavy Dropout and Data Augmentation)",
-      "Ad-hoc layout decisions lacked homogeneous design guidelines"
-    ],
-    legacy: "Sparked the modern Deep Learning and AI boom, establishing GPU acceleration as the industry standard.",
-    relevance: "Pioneered the core layers (ReLU, MaxPool, Dropout, Dense) used in modern CNN training pipelines.",
-    paperUrl: "https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf"
-  }
-];
-
-const ALL_PAPERS = [...FOUNDATIONAL_PAPERS, ...papersData];
+const ALL_PAPERS = papersData;
 
 // Custom Paper Node Component for React Flow (memoized to prevent redundant renders)
 const PaperNode = memo(function PaperNode({ data }: { data: Record<string, unknown> }) {
@@ -116,20 +72,20 @@ export default function ResearchFlow({ selectedPaperId, onSelectPaper }: Researc
     const layout = [
       { id: 'lenet', name: 'LeNet-5', year: 1998, category: 'Foundational', x: 260, y: 0 },
       { id: 'alexnet', name: 'AlexNet', year: 2012, category: 'Foundational', x: 260, y: 110 },
-      { id: 'vgg', name: 'VGG', year: 2014, category: 'VGG', x: 110, y: 220 },
-      { id: 'inception', name: 'Inception', year: 2015, category: 'Inception', x: -40, y: 330 },
-      { id: 'resnet', name: 'ResNet', year: 2015, category: 'ResNet', x: 410, y: 220 },
-      { id: 'resnetv2', name: 'ResNet V2', year: 2016, category: 'ResNet', x: 530, y: 330 },
-      { id: 'densenet', name: 'DenseNet', year: 2016, category: 'DenseNet', x: 670, y: 330 },
-      { id: 'xception', name: 'Xception', year: 2016, category: 'Xception', x: -40, y: 440 },
-      { id: 'nasnet', name: 'NASNet', year: 2017, category: 'NASNet', x: 110, y: 440 },
-      { id: 'mobilenet', name: 'MobileNet', year: 2017, category: 'MobileNet', x: 270, y: 330 },
-      { id: 'mobilenetv3', name: 'MobileNetV3', year: 2019, category: 'MobileNet', x: 210, y: 440 },
-      { id: 'efficientnet', name: 'EfficientNet', year: 2019, category: 'EfficientNet', x: 350, y: 440 },
-      { id: 'vit', name: 'ViT (Transformer)', year: 2020, category: 'Transformer', x: 530, y: 550 },
-      { id: 'swin', name: 'Swin Transformer', year: 2021, category: 'Transformer', x: 660, y: 660 },
-      { id: 'convnext', name: 'ConvNeXt', year: 2022, category: 'Transformer', x: 350, y: 550 },
-      { id: 'maxvit', name: 'MaxViT', year: 2022, category: 'Transformer', x: 500, y: 770 }
+      { id: 'vgg', name: 'VGG', year: 2014, category: 'VGG', x: 100, y: 220 },
+      { id: 'resnet', name: 'ResNet', year: 2015, category: 'ResNet', x: 420, y: 220 },
+      { id: 'inception', name: 'Inception', year: 2015, category: 'Inception', x: -60, y: 330 },
+      { id: 'mobilenet', name: 'MobileNet', year: 2017, category: 'MobileNet', x: 170, y: 330 },
+      { id: 'resnetv2', name: 'ResNet V2', year: 2016, category: 'ResNet', x: 400, y: 330 },
+      { id: 'densenet', name: 'DenseNet', year: 2016, category: 'DenseNet', x: 630, y: 330 },
+      { id: 'xception', name: 'Xception', year: 2016, category: 'Xception', x: -60, y: 440 },
+      { id: 'nasnet', name: 'NASNet', year: 2017, category: 'NASNet', x: 160, y: 440 },
+      { id: 'mobilenetv3', name: 'MobileNetV3', year: 2019, category: 'MobileNet', x: 380, y: 440 },
+      { id: 'efficientnet', name: 'EfficientNet', year: 2019, category: 'EfficientNet', x: 600, y: 440 },
+      { id: 'convnext', name: 'ConvNeXt', year: 2022, category: 'Transformer', x: 200, y: 550 },
+      { id: 'vit', name: 'ViT (Transformer)', year: 2020, category: 'Transformer', x: 480, y: 550 },
+      { id: 'swin', name: 'Swin Transformer', year: 2021, category: 'Transformer', x: 480, y: 660 },
+      { id: 'maxvit', name: 'MaxViT', year: 2022, category: 'Transformer', x: 480, y: 770 }
     ];
 
     return layout.map(node => {
