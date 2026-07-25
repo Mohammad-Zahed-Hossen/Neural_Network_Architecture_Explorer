@@ -15,18 +15,20 @@ export default function CategoryTabs({ onCategoryChange, selectedCategory }: Cat
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="overflow-x-auto pb-2 mb-6 border-b border-[#1f2937]/40"
+      className="overflow-x-auto scroll-fade-x scrollbar-none pb-2 mb-6 border-b border-[#1f2937]/40"
     >
-      <div className="flex gap-2 min-w-min px-4 sm:px-6 lg:px-8">
+      <div className="flex gap-2 min-w-min px-4 sm:px-6 lg:px-8 py-1" role="tablist" aria-label="Model categories">
         {/* "All" tab */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => onCategoryChange(null)}
-          className={`px-4 py-2 rounded-lg font-semibold text-sm whitespace-nowrap transition-all duration-300 border ${
+          role="tab"
+          aria-selected={selectedCategory === null}
+          className={`min-h-[44px] px-4 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-300 border flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
             selectedCategory === null
-              ? 'bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]'
-              : 'bg-transparent text-[#9ca3af] border-[#1f2937] hover:border-[#22d3ee]/40 hover:text-[#e5e7eb]'
+              ? 'bg-cyan-400 text-slate-950 border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.25)]'
+              : 'bg-transparent text-slate-400 border-slate-800 hover:border-cyan-400/40 hover:text-slate-200'
           }`}
         >
           All Models
@@ -43,10 +45,12 @@ export default function CategoryTabs({ onCategoryChange, selectedCategory }: Cat
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onCategoryChange(category)}
-              className={`px-4 py-2 rounded-lg font-semibold text-sm whitespace-nowrap transition-all duration-300 flex items-center gap-2 border ${
+              role="tab"
+              aria-selected={isSelected}
+              className={`min-h-[44px] px-4 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-300 flex items-center justify-center gap-2 border cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                 isSelected
-                  ? 'bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]'
-                  : 'bg-transparent text-[#9ca3af] border-[#1f2937] hover:border-[#22d3ee]/40 hover:text-[#e5e7eb]'
+                  ? 'bg-cyan-400 text-slate-950 border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.25)]'
+                  : 'bg-transparent text-slate-400 border-slate-800 hover:border-cyan-400/40 hover:text-slate-200'
               }`}
             >
               <cat.icon className="h-4 w-4" />

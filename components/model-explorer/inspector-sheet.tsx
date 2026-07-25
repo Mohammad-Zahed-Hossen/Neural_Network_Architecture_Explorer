@@ -40,8 +40,8 @@ export default function InspectorSheet({ layer, onClose, totalModelParameters = 
               stiffness: 300,
               duration: shouldReduceMotion ? 0 : 0.3 
             }}
-            className="fixed bottom-0 left-0 right-0 lg:hidden z-50 bg-slate-950/95 backdrop-blur-xl border-t border-border/30 rounded-t-2xl shadow-2xl max-h-[85vh] flex flex-col pb-[env(safe-area-inset-bottom)]"
-             style={{ maxHeight: '85vh' }}
+            className="fixed bottom-0 left-0 right-0 lg:hidden z-50 bg-slate-950/95 backdrop-blur-xl border-t border-border/30 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col pb-[max(1rem,env(safe-area-inset-bottom))]"
+             style={{ maxHeight: '60vh' }}
              data-safe-area-padding="true"
           >
             {/* Drag Handle / Header Bar */}
@@ -51,10 +51,10 @@ export default function InspectorSheet({ layer, onClose, totalModelParameters = 
               </div>
               <button
                 onClick={onClose}
-                className="text-slate-400 hover:text-white hover:bg-slate-900/60 p-1.5 rounded-lg transition-all border border-transparent hover:border-border/30"
+                className="text-slate-400 hover:text-white hover:bg-slate-900/60 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl transition-all border border-transparent hover:border-border/30 cursor-pointer"
                 aria-label="Close inspector"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               </button>
             </div>
 

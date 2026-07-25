@@ -84,21 +84,21 @@ export default function LayerList({ layers, selectedLayerId, onSelectLayer, grou
             {/* Group Header Card */}
             <button
               onClick={() => toggleGroup(group.id)}
-              className="w-full flex items-center justify-between p-4 bg-slate-950/40 border-b border-border/10 cursor-pointer hover:bg-slate-900/20 transition-all text-left"
+              className="w-full flex items-center justify-between p-4 min-h-[44px] bg-slate-950/40 border-b border-border/10 cursor-pointer hover:bg-slate-900/20 transition-all text-left"
             >
               <div className="flex items-center gap-3">
                 <div 
-                  className="w-2.5 h-2.5 rounded-full" 
+                  className="w-2.5 h-2.5 rounded-full shrink-0" 
                   style={{ backgroundColor: group.color || '#22d3ee' }}
                 />
                 <div>
                   <h3 className="text-xs font-black text-slate-200 tracking-wide">{group.name}</h3>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">{group.description}</p>
+                  <p className="text-xs text-slate-400 font-semibold mt-0.5">{group.description}</p>
                 </div>
               </div>
               
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-[9px] font-bold border-slate-800 text-slate-400">
+              <div className="flex items-center gap-2 shrink-0">
+                <Badge variant="outline" className="text-xs font-bold border-slate-800 text-slate-400">
                   {groupLayers.length} Layers
                 </Badge>
                 {isExpanded ? (
@@ -147,7 +147,7 @@ function renderLayerCard(
     <button
       onClick={() => onSelectLayer(layer.id)}
       className={cn(
-        "w-full text-left rounded-xl p-3 border transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer focus:outline-none relative overflow-hidden",
+        "w-full text-left rounded-xl p-3 min-h-[44px] border transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer focus:outline-none relative overflow-hidden",
         isSelected 
           ? "border-primary bg-slate-900/60 shadow-[0_0_15px_rgba(34,211,238,0.1)] translate-x-0.5" 
           : cn("border-border/10", isAltRow ? "bg-slate-900/20" : "bg-transparent hover:bg-slate-900/10 hover:border-border/30")
@@ -174,25 +174,25 @@ function renderLayerCard(
             )}>
               {layer.name}
             </span>
-            <Badge variant={style.badge} className="text-[8px] py-0 px-1 uppercase font-bold tracking-wider opacity-85">
+            <Badge variant={style.badge} className="text-xs py-0 px-1.5 uppercase font-bold tracking-wider opacity-85">
               {layer.type === 'conv2d' ? 'Conv2D' : layer.type.replace(/_/g, ' ')}
             </Badge>
           </div>
-          <p className="text-[10px] text-slate-500 font-medium line-clamp-1 mt-0.5">
+          <p className="text-xs text-slate-400 font-medium line-clamp-1 mt-0.5">
             {layer.educationalNote.summary}
           </p>
         </div>
       </div>
 
       {/* Right side info */}
-      <div className="flex sm:flex-col sm:items-end justify-between items-center shrink-0 gap-1 sm:gap-0 font-mono text-[10px] text-slate-400">
-        <div className="flex items-center gap-2">
+      <div className="flex sm:flex-col sm:items-end justify-between items-center shrink-0 gap-1.5 sm:gap-0 font-mono text-xs text-slate-400">
+        <div className="flex items-center gap-2 flex-wrap">
           {layer.parameters.total > 0 && (
-            <span className="text-[10px] text-slate-500 font-semibold bg-slate-900/40 border border-border/10 px-1.5 py-0.5 rounded">
+            <span className="text-xs text-slate-400 font-semibold bg-slate-900/40 border border-border/10 px-2 py-0.5 rounded-lg">
               {formatShortNumber(layer.parameters.total)} params
             </span>
           )}
-          <span className="text-[10px] font-bold text-slate-350 bg-slate-950/40 border border-border/10 px-1.5 py-0.5 rounded">
+          <span className="text-xs font-bold text-slate-300 bg-slate-950/40 border border-border/10 px-2 py-0.5 rounded-lg">
             {formatShape(layer.outputShape.dimensions)}
           </span>
         </div>

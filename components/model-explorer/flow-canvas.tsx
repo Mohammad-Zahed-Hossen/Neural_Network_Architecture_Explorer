@@ -285,6 +285,9 @@ export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }:
     );
   }
 
+  // Check if mobile for performance optimization
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div className="w-full h-full relative overflow-hidden select-none" style={{ height: '100%' }}>
       {/* Layer Type Filter */}
@@ -347,20 +350,22 @@ export default function FlowCanvas({ topology, selectedLayerId, onSelectLayer }:
       >
         <Background color="#334155" gap={20} size={1} style={{ opacity: 0.3 }} />
         
-        <Controls 
+        <Controls
           className="!bg-slate-900 !border-slate-800 !text-slate-300 [&_button]:!border-slate-800 [&_button]:hover:!bg-slate-800 [&_button_svg]:!fill-slate-350 [&_button_svg]:!stroke-slate-350"
-          showInteractive={false} 
+          showInteractive={false}
         />
-        
-        <MiniMap 
-          nodeColor={(node: Node) => {
-            if (node.data?.isSelected) return '#22d3ee';
-            return 'rgba(30, 41, 59, 0.8)';
-          }}
-          maskColor="rgba(2, 6, 23, 0.7)"
-          className="!bg-slate-950/60 !border-slate-800/80 rounded-xl overflow-hidden !w-[100px] !h-[100px]"
-          style={{ width: 120, height: 120 }}
-        />
+
+        {!isMobile && (
+          <MiniMap
+            nodeColor={(node: Node) => {
+              if (node.data?.isSelected) return '#22d3ee';
+              return 'rgba(30, 41, 59, 0.8)';
+            }}
+            maskColor="rgba(2, 6, 23, 0.7)"
+            className="!bg-slate-950/60 !border-slate-800/80 rounded-xl overflow-hidden !w-[100px] !h-[100px]"
+            style={{ width: 120, height: 120 }}
+          />
+        )}
       </ReactFlow>
     </div>
   );

@@ -13,6 +13,9 @@ import { cn } from '@/lib/utils/cn';
 import { modelCategories } from '@/lib/data/model-categories';
 import { useSearchParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import ContinueLearning from '@/components/ui/continue-learning';
+import { searchEntities } from '@/lib/search/search-engine';
+import { enrichModelEntity } from '@/lib/search/metadata-enrichment';
 
 const ComparisonCharts = dynamic(() => import('./comparison-chart'), {
   ssr: false,
@@ -46,7 +49,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
     }
     return ['vgg16', 'resnet50', 'densenet121', 'mobilenet', 'inceptionv3']
   });
-  const [isSelectorOpen, setIsSelectorOpen] = useState(true);
+  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [selectorSearch, setSelectorSearch] = useState('');
 
   // Sync selections to URL
@@ -108,22 +111,25 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
     return groups;
   }, [models]);
 
-  // Filter based on selector search query
+  // Filter based on selector search query using universal search engine
   const filteredGroups = useMemo(() => {
-    if (!selectorSearch) return modelsByCategory;
+    if (!selectorSearch.trim()) return modelsByCategory;
+    const searchResults = searchEntities(
+      models,
+      { searchQuery: selectorSearch },
+      enrichModelEntity
+    );
+    const matchedModelIds = new Set(searchResults.map(r => r.item.id));
+
     const filtered: Record<string, ModelSummary[]> = {};
     Object.entries(modelsByCategory).forEach(([category, list]) => {
-      const match = list.filter(m => 
-        m.name.toLowerCase().includes(selectorSearch.toLowerCase()) ||
-        m.fullName.toLowerCase().includes(selectorSearch.toLowerCase()) ||
-        m.category.toLowerCase().includes(selectorSearch.toLowerCase())
-      );
+      const match = list.filter(m => matchedModelIds.has(m.id));
       if (match.length > 0) {
         filtered[category] = match;
       }
     });
     return filtered;
-  }, [modelsByCategory, selectorSearch]);
+  }, [models, modelsByCategory, selectorSearch]);
 
   // Static metric tabs definition - hoisted to avoid recreation
   const metricTabs: { id: MetricType; label: string; icon: ComponentType<{ className?: string }>; desc: string }[] = [
@@ -259,22 +265,22 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
 
                 {/* Preset selectors */}
                 <div className="flex flex-wrap gap-2 items-center text-xs">
-                  <span className="text-slate-500 font-bold mr-1">Presets:</span>
+                  <span className="text-slate-400 font-bold mr-1">Presets:</span>
                   <button
                     onClick={selectAll}
-                    className="cursor-pointer bg-slate-900/50 border border-border/20 rounded-lg px-2.5 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-primary/40 transition-colors"
+                    className="min-h-[44px] cursor-pointer bg-slate-900/50 border border-border/20 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 hover:text-white hover:border-primary/40 transition-colors flex items-center justify-center"
                   >
                     Select All
                   </button>
                   <button
                     onClick={selectClassics}
-                    className="cursor-pointer bg-slate-900/50 border border-border/20 rounded-lg px-2.5 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-primary/40 transition-colors"
+                    className="min-h-[44px] cursor-pointer bg-slate-900/50 border border-border/20 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 hover:text-white hover:border-primary/40 transition-colors flex items-center justify-center"
                   >
                     Classics Only
                   </button>
                   <button
                     onClick={selectNone}
-                    className="cursor-pointer bg-slate-900/50 border border-border/20 rounded-lg px-2.5 py-1.5 text-[11px] font-bold text-slate-300 hover:text-red-400 hover:border-red-500/30 transition-colors"
+                    className="min-h-[44px] cursor-pointer bg-slate-900/50 border border-border/20 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 hover:text-red-400 hover:border-red-500/30 transition-colors flex items-center justify-center"
                   >
                     Clear All
                   </button>
@@ -396,7 +402,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
             {/* 2. Interactive Charts & Toggle Workspace */}
             <div className="flex flex-col gap-5 mt-3">
               {/* Tab Metric Selectors */}
-              <div className="flex md:grid md:grid-cols-5 overflow-x-auto md:overflow-x-visible gap-2 bg-slate-900/35 border border-border/20 rounded-2xl p-2 backdrop-blur-md scrollbar-none">
+              <div className="flex md:grid md:grid-cols-5 overflow-x-auto scroll-fade-x md:overflow-x-visible gap-2 bg-slate-900/35 border border-border/20 rounded-2xl p-2 backdrop-blur-md scrollbar-none">
                 {metricTabs.map((tab) => {
                   const TabIcon = tab.icon;
                   const isActive = activeMetric === tab.id;
@@ -405,7 +411,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
                       key={tab.id}
                       onClick={() => setActiveMetric(tab.id)}
                       className={cn(
-                        "flex-1 flex-shrink-0 min-w-[140px] md:min-w-0 flex items-center gap-2.5 rounded-xl p-3.5 border transition-all duration-300 text-left cursor-pointer focus:outline-none",
+                        "flex-1 flex-shrink-0 min-w-[150px] md:min-w-0 min-h-[44px] flex items-center gap-2.5 rounded-xl p-3 border transition-all duration-300 text-left cursor-pointer focus:outline-none",
                         isActive 
                           ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]" 
                           : "bg-transparent border-[#1f2937] text-[#9ca3af] hover:text-[#e5e7eb] hover:border-[#22d3ee]/30"
@@ -419,7 +425,7 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
                       </div>
                       <div>
                         <h3 className="text-xs font-bold tracking-tight">{tab.label}</h3>
-                        <p className="text-[9px] text-[#6b7280] font-semibold mt-0.5 leading-none">{tab.desc}</p>
+                        <p className="text-xs text-[#6b7280] font-semibold mt-0.5 leading-none">{tab.desc}</p>
                       </div>
                     </button>
                   );
@@ -455,6 +461,17 @@ export default function ComparisonClient({ models }: ComparisonClientProps) {
             </button>
           </div>
         )}
+
+        {/* Continue Learning section */}
+        <ContinueLearning
+          items={[
+            { title: 'Architecture Patterns Library', type: 'pattern', href: '/architecture-patterns', description: 'Explore mathematical design blocks (residual, dense, etc.).' },
+            { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate backpropagation gradient stability.' },
+            { title: 'Receptive Field Calculator', type: 'concept', href: '/concepts/receptive-field', description: 'Calculate spatial coverage for compared architectures.' },
+            { title: 'Evolution Timeline', type: 'evolution', href: '/evolution', description: 'Follow chronological breakthroughs across epochs.' },
+            { title: 'Model Catalog', type: 'model', href: '/catalog', description: 'Browse and filter all 34 neural network architectures.' }
+          ]}
+        />
       </div>
     </div>
   );

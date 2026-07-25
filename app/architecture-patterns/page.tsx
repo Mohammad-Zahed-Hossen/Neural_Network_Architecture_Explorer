@@ -8,7 +8,10 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import modelsSummary from '@/data/models.json';
+import { getModelSummaries } from '@/lib/data-access/models';
+import ContinueLearning from '@/components/ui/continue-learning';
+import { searchEntities } from '@/lib/search/search-engine';
+import { enrichModelEntity } from '@/lib/search/metadata-enrichment';
 
 interface PatternInfo {
   id: string;
@@ -184,8 +187,12 @@ export default function ArchitecturePatterns() {
   const activePattern = PATTERNS.find(p => p.id === selectedPattern) || PATTERNS[0];
   const Icon = activePattern.icon;
 
-  // Filter models summary list to only show models implementing this pattern
-  const associatedModels = modelsSummary.filter(m => activePattern.models.includes(m.id));
+  // Filter models summary list using search engine pattern metadata
+  const associatedModels = searchEntities(
+    getModelSummaries(),
+    { patterns: [activePattern.id] },
+    enrichModelEntity
+  ).map(r => r.item);
 
   return (
     <div className="relative flex flex-col flex-1 bg-background grid-bg pb-24 overflow-x-hidden">
@@ -211,11 +218,11 @@ export default function ArchitecturePatterns() {
           
           {/* LEFT 5-COL: Patterns Index Selector */}
           <div className="lg:col-span-4 flex flex-col gap-4">
-            <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest block pl-2">
+            <span className="text-xs text-slate-400 font-extrabold uppercase tracking-widest block pl-2">
               Select Design Pattern
             </span>
 
-            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-2.5 pb-2 lg:pb-0 scrollbar-none w-full bg-slate-950/40 border border-border/25 rounded-2xl p-2 backdrop-blur-md">
+            <div className="flex lg:flex-col overflow-x-auto scroll-fade-x lg:overflow-x-visible gap-2.5 pb-2 lg:pb-0 scrollbar-none w-full bg-slate-950/40 border border-border/25 rounded-2xl p-2 backdrop-blur-md">
               {PATTERNS.map((p) => {
                 const isActive = selectedPattern === p.id;
                 const PIcon = p.icon;
@@ -223,7 +230,7 @@ export default function ArchitecturePatterns() {
                   <button
                     key={p.id}
                     onClick={() => setSelectedPattern(p.id)}
-                    className={`flex-shrink-0 lg:flex-shrink-1 w-[200px] lg:w-full text-left px-4 py-4 rounded-xl text-xs transition-all duration-300 flex items-center justify-between cursor-pointer border ${
+                    className={`flex-shrink-0 lg:flex-shrink-1 w-[220px] lg:w-full min-h-[44px] text-left px-4 py-3.5 rounded-xl text-xs transition-all duration-300 flex items-center justify-between cursor-pointer border ${
                       isActive 
                         ? 'bg-slate-900 border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.15)] text-[#22d3ee]' 
                         : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-900/30'
@@ -621,6 +628,17 @@ export default function ArchitecturePatterns() {
           </div>
 
         </div>
+
+        {/* Continue Learning Section */}
+        <ContinueLearning
+          items={[
+            { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate vanishing vs residual gradient propagation.' },
+            { title: 'Receptive Field Explorer', type: 'concept', href: '/concepts/receptive-field', description: 'Calculate spatial receptive fields for pattern networks.' },
+            { title: 'Research Map', type: 'paper', href: '/research-map', description: 'Trace landmark paper lineage across patterns.' },
+            { title: 'Evolution Timeline', type: 'evolution', href: '/evolution', description: 'Follow architectural innovations chronologically.' },
+            { title: 'Compare Model Benchmarks', type: 'compare', href: '/compare', description: 'Compare parameters vs accuracy across design patterns.' }
+          ]}
+        />
 
       </section>
     </div>

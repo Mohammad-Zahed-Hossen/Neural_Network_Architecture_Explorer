@@ -315,6 +315,36 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Mobile Bottom Navigation Bar (Fixed for Thumb Zone Reachability) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-[#1f2937] bg-[#020617]/95 backdrop-blur-xl px-1 py-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+        <div className="flex items-center justify-around max-w-md mx-auto">
+          {[
+            { href: '/', label: 'Home', icon: Home, active: pathname === '/' },
+            { href: '/catalog', label: 'Catalog', icon: Network, active: pathname === '/catalog' || pathname.startsWith('/models/') },
+            { href: '/compare', label: 'Compare', icon: BarChart3, active: pathname === '/compare' },
+            { href: '/learn', label: 'Learn', icon: BookOpen, active: pathname === '/learn' },
+            { href: '/papers', label: 'Papers', icon: GraduationCap, active: pathname === '/papers' },
+          ].map((item) => {
+            const ItemIcon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-2 py-1 rounded-xl transition-all duration-200 cursor-pointer",
+                  item.active
+                    ? "text-[#22d3ee] font-extrabold bg-[#22d3ee]/10"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                )}
+              >
+                <ItemIcon className={cn("h-4.5 w-4.5 transition-transform", item.active && "scale-110")} />
+                <span className="text-[11px] font-bold mt-0.5 tracking-tight">{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </header>
   );
 }

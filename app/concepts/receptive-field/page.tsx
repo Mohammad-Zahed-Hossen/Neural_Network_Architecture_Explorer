@@ -6,9 +6,13 @@ import {
   Compass, Info, Layers,
   ChevronRight, Grid
 } from 'lucide-react';
-import modelsSummary from '@/data/models.json';
+import { useSearchParams } from 'next/navigation';
+import { getModelSummaries } from '@/lib/data-access/models';
 import { calculateReceptiveFields } from '@/lib/utils/rf-math';
 import { NeuralNetworkModel } from '@/lib/schema/model.schema';
+import ContinueLearning from '@/components/ui/continue-learning';
+
+// Code-split dynamic loaders for all models' detailed configurations
 
 // Code-split dynamic loaders for all models' detailed configurations
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +54,11 @@ const modelLoaders: Record<string, () => Promise<any>> = {
 };
 
 export default function ReceptiveFieldExplorer() {
-  const [selectedModelId, setSelectedModelId] = useState('resnet50');
+  const searchParams = useSearchParams();
+  const initialModel = searchParams.get('model');
+  const [selectedModelId, setSelectedModelId] = useState(
+    initialModel && modelLoaders[initialModel] ? initialModel : 'resnet50'
+  );
   const [modelData, setModelData] = useState<NeuralNetworkModel | null>(null);
   const [activeLayerIndex, setActiveLayerIndex] = useState<number>(-1);
 
@@ -131,7 +139,7 @@ export default function ReceptiveFieldExplorer() {
               onChange={(e) => setSelectedModelId(e.target.value)}
               className="bg-slate-900 border border-border/30 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-200 focus:outline-none focus:border-primary/50 transition-all select-glow cursor-pointer"
             >
-              {modelsSummary.map((m) => (
+              {getModelSummaries().map((m) => (
                 <option key={m.id} value={m.id}>
                   {m.name}
                 </option>
@@ -216,6 +224,8 @@ export default function ReceptiveFieldExplorer() {
               </p>
             </div>
           </div>
+
+
 
           {/* RIGHT PANEL: Cumulative Stride & Layer Stack calculations (7 cols) */}
           <div className="lg:col-span-7 flex flex-col gap-6">
@@ -321,6 +331,17 @@ export default function ReceptiveFieldExplorer() {
             </div>
           </div>
         </div>
+
+        {/* Continue Learning section */}
+        <ContinueLearning
+          items={[
+            { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate backpropagation gradient flows.' },
+            { title: 'Depthwise Separable Pattern', type: 'pattern', href: '/architecture-patterns?pattern=depthwise', description: 'Learn how MobileNet & Xception optimize spatial filters.' },
+            { title: 'ResNet-50 Explorer', type: 'model', href: '/models/resnet50', description: 'Inspect full 50-layer architecture topology.' },
+            { title: 'Evolution Timeline', type: 'evolution', href: '/evolution', description: 'Trace milestone breakthroughs from 1998 to 2022.' },
+            { title: 'Compare Key Architectures', type: 'compare', href: '/compare?models=resnet50,densenet121,mobilenet', description: 'Side-by-side comparison of depth vs accuracy.' }
+          ]}
+        />
       </section>
     </div>
   );

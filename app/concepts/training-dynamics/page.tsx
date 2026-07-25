@@ -5,6 +5,8 @@ import {
   Activity, Zap,
   RefreshCw, Play, Pause
 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import ContinueLearning from '@/components/ui/continue-learning';
 
 interface ConceptInfo {
   id: string;
@@ -59,7 +61,11 @@ const CONCEPTS: Record<string, ConceptInfo> = {
 };
 
 export default function TrainingDynamicsVisualizer() {
-  const [activeTab, setActiveTab] = useState<string>('vanishing');
+  const searchParams = useSearchParams();
+  const initialConcept = searchParams.get('concept');
+  const [activeTab, setActiveTab] = useState<string>(
+    initialConcept && CONCEPTS[initialConcept] ? initialConcept : 'vanishing'
+  );
   const [isSimulating, setIsSimulating] = useState<boolean>(true);
   const [networkDepth, setNetworkDepth] = useState<number>(6);
   const [backpropTrigger, setBackpropTrigger] = useState<number>(0);
@@ -660,6 +666,17 @@ export default function TrainingDynamicsVisualizer() {
           </div>
 
         </div>
+
+        {/* Continue Learning Section */}
+        <ContinueLearning
+          items={[
+            { title: 'Residual Connections Pattern', type: 'pattern', href: '/architecture-patterns?pattern=residual', description: 'Deep dive into ResNet identity skip math.' },
+            { title: 'Dense Connectivity Pattern', type: 'pattern', href: '/architecture-patterns?pattern=dense', description: 'Explore DenseNet feature concatenation.' },
+            { title: 'ResNet-50 Model Page', type: 'model', href: '/models/resnet50', description: 'Inspect layer topology and benchmark metrics.' },
+            { title: 'Receptive Field Calculator', type: 'concept', href: '/concepts/receptive-field', description: 'Calculate spatial coverage across layers.' },
+            { title: 'Compare ResNet vs DenseNet', type: 'compare', href: '/compare?models=resnet50,densenet121', description: 'Compare parameter efficiency side-by-side.' }
+          ]}
+        />
 
       </section>
     </div>

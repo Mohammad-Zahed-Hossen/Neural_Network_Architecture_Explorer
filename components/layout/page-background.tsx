@@ -1,5 +1,3 @@
-'use client';
-
 interface PageBackgroundProps {
   variant: 'cyan-purple' | 'blue-purple' | 'primary-indigo';
 }

@@ -9,7 +9,8 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import papersData from '@/data/papers.json';
-import modelsSummary from '@/data/models.json';
+import { getModelSummaries } from '@/lib/data-access/models';
+import ContinueLearning from '@/components/ui/continue-learning';
 
 // Lazy load the React Flow component for performance and bundler optimizations
 const ResearchFlow = dynamic(() => import('@/components/research-map/research-flow'), {
@@ -86,9 +87,8 @@ export default function ResearchMap() {
     return ALL_PAPERS.find(p => p.id === selectedPaperId) || ALL_PAPERS[0];
   }, [selectedPaperId]);
 
-  // Model references
   const associatedModels = useMemo(() => {
-    return modelsSummary.filter(m => activePaper.modelIds.includes(m.id));
+    return getModelSummaries().filter(m => activePaper.modelIds.includes(m.id));
   }, [activePaper]);
 
   return (
@@ -257,6 +257,17 @@ export default function ResearchMap() {
           </div>
 
         </div>
+
+        {/* Continue Learning section */}
+        <ContinueLearning
+          items={[
+            { title: 'Papers Summary Library', type: 'paper', href: '/papers', description: 'Read detailed problem/solution breakdowns for all landmark papers.' },
+            { title: 'Evolution Timeline', type: 'evolution', href: '/evolution', description: 'Track chronological progress across key vision epochs.' },
+            { title: 'Architecture Patterns Library', type: 'pattern', href: '/architecture-patterns', description: 'Explore mathematical design patterns across models.' },
+            { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate gradient behavior across model depth.' },
+            { title: 'Compare SOTA Models', type: 'compare', href: '/compare?models=resnet50,densenet121,efficientnetb0,vit', description: 'Compare benchmarks for research map nodes.' }
+          ]}
+        />
 
       </section>
     </div>

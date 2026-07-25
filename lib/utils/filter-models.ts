@@ -1,9 +1,17 @@
 import { ModelSummary, ModelCategory, EfficiencyLevel } from '@/lib/schema/model.schema';
 
+import { searchEntities } from '@/lib/search/search-engine';
+import { enrichModelEntity } from '@/lib/search/metadata-enrichment';
+import { SearchFilterCriteria } from '@/lib/search/types';
+
 export interface FilterCriteria {
   searchQuery?: string;
   categories?: ModelCategory[];
   efficiencyLevels?: EfficiencyLevel[];
+  patterns?: string[];
+  applications?: string[];
+  difficulties?: string[];
+  eras?: string[];
   yearRange?: {
     min?: number;
     max?: number;
@@ -11,49 +19,22 @@ export interface FilterCriteria {
 }
 
 /**
- * Filter models based on multiple criteria
+ * Filter and rank models based on deterministic relevance criteria
  */
 export function filterModels(models: ModelSummary[], criteria: FilterCriteria): ModelSummary[] {
-  return models.filter(model => {
-    // Search query filter (searches name, fullName, description)
-    if (criteria.searchQuery) {
-      const query = criteria.searchQuery.toLowerCase();
-      const matchesSearch =
-        model.name.toLowerCase().includes(query) ||
-        model.fullName.toLowerCase().includes(query) ||
-        model.description.toLowerCase().includes(query) ||
-        model.authors.some(author => author.toLowerCase().includes(query));
+  const searchCriteria: SearchFilterCriteria = {
+    searchQuery: criteria.searchQuery,
+    categories: criteria.categories,
+    efficiencyLevels: criteria.efficiencyLevels,
+    patterns: criteria.patterns,
+    applications: criteria.applications,
+    difficulties: criteria.difficulties,
+    eras: criteria.eras,
+    yearRange: criteria.yearRange,
+  };
 
-      if (!matchesSearch) return false;
-    }
-
-    // Category filter
-    if (criteria.categories && criteria.categories.length > 0) {
-      if (!criteria.categories.includes(model.category)) {
-        return false;
-      }
-    }
-
-    // Efficiency filter
-    if (criteria.efficiencyLevels && criteria.efficiencyLevels.length > 0) {
-      if (!criteria.efficiencyLevels.includes(model.efficiency)) {
-        return false;
-      }
-    }
-
-    // Year range filter
-    if (criteria.yearRange) {
-      const year = model.releaseYear || model.paperYear;
-      if (criteria.yearRange.min && year < criteria.yearRange.min) {
-        return false;
-      }
-      if (criteria.yearRange.max && year > criteria.yearRange.max) {
-        return false;
-      }
-    }
-
-    return true;
-  });
+  const results = searchEntities(models, searchCriteria, enrichModelEntity);
+  return results.map(res => res.item);
 }
 
 /**

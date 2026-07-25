@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils/cn';
 import { motion } from 'framer-motion';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
 import dynamic from 'next/dynamic';
+import { getModelRelationships } from '@/lib/data/relationships';
+import ModelRelationshipsView from './model-relationships';
 
 const MAX_DETAILED_NODES = 100;
 
@@ -130,45 +132,45 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             {/* Card 1: Publication info */}
             <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-between min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
               <div>
-                <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Publication Reference</span>
+                <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Publication Reference</span>
                 <span className="text-sm font-extrabold text-slate-200 block">
                   {overview.paperYear} - {overview.authors[0]}{overview.authors.length > 1 ? ` & ${overview.authors[1]}` : ''}
                 </span>
-                <span className="text-[10px] text-slate-500 font-semibold truncate block max-w-xs mt-0.5" title={overview.authors.join(', ')}>
+                <span className="text-xs text-slate-400 font-semibold truncate block max-w-xs mt-0.5" title={overview.authors.join(', ')}>
                   By {overview.authors.slice(0, 3).join(', ')}{overview.authors.length > 3 ? ' et al.' : ''}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+              <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-3 items-center">
                 <Link
                   href={`/papers#${overview.id}`}
-                  className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:text-primary-hover transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:text-primary-hover transition-colors min-h-[32px]"
                 >
-                  View Paper Summary <BookOpen className="h-3 w-3" />
+                  View Paper Summary <BookOpen className="h-3.5 w-3.5" />
                 </Link>
                 <span className="text-slate-700 text-xs font-light">|</span>
                 <a
                   href={overview.paperUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-400 hover:text-slate-200 transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-slate-200 transition-colors min-h-[32px]"
                 >
-                  Original PDF <ExternalLink className="h-3 w-3" />
+                  Original PDF <ExternalLink className="h-3.5 w-3.5" />
                 </a>
               </div>
             </div>
 
             {/* Card 2: Parameters and Layers */}
             <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-center min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-              <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Complexity & Depth</span>
+              <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Complexity & Depth</span>
               <span className="text-sm font-extrabold text-slate-200 block">{formatShortNumber(overview.totalParameters)} params</span>
-              <span className="text-[10px] text-slate-450 font-semibold mt-0.5 block">{overview.depth} network layers</span>
+              <span className="text-xs text-slate-400 font-semibold mt-0.5 block">{overview.depth} network layers</span>
             </div>
 
             {/* Card 3: Accuracy and Memory */}
             <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-4 flex flex-col justify-center min-h-[100px] shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-              <span className="text-[9px] text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Accuracy & Footprint</span>
+              <span className="text-xs text-[#6b7280] font-extrabold uppercase tracking-wider block mb-1">Accuracy & Footprint</span>
               <span className="text-sm font-extrabold text-slate-200 block">{formatAccuracy(overview.top1Accuracy)} Top-1 Acc</span>
-              <span className="text-[10px] text-slate-455 font-semibold mt-0.5 block">{formatMemory(overview.memoryUsage)} VRAM footprint</span>
+              <span className="text-xs text-slate-400 font-semibold mt-0.5 block">{formatMemory(overview.memoryUsage)} VRAM footprint</span>
             </div>
           </div>
         </div>
@@ -179,7 +181,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             onClick={() => setActiveTab('overview')}
             aria-label="Overview"
             className={cn(
-              "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'overview'
                 ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
@@ -192,7 +194,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             onClick={() => setActiveTab('layers')}
             aria-label="Layers List"
             className={cn(
-              "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'layers'
                 ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
@@ -206,7 +208,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             onClick={() => setActiveTab('topology')}
             aria-label="Topology Graph"
             className={cn(
-              "flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 text-[10px] sm:text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
               activeTab === 'topology'
                 ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_12px_rgba(34,211,238,0.25)]"
                 : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
@@ -246,76 +248,88 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
                   </p>
                 </div>
 
-                 {/* External links */}
-                 <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
-                   <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
-                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                     <a
-                       href={overview.paperUrl}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
-                     >
-                       <span className="text-[#9ca3af]">Read Research Publication</span>
-                       <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
-                     </a>
-                     {overview.docsUrl ? (
-                       <a
-                         href={overview.docsUrl}
-                         target="_blank"
-                         rel="noopener noreferrer"
-                         className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
-                       >
-                         <span className="text-[#9ca3af]">Keras API Documentation</span>
-                         <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
-                       </a>
-                     ) : (
-                       <span className="flex items-center justify-center p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] text-xs italic">
-                         <span className="text-slate-500">Documentation unavailable</span>
-                       </span>
-                     )}
-                   </div>
-                 </div>
-               </div>
+                {/* External links */}
+                <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-4">
+                  <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider">Resources & References</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <a
+                      href={overview.paperUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
+                    >
+                      <span className="text-[#9ca3af]">Read Research Publication</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
+                    </a>
+                    {overview.docsUrl ? (
+                      <a
+                        href={overview.docsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] hover:bg-[#0a0f1e] hover:border-[#22d3ee]/45 transition-colors font-bold text-xs"
+                      >
+                        <span className="text-[#9ca3af]">Keras API Documentation</span>
+                        <ExternalLink className="h-3.5 w-3.5 text-[#22d3ee]" />
+                      </a>
+                    ) : (
+                      <span className="flex items-center justify-center p-3.5 rounded-xl border border-[#1f2937] bg-[#020617] text-xs italic">
+                        <span className="text-slate-500">Documentation unavailable</span>
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
 
-               {/* Architectural Metrics sidebar */}
-               <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-6">
-                 <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider border-b border-[#1f2937] pb-2">Hardware & Accuracy Benchmarks</h3>
-                 
-                 <div className="space-y-4">
-                   <div>
-                     <div className="flex justify-between text-xs font-semibold mb-1">
-                       <span className="text-[#6b7280]">Top-1 ImageNet Accuracy</span>
-                       <span className="text-[#e5e7eb] font-bold">{formatAccuracy(overview.top1Accuracy)}</span>
-                     </div>
-                     <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
-                       <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${overview.top1Accuracy * 100}%` }} />
-                     </div>
-                   </div>
+              {/* Architectural Metrics sidebar */}
+              <div className="bg-[#020617] border border-[#1f2937] rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] space-y-6">
+                <h3 className="text-sm font-extrabold text-[#e5e7eb] uppercase tracking-wider border-b border-[#1f2937] pb-2">Hardware & Accuracy Benchmarks</h3>
+                
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-xs font-semibold mb-1">
+                      <span className="text-[#6b7280]">Top-1 ImageNet Accuracy</span>
+                      <span className="text-[#e5e7eb] font-bold">{formatAccuracy(overview.top1Accuracy)}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
+                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${overview.top1Accuracy * 100}%` }} />
+                    </div>
+                  </div>
 
-                   <div>
-                     <div className="flex justify-between text-xs font-semibold mb-1">
-                       <span className="text-[#6b7280]">Top-5 ImageNet Accuracy</span>
-                       <span className="text-[#e5e7eb] font-bold">{formatAccuracy(overview.top5Accuracy)}</span>
-                     </div>
-                     <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
-                       <div className="h-full bg-teal-500 rounded-full" style={{ width: `${overview.top5Accuracy * 100}%` }} />
-                     </div>
-                   </div>
+                  <div>
+                    <div className="flex justify-between text-xs font-semibold mb-1">
+                      <span className="text-[#6b7280]">Top-5 ImageNet Accuracy</span>
+                      <span className="text-[#e5e7eb] font-bold">{formatAccuracy(overview.top5Accuracy)}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-[#1f2937] rounded-full overflow-hidden">
+                      <div className="h-full bg-teal-500 rounded-full" style={{ width: `${overview.top5Accuracy * 100}%` }} />
+                    </div>
+                  </div>
 
-                   <div className="pt-2 border-t border-[#1f2937] grid grid-cols-2 gap-3 text-xs">
-                     <div>
-                       <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Parameters size</span>
-                       <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatShortNumber(overview.totalParameters)}</span>
-                     </div>
-                     <div>
-                       <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Inference Ram</span>
-                       <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatMemory(overview.memoryUsage)}</span>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             </motion.div>
+                  <div className="pt-2 border-t border-[#1f2937] grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Parameters size</span>
+                      <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatShortNumber(overview.totalParameters)}</span>
+                    </div>
+                    <div>
+                      <span className="text-[#6b7280] font-bold uppercase text-[9px] tracking-wider block">Inference Ram</span>
+                      <span className="text-sm font-extrabold text-[#e5e7eb] mt-0.5 block">{formatMemory(overview.memoryUsage)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Model Relationships & Educational Flow (Patterns, Concepts, Lineage, Related Models, Compare, Continue Learning) */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={activeTab === 'overview' ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.4, delay: 0.1 }}
+              className="mt-6"
+            >
+              <ModelRelationshipsView
+                relationships={getModelRelationships(overview.id, { name: overview.name, category: overview.category, year: overview.paperYear })}
+              />
+            </motion.div>
            </div>
 
            {/* Layers Panel */}
@@ -420,7 +434,7 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
                      <FlowCanvas
                        topology={
                          showDetailedLayers
-                           ? { mode: 'detailed', model: { ...overview, architecture: { layers, connections: [], groups: graphData.groups } } as NeuralNetworkModel }
+                           ? { mode: 'detailed', model: { ...overview, architecture: { layers, connections: [], groups: graphData.groups } } as unknown as NeuralNetworkModel }
                            : {
                                mode: 'grouped',
                                id: overview.id,

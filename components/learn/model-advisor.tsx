@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import advisorQuestions from '@/data/advisor.json';
-import modelsSummary from '@/data/models.json';
+import { getModelSummaries } from '@/lib/data-access/models';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 
 interface Question {
@@ -74,7 +74,7 @@ export default function ModelAdvisor() {
 
     const { goal, hardware, budget } = selections;
 
-    const scored = modelsSummary.map(model => {
+    const scored = getModelSummaries().map(model => {
       let score = 50; // Base score
       const reasons: string[] = [];
       const tradeOffs: string[] = [];
@@ -228,7 +228,7 @@ export default function ModelAdvisor() {
               </div>
 
               {/* Step indicator */}
-              <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest block mb-2">
+              <span className="text-xs text-slate-400 font-extrabold uppercase tracking-widest block mb-2">
                 Question {currentStep + 1} of {questions.length}
               </span>
 
@@ -245,13 +245,13 @@ export default function ModelAdvisor() {
                   <button
                     key={opt.value}
                     onClick={() => handleSelect(currentQuestion.id, opt.value)}
-                    className="w-full text-left px-5 py-4 rounded-2xl border border-border/20 bg-slate-900/20 hover:bg-slate-900/50 hover:border-primary/40 text-slate-300 hover:text-white transition-all cursor-pointer group flex flex-col gap-1.5"
+                    className="w-full min-h-[44px] text-left px-5 py-4 rounded-2xl border border-border/20 bg-slate-900/20 hover:bg-slate-900/50 hover:border-primary/40 text-slate-300 hover:text-white transition-all cursor-pointer group flex flex-col gap-1.5"
                   >
                     <span className="text-xs font-extrabold text-slate-200 group-hover:text-primary transition-colors flex items-center gap-1.5">
                       {opt.label}
                       <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                     </span>
-                    <span className="text-[11px] text-slate-500 leading-relaxed font-medium">
+                    <span className="text-xs text-slate-400 leading-relaxed font-medium">
                       {opt.description}
                     </span>
                   </button>
@@ -262,7 +262,7 @@ export default function ModelAdvisor() {
               {currentStep > 0 && (
                 <button
                   onClick={handleBack}
-                  className="mt-6 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-slate-200 transition-colors cursor-pointer"
+                  className="mt-6 min-h-[44px] px-3 inline-flex items-center text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
                 >
                   ← Go Back
                 </button>
@@ -285,7 +285,7 @@ export default function ModelAdvisor() {
 
                 <button
                   onClick={handleReset}
-                  className="flex items-center gap-1.5 px-4 py-2 border border-border/30 bg-slate-900/40 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer hover:border-primary/20"
+                  className="min-h-[44px] flex items-center gap-1.5 px-4 py-2 border border-border/30 bg-slate-900/40 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer hover:border-primary/20"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Restart Advisor
@@ -308,7 +308,7 @@ export default function ModelAdvisor() {
                     >
                       {/* Best match overlay badge */}
                       {isBest && (
-                        <div className="absolute top-0 right-0 bg-primary text-slate-950 font-black uppercase text-[8px] tracking-widest px-3 py-1 rounded-bl-xl">
+                        <div className="absolute top-0 right-0 bg-primary text-slate-950 font-black uppercase text-[10px] tracking-widest px-3 py-1 rounded-bl-xl">
                           Best Match
                         </div>
                       )}
@@ -318,7 +318,7 @@ export default function ModelAdvisor() {
                         <div className="flex items-center justify-between mb-4">
                           <div>
                             <h3 className="text-lg font-black text-white">{rec.name}</h3>
-                            <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider block">
+                            <span className="text-xs text-slate-400 font-extrabold uppercase tracking-wider block">
                               {rec.family} Family
                             </span>
                           </div>
@@ -326,7 +326,7 @@ export default function ModelAdvisor() {
                             <span className="text-2xl font-black text-primary block">
                               {rec.matchScore}%
                             </span>
-                            <span className="text-[9px] text-slate-500 font-semibold block uppercase">
+                            <span className="text-xs text-slate-400 font-semibold block uppercase">
                               Match Rating
                             </span>
                           </div>
@@ -335,19 +335,19 @@ export default function ModelAdvisor() {
                         {/* Dynamic specifications list */}
                         <div className="grid grid-cols-3 gap-2 py-3.5 border-y border-white/5 bg-slate-950/40 my-4 text-center rounded-xl">
                           <div>
-                            <span className="text-[8px] text-slate-500 font-extrabold uppercase tracking-wider block">Accuracy</span>
+                            <span className="text-xs text-slate-400 font-extrabold uppercase tracking-wider block">Accuracy</span>
                             <span className="text-xs font-extrabold text-slate-200 block mt-0.5">
                               {formatAccuracy(rec.top1Accuracy)}
                             </span>
                           </div>
                           <div>
-                            <span className="text-[8px] text-slate-500 font-extrabold uppercase tracking-wider block">Params</span>
+                            <span className="text-xs text-slate-400 font-extrabold uppercase tracking-wider block">Params</span>
                             <span className="text-xs font-extrabold text-slate-200 block mt-0.5">
                               {formatShortNumber(rec.totalParameters)}
                             </span>
                           </div>
                           <div>
-                            <span className="text-[8px] text-slate-500 font-extrabold uppercase tracking-wider block">Memory</span>
+                            <span className="text-xs text-slate-400 font-extrabold uppercase tracking-wider block">Memory</span>
                             <span className="text-xs font-extrabold text-slate-200 block mt-0.5">
                               {formatMemory(rec.memoryUsage)}
                             </span>
@@ -356,7 +356,7 @@ export default function ModelAdvisor() {
 
                         {/* Match reasons */}
                         <div className="space-y-2 mb-6 font-semibold">
-                          <span className="text-[9px] text-slate-500 font-extrabold uppercase tracking-wider block">
+                          <span className="text-xs text-slate-400 font-extrabold uppercase tracking-wider block">
                             Why it matches:
                           </span>
                           {rec.reasons.map((r, rIdx) => (
@@ -378,7 +378,7 @@ export default function ModelAdvisor() {
                       <div className="flex gap-2 border-t border-white/5 pt-4">
                         <Link
                           href={`/models/${rec.id}`}
-                          className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-primary/10 border border-primary/20 text-xs font-bold text-primary hover:bg-primary/20 transition-all rounded-xl cursor-pointer"
+                          className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-primary/10 border border-primary/20 text-xs font-bold text-primary hover:bg-primary/20 transition-all rounded-xl cursor-pointer"
                         >
                           Interactive Explorer <ArrowRight className="h-3.5 w-3.5" />
                         </Link>
@@ -386,7 +386,7 @@ export default function ModelAdvisor() {
                           href={rec.paperUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 border border-white/10 hover:border-slate-500 text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer bg-slate-950/20"
+                          className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 border border-white/10 hover:border-slate-500 text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer bg-slate-950/20"
                           title="Read research paper"
                         >
                           <ExternalLink className="h-4 w-4" />

@@ -121,6 +121,33 @@ h2 {
   font-size: clamp(1.3rem, 3vw + 0.8rem, 2.2rem);
 }
 
+/* Mobile Usability & Accessibility Foundations */
+.min-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.scroll-fade-x {
+  mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
+}
+
+.safe-area-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary, #22d3ee);
+  outline-offset: 2px;
+}
+
+/* Ensure mobile text readable minimum scale */
+@media (max-width: 640px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -132,4 +159,5 @@ h2 {
     scroll-behavior: auto !important;
   }
 }
+
 

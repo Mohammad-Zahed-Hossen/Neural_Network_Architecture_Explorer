@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import evolutionData from '@/data/evolution.json';
 import PageBackground from '@/components/layout/page-background';
+import ContinueLearning from '@/components/ui/continue-learning';
 
 interface EvolutionNode {
   id: string;
@@ -85,11 +86,11 @@ export default function EvolutionTimeline() {
           animate="visible"
           className="relative pl-0"
         >
-          {/* Vertical timeline spine */}
+          {/* Vertical timeline spine (Desktop center spine, Mobile left border) */}
           <div className="hidden md:block absolute left-[9px] md:left-1/2 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary via-indigo-500 to-purple-500/20 transform -translate-x-[1px] z-0" />
 
           {/* Timeline Nodes */}
-          <div className="space-y-12 relative z-10">
+          <div className="space-y-12 relative z-10 border-l-2 border-primary/20 md:border-l-0 pl-4 md:pl-0">
             {(evolutionData as EvolutionNode[]).map((node, index) => {
               const isEven = index % 2 === 0;
               const isExpanded = expandedNode === node.id;
@@ -116,23 +117,23 @@ export default function EvolutionTimeline() {
                       {/* Year badge & Name */}
                       <div className="flex items-center justify-between gap-3 mb-4">
                         <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1 text-[10px] sm:text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                          <div className="flex items-center gap-1 text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full uppercase tracking-wider">
                             <Calendar className="h-3.5 w-3.5" />
                             {node.year}
                           </div>
-                          <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest">
+                          <span className="text-xs text-slate-400 font-extrabold uppercase tracking-widest">
                             STEP 0{index + 1}
                           </span>
                         </div>
                         <button
                           onClick={() => toggleExpand(node.id)}
-                          className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800/40 transition-colors"
+                          className="min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800/40 transition-colors cursor-pointer"
                           aria-label="Toggle details"
                         >
                           {isExpanded ? (
-                            <ChevronUp className="h-4 w-4" />
+                            <ChevronUp className="h-5 w-5" />
                           ) : (
-                            <ChevronDown className="h-4 w-4" />
+                            <ChevronDown className="h-5 w-5" />
                           )}
                         </button>
                       </div>
@@ -142,9 +143,9 @@ export default function EvolutionTimeline() {
                         {node.exampleModelId && (
                           <Link 
                             href={`/models/${node.exampleModelId}`}
-                            className="inline-flex items-center gap-1 text-[10px] font-bold text-primary/80 hover:text-primary hover:underline transition-all shrink-0 self-start sm:self-auto"
+                            className="inline-flex items-center gap-1 text-xs font-bold text-primary/80 hover:text-primary hover:underline transition-all shrink-0 self-start sm:self-auto min-h-[32px]"
                           >
-                            Interactive Explorer <ArrowUpRight className="h-3 w-3" />
+                            Interactive Explorer <ArrowUpRight className="h-3.5 w-3.5" />
                           </Link>
                         )}
                       </h2>
@@ -153,7 +154,7 @@ export default function EvolutionTimeline() {
                       <div className="space-y-4 text-xs sm:text-sm font-medium">
                         {/* Problem */}
                         <div className="border-l-2 border-red-500/50 bg-red-500/5 p-3 rounded-r-xl">
-                          <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider flex items-center gap-1 mb-1">
+                          <span className="text-xs text-red-400 font-bold uppercase tracking-wider flex items-center gap-1 mb-1">
                             <AlertTriangle className="h-3.5 w-3.5" />
                             The Problem Addressed
                           </span>
@@ -162,7 +163,7 @@ export default function EvolutionTimeline() {
 
                         {/* Innovation */}
                         <div className="border-l-2 border-emerald-500/50 bg-emerald-500/5 p-3 rounded-r-xl">
-                          <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 mb-1">
+                          <span className="text-xs text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 mb-1">
                             <Lightbulb className="h-3.5 w-3.5" />
                             Proposed Innovation
                           </span>
@@ -171,7 +172,7 @@ export default function EvolutionTimeline() {
 
                         {/* Key Idea */}
                         <div className="bg-slate-900/30 border border-border/20 p-3.5 rounded-xl">
-                          <span className="text-[10px] text-slate-450 font-bold uppercase tracking-wider block mb-1">
+                          <span className="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1">
                             Key Intuition
                           </span>
                           <p className="text-slate-300 italic leading-relaxed">&ldquo;{node.keyIdea}&rdquo;</p>
@@ -192,7 +193,7 @@ export default function EvolutionTimeline() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               {/* Advantages */}
                               <div className="space-y-2">
-                                <span className="text-[10px] text-emerald-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
+                                <span className="text-xs text-emerald-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
                                   <CheckCircle2 className="h-3.5 w-3.5" />
                                   Advantages
                                 </span>
@@ -208,7 +209,7 @@ export default function EvolutionTimeline() {
 
                               {/* Limitations */}
                               <div className="space-y-2">
-                                <span className="text-[10px] text-amber-500 font-extrabold uppercase tracking-wider flex items-center gap-1">
+                                <span className="text-xs text-amber-500 font-extrabold uppercase tracking-wider flex items-center gap-1">
                                   <XCircle className="h-3.5 w-3.5" />
                                   Limitations
                                 </span>
@@ -225,7 +226,7 @@ export default function EvolutionTimeline() {
 
                             {/* Legacy */}
                             <div className="border-t border-border/10 pt-3">
-                              <span className="text-[10px] text-indigo-400 font-extrabold uppercase tracking-wider flex items-center gap-1 mb-1">
+                              <span className="text-xs text-indigo-400 font-extrabold uppercase tracking-wider flex items-center gap-1 mb-1">
                                 <Compass className="h-3.5 w-3.5" />
                                 Legacy & Future Impact
                               </span>
@@ -240,17 +241,17 @@ export default function EvolutionTimeline() {
                       {/* Expand/Collapse footer bar */}
                       <button
                         onClick={() => toggleExpand(node.id)}
-                        className="w-full mt-4 py-1.5 flex items-center justify-center gap-1 border border-border/10 bg-slate-950/20 hover:bg-slate-900/20 rounded-xl text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-all cursor-pointer"
+                        className="w-full min-h-[44px] mt-4 flex items-center justify-center gap-1.5 border border-border/10 bg-slate-950/20 hover:bg-slate-900/20 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-all cursor-pointer"
                       >
                         {isExpanded ? (
                           <>
                             <span>Hide breakdown details</span>
-                            <ChevronUp className="h-3 w-3" />
+                            <ChevronUp className="h-4 w-4" />
                           </>
                         ) : (
                           <>
                             <span>Show advantages & limitations</span>
-                            <ChevronDown className="h-3 w-3" />
+                            <ChevronDown className="h-4 w-4" />
                           </>
                         )}
                       </button>
@@ -264,6 +265,17 @@ export default function EvolutionTimeline() {
             })}
           </div>
         </motion.div>
+
+        {/* Continue Learning section */}
+        <ContinueLearning
+          items={[
+            { title: 'Research Lineage Map', type: 'paper', href: '/research-map', description: 'Explore citation graph and paper lineage DAG.' },
+            { title: 'Architecture Patterns Library', type: 'pattern', href: '/architecture-patterns', description: 'Master residual, dense, depthwise, and attention patterns.' },
+            { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate backpropagation gradient stability.' },
+            { title: 'Model Catalog', type: 'model', href: '/catalog', description: 'Filter all 34 architectures by era, category, and efficiency.' },
+            { title: 'Compare Milestone Models', type: 'compare', href: '/compare?models=lenet,alexnet,vgg16,resnet50,vit', description: 'Compare evolution milestone models side-by-side.' }
+          ]}
+        />
       </section>
     </div>
   );

@@ -5,9 +5,28 @@ import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Layers, Zap, Network, Award, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import ModelAdvisor from '@/components/learn/model-advisor';
+import dynamic from 'next/dynamic';
 import PageBackground from '@/components/layout/page-background';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
+import ContinueLearning from '@/components/ui/continue-learning';
+
+// Lazy load Model Advisor for performance
+const ModelAdvisor = dynamic(() => import('@/components/learn/model-advisor'), {
+  ssr: true,
+  loading: () => (
+    <div className="w-full max-w-xl mx-auto glass-card rounded-3xl p-6 md:p-8">
+      <div className="animate-pulse space-y-4">
+        <div className="h-4 bg-slate-800 rounded w-3/4" />
+        <div className="h-3 bg-slate-800 rounded w-1/2" />
+        <div className="space-y-2 mt-6">
+          <div className="h-10 bg-slate-800 rounded-lg" />
+          <div className="h-10 bg-slate-800 rounded-lg" />
+          <div className="h-10 bg-slate-800 rounded-lg" />
+        </div>
+      </div>
+    </div>
+  ),
+});
 
 export default function Learn() {
   const router = useRouter();
@@ -183,6 +202,17 @@ export default function Learn() {
             <ModelAdvisor />
           </motion.div>
         )}
+
+        {/* Continue Learning section */}
+        <ContinueLearning
+          items={[
+            { title: 'Architecture Patterns Library', type: 'pattern', href: '/architecture-patterns', description: 'Master residual, dense, depthwise, and attention blocks.' },
+            { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate backpropagation gradient stability.' },
+            { title: 'Receptive Field Explorer', type: 'concept', href: '/concepts/receptive-field', description: 'Inspect spatial coverage calculations.' },
+            { title: 'Evolution Timeline', type: 'evolution', href: '/evolution', description: 'Follow chronological breakthroughs from 1998 to present.' },
+            { title: 'Research Map', type: 'paper', href: '/research-map', description: 'Explore landmark paper DAG lineage.' }
+          ]}
+        />
       </div>
     </div>
   );

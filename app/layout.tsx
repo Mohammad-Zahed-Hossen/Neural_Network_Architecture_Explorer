@@ -90,7 +90,7 @@ export default function RootLayout({
         </div>
         
         <Navbar />
-        <main className="flex flex-1 flex-col overflow-x-hidden">
+        <main className="flex flex-1 flex-col overflow-x-hidden pb-16 md:pb-0">
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
