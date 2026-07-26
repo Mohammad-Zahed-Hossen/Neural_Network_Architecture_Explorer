@@ -12,6 +12,7 @@ import { calculateReceptiveFields } from '@/lib/utils/rf-math';
 import { NeuralNetworkModel } from '@/lib/schema/model.schema';
 import ContinueLearning from '@/components/ui/continue-learning';
 import MathFormula from '@/components/ui/math-formula';
+import ModelSelectorDropdown from '@/components/ui/model-selector-dropdown';
 
 // Code-split dynamic loaders for all models' detailed configurations
 
@@ -133,27 +134,20 @@ export default function ReceptiveFieldExplorer() {
           </div>
 
           {/* Model Selector Dropdown */}
-          <div className="flex flex-col gap-1.5 min-w-[200px]">
-            <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest">Select Model</label>
-            <select
-              value={selectedModelId}
-              onChange={(e) => setSelectedModelId(e.target.value)}
-              className="bg-slate-900 border border-border/30 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-200 focus:outline-none focus:border-primary/50 transition-all select-glow cursor-pointer"
-            >
-              {getModelSummaries().map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.name}
-                </option>
-              ))}
-            </select>
+          <div className="min-w-[220px] w-full">
+            <ModelSelectorDropdown
+              models={getModelSummaries()}
+              selectedModelId={selectedModelId}
+              onSelect={(id) => setSelectedModelId(id)}
+            />
           </div>
         </div>
 
         {/* Content Workspace Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* LEFT PANEL: Interactive Receptive Field Size Visualizer (4 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
+          <div className="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-6">
             <div className="glass-card rounded-2xl border border-border/30 bg-slate-950/40 p-6 backdrop-blur-md flex flex-col items-center justify-center min-h-[400px]">
               <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-6 self-start flex items-center gap-1.5">
                 <Grid className="h-4 w-4 text-primary" />
@@ -236,14 +230,11 @@ export default function ReceptiveFieldExplorer() {
             </div>
           </div>
 
-
-
-          {/* RIGHT PANEL: Cumulative Stride & Layer Stack calculations (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col gap-6">
-            <div className="glass-card rounded-2xl border border-border/30 bg-slate-950/40 p-6 backdrop-blur-md flex-1 flex flex-col lg:h-[615px] overflow-hidden">
-              
+          {/* RIGHT PANEL: Cumulative Stride & Layer Stack calculations (8 cols) */}
+          <div className="lg:col-span-8 flex flex-col gap-6">
+            <div className="glass-card rounded-2xl border border-border/30 bg-slate-950/40 p-4 sm:p-6 backdrop-blur-md flex flex-col h-auto md:h-[680px] lg:h-[760px] xl:h-[820px] overflow-hidden">
               {/* Controls Header */}
-              <div className="flex items-center justify-between border-b border-border/10 pb-3 mb-3 shrink-0">
+              <div className="flex items-center justify-between border-b border-border/10 pb-3 mb-4 shrink-0">
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-xl bg-primary/10 border border-primary/20 text-primary">
                     <Layers className="h-4.5 w-4.5" />
@@ -262,120 +253,131 @@ export default function ReceptiveFieldExplorer() {
                 </span>
               </div>
 
-              {/* Table Container - Scrollable layer list with sticky header */}
-              <div className="flex-1 min-h-0 relative flex flex-col rounded-xl bg-slate-950/50 border border-border/20 overflow-hidden">
-                <div className="flex-1 overflow-y-auto overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
-                  {isLoading ? (
-                    <div className="h-full flex flex-col items-center justify-center py-20 gap-2">
-                      <span className="text-xs text-primary font-extrabold uppercase tracking-widest animate-pulse">
-                        Loading model layer details...
-                      </span>
+              <div className="grid flex-1 min-h-0 gap-4 grid-cols-1 md:grid-cols-12">
+                {/* Table Container - Scrollable layer list with sticky header (7 cols on md+) */}
+                <div className="md:col-span-7 flex min-h-0 flex-col rounded-xl bg-slate-950/50 border border-border/20 overflow-hidden h-[320px] sm:h-[360px] md:h-full">
+                  <div className="flex-1 overflow-y-auto overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+                    {isLoading ? (
+                      <div className="h-full flex flex-col items-center justify-center py-20 gap-2">
+                        <span className="text-xs text-primary font-extrabold uppercase tracking-widest animate-pulse">
+                          Loading model layer details...
+                        </span>
+                      </div>
+                    ) : (
+                      <table className="w-full text-left text-xs border-collapse">
+                        <thead className="sticky top-0 bg-slate-950/95 backdrop-blur-md z-10 border-b border-border/20 shadow-sm">
+                          <tr className="text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">
+                            <th className="py-2.5 px-3.5">Layer Name</th>
+                            <th className="py-2.5 px-2 text-center">Layer Type</th>
+                            <th className="py-2.5 px-2 text-center">Kernel</th>
+                            <th className="py-2.5 px-2 text-center">Stride</th>
+                            <th className="py-2.5 px-3.5 text-right">Receptive Field</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border/10 font-medium">
+                          {spatialLayers.map((layer, index) => {
+                            const isActive = activeLayerIndex === index;
+                            return (
+                              <tr
+                                key={layer.layerId}
+                                onClick={() => setActiveLayerIndex(index)}
+                                className={`cursor-pointer transition-all duration-150 relative group ${
+                                  isActive 
+                                    ? 'bg-cyan-500/10 text-cyan-200 font-semibold shadow-[inset_0_0_12px_rgba(6,182,212,0.08)]' 
+                                    : 'hover:bg-slate-900/40 text-slate-350 hover:text-white'
+                                }`}
+                              >
+                                <td className="py-2.5 px-3.5 font-semibold flex items-center gap-2 relative">
+                                  {/* Left active indicator line */}
+                                  <div 
+                                    className={`absolute left-0 top-1 bottom-1 w-1 rounded-r-full transition-colors duration-150 ${
+                                      isActive ? 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)]' : 'bg-transparent group-hover:bg-slate-700'
+                                    }`} 
+                                  />
+                                  <ChevronRight className={`h-3.5 w-3.5 transition-transform duration-150 shrink-0 ${isActive ? 'rotate-90 text-cyan-400' : 'text-slate-600 group-hover:text-slate-400'}`} />
+                                  <span className="truncate">{layer.layerName}</span>
+                                </td>
+                                <td className="py-2.5 px-2 text-center">
+                                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wide border ${
+                                    layer.layerType === 'conv2d' 
+                                      ? 'bg-blue-500/10 text-blue-300 border-blue-500/20'
+                                      : layer.layerType === 'max_pooling2d' || layer.layerType === 'average_pooling2d'
+                                      ? 'bg-amber-500/10 text-amber-300 border-amber-500/20'
+                                      : 'bg-slate-500/10 text-slate-350 border-slate-500/20'
+                                  }`}>
+                                    {layer.layerType.replace('_', ' ')}
+                                  </span>
+                                </td>
+                                <td className="py-2.5 px-2 text-center font-mono text-slate-300">
+                                  {layer.kernelSize ? `${layer.kernelSize[0]}×${layer.kernelSize[1]}` : '—'}
+                                </td>
+                                <td className="py-2.5 px-2 text-center font-mono text-slate-300">
+                                  {layer.strides ? `${layer.strides[0]}×${layer.strides[1]}` : '—'}
+                                </td>
+                                <td className={`py-2.5 px-3.5 text-right font-mono font-bold tabular-nums ${isActive ? 'text-cyan-300' : 'text-slate-200'}`}>
+                                  {layer.effectiveRF} <span className="text-[10px] font-normal text-slate-400">px</span>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </div>
+
+                {/* Mathematical Breakdown (5 cols on md+) */}
+                <div className="md:col-span-5 flex min-h-0 flex-col h-auto md:h-full">
+                  {activeLayer ? (
+                    <div className="h-full rounded-xl border border-border/20 bg-slate-900/80 p-4 text-xs text-slate-300 leading-relaxed font-medium space-y-3 backdrop-blur-md shadow-md flex flex-col justify-between overflow-y-auto">
+                      <div className="space-y-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/10 pb-2">
+                          <span className="text-xs text-cyan-400 font-extrabold uppercase tracking-wider flex items-center gap-1.5">
+                            <Info className="h-3.5 w-3.5 text-cyan-400" />
+                            Mathematical Breakdown
+                          </span>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2 font-mono text-[10px]">
+                          <span className="bg-slate-950/80 border border-border/30 text-slate-350 px-2 py-1 rounded-md flex-1 text-center">
+                            Layer Stride: <strong className="text-cyan-300 font-bold">{activeLayer.strides ? activeLayer.strides[0] : 1}</strong>
+                          </span>
+                          <span className="bg-slate-950/80 border border-border/30 text-slate-350 px-2 py-1 rounded-md flex-1 text-center">
+                            Cumulative Stride: <strong className="text-cyan-300 font-bold">{activeLayer.effectiveStride}</strong>
+                          </span>
+                        </div>
+
+                        <p className="text-slate-300 text-xs leading-snug">
+                          Receptive Field size at layer <strong className="text-white font-semibold">{activeLayer.layerName}</strong> grows using the recurrence equation:
+                        </p>
+
+                        <MathFormula 
+                          formula="RF_l = RF_{l-1} + (k_l - 1) \times S_{l-1}" 
+                          className="my-1.5 py-2 border-cyan-500/20 bg-slate-950/90 shadow-inner text-cyan-300 font-mono text-xs sm:text-sm"
+                        />
+                      </div>
+
+                      {activeLayer.kernelSize ? (
+                        <div className="bg-slate-950/60 px-3 py-2.5 rounded-lg border border-border/20 font-mono text-[11px] sm:text-xs text-slate-300 flex items-center gap-2 mt-auto">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                          <span>
+                            Substituted: <strong className="text-cyan-300 font-bold">{activeLayer.effectiveRF}</strong> = (Previous RF) + ({activeLayer.kernelSize[0]} - 1) × {activeLayer.effectiveStride / (activeLayer.strides ? activeLayer.strides[0] : 1)}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="bg-slate-950/60 px-3 py-2.5 rounded-lg border border-border/20 font-mono text-[11px] sm:text-xs text-slate-400 flex items-center gap-2 mt-auto">
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0" />
+                          <span>Initial input layer representation. Receptive field starts at 1 px.</span>
+                        </div>
+                      )}
                     </div>
                   ) : (
-                    <table className="w-full text-left text-xs border-collapse">
-                      <thead className="sticky top-0 bg-slate-950/95 backdrop-blur-md z-10 border-b border-border/20 shadow-sm">
-                        <tr className="text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">
-                          <th className="py-2.5 px-3.5">Layer Name</th>
-                          <th className="py-2.5 px-2 text-center">Layer Type</th>
-                          <th className="py-2.5 px-2 text-center">Kernel</th>
-                          <th className="py-2.5 px-2 text-center">Stride</th>
-                          <th className="py-2.5 px-3.5 text-right">Receptive Field</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-border/10 font-medium">
-                        {spatialLayers.map((layer, index) => {
-                          const isActive = activeLayerIndex === index;
-                          return (
-                            <tr
-                              key={layer.layerId}
-                              onClick={() => setActiveLayerIndex(index)}
-                              className={`cursor-pointer transition-all duration-150 relative group ${
-                                isActive 
-                                  ? 'bg-cyan-500/10 text-cyan-200 font-semibold shadow-[inset_0_0_12px_rgba(6,182,212,0.08)]' 
-                                  : 'hover:bg-slate-900/40 text-slate-350 hover:text-white'
-                              }`}
-                            >
-                              <td className="py-2.5 px-3.5 font-semibold flex items-center gap-2 relative">
-                                {/* Left active indicator line */}
-                                <div 
-                                  className={`absolute left-0 top-1 bottom-1 w-1 rounded-r-full transition-colors duration-150 ${
-                                    isActive ? 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)]' : 'bg-transparent group-hover:bg-slate-700'
-                                  }`} 
-                                />
-                                <ChevronRight className={`h-3.5 w-3.5 transition-transform duration-150 shrink-0 ${isActive ? 'rotate-90 text-cyan-400' : 'text-slate-600 group-hover:text-slate-400'}`} />
-                                <span className="truncate">{layer.layerName}</span>
-                              </td>
-                              <td className="py-2.5 px-2 text-center">
-                                <span className={`inline-block px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wide border ${
-                                  layer.layerType === 'conv2d' 
-                                    ? 'bg-blue-500/10 text-blue-300 border-blue-500/20'
-                                    : layer.layerType === 'max_pooling2d' || layer.layerType === 'average_pooling2d'
-                                    ? 'bg-amber-500/10 text-amber-300 border-amber-500/20'
-                                    : 'bg-slate-500/10 text-slate-350 border-slate-500/20'
-                                }`}>
-                                  {layer.layerType.replace('_', ' ')}
-                                </span>
-                              </td>
-                              <td className="py-2.5 px-2 text-center font-mono text-slate-300">
-                                {layer.kernelSize ? `${layer.kernelSize[0]}×${layer.kernelSize[1]}` : '—'}
-                              </td>
-                              <td className="py-2.5 px-2 text-center font-mono text-slate-300">
-                                {layer.strides ? `${layer.strides[0]}×${layer.strides[1]}` : '—'}
-                              </td>
-                              <td className={`py-2.5 px-3.5 text-right font-mono font-bold tabular-nums ${isActive ? 'text-cyan-300' : 'text-slate-200'}`}>
-                                {layer.effectiveRF} <span className="text-[10px] font-normal text-slate-400">px</span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    <div className="h-full rounded-xl border border-border/20 bg-slate-900/60 p-4 text-xs text-slate-400 backdrop-blur-md flex items-center justify-center">
+                      Select a spatial unit to view the breakdown.
+                    </div>
                   )}
                 </div>
               </div>
-
-              {/* Mathematical Breakdown Docked at bottom (Permanently Visible) */}
-              {activeLayer && (
-                <div className="mt-3 bg-slate-900/80 border border-border/30 rounded-xl p-4 shrink-0 text-xs text-slate-300 leading-relaxed font-medium space-y-2.5 backdrop-blur-md shadow-md">
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/10 pb-2">
-                    <span className="text-xs text-cyan-400 font-extrabold uppercase tracking-wider flex items-center gap-1.5">
-                      <Info className="h-3.5 w-3.5 text-cyan-400" />
-                      Mathematical Breakdown
-                    </span>
-                    <div className="flex items-center gap-2 font-mono text-[10px]">
-                      <span className="bg-slate-950/80 border border-border/30 text-slate-350 px-2 py-0.5 rounded-md">
-                        Layer Stride: <strong className="text-cyan-300 font-bold">{activeLayer.strides ? activeLayer.strides[0] : 1}</strong>
-                      </span>
-                      <span className="bg-slate-950/80 border border-border/30 text-slate-350 px-2 py-0.5 rounded-md">
-                        Cumulative Stride: <strong className="text-cyan-300 font-bold">{activeLayer.effectiveStride}</strong>
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-slate-300 text-xs leading-snug">
-                    Receptive Field size at layer <strong className="text-white font-semibold">{activeLayer.layerName}</strong> grows using the recurrence equation:
-                  </p>
-
-                  <MathFormula 
-                    formula="RF_l = RF_{l-1} + (k_l - 1) \times S_{l-1}" 
-                    className="my-1.5 py-2 border-cyan-500/20 bg-slate-950/90 shadow-inner text-cyan-300 font-mono text-xs sm:text-sm"
-                  />
-
-                  {activeLayer.kernelSize ? (
-                    <div className="bg-slate-950/60 px-3 py-2 rounded-lg border border-border/20 font-mono text-[11px] sm:text-xs text-slate-300 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                      <span>
-                        Substituted: <strong className="text-cyan-300 font-bold">{activeLayer.effectiveRF}</strong> = (Previous RF) + ({activeLayer.kernelSize[0]} - 1) × {activeLayer.effectiveStride / (activeLayer.strides ? activeLayer.strides[0] : 1)}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="bg-slate-950/60 px-3 py-2 rounded-lg border border-border/20 font-mono text-[11px] sm:text-xs text-slate-400 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0" />
-                      <span>Initial input layer representation. Receptive field starts at 1 px.</span>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         </div>

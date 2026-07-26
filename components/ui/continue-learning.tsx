@@ -7,6 +7,7 @@ import { LearningItem } from '@/lib/data/relationships';
 interface ContinueLearningProps {
   items: LearningItem[];
   title?: string;
+  className?: string;
 }
 
 const typeIconMap = {
@@ -29,14 +30,18 @@ const typeBadgeMap = {
   learn: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
 };
 
-export default function ContinueLearning({ items, title = 'Continue Learning' }: ContinueLearningProps) {
+export default function ContinueLearning({
+  items,
+  title = 'Continue Learning',
+  className = 'w-full mt-10 pt-8 border-t border-border/20',
+}: ContinueLearningProps) {
   if (!items || items.length === 0) return null;
 
   // Cap recommendations at max 5 strictly as per requirement
   const displayItems = items.slice(0, 5);
 
   return (
-    <section aria-label="Continue Learning" className="w-full mt-10 pt-8 border-t border-border/20">
+    <section aria-label="Continue Learning" className={className}>
       <div className="flex items-center gap-2 mb-5">
         <Compass className="h-5 w-5 text-[#22d3ee]" />
         <h3 className="text-base font-extrabold text-[#e5e7eb] tracking-tight uppercase">

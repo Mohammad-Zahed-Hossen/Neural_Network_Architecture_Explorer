@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ReadingStatus, PaperType } from '@/lib/schema/paper.schema';
 
 interface UserPaperState {
@@ -16,26 +16,24 @@ type PaperStateMap = Record<string, UserPaperState>;
 const STORAGE_KEY = 'nn_explorer_paper_kb_v1';
 
 export function usePaperKnowledgeBase() {
-  // Initialize state lazily from localStorage to avoid setState in useEffect
-  const [paperStates, setPaperStates] = useState<PaperStateMap>(() => {
-    if (typeof window === 'undefined') return {};
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : {};
-    } catch {
-      return {};
-    }
-  });
+  const [paperStates, setPaperStates] = useState<PaperStateMap>({});
+  const [recentlyOpened, setRecentlyOpened] = useState<string[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
-  const [recentlyOpened, setRecentlyOpened] = useState<string[]>(() => {
-    if (typeof window === 'undefined') return [];
+  // Read from localStorage after initial hydration to prevent SSR hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
     try {
-      const saved = localStorage.getItem(`${STORAGE_KEY}_recent`);
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+      const savedStates = localStorage.getItem(STORAGE_KEY);
+      if (savedStates) {
+        setPaperStates(JSON.parse(savedStates));
+      }
+      const savedRecent = localStorage.getItem(`${STORAGE_KEY}_recent`);
+      if (savedRecent) {
+        setRecentlyOpened(JSON.parse(savedRecent));
+      }
+    } catch {}
+  }, []);
 
   const [activeType, setActiveType] = useState<PaperType | 'all'>('all');
   const [activeStatusFilter, setActiveStatusFilter] = useState<ReadingStatus | 'all'>('all');
@@ -175,5 +173,6 @@ export function usePaperKnowledgeBase() {
     setActiveCategory,
     sortMode,
     setSortMode,
+    isMounted,
   };
 }
