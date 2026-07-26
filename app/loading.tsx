@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Network } from 'lucide-react';
+import BrandLogo from '@/components/ui/brand-logo';
 
 export default function RootLoading() {
   return (
@@ -43,7 +43,7 @@ export default function RootLoading() {
           }}
           className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
         >
-          <Network className="h-8 w-8 stroke-[1.5]" />
+          <BrandLogo className="h-8 w-8 object-contain" width={32} height={32} alt="NeuralExplorer logo" />
         </motion.div>
 
         {/* Text and progress */}

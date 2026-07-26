@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   title: "Neural Network Architecture Explorer",
   description: "An interactive, educational platform to inspect, compare, and animate classic neural network architectures (VGG16, ResNet50, DenseNet121) layer-by-layer.",
   metadataBase: new URL('https://neuralnetworkarchitecture.com'),
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/NN_LOGO.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/icon.svg',
+    apple: '/NN_LOGO.svg',
+  },
+  manifest: '/manifest.webmanifest',
   openGraph: {
     title: "Neural Network Architecture Explorer",
     description: "Interactive deep learning architecture visualization and comparison tool",
@@ -59,7 +68,7 @@ const organizationSchema = {
   name: 'NeuralExplorer',
   description: 'Interactive deep learning architecture visualization platform',
   url: 'https://neuralnetworkarchitecture.com',
-  logo: 'https://neuralnetworkarchitecture.com/logo.png',
+  logo: 'https://neuralnetworkarchitecture.com/NN_LOGO.svg',
 }
 
 export default function RootLayout({

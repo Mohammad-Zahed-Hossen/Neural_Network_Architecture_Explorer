@@ -7,6 +7,7 @@ import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Compass, Gi
 import { cn } from '@/lib/utils/cn';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
+import BrandLogo from '@/components/ui/brand-logo';
 
 // Static navigation structure - defined once at module scope
 // The `active` boolean is derived separately in the component to avoid recreating the array on every render
@@ -89,9 +90,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-[#1f2937] bg-[#020617]/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] group-hover:bg-[#22d3ee]/20 group-hover:scale-105 transition-all duration-300">
-            <Network className="h-5 w-5" />
+        <Link href="/" className="flex items-center gap-2.5 group" aria-label="NeuralExplorer home">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] group-hover:bg-[#22d3ee]/20 group-hover:scale-105 transition-all duration-300 overflow-hidden">
+            <BrandLogo className="h-6 w-6 object-contain" width={24} height={24} alt="NeuralExplorer logo" />
           </div>
           <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-[#22d3ee] via-[#67e8f9] to-[#a5f3fc] bg-clip-text text-transparent group-hover:opacity-90 transition-opacity">
             NeuralExplorer

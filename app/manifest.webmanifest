@@ -1,0 +1,23 @@
+{
+  "name": "Neural Network Architecture Explorer",
+  "short_name": "NeuralExplorer",
+  "description": "Interactive neural network architecture explorer and learning platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/NN_LOGO.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

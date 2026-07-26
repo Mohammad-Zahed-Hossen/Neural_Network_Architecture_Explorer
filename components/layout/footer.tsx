@@ -1,4 +1,4 @@
-import { Layers } from 'lucide-react';
+import BrandLogo from '@/components/ui/brand-logo';
 
 export default function Footer() {
   return (
@@ -8,7 +8,9 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="flex flex-col items-center md:items-start gap-1">
             <div className="flex items-center gap-2 text-[#e5e7eb] font-semibold text-sm">
-              <Layers className="h-4 w-4 text-[#22d3ee]" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#22d3ee]/10 border border-[#22d3ee]/20 p-1">
+                <BrandLogo className="h-5 w-5 object-contain" width={20} height={20} alt="NeuralExplorer logo" />
+              </div>
               <span>Neural Network Architecture Explorer</span>
             </div>
             <p className="text-xs text-[#6b7280] text-center md:text-left">

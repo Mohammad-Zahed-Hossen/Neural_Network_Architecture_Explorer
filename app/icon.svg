@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="NeuralExplorer icon">
+  <rect width="256" height="256" rx="56" fill="#020617"/>
+  <path d="M72 176V88h28l32 44 32-44h28v88h-24v-54l-28 40h-16l-28-40v54H72Z" fill="#22d3ee"/>
+  <circle cx="72" cy="88" r="12" fill="#67e8f9"/>
+  <circle cx="184" cy="88" r="12" fill="#a78bfa"/>
+  <circle cx="120" cy="132" r="12" fill="#38bdf8"/>
+  <circle cx="184" cy="176" r="12" fill="#818cf8"/>
+</svg>
