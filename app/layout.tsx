@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Neural Network Architecture Explorer",
-  description: "An interactive, educational platform to inspect, compare, and animate classic neural network architectures (VGG16, ResNet50, DenseNet121) layer-by-layer.",
+  title: 'NN',
+  description: 'An interactive, educational platform to inspect, compare, and animate classic neural network architectures (VGG16, ResNet50, DenseNet121) layer-by-layer.',
   metadataBase: new URL('https://neuralnetworkarchitecture.com'),
   icons: {
     icon: [
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.webmanifest',
   openGraph: {
-    title: "Neural Network Architecture Explorer",
-    description: "Interactive deep learning architecture visualization and comparison tool",
+    title: 'NN',
+    description: 'Interactive deep learning architecture visualization and comparison tool',
     url: 'https://neuralnetworkarchitecture.com',
     siteName: 'NeuralExplorer',
     images: [
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Neural Network Architecture Explorer",
-    description: "Interactive deep learning architecture visualization",
+    title: 'NN',
+    description: 'Interactive deep learning architecture visualization',
     images: ['/og-image.png'],
   },
   robots: {

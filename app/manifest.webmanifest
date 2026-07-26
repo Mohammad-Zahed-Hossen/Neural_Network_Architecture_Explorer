@@ -1,6 +1,6 @@
 {
-  "name": "Neural Network Architecture Explorer",
-  "short_name": "NeuralExplorer",
+  "name": "NN",
+  "short_name": "NN",
   "description": "Interactive neural network architecture explorer and learning platform",
   "start_url": "/",
   "display": "standalone",
