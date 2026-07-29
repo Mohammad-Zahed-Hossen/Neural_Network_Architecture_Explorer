@@ -5,11 +5,11 @@
   "paperYear": 1998,
   "authors": [
     "Yann LeCun",
-    "Léon Bottou",
+    "L\u00e9on Bottou",
     "Yoshua Bengio",
     "Patrick Haffner"
   ],
-  "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+  "paperUrl": "https://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
   "depth": 5,
   "totalParameters": 61706,
   "totalFLOPs": 340000,
@@ -21,7 +21,7 @@
   "top1Accuracy": 0.992,
   "top5Accuracy": 0.998,
   "memoryUsage": 1,
-  "description": "LeNet-5 is the pioneering convolutional neural network that established standard weight sharing, local receptive fields, and subsampling structures to read handwritten digits.",
+  "description": "LeNet-5 is the pioneering convolutional neural network that established standard weight sharing, local receptive fields, and subsampling structures to read handwritten digits. Historical vs Modern Implementation Note: Original 1998 LeNet-5 paper used a custom sparse connection table in layer C3 (connecting 16 feature maps to subsets of S2 maps to limit memory and break symmetry), yielding 60,840 total parameters. Modern framework implementations use full dense 2D convolutions in C3 (2,416 params vs 1,516 params), resulting in 61,706 parameters.",
   "colorTheme": "#84CC16",
   "tags": [
     "CNN",
@@ -121,11 +121,11 @@
           "total": 156,
           "weights": 150,
           "biases": 6,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "5 × 5 × 1 × 6",
+              "expression": "5 \u00d7 5 \u00d7 1 \u00d7 6",
               "result": 150,
               "explanation": "6 filters of size 5x5 operating over 1 input channel."
             },
@@ -245,11 +245,11 @@
           "total": 2416,
           "weights": 2400,
           "biases": 16,
-          "formula": "(kernel_height × kernel_width × input_channels + 1) × filters",
+          "formula": "(kernel_height \u00d7 kernel_width \u00d7 input_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "5 × 5 × 6 × 16",
+              "expression": "5 \u00d7 5 \u00d7 6 \u00d7 16",
               "result": 2400,
               "explanation": "16 filters of size 5x5 operating over 6 input channels."
             },
@@ -266,7 +266,8 @@
         "educationalNote": {
           "summary": "Extracts 16 high-level feature maps.",
           "detailed": "Computes 16 filters of size 5x5 over the 14x14 features. Pushes the network to learn combinations of low-level features.",
-          "keyTakeaway": "Deeper convolutional layers combine simple features into complex representations."
+          "keyTakeaway": "Deeper convolutional layers combine simple features into complex representations.",
+          "historicalNote": "Historical vs Modern Implementation Note: Original 1998 LeNet-5 paper used a custom sparse connection table in layer C3 (connecting 16 feature maps to subsets of S2 maps to limit memory and break symmetry), yielding 60,840 total parameters. Modern framework implementations use full dense 2D convolutions in C3 (2,416 params vs 1,516 params), resulting in 61,706 parameters."
         },
         "position": {
           "x": 250,
@@ -398,11 +399,11 @@
           "total": 48120,
           "weights": 48000,
           "biases": 120,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "400 × 120",
+              "expression": "400 \u00d7 120",
               "result": 48000,
               "explanation": "Weight matrix connecting 400 input features to 120 units."
             },
@@ -455,11 +456,11 @@
           "total": 10164,
           "weights": 10080,
           "biases": 84,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "120 × 84",
+              "expression": "120 \u00d7 84",
               "result": 10080,
               "explanation": "Connections from 120 features to 84 units."
             },
@@ -512,11 +513,11 @@
           "total": 850,
           "weights": 840,
           "biases": 10,
-          "formula": "(input_units + 1) × output_units",
+          "formula": "(input_units + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "84 × 10",
+              "expression": "84 \u00d7 10",
               "result": 840,
               "explanation": "Connections from 84 features to 10 final classes."
             },
@@ -857,5 +858,6 @@
   "nonTrainableParameters": 0,
   "trainableParameters": 61706,
   "family": "Foundational",
-  "category": "Foundational"
+  "category": "Foundational",
+  "year": 1998
 }

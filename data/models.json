@@ -20,8 +20,8 @@
       "Foundational",
       "ImageNet"
     ],
-    "totalParameters": 62378344,
-    "trainableParameters": 62378344,
+    "totalParameters": 61100840,
+    "trainableParameters": 61100840,
     "nonTrainableParameters": 0,
     "top1Accuracy": 0.571,
     "top5Accuracy": 0.802,
@@ -30,7 +30,7 @@
     "depth": 8,
     "paperUrl": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
     "colorTheme": "#F59E0B",
-    "docsUrl": "https://pytorch.org/hub/pytorch_vision_alexnet/",
+    "docsUrl": "https://pytorch.org/vision/stable/models/alexnet.html",
     "description": "AlexNet is the landmark architecture that won the ImageNet 2012 competition by a massive margin, establishing GPU-accelerated CNNs as the state-of-the-art approach in computer vision."
   },
   {
@@ -57,8 +57,8 @@
       "Modern-CNN",
       "ImageNet"
     ],
-    "totalParameters": 28475064,
-    "trainableParameters": 28475064,
+    "totalParameters": 28589128,
+    "trainableParameters": 28589128,
     "nonTrainableParameters": 0,
     "top1Accuracy": 0.821,
     "top5Accuracy": 0.959,
@@ -68,7 +68,7 @@
     "paperUrl": "https://arxiv.org/abs/2201.03545",
     "colorTheme": "#10B981",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/convnext/ConvNeXtTiny",
-    "description": "ConvNeXt modernizes classical ResNet architectures by incorporating modern Transformer-style design decisions, such as large 7x7 depthwise convolutions, inverted bottleneck channel ratios, GELU activations, and Layer Normalization. Proves that standard CNNs can achieve accuracy and scaling trends comparable to Vision Transformers."
+    "description": "ConvNeXt modernizes classical ResNet architectures by incorporating modern Transformer-style design decisions, such as large 7x7 depthwise convolutions, inverted bottleneck channel ratios, GELU activations, and Layer Normalization. Proves that standard CNNs can achieve accuracy and scaling trends comparable to Vision Transformers. ImageNet Accuracy Benchmarks: Original 2022 Paper ConvNeXt-Tiny Top-1: 82.1% (Top-5: 95.9%). Retrained / fine-tuned 384x384 Top-1: 84.1%."
   },
   {
     "id": "densenet121",
@@ -103,7 +103,7 @@
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#8B5CF6",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet121",
-    "description": "DenseNet121 connects every layer to all preceding layers in a feed-forward manner. This maximizes feature reuse and avoids redundant parameter mapping, allowing 121 layers to run with only 8M parameters."
+    "description": "DenseNet121 connects every layer to all preceding layers in a feed-forward manner. This maximizes feature reuse and avoids redundant parameter mapping, allowing 121 layers to run with only 8M parameters. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712)."
   },
   {
     "id": "densenet169",
@@ -138,7 +138,7 @@
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#7C3AED",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet169",
-    "description": "Deeper 169-layer variant of DenseNet. Balances accuracy improvement with computational cost through dense connections and efficient feature reuse."
+    "description": "Deeper 169-layer variant of DenseNet. Balances accuracy improvement with computational cost through dense connections and efficient feature reuse. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712)."
   },
   {
     "id": "densenet201",
@@ -173,7 +173,7 @@
     "paperUrl": "https://arxiv.org/abs/1608.06993",
     "colorTheme": "#6D28D9",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/densenet/DenseNet201",
-    "description": "The largest DenseNet variant with 201 layers. Achieves excellent accuracy through dense feature reuse while maintaining parameter efficiency compared to older architectures."
+    "description": "The largest DenseNet variant with 201 layers. Achieves excellent accuracy through dense feature reuse while maintaining parameter efficiency compared to older architectures. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712)."
   },
   {
     "id": "efficientnetb0",
@@ -207,7 +207,7 @@
     "paperUrl": "https://arxiv.org/abs/1905.11946",
     "colorTheme": "#F97316",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/EfficientNetB0",
-    "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks scaled using compound scaling values."
+    "description": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks scaled using compound scaling values. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712)."
   },
   {
     "id": "efficientnetb1",
@@ -531,7 +531,7 @@
     "releaseYear": 1998,
     "authors": [
       "Yann LeCun",
-      "Léon Bottou",
+      "L\u00e9on Bottou",
       "Yoshua Bengio",
       "Patrick Haffner"
     ],
@@ -549,10 +549,10 @@
     "memoryUsage": 1,
     "totalFLOPs": 340000,
     "depth": 5,
-    "paperUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "paperUrl": "https://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
     "colorTheme": "#84CC16",
     "docsUrl": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
-    "description": "LeNet-5 is the pioneering convolutional neural network that established standard weight sharing, local receptive fields, and subsampling structures to read handwritten digits."
+    "description": "LeNet-5 is the pioneering convolutional neural network that established standard weight sharing, local receptive fields, and subsampling structures to read handwritten digits. Historical vs Modern Implementation Note: Original 1998 LeNet-5 paper used a custom sparse connection table in layer C3 (connecting 16 feature maps to subsets of S2 maps to limit memory and break symmetry), yielding 60,840 total parameters. Modern framework implementations use full dense 2D convolutions in C3 (2,416 params vs 1,516 params), resulting in 61,706 parameters."
   },
   {
     "id": "maxvit",
@@ -667,7 +667,7 @@
     "paperUrl": "https://arxiv.org/abs/1801.04381",
     "colorTheme": "#0EA5E9",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2",
-    "description": "MobileNetV2 is a highly efficient CNN optimized for mobile applications. It introduces inverted residual blocks with linear bottlenecks, leveraging depthwise-separable convolutions to cut calculation weights by over 90% while preserving accuracy."
+    "description": "MobileNetV2 is a highly efficient CNN optimized for mobile applications. It introduces inverted residual blocks with linear bottlenecks, leveraging depthwise-separable convolutions to cut calculation weights by over 90% while preserving accuracy. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712). ImageNet Accuracy Benchmarks: Original 2018 Paper Top-1: 72.0% (Top-5: 91.0%). Modern PyTorch torchvision Retrained Recipe Top-1: 73.034% (Top-5: 91.064%)."
   },
   {
     "id": "mobilenetv3large",
@@ -825,7 +825,7 @@
     "paperUrl": "https://arxiv.org/abs/1707.07012",
     "colorTheme": "#06B6D4",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/nasnet/NASNetMobile",
-    "description": "Mobile-optimized neural architecture found through automated architecture search. Achieves good accuracy-to-efficiency ratio for mobile deployment."
+    "description": "Mobile-optimized neural architecture found through automated architecture search. Achieves good accuracy-to-efficiency ratio for mobile deployment. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712)."
   },
   {
     "id": "resnet101",
@@ -860,7 +860,7 @@
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#059669",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet101",
-    "description": "101-layer residual network with even deeper architecture. Stacks bottleneck blocks for computational efficiency while maintaining representational power."
+    "description": "101-layer residual network with even deeper architecture. Stacks bottleneck blocks for computational efficiency while maintaining representational power. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712). ImageNet Accuracy Benchmarks: Original 2015 Paper Top-1: 77.37% (Top-5: 93.56%). Modern PyTorch torchvision V2 Retrained Recipe Top-1: 81.886% (Top-5: 95.780%)."
   },
   {
     "id": "resnet101v2",
@@ -930,7 +930,7 @@
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#047857",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet/ResNet152",
-    "description": "The deepest variant in the original ResNet family with 152 layers. Achieves best accuracy but requires more computational resources. Demonstrates that deeper networks benefit from skip connections."
+    "description": "The deepest variant in the original ResNet family with 152 layers. Achieves best accuracy but requires more computational resources. Demonstrates that deeper networks benefit from skip connections. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712). ImageNet Accuracy Benchmarks: Original 2015 Paper Top-1: 78.57% (Top-5: 94.29%). Modern PyTorch torchvision V2 Retrained Recipe Top-1: 82.284% (Top-5: 96.002%)."
   },
   {
     "id": "resnet152v2",
@@ -1000,7 +1000,7 @@
     "paperUrl": "https://arxiv.org/abs/1512.03385",
     "colorTheme": "#10B981",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50",
-    "description": "ResNet50 is a seminal convolutional neural network utilizing residual skip connections to facilitate backpropagation in deep architectures. This addresses the vanishing gradient problem, allowing stable weight updates across 50 layers."
+    "description": "ResNet50 is a seminal convolutional neural network utilizing residual skip connections to facilitate backpropagation in deep architectures. This addresses the vanishing gradient problem, allowing stable weight updates across 50 layers. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712). ImageNet Accuracy Benchmarks: Original 2015 Paper Top-1: 76.15% (Top-5: 92.87%). Modern PyTorch torchvision V2 Retrained Recipe Top-1: 80.858% (Top-5: 95.434%)."
   },
   {
     "id": "resnet50v2",
@@ -1183,7 +1183,7 @@
     "paperUrl": "https://arxiv.org/abs/2010.11929",
     "colorTheme": "#D946EF",
     "docsUrl": "https://huggingface.co/docs/transformers/model_doc/vit",
-    "description": "ViT (Vision Transformer) applies a pure standard Transformer encoder directly to image patches. It splits the image into a sequence of flat patches, projects them linearly, and updates global relationships using self-attention. Bypasses CNN convolution operations entirely."
+    "description": "ViT (Vision Transformer) applies a pure standard Transformer encoder directly to image patches. It splits the image into a sequence of flat patches, projects them linearly, and updates global relationships using self-attention. Bypasses CNN convolution operations entirely. ImageNet Accuracy Benchmarks: ViT-B/16 Original Paper Top-1 (ImageNet-21k pretrained): 85.81%. Direct ImageNet-1k baseline Top-1: 77.91%. Modern PyTorch SWAG / SWAG-e fine-tuned Top-1: 85.3%."
   },
   {
     "id": "xception",
@@ -1196,7 +1196,7 @@
     "paperYear": 2016,
     "releaseYear": 2016,
     "authors": [
-      "François Chollet"
+      "Fran\u00e7ois Chollet"
     ],
     "tags": [
       "CNN",
@@ -1215,6 +1215,6 @@
     "paperUrl": "https://arxiv.org/abs/1610.02357",
     "colorTheme": "#EC4899",
     "docsUrl": "https://www.tensorflow.org/api_docs/python/tf/keras/applications/xception/Xception",
-    "description": "Xception replaces standard Inception modules with Depthwise Separable Convolutions, significantly reducing parameters and accelerating feature mapping capabilities."
+    "description": "Xception replaces standard Inception modules with Depthwise Separable Convolutions, significantly reducing parameters and accelerating feature mapping capabilities. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712)."
   }
 ]

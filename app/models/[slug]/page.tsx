@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import TabbedExplorer from '@/components/model-explorer/tabbed-explorer';
 import { getAllModelIds } from '@/lib/data-access/models';
 import { getModel } from '@/lib/data-access/models.server';
+import { getImplementationData } from '@/lib/data-access/implementations.server';
 
 // Generates static parameters during static export build
 export async function generateStaticParams() {
@@ -41,6 +42,9 @@ export default async function ModelPage({ params }: PageProps) {
     console.error(`Error loading model ${slug}:`, error);
     notFound();
   }
+
+  // Load implementation data (returns null if JSON is missing)
+  const implementation = getImplementationData(slug);
 
   // Extract graph data from architecture.layout while keeping TabbedExplorer's prop shape stable.
   const graphData = {
@@ -104,7 +108,12 @@ export default async function ModelPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <TabbedExplorer overview={overview} layers={model.architecture.layers} graphData={graphData} />
+      <TabbedExplorer
+        overview={overview}
+        layers={model.architecture.layers}
+        graphData={graphData}
+        implementation={implementation}
+      />
     </>
   );
 }

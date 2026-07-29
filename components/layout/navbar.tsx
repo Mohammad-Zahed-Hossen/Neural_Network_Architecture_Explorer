@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Compass, GitCommit, Zap } from 'lucide-react';
+import { Network, BarChart3, Home, BookOpen, History, GraduationCap, Compass, GitCommit, Zap, Code2 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';

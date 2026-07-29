@@ -125,11 +125,11 @@
           "total": 4704,
           "weights": 4608,
           "biases": 96,
-          "formula": "(patch_h × patch_w × in_channels + 1) × embedding_dim",
+          "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 embedding_dim",
           "calculationSteps": [
             {
               "label": "Stem Weights",
-              "expression": "4 × 4 × 3 × 96",
+              "expression": "4 \u00d7 4 \u00d7 3 \u00d7 96",
               "result": 4608,
               "explanation": "Convolutes 4x4 non-overlapping patches, mapping each patch's RGB pixels to 96 feature dimensions."
             },
@@ -184,11 +184,11 @@
           "total": 170000,
           "weights": 169600,
           "biases": 400,
-          "formula": "2 × SwinBlock_Params",
+          "formula": "2 \u00d7 SwinBlock_Params",
           "calculationSteps": [
             {
               "label": "Attention & MLP weights",
-              "expression": "2 × 84800",
+              "expression": "2 \u00d7 84800",
               "result": 169600,
               "explanation": "Parameters for MSA Query-Key-Value projections and MLP channels across two local window blocks."
             }
@@ -248,11 +248,11 @@
           "total": 73920,
           "weights": 73728,
           "biases": 192,
-          "formula": "(2 × 2 × in_channels + 1) × out_channels",
+          "formula": "(2 \u00d7 2 \u00d7 in_channels + 1) \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Linear Reduction Weights",
-              "expression": "384 × 192",
+              "expression": "384 \u00d7 192",
               "result": 73728,
               "explanation": "Concatenates 2x2 adjacent patch embeddings (96 x 4 = 384 channels), then projects them back to 192 channels."
             }
@@ -301,11 +301,11 @@
           "total": 580000,
           "weights": 579200,
           "biases": 800,
-          "formula": "2 × Stage2Block_Params",
+          "formula": "2 \u00d7 Stage2Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 2 Attention Weights",
-              "expression": "2 × 289600",
+              "expression": "2 \u00d7 289600",
               "result": 579200,
               "explanation": "Self-attention QKV projections and MLP weight parameters for 192 channels."
             }
@@ -365,11 +365,11 @@
           "total": 295296,
           "weights": 294912,
           "biases": 384,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Linear Reduction Weights",
-              "expression": "768 × 384",
+              "expression": "768 \u00d7 384",
               "result": 294912,
               "explanation": "Concatenates 2x2 spatial patch tokens (192 x 4 = 768 channels) and maps them to a 384-dimensional space."
             }
@@ -418,11 +418,11 @@
           "total": 13800000,
           "weights": 13790000,
           "biases": 10000,
-          "formula": "6 × Stage3Block_Params",
+          "formula": "6 \u00d7 Stage3Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 3 Weights Stack",
-              "expression": "6 × 2298333",
+              "expression": "6 \u00d7 2298333",
               "result": 13790000,
               "explanation": "Accumulated parameters of the 6 sequential transformer encoder blocks at 384 hidden dimensions."
             }
@@ -482,11 +482,11 @@
           "total": 1180416,
           "weights": 1179648,
           "biases": 768,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
               "label": "Reduction Weights",
-              "expression": "1536 × 768",
+              "expression": "1536 \u00d7 768",
               "result": 1179648,
               "explanation": "Maps 2x2 merged tokens (1536 channels) to 768 output channels."
             }
@@ -535,11 +535,11 @@
           "total": 11600000,
           "weights": 11596000,
           "biases": 4000,
-          "formula": "2 × Stage4Block_Params",
+          "formula": "2 \u00d7 Stage4Block_Params",
           "calculationSteps": [
             {
               "label": "Stage 4 Blocks Weights",
-              "expression": "2 × 5798000",
+              "expression": "2 \u00d7 5798000",
               "result": 11596000,
               "explanation": "Self-attention and MLP parameters for the final 2 transformer blocks operating on 768 hidden dimensions."
             }
@@ -583,17 +583,17 @@
         },
         "config": {
           "axis": -1,
-          "epsilon": 0.000001
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Normalization Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma scaling and beta bias parameters."
             }
@@ -682,11 +682,11 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(hidden_dim × num_classes) + num_classes",
+          "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
           "calculationSteps": [
             {
               "label": "Logits Weights",
-              "expression": "768 × 1000",
+              "expression": "768 \u00d7 1000",
               "result": 768000,
               "explanation": "Weights mapping final 768 features to the 1000 class indexes."
             },
@@ -1268,5 +1268,6 @@
   "nonTrainableParameters": 0,
   "trainableParameters": 28474872,
   "family": "Transformer",
-  "category": "Transformer"
+  "category": "Transformer",
+  "year": 2021
 }

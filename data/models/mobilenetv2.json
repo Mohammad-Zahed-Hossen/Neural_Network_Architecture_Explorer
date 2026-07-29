@@ -22,7 +22,7 @@
   "top1Accuracy": 0.718,
   "top5Accuracy": 0.91,
   "memoryUsage": 14,
-  "description": "MobileNetV2 is a highly efficient CNN optimized for mobile applications. It introduces inverted residual blocks with linear bottlenecks, leveraging depthwise-separable convolutions to cut calculation weights by over 90% while preserving accuracy.",
+  "description": "MobileNetV2 is a highly efficient CNN optimized for mobile applications. It introduces inverted residual blocks with linear bottlenecks, leveraging depthwise-separable convolutions to cut calculation weights by over 90% while preserving accuracy. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712). ImageNet Accuracy Benchmarks: Original 2018 Paper Top-1: 72.0% (Top-5: 91.0%). Modern PyTorch torchvision Retrained Recipe Top-1: 73.034% (Top-5: 91.064%).",
   "colorTheme": "#0EA5E9",
   "tags": [
     "CNN",
@@ -43,7 +43,7 @@
             224,
             3
           ],
-          "description": "224×224×3 RGB Image"
+          "description": "224\u00d7224\u00d73 RGB Image"
         },
         "outputShape": {
           "dimensions": [
@@ -52,7 +52,7 @@
             224,
             3
           ],
-          "description": "224×224×3 RGB Image"
+          "description": "224\u00d7224\u00d73 RGB Image"
         },
         "config": {
           "shape": [
@@ -94,7 +94,7 @@
             224,
             3
           ],
-          "description": "224×224×3"
+          "description": "224\u00d7224\u00d73"
         },
         "outputShape": {
           "dimensions": [
@@ -103,7 +103,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "filters": 32,
@@ -123,11 +123,11 @@
           "total": 864,
           "weights": 864,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × input_channels × output_filters",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Kernel Weights",
-              "expression": "3 × 3 × 3 × 32",
+              "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
               "result": 864,
               "explanation": "32 filters of size 3x3 convolving over 3 RGB channels. Stride 2 halves resolution."
             }
@@ -159,7 +159,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -168,7 +168,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "axis": 3,
@@ -185,17 +185,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -223,7 +223,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -232,7 +232,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "activation": "relu"
@@ -270,7 +270,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -279,7 +279,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "filters": 32,
@@ -299,11 +299,11 @@
           "total": 288,
           "weights": 288,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 32",
+              "expression": "3 \u00d7 3 \u00d7 32",
               "result": 288,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -335,7 +335,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -344,7 +344,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "axis": 3,
@@ -361,17 +361,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -399,7 +399,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -408,7 +408,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "activation": "relu"
@@ -444,7 +444,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -453,7 +453,7 @@
             112,
             16
           ],
-          "description": "112×112×16"
+          "description": "112\u00d7112\u00d716"
         },
         "config": {
           "filters": 16,
@@ -473,11 +473,11 @@
           "total": 512,
           "weights": 512,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "32 × 16",
+              "expression": "32 \u00d7 16",
               "result": 512,
               "explanation": "Compresses channel information."
             }
@@ -509,7 +509,7 @@
             112,
             16
           ],
-          "description": "112×112×16"
+          "description": "112\u00d7112\u00d716"
         },
         "outputShape": {
           "dimensions": [
@@ -518,7 +518,7 @@
             112,
             16
           ],
-          "description": "112×112×16"
+          "description": "112\u00d7112\u00d716"
         },
         "config": {
           "axis": 3,
@@ -535,17 +535,17 @@
           "beta": 16,
           "movingMean": 16,
           "movingVariance": 16,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 16",
+              "expression": "2 \u00d7 16",
               "result": 32,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 16",
+              "expression": "2 \u00d7 16",
               "result": 32,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -573,7 +573,7 @@
             112,
             16
           ],
-          "description": "112×112×16"
+          "description": "112\u00d7112\u00d716"
         },
         "outputShape": {
           "dimensions": [
@@ -582,7 +582,7 @@
             112,
             96
           ],
-          "description": "112×112×96"
+          "description": "112\u00d7112\u00d796"
         },
         "config": {
           "filters": 96,
@@ -602,11 +602,11 @@
           "total": 1536,
           "weights": 1536,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "16 × 96",
+              "expression": "16 \u00d7 96",
               "result": 1536,
               "explanation": "1x1 projection expanding channels."
             }
@@ -638,7 +638,7 @@
             112,
             96
           ],
-          "description": "112×112×96"
+          "description": "112\u00d7112\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -647,7 +647,7 @@
             112,
             96
           ],
-          "description": "112×112×96"
+          "description": "112\u00d7112\u00d796"
         },
         "config": {
           "axis": 3,
@@ -664,17 +664,17 @@
           "beta": 96,
           "movingMean": 96,
           "movingVariance": 96,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -702,7 +702,7 @@
             112,
             96
           ],
-          "description": "112×112×96"
+          "description": "112\u00d7112\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -711,7 +711,7 @@
             112,
             96
           ],
-          "description": "112×112×96"
+          "description": "112\u00d7112\u00d796"
         },
         "config": {
           "activation": "relu"
@@ -747,7 +747,7 @@
             112,
             96
           ],
-          "description": "112×112×96"
+          "description": "112\u00d7112\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -756,7 +756,7 @@
             56,
             96
           ],
-          "description": "56×56×96"
+          "description": "56\u00d756\u00d796"
         },
         "config": {
           "filters": 96,
@@ -776,11 +776,11 @@
           "total": 864,
           "weights": 864,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 96",
+              "expression": "3 \u00d7 3 \u00d7 96",
               "result": 864,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -812,7 +812,7 @@
             56,
             96
           ],
-          "description": "56×56×96"
+          "description": "56\u00d756\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -821,7 +821,7 @@
             56,
             96
           ],
-          "description": "56×56×96"
+          "description": "56\u00d756\u00d796"
         },
         "config": {
           "axis": 3,
@@ -838,17 +838,17 @@
           "beta": 96,
           "movingMean": 96,
           "movingVariance": 96,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -876,7 +876,7 @@
             56,
             96
           ],
-          "description": "56×56×96"
+          "description": "56\u00d756\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -885,7 +885,7 @@
             56,
             96
           ],
-          "description": "56×56×96"
+          "description": "56\u00d756\u00d796"
         },
         "config": {
           "activation": "relu"
@@ -921,7 +921,7 @@
             56,
             96
           ],
-          "description": "56×56×96"
+          "description": "56\u00d756\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -930,7 +930,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "config": {
           "filters": 24,
@@ -950,11 +950,11 @@
           "total": 2304,
           "weights": 2304,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "96 × 24",
+              "expression": "96 \u00d7 24",
               "result": 2304,
               "explanation": "Compresses channel information."
             }
@@ -986,7 +986,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "outputShape": {
           "dimensions": [
@@ -995,7 +995,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "config": {
           "axis": 3,
@@ -1012,17 +1012,17 @@
           "beta": 24,
           "movingMean": 24,
           "movingVariance": 24,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 24",
+              "expression": "2 \u00d7 24",
               "result": 48,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 24",
+              "expression": "2 \u00d7 24",
               "result": 48,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1050,7 +1050,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "outputShape": {
           "dimensions": [
@@ -1059,7 +1059,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "filters": 144,
@@ -1079,11 +1079,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "24 × 144",
+              "expression": "24 \u00d7 144",
               "result": 3456,
               "explanation": "1x1 projection expanding channels."
             }
@@ -1115,7 +1115,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1124,7 +1124,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "axis": 3,
@@ -1141,17 +1141,17 @@
           "beta": 144,
           "movingMean": 144,
           "movingVariance": 144,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1179,7 +1179,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1188,7 +1188,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "activation": "relu"
@@ -1224,7 +1224,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1233,7 +1233,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "filters": 144,
@@ -1253,11 +1253,11 @@
           "total": 1296,
           "weights": 1296,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 144",
+              "expression": "3 \u00d7 3 \u00d7 144",
               "result": 1296,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -1289,7 +1289,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1298,7 +1298,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "axis": 3,
@@ -1315,17 +1315,17 @@
           "beta": 144,
           "movingMean": 144,
           "movingVariance": 144,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1353,7 +1353,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1362,7 +1362,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "activation": "relu"
@@ -1398,7 +1398,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1407,7 +1407,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "config": {
           "filters": 24,
@@ -1427,11 +1427,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "144 × 24",
+              "expression": "144 \u00d7 24",
               "result": 3456,
               "explanation": "Compresses channel information."
             }
@@ -1463,7 +1463,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "outputShape": {
           "dimensions": [
@@ -1472,7 +1472,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "config": {
           "axis": 3,
@@ -1489,17 +1489,17 @@
           "beta": 24,
           "movingMean": 24,
           "movingVariance": 24,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 24",
+              "expression": "2 \u00d7 24",
               "result": 48,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 24",
+              "expression": "2 \u00d7 24",
               "result": 48,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1571,7 +1571,7 @@
             56,
             24
           ],
-          "description": "56×56×24"
+          "description": "56\u00d756\u00d724"
         },
         "outputShape": {
           "dimensions": [
@@ -1580,7 +1580,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "filters": 144,
@@ -1600,11 +1600,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "24 × 144",
+              "expression": "24 \u00d7 144",
               "result": 3456,
               "explanation": "1x1 projection expanding channels."
             }
@@ -1636,7 +1636,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1645,7 +1645,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "axis": 3,
@@ -1662,17 +1662,17 @@
           "beta": 144,
           "movingMean": 144,
           "movingVariance": 144,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1700,7 +1700,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1709,7 +1709,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "config": {
           "activation": "relu"
@@ -1745,7 +1745,7 @@
             56,
             144
           ],
-          "description": "56×56×144"
+          "description": "56\u00d756\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1754,7 +1754,7 @@
             28,
             144
           ],
-          "description": "28×28×144"
+          "description": "28\u00d728\u00d7144"
         },
         "config": {
           "filters": 144,
@@ -1774,11 +1774,11 @@
           "total": 1296,
           "weights": 1296,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 144",
+              "expression": "3 \u00d7 3 \u00d7 144",
               "result": 1296,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -1810,7 +1810,7 @@
             28,
             144
           ],
-          "description": "28×28×144"
+          "description": "28\u00d728\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1819,7 +1819,7 @@
             28,
             144
           ],
-          "description": "28×28×144"
+          "description": "28\u00d728\u00d7144"
         },
         "config": {
           "axis": 3,
@@ -1836,17 +1836,17 @@
           "beta": 144,
           "movingMean": 144,
           "movingVariance": 144,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 144",
+              "expression": "2 \u00d7 144",
               "result": 288,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1874,7 +1874,7 @@
             28,
             144
           ],
-          "description": "28×28×144"
+          "description": "28\u00d728\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1883,7 +1883,7 @@
             28,
             144
           ],
-          "description": "28×28×144"
+          "description": "28\u00d728\u00d7144"
         },
         "config": {
           "activation": "relu"
@@ -1919,7 +1919,7 @@
             28,
             144
           ],
-          "description": "28×28×144"
+          "description": "28\u00d728\u00d7144"
         },
         "outputShape": {
           "dimensions": [
@@ -1928,7 +1928,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "config": {
           "filters": 32,
@@ -1948,11 +1948,11 @@
           "total": 4608,
           "weights": 4608,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "144 × 32",
+              "expression": "144 \u00d7 32",
               "result": 4608,
               "explanation": "Compresses channel information."
             }
@@ -1984,7 +1984,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -1993,7 +1993,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "config": {
           "axis": 3,
@@ -2010,17 +2010,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2048,7 +2048,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -2057,7 +2057,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "filters": 192,
@@ -2077,11 +2077,11 @@
           "total": 6144,
           "weights": 6144,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "32 × 192",
+              "expression": "32 \u00d7 192",
               "result": 6144,
               "explanation": "1x1 projection expanding channels."
             }
@@ -2113,7 +2113,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2122,7 +2122,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "axis": 3,
@@ -2139,17 +2139,17 @@
           "beta": 192,
           "movingMean": 192,
           "movingVariance": 192,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2177,7 +2177,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2186,7 +2186,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "activation": "relu"
@@ -2222,7 +2222,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2231,7 +2231,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "filters": 192,
@@ -2251,11 +2251,11 @@
           "total": 1728,
           "weights": 1728,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 192",
+              "expression": "3 \u00d7 3 \u00d7 192",
               "result": 1728,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -2287,7 +2287,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2296,7 +2296,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "axis": 3,
@@ -2313,17 +2313,17 @@
           "beta": 192,
           "movingMean": 192,
           "movingVariance": 192,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2351,7 +2351,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2360,7 +2360,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "activation": "relu"
@@ -2396,7 +2396,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2405,7 +2405,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "config": {
           "filters": 32,
@@ -2425,11 +2425,11 @@
           "total": 6144,
           "weights": 6144,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "192 × 32",
+              "expression": "192 \u00d7 32",
               "result": 6144,
               "explanation": "Compresses channel information."
             }
@@ -2461,7 +2461,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -2470,7 +2470,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "config": {
           "axis": 3,
@@ -2487,17 +2487,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2569,7 +2569,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -2578,7 +2578,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "filters": 192,
@@ -2598,11 +2598,11 @@
           "total": 6144,
           "weights": 6144,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "32 × 192",
+              "expression": "32 \u00d7 192",
               "result": 6144,
               "explanation": "1x1 projection expanding channels."
             }
@@ -2634,7 +2634,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2643,7 +2643,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "axis": 3,
@@ -2660,17 +2660,17 @@
           "beta": 192,
           "movingMean": 192,
           "movingVariance": 192,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2698,7 +2698,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2707,7 +2707,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "activation": "relu"
@@ -2743,7 +2743,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2752,7 +2752,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "filters": 192,
@@ -2772,11 +2772,11 @@
           "total": 1728,
           "weights": 1728,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 192",
+              "expression": "3 \u00d7 3 \u00d7 192",
               "result": 1728,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -2808,7 +2808,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2817,7 +2817,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "axis": 3,
@@ -2834,17 +2834,17 @@
           "beta": 192,
           "movingMean": 192,
           "movingVariance": 192,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2872,7 +2872,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2881,7 +2881,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "activation": "relu"
@@ -2917,7 +2917,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -2926,7 +2926,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "config": {
           "filters": 32,
@@ -2946,11 +2946,11 @@
           "total": 6144,
           "weights": 6144,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "192 × 32",
+              "expression": "192 \u00d7 32",
               "result": 6144,
               "explanation": "Compresses channel information."
             }
@@ -2982,7 +2982,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -2991,7 +2991,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "config": {
           "axis": 3,
@@ -3008,17 +3008,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3090,7 +3090,7 @@
             28,
             32
           ],
-          "description": "28×28×32"
+          "description": "28\u00d728\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -3099,7 +3099,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "filters": 192,
@@ -3119,11 +3119,11 @@
           "total": 6144,
           "weights": 6144,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "32 × 192",
+              "expression": "32 \u00d7 192",
               "result": 6144,
               "explanation": "1x1 projection expanding channels."
             }
@@ -3155,7 +3155,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -3164,7 +3164,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "axis": 3,
@@ -3181,17 +3181,17 @@
           "beta": 192,
           "movingMean": 192,
           "movingVariance": 192,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3219,7 +3219,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -3228,7 +3228,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "config": {
           "activation": "relu"
@@ -3264,7 +3264,7 @@
             28,
             192
           ],
-          "description": "28×28×192"
+          "description": "28\u00d728\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -3273,7 +3273,7 @@
             14,
             192
           ],
-          "description": "14×14×192"
+          "description": "14\u00d714\u00d7192"
         },
         "config": {
           "filters": 192,
@@ -3293,11 +3293,11 @@
           "total": 1728,
           "weights": 1728,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 192",
+              "expression": "3 \u00d7 3 \u00d7 192",
               "result": 1728,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -3329,7 +3329,7 @@
             14,
             192
           ],
-          "description": "14×14×192"
+          "description": "14\u00d714\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -3338,7 +3338,7 @@
             14,
             192
           ],
-          "description": "14×14×192"
+          "description": "14\u00d714\u00d7192"
         },
         "config": {
           "axis": 3,
@@ -3355,17 +3355,17 @@
           "beta": 192,
           "movingMean": 192,
           "movingVariance": 192,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 192",
+              "expression": "2 \u00d7 192",
               "result": 384,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3393,7 +3393,7 @@
             14,
             192
           ],
-          "description": "14×14×192"
+          "description": "14\u00d714\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -3402,7 +3402,7 @@
             14,
             192
           ],
-          "description": "14×14×192"
+          "description": "14\u00d714\u00d7192"
         },
         "config": {
           "activation": "relu"
@@ -3438,7 +3438,7 @@
             14,
             192
           ],
-          "description": "14×14×192"
+          "description": "14\u00d714\u00d7192"
         },
         "outputShape": {
           "dimensions": [
@@ -3447,7 +3447,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "filters": 64,
@@ -3467,11 +3467,11 @@
           "total": 12288,
           "weights": 12288,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "192 × 64",
+              "expression": "192 \u00d7 64",
               "result": 12288,
               "explanation": "Compresses channel information."
             }
@@ -3503,7 +3503,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -3512,7 +3512,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "axis": 3,
@@ -3529,17 +3529,17 @@
           "beta": 64,
           "movingMean": 64,
           "movingVariance": 64,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3567,7 +3567,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -3576,7 +3576,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -3596,11 +3596,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "64 × 384",
+              "expression": "64 \u00d7 384",
               "result": 24576,
               "explanation": "1x1 projection expanding channels."
             }
@@ -3632,7 +3632,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -3641,7 +3641,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -3658,17 +3658,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3696,7 +3696,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -3705,7 +3705,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -3741,7 +3741,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -3750,7 +3750,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -3770,11 +3770,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 384",
+              "expression": "3 \u00d7 3 \u00d7 384",
               "result": 3456,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -3806,7 +3806,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -3815,7 +3815,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -3832,17 +3832,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3870,7 +3870,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -3879,7 +3879,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -3915,7 +3915,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -3924,7 +3924,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "filters": 64,
@@ -3944,11 +3944,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "384 × 64",
+              "expression": "384 \u00d7 64",
               "result": 24576,
               "explanation": "Compresses channel information."
             }
@@ -3980,7 +3980,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -3989,7 +3989,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "axis": 3,
@@ -4006,17 +4006,17 @@
           "beta": 64,
           "movingMean": 64,
           "movingVariance": 64,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4088,7 +4088,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -4097,7 +4097,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -4117,11 +4117,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "64 × 384",
+              "expression": "64 \u00d7 384",
               "result": 24576,
               "explanation": "1x1 projection expanding channels."
             }
@@ -4153,7 +4153,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4162,7 +4162,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -4179,17 +4179,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4217,7 +4217,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4226,7 +4226,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -4262,7 +4262,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4271,7 +4271,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -4291,11 +4291,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 384",
+              "expression": "3 \u00d7 3 \u00d7 384",
               "result": 3456,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -4327,7 +4327,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4336,7 +4336,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -4353,17 +4353,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4391,7 +4391,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4400,7 +4400,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -4436,7 +4436,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4445,7 +4445,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "filters": 64,
@@ -4465,11 +4465,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "384 × 64",
+              "expression": "384 \u00d7 64",
               "result": 24576,
               "explanation": "Compresses channel information."
             }
@@ -4501,7 +4501,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -4510,7 +4510,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "axis": 3,
@@ -4527,17 +4527,17 @@
           "beta": 64,
           "movingMean": 64,
           "movingVariance": 64,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4609,7 +4609,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -4618,7 +4618,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -4638,11 +4638,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "64 × 384",
+              "expression": "64 \u00d7 384",
               "result": 24576,
               "explanation": "1x1 projection expanding channels."
             }
@@ -4674,7 +4674,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4683,7 +4683,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -4700,17 +4700,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4738,7 +4738,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4747,7 +4747,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -4783,7 +4783,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4792,7 +4792,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -4812,11 +4812,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 384",
+              "expression": "3 \u00d7 3 \u00d7 384",
               "result": 3456,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -4848,7 +4848,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4857,7 +4857,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -4874,17 +4874,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4912,7 +4912,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4921,7 +4921,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -4957,7 +4957,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -4966,7 +4966,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "filters": 64,
@@ -4986,11 +4986,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "384 × 64",
+              "expression": "384 \u00d7 64",
               "result": 24576,
               "explanation": "Compresses channel information."
             }
@@ -5022,7 +5022,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -5031,7 +5031,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "config": {
           "axis": 3,
@@ -5048,17 +5048,17 @@
           "beta": 64,
           "movingMean": 64,
           "movingVariance": 64,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5130,7 +5130,7 @@
             14,
             64
           ],
-          "description": "14×14×64"
+          "description": "14\u00d714\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -5139,7 +5139,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -5159,11 +5159,11 @@
           "total": 24576,
           "weights": 24576,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "64 × 384",
+              "expression": "64 \u00d7 384",
               "result": 24576,
               "explanation": "1x1 projection expanding channels."
             }
@@ -5195,7 +5195,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -5204,7 +5204,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -5221,17 +5221,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5259,7 +5259,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -5268,7 +5268,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -5304,7 +5304,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -5313,7 +5313,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "filters": 384,
@@ -5333,11 +5333,11 @@
           "total": 3456,
           "weights": 3456,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 384",
+              "expression": "3 \u00d7 3 \u00d7 384",
               "result": 3456,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -5369,7 +5369,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -5378,7 +5378,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "axis": 3,
@@ -5395,17 +5395,17 @@
           "beta": 384,
           "movingMean": 384,
           "movingVariance": 384,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 384",
+              "expression": "2 \u00d7 384",
               "result": 768,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5433,7 +5433,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -5442,7 +5442,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "config": {
           "activation": "relu"
@@ -5478,7 +5478,7 @@
             14,
             384
           ],
-          "description": "14×14×384"
+          "description": "14\u00d714\u00d7384"
         },
         "outputShape": {
           "dimensions": [
@@ -5487,7 +5487,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "config": {
           "filters": 96,
@@ -5507,11 +5507,11 @@
           "total": 36864,
           "weights": 36864,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "384 × 96",
+              "expression": "384 \u00d7 96",
               "result": 36864,
               "explanation": "Compresses channel information."
             }
@@ -5543,7 +5543,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -5552,7 +5552,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "config": {
           "axis": 3,
@@ -5569,17 +5569,17 @@
           "beta": 96,
           "movingMean": 96,
           "movingVariance": 96,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5607,7 +5607,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -5616,7 +5616,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "filters": 576,
@@ -5636,11 +5636,11 @@
           "total": 55296,
           "weights": 55296,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "96 × 576",
+              "expression": "96 \u00d7 576",
               "result": 55296,
               "explanation": "1x1 projection expanding channels."
             }
@@ -5672,7 +5672,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -5681,7 +5681,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "axis": 3,
@@ -5698,17 +5698,17 @@
           "beta": 576,
           "movingMean": 576,
           "movingVariance": 576,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5736,7 +5736,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -5745,7 +5745,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "activation": "relu"
@@ -5781,7 +5781,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -5790,7 +5790,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "filters": 576,
@@ -5810,11 +5810,11 @@
           "total": 5184,
           "weights": 5184,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 576",
+              "expression": "3 \u00d7 3 \u00d7 576",
               "result": 5184,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -5846,7 +5846,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -5855,7 +5855,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "axis": 3,
@@ -5872,17 +5872,17 @@
           "beta": 576,
           "movingMean": 576,
           "movingVariance": 576,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5910,7 +5910,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -5919,7 +5919,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "activation": "relu"
@@ -5955,7 +5955,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -5964,7 +5964,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "config": {
           "filters": 96,
@@ -5984,11 +5984,11 @@
           "total": 55296,
           "weights": 55296,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "576 × 96",
+              "expression": "576 \u00d7 96",
               "result": 55296,
               "explanation": "Compresses channel information."
             }
@@ -6020,7 +6020,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -6029,7 +6029,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "config": {
           "axis": 3,
@@ -6046,17 +6046,17 @@
           "beta": 96,
           "movingMean": 96,
           "movingVariance": 96,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -6128,7 +6128,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -6137,7 +6137,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "filters": 576,
@@ -6157,11 +6157,11 @@
           "total": 55296,
           "weights": 55296,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "96 × 576",
+              "expression": "96 \u00d7 576",
               "result": 55296,
               "explanation": "1x1 projection expanding channels."
             }
@@ -6193,7 +6193,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6202,7 +6202,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "axis": 3,
@@ -6219,17 +6219,17 @@
           "beta": 576,
           "movingMean": 576,
           "movingVariance": 576,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -6257,7 +6257,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6266,7 +6266,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "activation": "relu"
@@ -6302,7 +6302,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6311,7 +6311,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "filters": 576,
@@ -6331,11 +6331,11 @@
           "total": 5184,
           "weights": 5184,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 576",
+              "expression": "3 \u00d7 3 \u00d7 576",
               "result": 5184,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -6367,7 +6367,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6376,7 +6376,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "axis": 3,
@@ -6393,17 +6393,17 @@
           "beta": 576,
           "movingMean": 576,
           "movingVariance": 576,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -6431,7 +6431,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6440,7 +6440,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "activation": "relu"
@@ -6476,7 +6476,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6485,7 +6485,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "config": {
           "filters": 96,
@@ -6505,11 +6505,11 @@
           "total": 55296,
           "weights": 55296,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "576 × 96",
+              "expression": "576 \u00d7 96",
               "result": 55296,
               "explanation": "Compresses channel information."
             }
@@ -6541,7 +6541,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -6550,7 +6550,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "config": {
           "axis": 3,
@@ -6567,17 +6567,17 @@
           "beta": 96,
           "movingMean": 96,
           "movingVariance": 96,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -6649,7 +6649,7 @@
             14,
             96
           ],
-          "description": "14×14×96"
+          "description": "14\u00d714\u00d796"
         },
         "outputShape": {
           "dimensions": [
@@ -6658,7 +6658,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "filters": 576,
@@ -6678,11 +6678,11 @@
           "total": 55296,
           "weights": 55296,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "96 × 576",
+              "expression": "96 \u00d7 576",
               "result": 55296,
               "explanation": "1x1 projection expanding channels."
             }
@@ -6714,7 +6714,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6723,7 +6723,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "axis": 3,
@@ -6740,17 +6740,17 @@
           "beta": 576,
           "movingMean": 576,
           "movingVariance": 576,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -6778,7 +6778,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6787,7 +6787,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "config": {
           "activation": "relu"
@@ -6823,7 +6823,7 @@
             14,
             576
           ],
-          "description": "14×14×576"
+          "description": "14\u00d714\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6832,7 +6832,7 @@
             7,
             576
           ],
-          "description": "7×7×576"
+          "description": "7\u00d77\u00d7576"
         },
         "config": {
           "filters": 576,
@@ -6852,11 +6852,11 @@
           "total": 5184,
           "weights": 5184,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 576",
+              "expression": "3 \u00d7 3 \u00d7 576",
               "result": 5184,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -6888,7 +6888,7 @@
             7,
             576
           ],
-          "description": "7×7×576"
+          "description": "7\u00d77\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6897,7 +6897,7 @@
             7,
             576
           ],
-          "description": "7×7×576"
+          "description": "7\u00d77\u00d7576"
         },
         "config": {
           "axis": 3,
@@ -6914,17 +6914,17 @@
           "beta": 576,
           "movingMean": 576,
           "movingVariance": 576,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 576",
+              "expression": "2 \u00d7 576",
               "result": 1152,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -6952,7 +6952,7 @@
             7,
             576
           ],
-          "description": "7×7×576"
+          "description": "7\u00d77\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -6961,7 +6961,7 @@
             7,
             576
           ],
-          "description": "7×7×576"
+          "description": "7\u00d77\u00d7576"
         },
         "config": {
           "activation": "relu"
@@ -6997,7 +6997,7 @@
             7,
             576
           ],
-          "description": "7×7×576"
+          "description": "7\u00d77\u00d7576"
         },
         "outputShape": {
           "dimensions": [
@@ -7006,7 +7006,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "config": {
           "filters": 160,
@@ -7026,11 +7026,11 @@
           "total": 92160,
           "weights": 92160,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "576 × 160",
+              "expression": "576 \u00d7 160",
               "result": 92160,
               "explanation": "Compresses channel information."
             }
@@ -7062,7 +7062,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "outputShape": {
           "dimensions": [
@@ -7071,7 +7071,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "config": {
           "axis": 3,
@@ -7088,17 +7088,17 @@
           "beta": 160,
           "movingMean": 160,
           "movingVariance": 160,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 160",
+              "expression": "2 \u00d7 160",
               "result": 320,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 160",
+              "expression": "2 \u00d7 160",
               "result": 320,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -7126,7 +7126,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "outputShape": {
           "dimensions": [
@@ -7135,7 +7135,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "filters": 960,
@@ -7155,11 +7155,11 @@
           "total": 153600,
           "weights": 153600,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "160 × 960",
+              "expression": "160 \u00d7 960",
               "result": 153600,
               "explanation": "1x1 projection expanding channels."
             }
@@ -7191,7 +7191,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7200,7 +7200,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "axis": 3,
@@ -7217,17 +7217,17 @@
           "beta": 960,
           "movingMean": 960,
           "movingVariance": 960,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -7255,7 +7255,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7264,7 +7264,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "activation": "relu"
@@ -7300,7 +7300,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7309,7 +7309,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "filters": 960,
@@ -7329,11 +7329,11 @@
           "total": 8640,
           "weights": 8640,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 960",
+              "expression": "3 \u00d7 3 \u00d7 960",
               "result": 8640,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -7365,7 +7365,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7374,7 +7374,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "axis": 3,
@@ -7391,17 +7391,17 @@
           "beta": 960,
           "movingMean": 960,
           "movingVariance": 960,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -7429,7 +7429,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7438,7 +7438,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "activation": "relu"
@@ -7474,7 +7474,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7483,7 +7483,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "config": {
           "filters": 160,
@@ -7503,11 +7503,11 @@
           "total": 153600,
           "weights": 153600,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "960 × 160",
+              "expression": "960 \u00d7 160",
               "result": 153600,
               "explanation": "Compresses channel information."
             }
@@ -7539,7 +7539,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "outputShape": {
           "dimensions": [
@@ -7548,7 +7548,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "config": {
           "axis": 3,
@@ -7565,17 +7565,17 @@
           "beta": 160,
           "movingMean": 160,
           "movingVariance": 160,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 160",
+              "expression": "2 \u00d7 160",
               "result": 320,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 160",
+              "expression": "2 \u00d7 160",
               "result": 320,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -7647,7 +7647,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "outputShape": {
           "dimensions": [
@@ -7656,7 +7656,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "filters": 960,
@@ -7676,11 +7676,11 @@
           "total": 153600,
           "weights": 153600,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "160 × 960",
+              "expression": "160 \u00d7 960",
               "result": 153600,
               "explanation": "1x1 projection expanding channels."
             }
@@ -7712,7 +7712,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7721,7 +7721,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "axis": 3,
@@ -7738,17 +7738,17 @@
           "beta": 960,
           "movingMean": 960,
           "movingVariance": 960,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -7776,7 +7776,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7785,7 +7785,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "activation": "relu"
@@ -7821,7 +7821,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7830,7 +7830,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "filters": 960,
@@ -7850,11 +7850,11 @@
           "total": 8640,
           "weights": 8640,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 960",
+              "expression": "3 \u00d7 3 \u00d7 960",
               "result": 8640,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -7886,7 +7886,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7895,7 +7895,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "axis": 3,
@@ -7912,17 +7912,17 @@
           "beta": 960,
           "movingMean": 960,
           "movingVariance": 960,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -7950,7 +7950,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -7959,7 +7959,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "activation": "relu"
@@ -7995,7 +7995,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8004,7 +8004,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "config": {
           "filters": 160,
@@ -8024,11 +8024,11 @@
           "total": 153600,
           "weights": 153600,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "960 × 160",
+              "expression": "960 \u00d7 160",
               "result": 153600,
               "explanation": "Compresses channel information."
             }
@@ -8060,7 +8060,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "outputShape": {
           "dimensions": [
@@ -8069,7 +8069,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "config": {
           "axis": 3,
@@ -8086,17 +8086,17 @@
           "beta": 160,
           "movingMean": 160,
           "movingVariance": 160,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 160",
+              "expression": "2 \u00d7 160",
               "result": 320,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 160",
+              "expression": "2 \u00d7 160",
               "result": 320,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -8168,7 +8168,7 @@
             7,
             160
           ],
-          "description": "7×7×160"
+          "description": "7\u00d77\u00d7160"
         },
         "outputShape": {
           "dimensions": [
@@ -8177,7 +8177,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "filters": 960,
@@ -8197,11 +8197,11 @@
           "total": 153600,
           "weights": 153600,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "160 × 960",
+              "expression": "160 \u00d7 960",
               "result": 153600,
               "explanation": "1x1 projection expanding channels."
             }
@@ -8233,7 +8233,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8242,7 +8242,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "axis": 3,
@@ -8259,17 +8259,17 @@
           "beta": 960,
           "movingMean": 960,
           "movingVariance": 960,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -8297,7 +8297,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8306,7 +8306,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "activation": "relu"
@@ -8342,7 +8342,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8351,7 +8351,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "filters": 960,
@@ -8371,11 +8371,11 @@
           "total": 8640,
           "weights": 8640,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × channels",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Depthwise weights",
-              "expression": "3 × 3 × 960",
+              "expression": "3 \u00d7 3 \u00d7 960",
               "result": 8640,
               "explanation": "Apply one 3x3 filter per channel independently (groups = channels), which separates spatial convolving from channel mixing."
             }
@@ -8407,7 +8407,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8416,7 +8416,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "axis": 3,
@@ -8433,17 +8433,17 @@
           "beta": 960,
           "movingMean": 960,
           "movingVariance": 960,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 960",
+              "expression": "2 \u00d7 960",
               "result": 1920,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -8471,7 +8471,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8480,7 +8480,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "config": {
           "activation": "relu"
@@ -8516,7 +8516,7 @@
             7,
             960
           ],
-          "description": "7×7×960"
+          "description": "7\u00d77\u00d7960"
         },
         "outputShape": {
           "dimensions": [
@@ -8525,7 +8525,7 @@
             7,
             320
           ],
-          "description": "7×7×320"
+          "description": "7\u00d77\u00d7320"
         },
         "config": {
           "filters": 320,
@@ -8545,11 +8545,11 @@
           "total": 307200,
           "weights": 307200,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Projection weights",
-              "expression": "960 × 320",
+              "expression": "960 \u00d7 320",
               "result": 307200,
               "explanation": "Compresses channel information."
             }
@@ -8581,7 +8581,7 @@
             7,
             320
           ],
-          "description": "7×7×320"
+          "description": "7\u00d77\u00d7320"
         },
         "outputShape": {
           "dimensions": [
@@ -8590,7 +8590,7 @@
             7,
             320
           ],
-          "description": "7×7×320"
+          "description": "7\u00d77\u00d7320"
         },
         "config": {
           "axis": 3,
@@ -8607,17 +8607,17 @@
           "beta": 320,
           "movingMean": 320,
           "movingVariance": 320,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 320",
+              "expression": "2 \u00d7 320",
               "result": 640,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 320",
+              "expression": "2 \u00d7 320",
               "result": 640,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -8645,7 +8645,7 @@
             7,
             320
           ],
-          "description": "7×7×320"
+          "description": "7\u00d77\u00d7320"
         },
         "outputShape": {
           "dimensions": [
@@ -8654,7 +8654,7 @@
             7,
             1280
           ],
-          "description": "7×7×1280"
+          "description": "7\u00d77\u00d71280"
         },
         "config": {
           "filters": 1280,
@@ -8674,11 +8674,11 @@
           "total": 409600,
           "weights": 409600,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "320 × 1280",
+              "expression": "320 \u00d7 1280",
               "result": 409600,
               "explanation": "Final 1x1 projection expanding descriptors."
             }
@@ -8709,7 +8709,7 @@
             7,
             1280
           ],
-          "description": "7×7×1280"
+          "description": "7\u00d77\u00d71280"
         },
         "outputShape": {
           "dimensions": [
@@ -8718,7 +8718,7 @@
             7,
             1280
           ],
-          "description": "7×7×1280"
+          "description": "7\u00d77\u00d71280"
         },
         "config": {
           "axis": 3,
@@ -8735,17 +8735,17 @@
           "beta": 1280,
           "movingMean": 1280,
           "movingVariance": 1280,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 1280",
+              "expression": "2 \u00d7 1280",
               "result": 2560,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 1280",
+              "expression": "2 \u00d7 1280",
               "result": 2560,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -8773,7 +8773,7 @@
             7,
             1280
           ],
-          "description": "7×7×1280"
+          "description": "7\u00d77\u00d71280"
         },
         "outputShape": {
           "dimensions": [
@@ -8782,7 +8782,7 @@
             7,
             1280
           ],
-          "description": "7×7×1280"
+          "description": "7\u00d77\u00d71280"
         },
         "config": {
           "activation": "relu"
@@ -8818,7 +8818,7 @@
             7,
             1280
           ],
-          "description": "7×7×1280"
+          "description": "7\u00d77\u00d71280"
         },
         "outputShape": {
           "dimensions": [
@@ -8876,11 +8876,11 @@
           "total": 1281000,
           "weights": 1280000,
           "biases": 1000,
-          "formula": "(input_features + 1) × output_units",
+          "formula": "(input_features + 1) \u00d7 output_units",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "1280 × 1000",
+              "expression": "1280 \u00d7 1000",
               "result": 1280000,
               "explanation": "Maps descriptors to classes."
             },
@@ -9889,7 +9889,7 @@
       {
         "id": "group_stage_1_b_0",
         "name": "Stage 1 Block 1",
-        "description": "Inverted Bottleneck Block (t=1): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=1): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_1_depthwise",
           "block_1_depthwise_BN",
@@ -9902,7 +9902,7 @@
       {
         "id": "group_stage_2_b_0",
         "name": "Stage 2 Block 1",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_2_expand",
           "block_2_expand_BN",
@@ -9918,7 +9918,7 @@
       {
         "id": "group_stage_2_b_1",
         "name": "Stage 2 Block 2",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_3_expand",
           "block_3_expand_BN",
@@ -9935,7 +9935,7 @@
       {
         "id": "group_stage_3_b_0",
         "name": "Stage 3 Block 1",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_4_expand",
           "block_4_expand_BN",
@@ -9951,7 +9951,7 @@
       {
         "id": "group_stage_3_b_1",
         "name": "Stage 3 Block 2",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_5_expand",
           "block_5_expand_BN",
@@ -9968,7 +9968,7 @@
       {
         "id": "group_stage_3_b_2",
         "name": "Stage 3 Block 3",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_6_expand",
           "block_6_expand_BN",
@@ -9985,7 +9985,7 @@
       {
         "id": "group_stage_4_b_0",
         "name": "Stage 4 Block 1",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_7_expand",
           "block_7_expand_BN",
@@ -10001,7 +10001,7 @@
       {
         "id": "group_stage_4_b_1",
         "name": "Stage 4 Block 2",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_8_expand",
           "block_8_expand_BN",
@@ -10018,7 +10018,7 @@
       {
         "id": "group_stage_4_b_2",
         "name": "Stage 4 Block 3",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_9_expand",
           "block_9_expand_BN",
@@ -10035,7 +10035,7 @@
       {
         "id": "group_stage_4_b_3",
         "name": "Stage 4 Block 4",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_10_expand",
           "block_10_expand_BN",
@@ -10052,7 +10052,7 @@
       {
         "id": "group_stage_5_b_0",
         "name": "Stage 5 Block 1",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_11_expand",
           "block_11_expand_BN",
@@ -10068,7 +10068,7 @@
       {
         "id": "group_stage_5_b_1",
         "name": "Stage 5 Block 2",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_12_expand",
           "block_12_expand_BN",
@@ -10085,7 +10085,7 @@
       {
         "id": "group_stage_5_b_2",
         "name": "Stage 5 Block 3",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_13_expand",
           "block_13_expand_BN",
@@ -10102,7 +10102,7 @@
       {
         "id": "group_stage_6_b_0",
         "name": "Stage 6 Block 1",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_14_expand",
           "block_14_expand_BN",
@@ -10118,7 +10118,7 @@
       {
         "id": "group_stage_6_b_1",
         "name": "Stage 6 Block 2",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_15_expand",
           "block_15_expand_BN",
@@ -10135,7 +10135,7 @@
       {
         "id": "group_stage_6_b_2",
         "name": "Stage 6 Block 3",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
         "layerIds": [
           "block_16_expand",
           "block_16_expand_BN",
@@ -10152,7 +10152,7 @@
       {
         "id": "group_stage_7_b_0",
         "name": "Stage 7 Block 1",
-        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+        "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
         "layerIds": [
           "block_17_expand",
           "block_17_expand_BN",
@@ -12381,7 +12381,7 @@
         {
           "id": "group_stage_1_b_0",
           "name": "Stage 1 Block 1",
-          "description": "Inverted Bottleneck Block (t=1): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=1): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_1_depthwise",
             "block_1_depthwise_BN",
@@ -12394,7 +12394,7 @@
         {
           "id": "group_stage_2_b_0",
           "name": "Stage 2 Block 1",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_2_expand",
             "block_2_expand_BN",
@@ -12410,7 +12410,7 @@
         {
           "id": "group_stage_2_b_1",
           "name": "Stage 2 Block 2",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_3_expand",
             "block_3_expand_BN",
@@ -12427,7 +12427,7 @@
         {
           "id": "group_stage_3_b_0",
           "name": "Stage 3 Block 1",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_4_expand",
             "block_4_expand_BN",
@@ -12443,7 +12443,7 @@
         {
           "id": "group_stage_3_b_1",
           "name": "Stage 3 Block 2",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_5_expand",
             "block_5_expand_BN",
@@ -12460,7 +12460,7 @@
         {
           "id": "group_stage_3_b_2",
           "name": "Stage 3 Block 3",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_6_expand",
             "block_6_expand_BN",
@@ -12477,7 +12477,7 @@
         {
           "id": "group_stage_4_b_0",
           "name": "Stage 4 Block 1",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_7_expand",
             "block_7_expand_BN",
@@ -12493,7 +12493,7 @@
         {
           "id": "group_stage_4_b_1",
           "name": "Stage 4 Block 2",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_8_expand",
             "block_8_expand_BN",
@@ -12510,7 +12510,7 @@
         {
           "id": "group_stage_4_b_2",
           "name": "Stage 4 Block 3",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_9_expand",
             "block_9_expand_BN",
@@ -12527,7 +12527,7 @@
         {
           "id": "group_stage_4_b_3",
           "name": "Stage 4 Block 4",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_10_expand",
             "block_10_expand_BN",
@@ -12544,7 +12544,7 @@
         {
           "id": "group_stage_5_b_0",
           "name": "Stage 5 Block 1",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_11_expand",
             "block_11_expand_BN",
@@ -12560,7 +12560,7 @@
         {
           "id": "group_stage_5_b_1",
           "name": "Stage 5 Block 2",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_12_expand",
             "block_12_expand_BN",
@@ -12577,7 +12577,7 @@
         {
           "id": "group_stage_5_b_2",
           "name": "Stage 5 Block 3",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_13_expand",
             "block_13_expand_BN",
@@ -12594,7 +12594,7 @@
         {
           "id": "group_stage_6_b_0",
           "name": "Stage 6 Block 1",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_14_expand",
             "block_14_expand_BN",
@@ -12610,7 +12610,7 @@
         {
           "id": "group_stage_6_b_1",
           "name": "Stage 6 Block 2",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_15_expand",
             "block_15_expand_BN",
@@ -12627,7 +12627,7 @@
         {
           "id": "group_stage_6_b_2",
           "name": "Stage 6 Block 3",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "layerIds": [
             "block_16_expand",
             "block_16_expand_BN",
@@ -12644,7 +12644,7 @@
         {
           "id": "group_stage_7_b_0",
           "name": "Stage 7 Block 1",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "layerIds": [
             "block_17_expand",
             "block_17_expand_BN",
@@ -12692,7 +12692,7 @@
           "id": "group_stage_1_b_0",
           "label": "Stage 1 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=1): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=1): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12710,7 +12710,7 @@
           "id": "group_stage_2_b_0",
           "label": "Stage 2 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12731,7 +12731,7 @@
           "id": "group_stage_2_b_1",
           "label": "Stage 2 Block 2",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12753,7 +12753,7 @@
           "id": "group_stage_3_b_0",
           "label": "Stage 3 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12774,7 +12774,7 @@
           "id": "group_stage_3_b_1",
           "label": "Stage 3 Block 2",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12796,7 +12796,7 @@
           "id": "group_stage_3_b_2",
           "label": "Stage 3 Block 3",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12818,7 +12818,7 @@
           "id": "group_stage_4_b_0",
           "label": "Stage 4 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12839,7 +12839,7 @@
           "id": "group_stage_4_b_1",
           "label": "Stage 4 Block 2",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12861,7 +12861,7 @@
           "id": "group_stage_4_b_2",
           "label": "Stage 4 Block 3",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12883,7 +12883,7 @@
           "id": "group_stage_4_b_3",
           "label": "Stage 4 Block 4",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12905,7 +12905,7 @@
           "id": "group_stage_5_b_0",
           "label": "Stage 5 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12926,7 +12926,7 @@
           "id": "group_stage_5_b_1",
           "label": "Stage 5 Block 2",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12948,7 +12948,7 @@
           "id": "group_stage_5_b_2",
           "label": "Stage 5 Block 3",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12970,7 +12970,7 @@
           "id": "group_stage_6_b_0",
           "label": "Stage 6 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -12991,7 +12991,7 @@
           "id": "group_stage_6_b_1",
           "label": "Stage 6 Block 2",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -13013,7 +13013,7 @@
           "id": "group_stage_6_b_2",
           "label": "Stage 6 Block 3",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project + skip.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project + skip.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -13035,7 +13035,7 @@
           "id": "group_stage_7_b_0",
           "label": "Stage 7 Block 1",
           "type": "group_node",
-          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand → 3x3 Depthwise → 1x1 Project.",
+          "description": "Inverted Bottleneck Block (t=6): 1x1 Expand \u2192 3x3 Depthwise \u2192 1x1 Project.",
           "color": "#3B82F6",
           "position": {
             "x": 250,
@@ -13186,5 +13186,6 @@
   "nonTrainableParameters": 34112,
   "trainableParameters": 3504872,
   "family": "MobileNet",
-  "category": "MobileNet"
+  "category": "MobileNet",
+  "year": 2018
 }

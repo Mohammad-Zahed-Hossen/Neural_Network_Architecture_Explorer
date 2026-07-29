@@ -13,7 +13,7 @@
   ],
   "paperUrl": "https://arxiv.org/abs/2201.03545",
   "depth": 30,
-  "totalParameters": 28475064,
+  "totalParameters": 28589128,
   "totalFLOPs": 4460000000,
   "inputShape": {
     "channels": 3,
@@ -23,7 +23,7 @@
   "top1Accuracy": 0.821,
   "top5Accuracy": 0.959,
   "memoryUsage": 110,
-  "description": "ConvNeXt modernizes classical ResNet architectures by incorporating modern Transformer-style design decisions, such as large 7x7 depthwise convolutions, inverted bottleneck channel ratios, GELU activations, and Layer Normalization. Proves that standard CNNs can achieve accuracy and scaling trends comparable to Vision Transformers.",
+  "description": "ConvNeXt modernizes classical ResNet architectures by incorporating modern Transformer-style design decisions, such as large 7x7 depthwise convolutions, inverted bottleneck channel ratios, GELU activations, and Layer Normalization. Proves that standard CNNs can achieve accuracy and scaling trends comparable to Vision Transformers. ImageNet Accuracy Benchmarks: Original 2022 Paper ConvNeXt-Tiny Top-1: 82.1% (Top-5: 95.9%). Retrained / fine-tuned 384x384 Top-1: 84.1%.",
   "colorTheme": "#10B981",
   "tags": [
     "CNN",
@@ -123,11 +123,11 @@
           "total": 4704,
           "weights": 4608,
           "biases": 96,
-          "formula": "(kernel_h × kernel_w × in_channels + 1) × filters",
+          "formula": "(kernel_h \u00d7 kernel_w \u00d7 in_channels + 1) \u00d7 filters",
           "calculationSteps": [
             {
               "label": "Stem weights",
-              "expression": "4 × 4 × 3 × 96",
+              "expression": "4 \u00d7 4 \u00d7 3 \u00d7 96",
               "result": 4608,
               "explanation": "Extracts 4x4 image patches with stride 4, mapping them to 96 feature dimensions."
             },
@@ -177,17 +177,17 @@
         },
         "config": {
           "axis": -1,
-          "epsilon": 0.000001
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 192,
           "weights": 96,
           "biases": 96,
-          "formula": "2 × channels",
+          "formula": "2 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "LN parameters",
-              "expression": "2 × 96",
+              "expression": "2 \u00d7 96",
               "result": 192,
               "explanation": "Gamma scaling and Beta bias vectors."
             }
@@ -233,19 +233,19 @@
           "expansion": 3
         },
         "parameters": {
-          "total": 350000,
-          "weights": 348500,
-          "biases": 1500,
-          "formula": "3 × Block_Params",
+          "total": 237888,
+          "weights": 232704,
+          "biases": 5184,
+          "formula": "3 \u00d7 Block_Params",
           "calculationSteps": [
             {
-              "label": "Stage 1 Weights",
-              "expression": "3 × 116166",
-              "result": 348500,
-              "explanation": "Parameters across 3 ConvNeXt blocks, each using 7x7 depthwise conv and inverted bottlenecks."
+              "label": "3x Block Parameters",
+              "expression": "3 \u00d7 (8 \u00d7 96\u00b2 + 58 \u00d7 96)",
+              "result": 237888,
+              "explanation": "3 ConvNeXt blocks at 96 channels (7x7 depthwise conv, LayerNorm, 1x1 expand to 384, 1x1 shrink to 96, LayerScale)."
             }
           ],
-          "trainableParameters": 350000,
+          "trainableParameters": 237888,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -297,19 +297,19 @@
           "activation": "linear"
         },
         "parameters": {
-          "total": 73920,
-          "weights": 73728,
+          "total": 74112,
+          "weights": 73920,
           "biases": 192,
-          "formula": "(kernel_h × kernel_w × in_channels + 1) × out_channels",
+          "formula": "(kernel_h \u00d7 kernel_w \u00d7 in_channels + 1) \u00d7 out_channels",
           "calculationSteps": [
             {
-              "label": "Downsample Weights",
-              "expression": "2 × 2 × 96 × 192",
-              "result": 73728,
-              "explanation": "Downsamples map resolution to 28x28 and projects features to 192 dimensions."
+              "label": "Downsample 1 LayerNorm + Conv2d",
+              "expression": "(2 \u00d7 96) + (2 \u00d7 2 \u00d7 96 \u00d7 192 + 192)",
+              "result": 74112,
+              "explanation": "LayerNorm (192) plus 2x2 Conv2d stride 2 (73,920) projecting features from 96 to 192 channels."
             }
           ],
-          "trainableParameters": 73920,
+          "trainableParameters": 74112,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -350,19 +350,19 @@
           "expansion": 3
         },
         "parameters": {
-          "total": 1400000,
-          "weights": 1397000,
-          "biases": 3000,
-          "formula": "3 × Stage2Block_Params",
+          "total": 918144,
+          "weights": 907776,
+          "biases": 10368,
+          "formula": "3 \u00d7 Stage2Block_Params",
           "calculationSteps": [
             {
-              "label": "Stage 2 Weights Stack",
-              "expression": "3 × 465666",
-              "result": 1397000,
-              "explanation": "Accumulated parameters of the 3 ConvNeXt blocks in Stage 2."
+              "label": "3x Block Parameters",
+              "expression": "3 \u00d7 (8 \u00d7 192\u00b2 + 58 \u00d7 192)",
+              "result": 918144,
+              "explanation": "3 ConvNeXt blocks at 192 channels (expanding internally to 768 channels)."
             }
           ],
-          "trainableParameters": 1400000,
+          "trainableParameters": 918144,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -414,19 +414,19 @@
           "activation": "linear"
         },
         "parameters": {
-          "total": 295296,
-          "weights": 294912,
+          "total": 295680,
+          "weights": 295296,
           "biases": 384,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
-              "label": "Linear Reduction Weights",
-              "expression": "192 × 4 × 384",
-              "result": 294912,
-              "explanation": "Projects 2x2 grid features (768 dimensions) down to 384 dimensions."
+              "label": "Downsample 2 LayerNorm + Conv2d",
+              "expression": "(2 \u00d7 192) + (2 \u00d7 2 \u00d7 192 \u00d7 384 + 384)",
+              "result": 295680,
+              "explanation": "LayerNorm (384) plus 2x2 Conv2d stride 2 (295,296) projecting features from 192 to 384 channels."
             }
           ],
-          "trainableParameters": 295296,
+          "trainableParameters": 295680,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -467,19 +467,19 @@
           "expansion": 9
         },
         "parameters": {
-          "total": 13500000,
-          "weights": 13482000,
-          "biases": 18000,
-          "formula": "9 × Stage3Block_Params",
+          "total": 10817280,
+          "weights": 10758144,
+          "biases": 59136,
+          "formula": "9 \u00d7 Stage3Block_Params",
           "calculationSteps": [
             {
-              "label": "Stage 3 Weights",
-              "expression": "9 × 1498000",
-              "result": 13482000,
-              "explanation": "Parameters of 9 stacked ConvNeXt blocks at 384 channels (expanding internally to 1536 channels)."
+              "label": "9x Block Parameters",
+              "expression": "9 \u00d7 (8 \u00d7 384\u00b2 + 58 \u00d7 384)",
+              "result": 10817280,
+              "explanation": "9 ConvNeXt blocks at 384 channels (expanding internally to 1536 channels)."
             }
           ],
-          "trainableParameters": 13500000,
+          "trainableParameters": 10817280,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -531,19 +531,19 @@
           "activation": "linear"
         },
         "parameters": {
-          "total": 1180416,
-          "weights": 1179648,
+          "total": 1181184,
+          "weights": 1180416,
           "biases": 768,
-          "formula": "in_channels × 4 × out_channels",
+          "formula": "in_channels \u00d7 4 \u00d7 out_channels",
           "calculationSteps": [
             {
-              "label": "Linear Reduction Weights",
-              "expression": "384 × 4 × 768",
-              "result": 1179648,
-              "explanation": "Downsamples maps to final 7x7 grid and doubles channel size to 768."
+              "label": "Downsample 3 LayerNorm + Conv2d",
+              "expression": "(2 \u00d7 384) + (2 \u00d7 2 \u00d7 384 \u00d7 768 + 768)",
+              "result": 1181184,
+              "explanation": "LayerNorm (768) plus 2x2 Conv2d stride 2 (1,180,416) projecting features from 384 to 768 channels."
             }
           ],
-          "trainableParameters": 1180416,
+          "trainableParameters": 1181184,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -584,19 +584,19 @@
           "expansion": 3
         },
         "parameters": {
-          "total": 10900000,
-          "weights": 10888000,
-          "biases": 12000,
-          "formula": "3 × Stage4Block_Params",
+          "total": 14289408,
+          "weights": 14234112,
+          "biases": 55296,
+          "formula": "3 \u00d7 Stage4Block_Params",
           "calculationSteps": [
             {
-              "label": "Stage 4 Weights",
-              "expression": "3 × 3629333",
-              "result": 10888000,
-              "explanation": "Parameters of the final 3 ConvNeXt blocks operating at 768 dimensions."
+              "label": "3x Block Parameters",
+              "expression": "3 \u00d7 (8 \u00d7 768\u00b2 + 58 \u00d7 768)",
+              "result": 14289408,
+              "explanation": "3 ConvNeXt blocks at 768 channels (expanding internally to 3072 channels)."
             }
           ],
-          "trainableParameters": 10900000,
+          "trainableParameters": 14289408,
           "nonTrainableParameters": 0
         },
         "educationalNote": {
@@ -673,17 +673,17 @@
         },
         "config": {
           "axis": -1,
-          "epsilon": 0.000001
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × channels",
+          "formula": "2 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "LN scaling parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma scaling and Beta bias vectors."
             }
@@ -730,11 +730,11 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(channels × classes) + classes",
+          "formula": "(channels \u00d7 classes) + classes",
           "calculationSteps": [
             {
               "label": "Logits weights",
-              "expression": "768 × 1000",
+              "expression": "768 \u00d7 1000",
               "result": 768000,
               "explanation": "Dense weights mapping pooled features to ImageNet categories."
             },
@@ -1337,7 +1337,8 @@
     }
   },
   "nonTrainableParameters": 0,
-  "trainableParameters": 28475064,
+  "trainableParameters": 28589128,
   "family": "Transformer",
-  "category": "Transformer"
+  "category": "Transformer",
+  "year": 2022
 }

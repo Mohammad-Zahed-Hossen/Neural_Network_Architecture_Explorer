@@ -1,12 +1,12 @@
 {
   "lenet": {
-    "paper": "http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf",
+    "paper": "https://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
     "documentation": "https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html",
     "implementation": "https://github.com/pytorch/examples/blob/main/mnist/main.py"
   },
   "alexnet": {
     "paper": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
-    "documentation": "https://pytorch.org/hub/pytorch_vision_alexnet/",
+    "documentation": "https://pytorch.org/vision/stable/models/alexnet.html",
     "implementation": "https://github.com/pytorch/vision/blob/main/torchvision/models/alexnet.py"
   },
   "vgg16": {

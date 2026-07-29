@@ -5,13 +5,15 @@ import Link from 'next/link';
 import { 
   ArrowLeft, ArrowRight, BookOpen, 
   ExternalLink, ListFilter, Network, Compass,
-  Layers, Info, Sparkles, X, Activity, HelpCircle
+  Layers, Info, Sparkles, X, Activity, HelpCircle, Code2
 } from 'lucide-react';
 import { NeuralNetworkModel, GroupedNode, GroupedEdge, LayerGroup, Layer } from '@/lib/schema/model.schema';
+import { ModelImplementationData } from '@/lib/schema/implementation.schema';
 import { formatShortNumber, formatAccuracy, formatMemory } from '@/lib/utils/formatters';
 import LayerList from './layer-list';
 import InspectorPanel from './inspector-panel';
 import InspectorSheet from './inspector-sheet';
+import ImplementationTab from './implementation-tab';
 import { cn } from '@/lib/utils/cn';
 import { motion } from 'framer-motion';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
@@ -62,10 +64,11 @@ interface TabbedExplorerProps {
     groupedNodes: GroupedNode[];
     groupedEdges: GroupedEdge[];
   };
+  implementation?: ModelImplementationData | null;
 }
 
-export default function TabbedExplorer({ overview, layers, graphData }: TabbedExplorerProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'layers' | 'topology'>('overview');
+export default function TabbedExplorer({ overview, layers, graphData, implementation }: TabbedExplorerProps) {
+  const [activeTab, setActiveTab] = useState<'overview' | 'layers' | 'topology' | 'implementation'>('overview');
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
   const [showLegend, setShowLegend] = useState(false);
   const shouldReduceMotion = useReducedMotionPreference();
@@ -233,6 +236,20 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
             <Network className="h-4 w-4 shrink-0" />
             <span className="hidden sm:inline">Topology Graph</span>
             <span className="hidden min-[380px]:inline sm:hidden">Topology</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('implementation')}
+            aria-label="Implementation Code"
+            className={cn(
+              "flex-1 min-h-[44px] flex items-center justify-center gap-1.5 sm:gap-2 text-xs font-bold rounded-xl cursor-pointer transition-all focus:outline-none border",
+              activeTab === 'implementation'
+                ? "bg-[#22d3ee] text-[#020617] border-[#22d3ee] shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+                : "bg-transparent text-[#9ca3af] border-transparent hover:text-[#e5e7eb] hover:bg-[#020617]"
+            )}
+          >
+            <Code2 className="h-4 w-4 shrink-0 text-cyan-400" />
+            <span className="hidden sm:inline">Implementation</span>
+            <span className="hidden min-[380px]:inline sm:hidden">Code</span>
           </button>
         </div>
 
@@ -592,9 +609,20 @@ export default function TabbedExplorer({ overview, layers, graphData }: TabbedEx
                  />
                </motion.div>
              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+           </div>
+
+           {/* Implementation Panel */}
+           <div className={activeTab === 'implementation' ? "block" : "hidden"}>
+             <ImplementationTab
+               modelId={overview.id}
+               modelName={overview.name}
+               paperUrl={overview.paperUrl}
+               implementation={implementation ?? null}
+               onNavigateToTopology={() => setActiveTab('topology')}
+             />
+           </div>
+         </div>
+       </div>
+     </div>
+   );
 }

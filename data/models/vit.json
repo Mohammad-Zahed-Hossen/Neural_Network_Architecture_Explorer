@@ -29,7 +29,7 @@
   "top1Accuracy": 0.779,
   "top5Accuracy": 0.943,
   "memoryUsage": 330,
-  "description": "ViT (Vision Transformer) applies a pure standard Transformer encoder directly to image patches. It splits the image into a sequence of flat patches, projects them linearly, and updates global relationships using self-attention. Bypasses CNN convolution operations entirely.",
+  "description": "ViT (Vision Transformer) applies a pure standard Transformer encoder directly to image patches. It splits the image into a sequence of flat patches, projects them linearly, and updates global relationships using self-attention. Bypasses CNN convolution operations entirely. ImageNet Accuracy Benchmarks: ViT-B/16 Original Paper Top-1 (ImageNet-21k pretrained): 85.81%. Direct ImageNet-1k baseline Top-1: 77.91%. Modern PyTorch SWAG / SWAG-e fine-tuned Top-1: 85.3%.",
   "colorTheme": "#D946EF",
   "tags": [
     "Transformer",
@@ -129,11 +129,11 @@
           "total": 590592,
           "weights": 589824,
           "biases": 768,
-          "formula": "(patch_h × patch_w × in_channels + 1) × hidden_dim",
+          "formula": "(patch_h \u00d7 patch_w \u00d7 in_channels + 1) \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Projection Weights",
-              "expression": "16 × 16 × 3 × 768",
+              "expression": "16 \u00d7 16 \u00d7 3 \u00d7 768",
               "result": 589824,
               "explanation": "Linear projection maps 16x16 patch pixels to a 768-dimensional embedding space."
             },
@@ -227,11 +227,11 @@
           "total": 150528,
           "weights": 150528,
           "biases": 0,
-          "formula": "seq_len × hidden_dim",
+          "formula": "seq_len \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "1D Position Embeddings",
-              "expression": "196 × 768",
+              "expression": "196 \u00d7 768",
               "result": 150528,
               "explanation": "Learnable 1D parameters added to each patch embedding to retain spatial location awareness."
             }
@@ -273,17 +273,17 @@
         },
         "config": {
           "axis": -1,
-          "epsilon": 0.000001
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Scale & Shift Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma (weights) and Beta (biases) learnable scaling parameters."
             }
@@ -332,17 +332,17 @@
           "total": 2362368,
           "weights": 2359296,
           "biases": 3072,
-          "formula": "4 × (hidden_dim × hidden_dim + hidden_dim)",
+          "formula": "4 \u00d7 (hidden_dim \u00d7 hidden_dim + hidden_dim)",
           "calculationSteps": [
             {
               "label": "Q, K, V & Out Weights",
-              "expression": "4 × 768 × 768",
+              "expression": "4 \u00d7 768 \u00d7 768",
               "result": 2359296,
               "explanation": "Four projection matrices mapping features for Query, Key, Value, and Multi-Head Output."
             },
             {
               "label": "Biases",
-              "expression": "4 × 768",
+              "expression": "4 \u00d7 768",
               "result": 3072,
               "explanation": "Bias terms for Q, K, V, and Out linear layers."
             }
@@ -426,17 +426,17 @@
         },
         "config": {
           "axis": -1,
-          "epsilon": 0.000001
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Scale & Shift Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Gamma and Beta scaling vectors."
             }
@@ -485,11 +485,11 @@
           "total": 2362368,
           "weights": 2359296,
           "biases": 3072,
-          "formula": "(hidden_dim × mlp_dim) + mlp_dim",
+          "formula": "(hidden_dim \u00d7 mlp_dim) + mlp_dim",
           "calculationSteps": [
             {
               "label": "Expansion Weights",
-              "expression": "768 × 3072",
+              "expression": "768 \u00d7 3072",
               "result": 2359296,
               "explanation": "Projects token representations from 768 to 3072 dimensions."
             },
@@ -588,11 +588,11 @@
           "total": 2360064,
           "weights": 2359296,
           "biases": 768,
-          "formula": "(mlp_dim × hidden_dim) + hidden_dim",
+          "formula": "(mlp_dim \u00d7 hidden_dim) + hidden_dim",
           "calculationSteps": [
             {
               "label": "Projection Weights",
-              "expression": "3072 × 768",
+              "expression": "3072 \u00d7 768",
               "result": 2359296,
               "explanation": "Projects token representations back from 3072 to 768 dimensions."
             },
@@ -663,7 +663,7 @@
       {
         "id": "blocks_stack",
         "type": "bottleneck",
-        "name": "Encoder Blocks 1–11",
+        "name": "Encoder Blocks 1\u201311",
         "inputShape": {
           "dimensions": [
             null,
@@ -687,17 +687,17 @@
           "total": 77966592,
           "weights": 77932800,
           "biases": 33792,
-          "formula": "11 × Block0_Params",
+          "formula": "11 \u00d7 Block0_Params",
           "calculationSteps": [
             {
               "label": "Stack Projection Weights",
-              "expression": "11 × 7084800",
+              "expression": "11 \u00d7 7084800",
               "result": 77932800,
               "explanation": "Calculates self-attention and MLP parameters across 11 identical stacked transformer encoder blocks."
             },
             {
               "label": "Stack Biases",
-              "expression": "11 × 3072",
+              "expression": "11 \u00d7 3072",
               "result": 33792,
               "explanation": "Total biases summed across 11 blocks."
             }
@@ -739,17 +739,17 @@
         },
         "config": {
           "axis": -1,
-          "epsilon": 0.000001
+          "epsilon": 1e-06
         },
         "parameters": {
           "total": 1536,
           "weights": 768,
           "biases": 768,
-          "formula": "2 × hidden_dim",
+          "formula": "2 \u00d7 hidden_dim",
           "calculationSteps": [
             {
               "label": "Scale & Shift Parameters",
-              "expression": "2 × 768",
+              "expression": "2 \u00d7 768",
               "result": 1536,
               "explanation": "Output Normalizer parameters."
             }
@@ -837,11 +837,11 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(hidden_dim × num_classes) + num_classes",
+          "formula": "(hidden_dim \u00d7 num_classes) + num_classes",
           "calculationSteps": [
             {
               "label": "Head Weights",
-              "expression": "768 × 1000",
+              "expression": "768 \u00d7 1000",
               "result": 768000,
               "explanation": "Weights mapping pooled image embeddings to the 1000 ImageNet categories."
             },
@@ -1469,5 +1469,6 @@
   "nonTrainableParameters": 0,
   "trainableParameters": 86566120,
   "family": "Transformer",
-  "category": "Transformer"
+  "category": "Transformer",
+  "year": 2020
 }

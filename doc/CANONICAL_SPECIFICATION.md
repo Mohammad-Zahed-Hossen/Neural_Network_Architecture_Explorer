@@ -829,6 +829,29 @@ export interface ModelRelationships {
 - Compare with Similar Models
 - Continue Learning
 
+#### 3. ImplementationTab Component
+
+**Location:** `components/model-explorer/implementation-tab.tsx`
+
+**Purpose:** Displays practical implementation details for neural network models in the Model Explorer
+
+**Features:**
+- **Empty State Handling:** Graceful fallback when implementation JSON doesn't exist with planned framework support (TensorFlow, PyTorch, Hugging Face, JAX)
+- **Implementation Header:** Metadata badges (difficulty, implementation type, example category), title, and description labeled as "Practical Learning Stage"
+- **Engineering Specifications:** Grid display of 6 key specifications (framework version, Python version, input shape, pretrained dataset, GPU requirement, estimated runtime)
+- **Verification Metadata:** Last verified date, tested framework versions, and Python version
+- **Prerequisites Card:** Minimum Python version, framework version, hardware recommendations, knowledge prerequisites, and expected familiarity as tags
+- **Code Integration:** Integrates with `CodeBlock` component for code display with implementation metadata, variants, callouts, and footer
+- **Engineering Notes:** Four summary sections in 2-column grid (Best Used When, Architectural Tradeoffs, Expected Training Behavior, Production & Serving Notes)
+- **Navigation:** Next learning steps with three options (Explore Topology Graph, Read Original Paper, Compare Model Benchmarks)
+
+**Technical Details:**
+- Uses `useReducedMotionPreference` hook for accessibility
+- Framer Motion animations with conditional reduced motion
+- Responsive grid layouts (1-6 columns based on screen size)
+- Lucide React icons for visual indicators
+- TypeScript with `ModelImplementationData` schema
+
 ### 10.3 Learning Pathways
 
 **3 Guided Learning Paths:**
@@ -959,12 +982,19 @@ TabbedExplorer (components/model-explorer/tabbed-explorer.tsx)
 │   ├── Publication Info Card
 │   ├── Complexity & Depth Card
 │   └── Accuracy & Footprint Card
-├── Tab Controls (Overview / Layers / Topology)
+├── Tab Controls (Overview / Implementation / Layers / Topology)
 ├── Overview Tab
 │   ├── Architecture Idea Card
 │   ├── Resources & References Card
 │   ├── ModelRelationshipsView
 │   └── ContinueLearning
+├── Implementation Tab
+│   ├── Implementation Header (metadata badges, title, description)
+│   ├── Engineering Specifications (framework, Python, input shape, dataset, GPU, runtime)
+│   ├── Prerequisites Card (Python version, framework, hardware, knowledge)
+│   ├── CodeBlock Integration
+│   ├── Engineering Notes (use cases, tradeoffs, behavior, deployment)
+│   └── Next Learning Steps (topology, paper, compare)
 ├── Layers Tab
 │   ├── Layer List
 │   └── Inspector Panel (Desktop) / Inspector Sheet (Mobile)
@@ -1005,6 +1035,7 @@ ComparisonClient (components/model-comparison/comparison-client.tsx)
 | `CategoryTabs` | Category filter tabs | `framer-motion` | Low | Low |
 | `SearchBar` | Search and filter UI | `framer-motion` | Low | Medium |
 | `TabbedExplorer` | Model explorer with tabs | Multiple | Low | High |
+| `ImplementationTab` | Implementation details display | `framer-motion`, `lucide-react`, `@/components/code-block` | Low | Medium |
 | `FlowCanvas` | React Flow topology | `@xyflow/react` | Low | High |
 | `CustomNode` | React Flow node | `@xyflow/react` | Low | Medium |
 | `LayerList` | Collapsible layer list | - | Low | Medium |

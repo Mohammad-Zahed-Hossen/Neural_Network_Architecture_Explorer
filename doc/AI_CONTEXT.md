@@ -375,6 +375,7 @@ interface ModelRelationships {
 
 ### Components
 - `components/model-explorer/tabbed-explorer.tsx` - Main explorer
+- `components/model-explorer/implementation-tab.tsx` - Implementation details display with engineering specifications, prerequisites, code integration, and engineering notes
 - `components/model-explorer/flow-canvas.tsx` - React Flow topology
 - `components/model-catalog/search-bar.tsx` - Search with filters
 - `components/model-comparison/comparison-client.tsx` - Comparison logic

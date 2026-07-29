@@ -4,7 +4,7 @@
   "fullName": "Xception: Deep Learning with Depthwise Separable Convolutions",
   "paperYear": 2016,
   "authors": [
-    "François Chollet"
+    "Fran\u00e7ois Chollet"
   ],
   "paperUrl": "https://arxiv.org/abs/1610.02357",
   "depth": 71,
@@ -18,7 +18,7 @@
   "top1Accuracy": 0.79,
   "top5Accuracy": 0.945,
   "memoryUsage": 88,
-  "description": "Xception replaces standard Inception modules with Depthwise Separable Convolutions, significantly reducing parameters and accelerating feature mapping capabilities.",
+  "description": "Xception replaces standard Inception modules with Depthwise Separable Convolutions, significantly reducing parameters and accelerating feature mapping capabilities. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712).",
   "colorTheme": "#EC4899",
   "tags": [
     "CNN",
@@ -39,7 +39,7 @@
             299,
             3
           ],
-          "description": "299×299×3 RGB Image"
+          "description": "299\u00d7299\u00d73 RGB Image"
         },
         "outputShape": {
           "dimensions": [
@@ -48,7 +48,7 @@
             299,
             3
           ],
-          "description": "299×299×3 RGB Image"
+          "description": "299\u00d7299\u00d73 RGB Image"
         },
         "config": {
           "shape": [
@@ -84,7 +84,7 @@
             null,
             3
           ],
-          "description": "×3"
+          "description": "\u00d73"
         },
         "outputShape": {
           "dimensions": [
@@ -93,7 +93,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -113,11 +113,11 @@
           "total": 864,
           "weights": 864,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × input_channels × output_filters",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "3 × 3 × 3 × 32",
+              "expression": "3 \u00d7 3 \u00d7 3 \u00d7 32",
               "result": 864,
               "explanation": "Kernel weights."
             }
@@ -149,7 +149,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -158,7 +158,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "axis": 3,
@@ -175,17 +175,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -215,7 +215,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -224,7 +224,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "activation": "relu"
@@ -262,7 +262,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -271,7 +271,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -291,11 +291,11 @@
           "total": 18432,
           "weights": 18432,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × input_channels × output_filters",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
           "calculationSteps": [
             {
               "label": "Weights",
-              "expression": "3 × 3 × 32 × 64",
+              "expression": "3 \u00d7 3 \u00d7 32 \u00d7 64",
               "result": 18432,
               "explanation": "Kernel weights."
             }
@@ -327,7 +327,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -336,7 +336,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "axis": 3,
@@ -353,17 +353,17 @@
           "beta": 64,
           "movingMean": 64,
           "movingVariance": 64,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 64",
+              "expression": "2 \u00d7 64",
               "result": 128,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -393,7 +393,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -402,7 +402,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "activation": "relu"
@@ -440,7 +440,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -449,7 +449,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -492,7 +492,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -501,7 +501,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "axis": 3,
@@ -518,17 +518,17 @@
           "beta": 128,
           "movingMean": 128,
           "movingVariance": 128,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 128",
+              "expression": "2 \u00d7 128",
               "result": 256,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 128",
+              "expression": "2 \u00d7 128",
               "result": 256,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -552,7 +552,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -561,7 +561,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "activation": "relu"
@@ -593,7 +593,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -602,7 +602,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -645,7 +645,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -654,7 +654,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "axis": 3,
@@ -671,17 +671,17 @@
           "beta": 128,
           "movingMean": 128,
           "movingVariance": 128,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 128",
+              "expression": "2 \u00d7 128",
               "result": 256,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 128",
+              "expression": "2 \u00d7 128",
               "result": 256,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -705,7 +705,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -714,7 +714,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "poolSize": [
@@ -754,7 +754,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -763,7 +763,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -783,7 +783,7 @@
           "total": 8192,
           "weights": 8192,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [],
           "trainableParameters": 8192,
           "nonTrainableParameters": 0
@@ -806,7 +806,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -815,7 +815,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "axis": 3,
@@ -832,17 +832,17 @@
           "beta": 128,
           "movingMean": 128,
           "movingVariance": 128,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 128",
+              "expression": "2 \u00d7 128",
               "result": 256,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 128",
+              "expression": "2 \u00d7 128",
               "result": 256,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -905,7 +905,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -914,7 +914,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "filters": 256,
@@ -957,7 +957,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -966,7 +966,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "axis": 3,
@@ -983,17 +983,17 @@
           "beta": 256,
           "movingMean": 256,
           "movingVariance": 256,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 256",
+              "expression": "2 \u00d7 256",
               "result": 512,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 256",
+              "expression": "2 \u00d7 256",
               "result": 512,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1017,7 +1017,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1026,7 +1026,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "activation": "relu"
@@ -1058,7 +1058,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1067,7 +1067,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "filters": 256,
@@ -1110,7 +1110,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1119,7 +1119,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "axis": 3,
@@ -1136,17 +1136,17 @@
           "beta": 256,
           "movingMean": 256,
           "movingVariance": 256,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 256",
+              "expression": "2 \u00d7 256",
               "result": 512,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 256",
+              "expression": "2 \u00d7 256",
               "result": 512,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1170,7 +1170,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1179,7 +1179,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "poolSize": [
@@ -1219,7 +1219,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1228,7 +1228,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "filters": 256,
@@ -1248,7 +1248,7 @@
           "total": 32768,
           "weights": 32768,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [],
           "trainableParameters": 32768,
           "nonTrainableParameters": 0
@@ -1271,7 +1271,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1280,7 +1280,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "config": {
           "axis": 3,
@@ -1297,17 +1297,17 @@
           "beta": 256,
           "movingMean": 256,
           "movingVariance": 256,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 256",
+              "expression": "2 \u00d7 256",
               "result": 512,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 256",
+              "expression": "2 \u00d7 256",
               "result": 512,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1370,7 +1370,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1379,7 +1379,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -1422,7 +1422,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1431,7 +1431,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -1448,17 +1448,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1482,7 +1482,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1491,7 +1491,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -1523,7 +1523,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1532,7 +1532,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -1575,7 +1575,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1584,7 +1584,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -1601,17 +1601,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1635,7 +1635,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1644,7 +1644,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "poolSize": [
@@ -1684,7 +1684,7 @@
             null,
             256
           ],
-          "description": "×256"
+          "description": "\u00d7256"
         },
         "outputShape": {
           "dimensions": [
@@ -1693,7 +1693,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -1713,7 +1713,7 @@
           "total": 186368,
           "weights": 186368,
           "biases": 0,
-          "formula": "input_channels × output_filters",
+          "formula": "input_channels \u00d7 output_filters",
           "calculationSteps": [],
           "trainableParameters": 186368,
           "nonTrainableParameters": 0
@@ -1736,7 +1736,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1745,7 +1745,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -1762,17 +1762,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1835,7 +1835,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1844,7 +1844,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -1887,7 +1887,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1896,7 +1896,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -1913,17 +1913,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -1947,7 +1947,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1956,7 +1956,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -1988,7 +1988,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -1997,7 +1997,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -2040,7 +2040,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2049,7 +2049,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -2066,17 +2066,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2100,7 +2100,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2109,7 +2109,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -2141,7 +2141,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2150,7 +2150,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -2193,7 +2193,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2202,7 +2202,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -2219,17 +2219,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2253,7 +2253,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2262,7 +2262,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -2333,7 +2333,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2342,7 +2342,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -2385,7 +2385,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2394,7 +2394,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -2411,17 +2411,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2445,7 +2445,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2454,7 +2454,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -2486,7 +2486,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2495,7 +2495,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -2538,7 +2538,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2547,7 +2547,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -2564,17 +2564,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2598,7 +2598,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2607,7 +2607,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -2639,7 +2639,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2648,7 +2648,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -2691,7 +2691,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2700,7 +2700,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -2717,17 +2717,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2751,7 +2751,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2760,7 +2760,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -2831,7 +2831,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2840,7 +2840,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -2883,7 +2883,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2892,7 +2892,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -2909,17 +2909,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -2943,7 +2943,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2952,7 +2952,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -2984,7 +2984,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -2993,7 +2993,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -3036,7 +3036,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3045,7 +3045,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -3062,17 +3062,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3096,7 +3096,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3105,7 +3105,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -3137,7 +3137,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3146,7 +3146,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -3189,7 +3189,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3198,7 +3198,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -3215,17 +3215,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3249,7 +3249,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3258,7 +3258,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -3329,7 +3329,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3338,7 +3338,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -3381,7 +3381,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3390,7 +3390,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -3407,17 +3407,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3441,7 +3441,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3450,7 +3450,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -3482,7 +3482,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3491,7 +3491,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -3534,7 +3534,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3543,7 +3543,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -3560,17 +3560,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3594,7 +3594,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3603,7 +3603,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -3635,7 +3635,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3644,7 +3644,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -3687,7 +3687,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3696,7 +3696,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -3713,17 +3713,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3747,7 +3747,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3756,7 +3756,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -3827,7 +3827,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3836,7 +3836,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -3879,7 +3879,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3888,7 +3888,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -3905,17 +3905,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -3939,7 +3939,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3948,7 +3948,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -3980,7 +3980,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -3989,7 +3989,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -4032,7 +4032,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4041,7 +4041,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -4058,17 +4058,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4092,7 +4092,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4101,7 +4101,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -4133,7 +4133,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4142,7 +4142,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -4185,7 +4185,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4194,7 +4194,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -4211,17 +4211,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4245,7 +4245,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4254,7 +4254,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -4325,7 +4325,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4334,7 +4334,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -4377,7 +4377,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4386,7 +4386,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -4403,17 +4403,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4437,7 +4437,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4446,7 +4446,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -4478,7 +4478,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4487,7 +4487,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -4530,7 +4530,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4539,7 +4539,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -4556,17 +4556,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4590,7 +4590,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4599,7 +4599,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -4631,7 +4631,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4640,7 +4640,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -4683,7 +4683,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4692,7 +4692,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -4709,17 +4709,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4743,7 +4743,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4752,7 +4752,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -4823,7 +4823,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4832,7 +4832,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -4875,7 +4875,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4884,7 +4884,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -4901,17 +4901,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -4935,7 +4935,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4944,7 +4944,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -4976,7 +4976,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -4985,7 +4985,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -5028,7 +5028,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5037,7 +5037,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -5054,17 +5054,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5088,7 +5088,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5097,7 +5097,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -5129,7 +5129,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5138,7 +5138,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -5181,7 +5181,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5190,7 +5190,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -5207,17 +5207,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5241,7 +5241,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5250,7 +5250,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -5321,7 +5321,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5330,7 +5330,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -5373,7 +5373,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5382,7 +5382,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -5399,17 +5399,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5433,7 +5433,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5442,7 +5442,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -5474,7 +5474,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5483,7 +5483,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -5526,7 +5526,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5535,7 +5535,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -5552,17 +5552,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5586,7 +5586,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5595,7 +5595,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -5627,7 +5627,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5636,7 +5636,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "filters": 728,
@@ -5679,7 +5679,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5688,7 +5688,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "axis": 3,
@@ -5705,17 +5705,17 @@
           "beta": 728,
           "movingMean": 728,
           "movingVariance": 728,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 728",
+              "expression": "2 \u00d7 728",
               "result": 1456,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -5739,7 +5739,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "outputShape": {
           "dimensions": [
@@ -5748,7 +5748,7 @@
             null,
             728
           ],
-          "description": "×728"
+          "description": "\u00d7728"
         },
         "config": {
           "activation": "relu"
@@ -5819,7 +5819,7 @@
             10,
             2048
           ],
-          "description": "10×10×2048"
+          "description": "10\u00d710\u00d72048"
         },
         "outputShape": {
           "dimensions": [
@@ -5872,7 +5872,7 @@
           "total": 2049000,
           "weights": 2048000,
           "biases": 1000,
-          "formula": "(input_features + 1) × output_units",
+          "formula": "(input_features + 1) \u00d7 output_units",
           "calculationSteps": [],
           "trainableParameters": 2049000,
           "nonTrainableParameters": 0
@@ -9177,5 +9177,6 @@
   "nonTrainableParameters": 41808,
   "trainableParameters": 22868672,
   "family": "Xception",
-  "category": "Xception"
+  "category": "Xception",
+  "year": 2016
 }

@@ -84,3 +84,7 @@ coverage.xml
 *.njsproj
 *.sln
 *.sw?
+
+# audit
+nn-audit/
+

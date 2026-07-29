@@ -22,17 +22,20 @@ export function usePaperKnowledgeBase() {
 
   // Read from localStorage after initial hydration to prevent SSR hydration mismatch
   useEffect(() => {
-    setIsMounted(true);
-    try {
-      const savedStates = localStorage.getItem(STORAGE_KEY);
-      if (savedStates) {
-        setPaperStates(JSON.parse(savedStates));
-      }
-      const savedRecent = localStorage.getItem(`${STORAGE_KEY}_recent`);
-      if (savedRecent) {
-        setRecentlyOpened(JSON.parse(savedRecent));
-      }
-    } catch {}
+    const handle = requestAnimationFrame(() => {
+      setIsMounted(true);
+      try {
+        const savedStates = localStorage.getItem(STORAGE_KEY);
+        if (savedStates) {
+          setPaperStates(JSON.parse(savedStates));
+        }
+        const savedRecent = localStorage.getItem(`${STORAGE_KEY}_recent`);
+        if (savedRecent) {
+          setRecentlyOpened(JSON.parse(savedRecent));
+        }
+      } catch {}
+    });
+    return () => cancelAnimationFrame(handle);
   }, []);
 
   const [activeType, setActiveType] = useState<PaperType | 'all'>('all');

@@ -21,7 +21,7 @@
   "top1Accuracy": 0.744,
   "top5Accuracy": 0.919,
   "memoryUsage": 20,
-  "description": "Mobile-optimized neural architecture found through automated architecture search. Achieves good accuracy-to-efficiency ratio for mobile deployment.",
+  "description": "Mobile-optimized neural architecture found through automated architecture search. Achieves good accuracy-to-efficiency ratio for mobile deployment. Framework Parameter Accounting (Batch Normalization): This model's total parameter count follows the Keras/TensorFlow convention, which includes non-trainable BatchNorm buffers (moving mean and moving variance, 2 parameters per channel) alongside trainable gamma scaling and beta bias parameters. PyTorch model.parameters() registers moving mean and variance as persistent buffers rather than model parameters, yielding slightly lower parameter totals (e.g., PyTorch ResNet-50 reports 25,557,032 vs Keras 25,636,712).",
   "colorTheme": "#06B6D4",
   "tags": [
     "CNN",
@@ -43,7 +43,7 @@
             224,
             3
           ],
-          "description": "224×224×3 RGB Image"
+          "description": "224\u00d7224\u00d73 RGB Image"
         },
         "outputShape": {
           "dimensions": [
@@ -52,7 +52,7 @@
             224,
             3
           ],
-          "description": "224×224×3 RGB Image"
+          "description": "224\u00d7224\u00d73 RGB Image"
         },
         "config": {
           "shape": [
@@ -88,7 +88,7 @@
             224,
             3
           ],
-          "description": "224×224×3"
+          "description": "224\u00d7224\u00d73"
         },
         "outputShape": {
           "dimensions": [
@@ -97,7 +97,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "filters": 32,
@@ -117,7 +117,7 @@
           "total": 864,
           "weights": 864,
           "biases": 0,
-          "formula": "kernel_height × kernel_width × input_channels × output_filters",
+          "formula": "kernel_height \u00d7 kernel_width \u00d7 input_channels \u00d7 output_filters",
           "calculationSteps": [],
           "trainableParameters": 864,
           "nonTrainableParameters": 0
@@ -140,7 +140,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -149,7 +149,7 @@
             112,
             32
           ],
-          "description": "112×112×32"
+          "description": "112\u00d7112\u00d732"
         },
         "config": {
           "axis": 3,
@@ -166,17 +166,17 @@
           "beta": 32,
           "movingMean": 32,
           "movingVariance": 32,
-          "formula": "4 × channels",
+          "formula": "4 \u00d7 channels",
           "calculationSteps": [
             {
               "label": "Trainable Parameters (gamma, beta)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Scale parameter (gamma) and shift parameter (beta) for active channel scaling."
             },
             {
               "label": "Non-trainable Parameters (mean, variance)",
-              "expression": "2 × 32",
+              "expression": "2 \u00d7 32",
               "result": 64,
               "explanation": "Running mean and running variance tracked during training to normalize inference inputs."
             }
@@ -200,7 +200,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -209,7 +209,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -252,7 +252,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -261,7 +261,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -343,7 +343,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -352,7 +352,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -395,7 +395,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -404,7 +404,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -486,7 +486,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -495,7 +495,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -538,7 +538,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -547,7 +547,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -629,7 +629,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -638,7 +638,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -681,7 +681,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -690,7 +690,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "config": {
           "filters": 32,
@@ -772,7 +772,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -781,7 +781,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -824,7 +824,7 @@
             null,
             32
           ],
-          "description": "×32"
+          "description": "\u00d732"
         },
         "outputShape": {
           "dimensions": [
@@ -833,7 +833,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -915,7 +915,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -924,7 +924,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -967,7 +967,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -976,7 +976,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1058,7 +1058,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1067,7 +1067,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1110,7 +1110,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1119,7 +1119,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1201,7 +1201,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1210,7 +1210,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1253,7 +1253,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1262,7 +1262,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1344,7 +1344,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1353,7 +1353,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1396,7 +1396,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1405,7 +1405,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "config": {
           "filters": 64,
@@ -1487,7 +1487,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1496,7 +1496,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1539,7 +1539,7 @@
             null,
             64
           ],
-          "description": "×64"
+          "description": "\u00d764"
         },
         "outputShape": {
           "dimensions": [
@@ -1548,7 +1548,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1630,7 +1630,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1639,7 +1639,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1682,7 +1682,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1691,7 +1691,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1773,7 +1773,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1782,7 +1782,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1825,7 +1825,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1834,7 +1834,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1916,7 +1916,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1925,7 +1925,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -1968,7 +1968,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -1977,7 +1977,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -2059,7 +2059,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -2068,7 +2068,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -2111,7 +2111,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "outputShape": {
           "dimensions": [
@@ -2120,7 +2120,7 @@
             null,
             128
           ],
-          "description": "×128"
+          "description": "\u00d7128"
         },
         "config": {
           "filters": 128,
@@ -2202,7 +2202,7 @@
             7,
             768
           ],
-          "description": "7×7×768"
+          "description": "7\u00d77\u00d7768"
         },
         "outputShape": {
           "dimensions": [
@@ -2255,7 +2255,7 @@
           "total": 769000,
           "weights": 768000,
           "biases": 1000,
-          "formula": "(input_features + 1) × output_units",
+          "formula": "(input_features + 1) \u00d7 output_units",
           "calculationSteps": [],
           "trainableParameters": 769000,
           "nonTrainableParameters": 0
@@ -4085,5 +4085,6 @@
   "nonTrainableParameters": 64,
   "trainableParameters": 5326500,
   "family": "NASNet",
-  "category": "NASNet"
+  "category": "NASNet",
+  "year": 2017
 }

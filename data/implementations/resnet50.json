@@ -1,0 +1,271 @@
+{
+  "modelId": "resnet50",
+  "headerTitle": "ResNet-50 Production & Transfer Learning Implementation",
+  "headerDescription": "End-to-end, production-ready image classification pipeline using pre-trained ResNet-50 weights. Demonstrates backbone freezing, classification head replacement, data pipeline optimization, and multi-stage fine-tuning.",
+  "subtitle": "Deep Residual Network for Vision Tasks",
+  "difficulty": "Intermediate",
+  "implementationType": "Transfer Learning",
+  "exampleCategory": "End-to-End Workflow",
+  "isTransferLearning": true,
+  "isProductionReady": true,
+  "metadata": {
+    "frameworkVersion": "TensorFlow 2.19 / PyTorch 2.3",
+    "pythonVersion": "3.12",
+    "inputResolution": "224×224 RGB",
+    "dataset": "ImageNet-1k Pretrained",
+    "gpuRequirement": "Recommended",
+    "estimatedRuntime": "~1.5 min / epoch (T4 GPU)",
+    "mixedPrecisionSupported": true,
+    "fineTuningSupported": true,
+    "customBadges": ["ResNet-v1", "Residual Connections", "Apex Bottleneck"]
+  },
+  "prerequisites": {
+    "minimumPythonVersion": "3.10",
+    "frameworkVersion": "TensorFlow 2.15+ or PyTorch 2.0+",
+    "hardwareRecommendation": "GPU Recommended (4GB+ VRAM)",
+    "knowledgePrerequisites": ["Basic CNN knowledge", "Transfer Learning fundamentals", "Python/NumPy proficiency"],
+    "expectedFamiliarity": ["Keras API or PyTorch nn.Module", "Data loading pipelines", "Model compilation"]
+  },
+  "verification": {
+    "lastVerifiedDate": "July 2026",
+    "verifiedFrameworkVersions": ["TensorFlow 2.19", "PyTorch 2.3"],
+    "verifiedPythonVersion": "3.12"
+  },
+  "variants": [
+    {
+      "id": "tf-keras",
+      "label": "TensorFlow / Keras",
+      "framework": "tensorflow",
+      "snippets": [
+        {
+          "id": "tf-main",
+          "filename": "transfer_learning.py",
+          "language": "python",
+          "framework": "tensorflow",
+          "frameworkVersion": "TensorFlow 2.19",
+          "highlightLines": [11, 12, 19, 27],
+          "sections": [
+            { "id": "model_def", "label": "Model Definition", "startLine": 6, "endLine": 16 },
+            { "id": "training_loop", "label": "Training Loop", "startLine": 18, "endLine": 28 }
+          ],
+          "code": "import tensorflow as tf\nfrom tensorflow.keras import layers, models\nfrom tensorflow.keras.applications import ResNet50\n\n# 1. Load Pre-trained ResNet50 Backbone (weights trained on ImageNet)\nbase_model = ResNet50(\n    weights='imagenet',\n    include_top=False,\n    input_shape=(224, 224, 3)\n)\n\n# 2. Freeze the Base Backbone to preserve pre-trained representations\nbase_model.trainable = False\n\n# 3. Construct Custom Classification Head\ninputs = layers.Input(shape=(224, 224, 3))\nx = tf.keras.applications.resnet50.preprocess_input(inputs)\nx = base_model(x, training=False)\nx = layers.GlobalAveragePooling2D()(x)\nx = layers.BatchNormalization()(x)\nx = layers.Dropout(0.3)(x)\noutputs = layers.Dense(10, activation='softmax', name='classifier')(x)\n\nmodel = models.Model(inputs, outputs, name='ResNet50_Transfer_Learning')\n\n# 4. Compile Model with Adam Optimizer and Categorical Crossentropy\nmodel.compile(\n    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),\n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)\n\n# 5. Summary & Training Verification\nmodel.summary()\nprint(\"✓ ResNet50 Transfer Learning Pipeline successfully initialized.\")"
+        },
+        {
+          "id": "tf-data",
+          "filename": "data_loader.py",
+          "language": "python",
+          "framework": "tensorflow",
+          "code": "import tensorflow as tf\n\ndef build_data_pipeline(data_dir, batch_size=32, img_size=(224, 224)):\n    \"\"\"Builds an optimized tf.data pipeline with prefetching and GPU caching.\"\"\"\n    dataset = tf.keras.utils.image_dataset_from_directory(\n        data_dir,\n        image_size=img_size,\n        batch_size=batch_size,\n        label_mode='categorical'\n    )\n    \n    # AUTOTUNE prefetching for zero I/O bottleneck\n    autotune = tf.data.AUTOTUNE\n    return dataset.cache().prefetch(buffer_size=autotune)"
+        },
+        {
+          "id": "tf-infer",
+          "filename": "infer.py",
+          "language": "python",
+          "framework": "tensorflow",
+          "frameworkVersion": "TensorFlow 2.19",
+          "code": "import numpy as np\nimport tensorflow as tf\nfrom tensorflow.keras.preprocessing import image\n\ndef predict_image(model, img_path, class_names):\n    \"\"\"Loads a target image, applies ResNet preprocessing, and predicts class probabilities.\"\"\"\n    img = image.load_img(img_path, target_size=(224, 224))\n    img_array = image.img_to_array(img)\n    img_batch = np.expand_dims(img_array, axis=0)\n    \n    # Apply exact ResNet50 input preprocessing\n    preprocessed_img = tf.keras.applications.resnet50.preprocess_input(img_batch)\n    \n    # Perform batched inference in evaluation mode\n    predictions = model.predict(preprocessed_img)\n    top_class_idx = np.argmax(predictions[0])\n    confidence = predictions[0][top_class_idx]\n    \n    print(f\"Predicted Class: {class_names[top_class_idx]} ({confidence * 100:.2f}% confidence)\")\n    return class_names[top_class_idx], confidence"
+        }
+      ]
+    },
+    {
+      "id": "pytorch",
+      "label": "PyTorch",
+      "framework": "pytorch",
+      "snippets": [
+        {
+          "id": "pt-main",
+          "filename": "resnet_transfer.py",
+          "language": "python",
+          "framework": "pytorch",
+          "frameworkVersion": "PyTorch 2.3",
+          "highlightLines": [8, 9, 15],
+          "sections": [
+            { "id": "model_def", "label": "Model Definition", "startLine": 5, "endLine": 18 },
+            { "id": "training_loop", "label": "Training Loop", "startLine": 20, "endLine": 30 }
+          ],
+          "code": "import torch\nimport torch.nn as nn\nfrom torchvision.models import resnet50, ResNet50_Weights\n\n# 1. Load Pre-trained ResNet50 Weights\nweights = ResNet50_Weights.DEFAULT\nmodel = resnet50(weights=weights)\n\n# 2. Freeze all feature extractor parameters\nfor param in model.parameters():\n    param.requires_grad = False\n\n# 3. Replace Final FC Head for 10 custom classes\nnum_features = model.fc.in_features\nmodel.fc = nn.Sequential(\n    nn.BatchNorm1d(num_features),\n    nn.Dropout(0.3),\n    nn.Linear(num_features, 10)\n)\n\n# 4. Device Placement & Optimizer\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nmodel = model.to(device)\ncriterion = nn.CrossEntropyLoss()\noptimizer = torch.optim.Adam(model.fc.parameters(), lr=1e-3)\n\nprint(f\"✓ ResNet50 initialized on {device}. Classifier parameters active.\")"
+        },
+        {
+          "id": "pt-infer",
+          "filename": "infer.py",
+          "language": "python",
+          "framework": "pytorch",
+          "frameworkVersion": "PyTorch 2.3",
+          "code": "import torch\nfrom PIL import Image\nfrom torchvision import transforms\nfrom torchvision.models import resnet50, ResNet50_Weights\n\n# 1. Setup Inference Transforms & Model\ntransform = ResNet50_Weights.DEFAULT.transforms()\nmodel = resnet50(weights=ResNet50_Weights.DEFAULT)\nmodel.eval()\n\n# 2. Perform Single Image Forward Pass\n@torch.no_grad()\ndef infer_single_image(img_path):\n    img = Image.open(img_path).convert('RGB')\n    tensor_input = transform(img).unsqueeze(0)  # Shape: [1, 3, 224, 224]\n    \n    logits = model(tensor_input)\n    probabilities = torch.softmax(logits, dim=1)\n    top_prob, top_catid = torch.topk(probabilities, 1)\n    \n    return top_catid.item(), top_prob.item()"
+        }
+      ]
+    }
+  ],
+  "callouts": [
+    {
+      "id": "c1",
+      "type": "why",
+      "title": "Why Freeze the Backbone?",
+      "content": "Freezing lower convolutional layers preserves low-level visual primitives (edges, textures, shapes) learned from millions of ImageNet samples. It prevents initial noisy gradients from damaging pre-trained weights while training a newly initialized classification head.",
+      "defaultExpanded": true
+    },
+    {
+      "id": "c2",
+      "type": "mistake",
+      "title": "Common Mistakes in Transfer Learning",
+      "content": "1. Forgetting to set training=False on BatchNormalization layers during inference or transfer learning.\n2. Omitting framework-specific input normalization (e.g. resnet50.preprocess_input), which causes scale mismatches between [-1, 1] and [0, 1].",
+      "defaultExpanded": false
+    },
+    {
+      "id": "c3",
+      "type": "tip",
+      "title": "Production Tip: Two-Stage Fine-Tuning",
+      "content": "Stage 1: Train only the top classifier head for 3–5 epochs with learning rate 1e-3.\nStage 2: Unfreeze top ResNet bottleneck blocks (e.g. conv5_block) and fine-tune with a 10× to 100× smaller learning rate (1e-5) to avoid catastrophic forgetting.",
+      "defaultExpanded": false
+    }
+  ],
+  "summary": {
+    "bestUsedWhen": [
+      "Custom image classification tasks with small-to-medium labeled datasets (<50,000 samples).",
+      "Establishing a reliable, fast baseline before exploring heavier ViT or ConvNeXt backbones.",
+      "Scenarios demanding fast real-time CPU/GPU inference with low latency constraints."
+    ],
+    "tradeoffs": [
+      "Slightly lower Top-1 accuracy (74.9%) compared to modern ViT-Large or ConvNeXt architectures.",
+      "Requires input images to match the standard 224×224 resolution unless fully convolutional mode is used.",
+      "Batch normalization statistics require careful synchronization across multi-GPU distributed nodes."
+    ],
+    "expectedBehavior": [
+      "Rapid initial loss drop within the first 3–5 epochs during top-head warmup training.",
+      "Stable convergence during Stage-2 unfreezing with reduced learning rate (1e-5).",
+      "Gradient flow is stabilized across all 50 layers via identity skip connections."
+    ],
+    "deploymentNotes": [
+      "Seamlessly exports to ONNX, TensorRT, and TensorFlow Lite with FP16/INT8 quantization.",
+      "Keep Batch Normalization layers locked in inference mode during production deployment.",
+      "Specify explicit input tensor signatures (e.g. [1, 224, 224, 3]) for low-latency serving."
+    ]
+  },
+  "footer": {
+    "exampleType": "End-to-End Transfer Learning Workflow",
+    "estimatedReadingTime": "3 min read",
+    "dependencies": ["TensorFlow >= 2.15", "PyTorch >= 2.0", "Torchvision", "NumPy"],
+    "compatibleModels": ["ResNet50", "ResNet101", "ResNet152", "ResNet50V2"],
+    "docsUrl": "https://pytorch.org/vision/stable/models/resnet.html",
+    "githubUrl": "https://github.com/pytorch/vision"
+  },
+  "strategy": {
+    "rationale": "Training a 50-layer CNN from scratch requires >1.2M labeled images and extensive compute. Initializing with ImageNet-1k pretrained weights grants high-level visual primitives (textures, edges, shapes) from epoch 0.",
+    "backboneStrategy": "Freeze all convolutional stem and residual bottleneck layers (requires_grad=False / trainable=False). Prevents random classifier gradients from destroying low-level pretrained feature maps.",
+    "fineTuningStrategy": "Execute 2-stage training. First train newly attached classification head for 3-5 epochs, then unfreeze top bottleneck block (conv5_x) with a 10x-100x lower learning rate.",
+    "trainingProgression": [
+      {
+        "stage": "Stage 1: Head Warmup",
+        "description": "Train custom FC/dense classifier while keeping ResNet backbone fully frozen.",
+        "lr": "1e-3",
+        "status": "Recommended (3-5 Epochs)"
+      },
+      {
+        "stage": "Stage 2: Top-Block Fine-Tune",
+        "description": "Unfreeze stage4/conv5 bottleneck blocks; fine-tune with reduced learning rate.",
+        "lr": "1e-5",
+        "status": "Recommended (10-15 Epochs)"
+      },
+      {
+        "stage": "Stage 3: Full Backbone Tuning",
+        "description": "Optional: Unfreeze all 50 layers with discriminative learning rates for large domain datasets.",
+        "lr": "1e-6",
+        "status": "Optional"
+      }
+    ]
+  },
+  "ioSpecification": {
+    "input": {
+      "tensorFormat": "NCHW (PyTorch) / NHWC (TensorFlow)",
+      "shape": "[B, 3, 224, 224]",
+      "colorSpace": "RGB",
+      "normalization": "ImageNet Mean: [0.485, 0.456, 0.406], Std: [0.229, 0.224, 0.225]",
+      "resizeStrategy": "Bilinear Resize + Center Crop 224×224",
+      "valueRange": "[0.0, 1.0] (float32)"
+    },
+    "output": {
+      "tensorFormat": "[B, 1000] Logits / Probabilities",
+      "predictionFormat": "Softmax Categorical Probabilities",
+      "classMapping": "ImageNet-1k Index (0-999)",
+      "confidenceOutput": "Scalar probability score ∈ [0.0, 1.0]",
+      "topK": "Top-5 Categorical Probabilities"
+    }
+  },
+  "trainingConfig": {
+    "optimizer": "Adam (Warmup) / SGD + Momentum 0.9 (Fine-tune)",
+    "lossFunction": "Categorical Cross-Entropy / Label Smoothing (0.1)",
+    "learningRate": "1e-3 (Warmup) → 1e-5 (Fine-tune)",
+    "lrScheduler": "CosineAnnealingLR (T_max=20)",
+    "epochs": "5 Warmup + 20 Fine-tune",
+    "batchSize": "32 per GPU (Effective Batch 128)",
+    "weightDecay": "1e-4 (L2 Regularization)",
+    "mixedPrecision": "FP16 (Automatic Mixed Precision / torch.cuda.amp)",
+    "gradientClipping": "Max Norm 1.0",
+    "gradientAccumulation": "4 steps (if VRAM < 8GB)",
+    "earlyStopping": "Patience 5 on Validation Loss",
+    "checkpointStrategy": "Save Best Top-1 Accuracy Model Checkpoint"
+  },
+  "inferencePipeline": [
+    {
+      "step": 1,
+      "title": "Load & Decode Image",
+      "description": "Read RGB image from disk or byte stream into raw memory tensor."
+    },
+    {
+      "step": 2,
+      "title": "Resize & Crop",
+      "description": "Resize short edge to 256px and extract centered 224×224 patch."
+    },
+    {
+      "step": 3,
+      "title": "Preprocess & Normalize",
+      "description": "Convert uint8 [0, 255] to float32 [0, 1] and apply ImageNet mean/std scaling."
+    },
+    {
+      "step": 4,
+      "title": "Forward Pass",
+      "description": "Pass batch tensor [1, 3, 224, 224] through 50 residual bottleneck layers."
+    },
+    {
+      "step": 5,
+      "title": "Post-Processing",
+      "description": "Apply Softmax activation over output logits [1, 1000]."
+    },
+    {
+      "step": 6,
+      "title": "Top-K Prediction",
+      "description": "Extract top-5 class indices, human labels, and confidence percentage scores."
+    }
+  ],
+  "performanceNotes": {
+    "mixedPrecisionSupported": true,
+    "onnxExportSupported": true,
+    "torchScriptSupported": true,
+    "tensorRTCompatible": true,
+    "cpuInferenceLatency": "12.4 ms (8-core Intel i7, FP32)",
+    "gpuInferenceLatency": "1.8 ms (NVIDIA T4, FP16 TensorRT)",
+    "memoryFootprint": "98 MB (Weights) / 450 MB (VRAM @ batch=1)",
+    "latencyCategory": "Real-Time (<5ms GPU)",
+    "dynamicShapesSupported": true,
+    "batchInferenceEfficiency": "High throughput up to batch size 64"
+  },
+  "productionChecklist": {
+    "batchInferenceReady": true,
+    "streamingInferenceReady": true,
+    "modelWarmupRecommended": true,
+    "threadSafetyVerified": true,
+    "quantizationSupport": "INT8 PTQ / FP16 Mixed Precision",
+    "onnxStatus": "Fully Supported (Opset 17+)",
+    "tensorRTStatus": "Fully Optimized Engine (FP16/INT8)",
+    "dockerCompatible": true,
+    "servingRecommendations": [
+      "Use Triton Inference Server or TorchServe with dynamic batching enabled.",
+      "Pin memory and enable TensorRT FP16 engine execution for sub-2ms latency.",
+      "Lock Batch Normalization layers in eval mode to prevent runtime drift."
+    ],
+    "memoryOptimizationTips": [
+      "Export to ONNX and run with ONNX Runtime CUDA execution provider.",
+      "Use PyTorch torch.compile() with mode='reduce-overhead' on PyTorch 2.0+."
+    ]
+  }
+}
