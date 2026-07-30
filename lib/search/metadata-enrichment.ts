@@ -338,7 +338,7 @@ export function enrichPaperEntity(paper: PaperData): SearchableEntity {
     title: paper.title,
     subtitle: `Published in ${paper.year} by ${paper.authors.join(', ')}`,
     description: paper.contribution + ' ' + paper.problem,
-    url: `/papers#${paper.id}`,
+    url: `/papers/${paper.id}`,
     aliases: [paper.title, paper.id, ...paper.modelIds],
     keywords: [paper.id, ...paper.modelIds, 'research paper', 'publication', 'paper'],
     patterns: [],

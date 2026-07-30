@@ -141,7 +141,7 @@ export default function ModelRelationshipsView({ relationships }: ModelRelations
             href={papers.paperPageAnchor}
             className="flex items-center justify-between p-3.5 rounded-xl border border-purple-500/20 bg-purple-500/5 hover:bg-purple-500/10 transition-colors font-bold text-xs"
           >
-            <span className="text-slate-200">View In-App Paper Summary</span>
+            <span className="text-slate-200">View Full Paper Specification</span>
             <ArrowRight className="h-4 w-4 text-purple-400" />
           </Link>
         </div>

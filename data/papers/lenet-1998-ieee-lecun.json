@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "paperId": "lenet-1998-ieee-lecun",
+    "title": "Gradient-Based Learning Applied to Document Recognition",
+    "authors": [
+      { "name": "Yann LeCun", "affiliation": "AT&T Labs", "leadAuthor": true },
+      { "name": "Léon Bottou", "affiliation": "AT&T Labs" },
+      { "name": "Yoshua Bengio", "affiliation": "Université de Montréal" },
+      { "name": "Patrick Haffner", "affiliation": "AT&T Labs" }
+    ],
+    "venue": "Proceedings of the IEEE",
+    "year": 1998,
+    "doi": "10.1109/5.726791",
+    "pdfUrl": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf",
+    "primaryCategory": "Computer Vision / Early CNN Foundations",
+    "citationCount": 62000,
+    "associatedModelId": "lenet",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Pioneered gradient-based end-to-end backpropagation training for deep convolutional networks (LeNet-5), combining weight sharing, local receptive fields, and sub-sampling.",
+    "keyTakeaways": [
+      "Introduced the classic Conv -> Pool -> Conv -> Pool -> FC pipeline for visual pattern recognition.",
+      "Demonstrated that weight sharing across spatial receptive fields drastically reduces parameters compared to fully connected layers.",
+      "Successfully deployed on commercial bank check digit recognition systems."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Traditional handwritten character recognition relied on handcrafted feature extractors combined with separate classifiers, failing to generalize to spatial shifts, scale variations, and geometric distortions.",
+    "previousLimitations": [
+      "Fully connected networks suffered from parameter explosion when processing raw 2D pixel grids.",
+      "Handcrafted feature extractors lost spatial topology and were domain-specific.",
+      "Absence of end-to-end gradient optimization across feature extractors."
+    ],
+    "coreInsight": "2D image pixels have strong local spatial correlations. By constraining convolutional weights to be shared across spatially shifted receptive fields, feature maps acquire translation invariance while drastically reducing parameter count.",
+    "contributions": [
+      "Formulated the LeNet-5 CNN architecture for 2D character recognition.",
+      "Introduced spatial sub-sampling (average pooling) to build translation tolerance.",
+      "Demonstrated backpropagation training end-to-end directly from raw pixel intensities."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "convolutional-weight-sharing",
+      "title": "Shared Weights & Local Receptive Fields",
+      "type": "component",
+      "summary": "Constrains 2D spatial filter weights to be reused across all pixel positions in a feature map.",
+      "detailedDescription": "Instead of assigning independent weights to every pixel, a 5x5 kernel slides across the 32x32 input grid. All units in a feature map share the exact same weight vector and bias, enforcing translation invariance.",
+      "math": {
+        "latexFormula": "y_{i,j} = f\\left( \\sum_{m} \\sum_{n} w_{m,n} \\cdot x_{i+m, j+n} + b \\right)",
+        "explanation": "Standard 2D convolution equation with shared weight matrix w and activation f.",
+        "variables": [
+          { "symbol": "x_{i+m, j+n}", "description": "Local 2D pixel intensity at spatial offset (m, n)" },
+          { "symbol": "w_{m,n}", "description": "Shared kernel weight at spatial position (m, n)" },
+          { "symbol": "b", "description": "Shared scalar bias term for feature map" }
+        ],
+        "significance": "Reduces parameter footprint from O(N_input * N_output) to O(Kernel_size * Feature_maps)."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["MNIST Digit Dataset"],
+    "primaryResults": [
+      {
+        "metricName": "MNIST Test Error Rate (LeNet-5)",
+        "value": 0.95,
+        "unit": "%",
+        "baselineValue": 1.7,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "LeNet-5 vs Fully Connected Multi-Layer Perceptron",
+        "description": "Compared 5-layer CNN against a 3-layer fully connected MLP on raw 28x28 pixels.",
+        "removedComponent": "Convolutional weight sharing and sub-sampling",
+        "performanceDelta": "Fully connected MLP suffered higher error rate (2.95%) and severe overfitting due to lack of spatial inductive bias."
+      }
+    ],
+    "reproducibilityNotes": "Trained using stochastic gradient descent (SGD) with custom weight initialization and scaled hyperbolic tangent activation functions."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-foundational",
+      "category": "strength",
+      "title": "Foundational CNN Blueprint",
+      "content": "Established the universal paradigm for all subsequent convolutional networks."
+    },
+    {
+      "id": "limitation-compute-bound",
+      "category": "limitation",
+      "title": "Bounded by 1990s Compute Bounds",
+      "content": "Restricted to low-resolution grayscale images (32x32) due to CPU hardware limits of 1998."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "alexnet-2012-nips-krizhevsky",
+        "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+        "year": 2012,
+        "authors": "Alex Krizhevsky et al.",
+        "relationshipType": "successor",
+        "description": "Scaled LeNet's Conv-Pool-FC paradigm to high-resolution color images using GPU acceleration."
+      }
+    ],
+    "researchGaps": [
+      "How to scale ConvNets to high-resolution RGB datasets without vanishing gradients?",
+      "How to accelerate backpropagation using GPU hardware parallelization?"
+    ],
+    "futureExtensions": [
+      "AlexNet (2012)",
+      "VGGNet (2014)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "Multilayer neural networks trained with backpropagation algorithms are best prepared for document recognition applications. We present LeNet-5, a convolutional neural network designed for handwritten character recognition.",
+    "trainingDetails": {
+      "optimizer": "Stochastic Gradient Descent (SGD)",
+      "learningRate": "Custom schedule per epoch",
+      "batchSize": "1",
+      "hardwareUsed": "DSP & Workstation CPUs"
+    },
+    "bibtex": "@article{lecun1998gradient,\n  title={Gradient-based learning applied to document recognition},\n  author={LeCun, Yann and Bottou, L{\\'e}on and Bengio, Yoshua and Haffner, Patrick},\n  journal={Proceedings of the IEEE},\n  volume={86},\n  number={11},\n  pages={2278--2324},\n  year={1998}\n}"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paperId": "inceptionresnetv2-2016-aaai-szegedy",
+    "title": "Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning",
+    "authors": [
+      { "name": "Christian Szegedy", "affiliation": "Google Inc.", "leadAuthor": true },
+      { "name": "Sergey Ioffe", "affiliation": "Google Inc." },
+      { "name": "Vincent Vanhoucke", "affiliation": "Google Inc." },
+      { "name": "Alex A. Alemi", "affiliation": "Google Inc." }
+    ],
+    "venue": "AAAI 2017",
+    "year": 2016,
+    "doi": "10.5555/3298023.3298188",
+    "arxivId": "1602.07261",
+    "pdfUrl": "https://arxiv.org/pdf/1602.07261.pdf",
+    "primaryCategory": "Computer Vision / Hybrid Inception-ResNet",
+    "citationCount": 12500,
+    "associatedModelId": "inceptionresnetv2",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Combines multi-branch Inception blocks with residual skip connections, demonstrating that residual connections significantly accelerate training convergence in deep multi-branch architectures.",
+    "keyTakeaways": [
+      "Residual connections accelerate Inception network training speed by over 2x.",
+      "Introduced scaling factors (e.g. 0.1 to 0.2) on residual additions to prevent network instability when channel counts exceed 1000.",
+      "Inception-v4 and Inception-ResNet-v2 achieved state-of-the-art ImageNet classification accuracy."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Deep multi-branch Inception architectures were computationally efficient but extremely slow and tricky to train. Scaling Inception networks to deeper configurations caused training instability.",
+    "previousLimitations": [
+      "Training deep multi-branch Inception networks required long convergence timelines.",
+      "High channel counts in deep layers caused numerical instability when applying residual addition directly.",
+      "Lack of unified design for combining multi-scale filtering with identity shortcuts."
+    ],
+    "coreInsight": "Replacing filter concatenation in Inception modules with residual addition operations preserves multi-scale spatial representation while providing clean identity paths for gradient flow.",
+    "contributions": [
+      "Designed Inception-v4 and Inception-ResNet-v1/v2 architectures.",
+      "Introduced residual scaling factors (0.1 - 0.2) for stabilizing deep residual additions.",
+      "Demonstrated 2x faster training convergence compared to non-residual Inception models."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "inception-residual-block",
+      "title": "Inception-ResNet Block with Residual Scaling",
+      "type": "architecture",
+      "summary": "Combines parallel multi-scale convolutions (1x1, 3x3, 1x7+7x1) with scaled residual addition.",
+      "detailedDescription": "Outputs of parallel Inception branches are projected via a 1x1 conv to match input channel dimension, scaled by a hyperparameter c (0.1 - 0.2), and added to the shortcut tensor.",
+      "math": {
+        "latexFormula": "y = x + c \\cdot \\text{InceptionBranch}(x), \\quad c \\in [0.1, 0.2]",
+        "explanation": "Residual addition formula with scaling factor c to prevent activation explosion in deep blocks.",
+        "variables": [
+          { "symbol": "c", "description": "Residual scaling factor (typically 0.1 to 0.2)" },
+          { "symbol": "x", "description": "Input feature map tensor" }
+        ],
+        "significance": "Prevents network destabilization and NaN losses when channel count exceeds 1000."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Error Rate (Inception-ResNet-v2 Single Model)",
+        "value": 19.9,
+        "unit": "%",
+        "baselineValue": 21.2,
+        "isSOTA": true
+      },
+      {
+        "metricName": "ImageNet Top-5 Error Rate (Ensemble)",
+        "value": 3.08,
+        "unit": "%",
+        "baselineValue": 3.58,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Impact of Residual Scaling Factor c",
+        "description": "Tested scaling factor c=1.0 vs c=0.1 on deep 1000-channel Inception-ResNet blocks.",
+        "removedComponent": "Residual scaling factor (c = 1.0)",
+        "performanceDelta": "Without scaling (c=1.0), training diverged and suffered from numerical instability early in training."
+      }
+    ],
+    "reproducibilityNotes": "Trained using RMSProp with decay 0.9, epsilon 1.0, and learning rate 0.045 with exponential decay."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-fast-convergence",
+      "category": "strength",
+      "title": "2x Faster Training Convergence",
+      "content": "Residual connections dramatically speed up optimization compared to pure non-residual Inception-v4."
+    },
+    {
+      "id": "weakness-complex-block-structure",
+      "category": "weakness",
+      "title": "Extreme Architectural Complexity",
+      "content": "Contains multiple non-uniform block types (Inception-A, B, C, Reduction-A, B) making custom modifications tedious."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "inceptionv3-2015-cvpr-szegedy",
+        "title": "Rethinking the Inception Architecture for Computer Vision",
+        "year": 2015,
+        "authors": "Christian Szegedy et al.",
+        "relationshipType": "predecessor",
+        "description": "Previous generation Inception architecture."
+      },
+      {
+        "paperId": "resnet-2015-cvpr-he",
+        "title": "Deep Residual Learning for Image Recognition",
+        "year": 2015,
+        "authors": "Kaiming He et al.",
+        "relationshipType": "predecessor",
+        "description": "Provided residual shortcut mechanism."
+      }
+    ],
+    "researchGaps": [
+      "Can complex multi-branch residual blocks be simplified using automated search?"
+    ],
+    "futureExtensions": [
+      "NASNet (2017)",
+      "MaxViT (2022)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "Very deep convolutional networks have been at the central core of the state-of-the-art computer vision solutions. In this paper we study whether the combination of the Inception architecture with residual connections improves performance.",
+    "trainingDetails": {
+      "optimizer": "RMSProp with decay 0.9",
+      "learningRate": "0.045 with 0.94 decay per 2 epochs",
+      "batchSize": "32 per GPU"
+    },
+    "bibtex": "@inproceedings{szegedy2017inception,\n  title={Inception-v4, inception-resnet and the impact of residual connections on learning},\n  author={Szegedy, Christian and Ioffe, Sergey and Vanhoucke, Vincent and Alemi, Alex A},\n  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},\n  volume={31},\n  number={1},\n  year={2017}\n}"
+  }
+}

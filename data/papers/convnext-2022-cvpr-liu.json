@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "paperId": "convnext-2022-cvpr-liu",
+    "title": "A ConvNet for the 2020s",
+    "authors": [
+      { "name": "Zhuang Liu", "affiliation": "Meta AI Research (FAIR)", "leadAuthor": true },
+      { "name": "Hanzi Mao", "affiliation": "Meta AI Research (FAIR)" },
+      { "name": "Chao-Yuan Wu", "affiliation": "Meta AI Research (FAIR)" },
+      { "name": "Christoph Feichtenhofer", "affiliation": "Meta AI Research (FAIR)" },
+      { "name": "Trevor Darrell", "affiliation": "UC Berkeley" },
+      { "name": "Saining Xie", "affiliation": "Meta AI Research (FAIR)" }
+    ],
+    "venue": "CVPR 2022",
+    "year": 2022,
+    "doi": "10.1109/CVPR52688.2022.01167",
+    "arxivId": "2201.03545",
+    "pdfUrl": "https://arxiv.org/pdf/2201.03545.pdf",
+    "primaryCategory": "Computer Vision / Modernized ConvNet Architecture",
+    "citationCount": 9500,
+    "associatedModelId": "convnext",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Modernizes a standard ResNet-50 step-by-step using Vision Transformer design choices (inverted bottleneck, 7x7 depthwise conv, LayerNorm, GELU), matching Swin Transformer accuracy and scalability.",
+    "keyTakeaways": [
+      "Proved pure convolutional networks can match or exceed Vision Transformers in accuracy, speed, and FLOP efficiency.",
+      "Identified critical design choices: 7x7 depthwise conv, inverted bottleneck ratio 1:4, LayerNorm instead of BatchNorm, and GELU activations.",
+      "Achieves 87.8% top-1 ImageNet accuracy with ConvNeXt-XLarge while maintaining pure CNN simplicity."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "The rapid ascent of Vision Transformers led many researchers to assume CNNs were intrinsically limited by inductive bias and destined for obsolescence in the 2020s.",
+    "previousLimitations": [
+      "Classic ResNets used outdated training recipes (SGD, basic augmentations).",
+      "ResNet bottleneck blocks placed heavy computation on 3x3 standard convolutions rather than depthwise layers.",
+      "ResNets relied on frequent BatchNorm layers, causing training-inference discrepancies."
+    ],
+    "coreInsight": "By systematically applying modern Vision Transformer design principles (macro design, inverted bottlenecking, large 7x7 depthwise kernels, micro design tweaks) to a plain ResNet, a pure CNN matches or outperforms Swin Transformer across all visual tasks.",
+    "contributions": [
+      "Constructed the ConvNeXt model family (Tiny, Small, Base, Large, XLarge).",
+      "Provided a transparent step-by-step modernization roadmap from ResNet-50 to ConvNeXt.",
+      "Demonstrated superior throughput, simplicity, and ease of deployment over Swin Transformer."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "convnext-inverted-block",
+      "title": "ConvNeXt Block (7x7 Depthwise Inverted Bottleneck)",
+      "type": "architecture",
+      "summary": "Combines a 7x7 depthwise convolution with an inverted bottleneck (1x1 expansion to 4x channels, GELU, 1x1 projection).",
+      "detailedDescription": "Positioning the 7x7 depthwise convolution before channel expansion mimics the self-attention block placement in Transformers, reducing FLOPs while expanding the effective receptive field.",
+      "math": {
+        "latexFormula": "\\text{ConvNeXtBlock}(x) = x + \\text{Conv1x1}_{4C \\to C}\\left( \\text{GELU}\\left( \\text{LN}\\left( \\text{Conv1x1}_{C \\to 4C}\\left( \\text{DWConv7x7}(x) \\right) \\right) \\right) \\right)",
+        "explanation": "ConvNeXt block structure featuring 7x7 depthwise filtering followed by 1:4 channel expansion and projection.",
+        "variables": [
+          { "symbol": "DWConv7x7", "description": "7x7 Depthwise Convolution (1 filter per channel)" },
+          { "symbol": "LN", "description": "Layer Normalization operating on channel dimension" }
+        ],
+        "significance": "Expands receptive field to 7x7 matching Transformer local window size while retaining pure CNN speed."
+      },
+      "codeSnippet": {
+        "language": "python",
+        "code": "class ConvNeXtBlock(nn.Module):\n    def __init__(self, dim):\n        super().__init__()\n        self.dwconv = nn.Conv2d(dim, dim, kernel_size=7, padding=3, groups=dim) # 7x7 DW Conv\n        self.norm = LayerNorm(dim, eps=1e-6)\n        self.pwconv1 = nn.Linear(dim, 4 * dim) # 1:4 expansion\n        self.act = nn.GELU()\n        self.pwconv2 = nn.Linear(4 * dim, dim) # projection\n    def forward(self, x):\n        shortcut = x\n        x = self.dwconv(x)\n        x = self.norm(x)\n        x = self.pwconv1(x)\n        x = self.act(x)\n        x = self.pwconv2(x)\n        return shortcut + x"
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet-1K / ImageNet-22K", "COCO Detection", "ADE20K Segmentation"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Accuracy (ConvNeXt-Base vs Swin-B)",
+        "value": 83.8,
+        "unit": "%",
+        "baselineValue": 83.5,
+        "isSOTA": true
+      },
+      {
+        "metricName": "COCO Detection mAP (ConvNeXt-Base vs Swin-B)",
+        "value": 52.7,
+        "unit": "%",
+        "baselineValue": 51.9,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Kernel Size Scaling (3x3 up to 11x11)",
+        "description": "Evaluated impact of depthwise kernel size on model top-1 accuracy.",
+        "removedComponent": "7x7 depthwise kernel (replaced with standard 3x3 depthwise kernel)",
+        "performanceDelta": "Increasing kernel size from 3x3 to 7x7 improved top-1 accuracy by 0.7%, while 11x11 showed no further gain."
+      }
+    ],
+    "reproducibilityNotes": "Trained using AdamW with weight decay 0.05, Mixup, CutMix, RandAugment, and LayerScale initialization."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-cnn-simplicity",
+      "category": "strength",
+      "title": "Pure CNN Hardware Compatibility",
+      "content": "Contains no complex window shifting or quadratic self-attention, enabling seamless TensorRT and CoreML deployment."
+    },
+    {
+      "id": "weakness-large-kernel-vram",
+      "category": "weakness",
+      "title": "7x7 Depthwise Kernel Memory Overhead",
+      "content": "7x7 depthwise convolutions require updated cuDNN libraries to achieve maximum execution speed."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "resnet-2015-cvpr-he",
+        "title": "Deep Residual Learning for Image Recognition",
+        "year": 2015,
+        "authors": "Kaiming He et al.",
+        "relationshipType": "predecessor",
+        "description": "Baseline residual architecture which ConvNeXt modernized."
+      },
+      {
+        "paperId": "swin-2021-iccv-liu",
+        "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+        "year": 2021,
+        "authors": "Ze Liu et al.",
+        "relationshipType": "competing",
+        "description": "Vision Transformer model whose design choices inspired ConvNeXt."
+      }
+    ],
+    "researchGaps": [
+      "Can ConvNeXt principles be combined with multi-axis self-attention in hybrid architectures?"
+    ],
+    "futureExtensions": [
+      "ConvNeXt V2 (Woo et al., 2023)",
+      "MaxViT (Chen et al., 2022)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "The 'Roaring 20s' of visual recognition began with the introduction of Vision Transformers (ViTs). In this work, we re-examine the design spaces and test the limits of what a pure ConvNet can achieve. We gradually modernize a standard ResNet toward the design of a Vision Transformer.",
+    "trainingDetails": {
+      "optimizer": "AdamW with weight decay 0.05",
+      "learningRate": "4e-3 initial, 20 epochs linear warmup, cosine decay",
+      "batchSize": "4096 total"
+    },
+    "bibtex": "@inproceedings{liu2022convnet,\n  title={A convnet for the 2020s},\n  author={Liu, Zhuang and Mao, Hanzi and Wu, Chao-Yuan and Feichtenhofer, Christoph and Darrell, Trevor and Xie, Saining},\n  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},\n  pages={11976--11986},\n  year={2022}\n}"
+  }
+}

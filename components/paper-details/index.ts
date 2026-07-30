@@ -1,0 +1,9 @@
+export { PaperPageLayout } from './PaperPageLayout';
+export { QuickScanZone } from './zones/Zone1_QuickScan/QuickScanZone';
+export { MotivationZone } from './zones/Zone2_Motivation/MotivationZone';
+export { InnovationsZone } from './zones/Zone3_Innovations/InnovationsZone';
+export { EvidenceZone } from './zones/Zone4_Evidence/EvidenceZone';
+export { CriticalNotesZone } from './zones/Zone5_CriticalNotes/CriticalNotesZone';
+export { ConnectionsZone } from './zones/Zone6_Connections/ConnectionsZone';
+export { ReferenceZone } from './zones/Zone7_Reference/ReferenceZone';
+export { PersistentUtilityPanel } from './utility-panel/PersistentUtilityPanel';

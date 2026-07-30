@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "paperId": "alexnet-2012-nips-krizhevsky",
+    "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+    "authors": [
+      { "name": "Alex Krizhevsky", "affiliation": "University of Toronto", "leadAuthor": true },
+      { "name": "Ilya Sutskever", "affiliation": "University of Toronto" },
+      { "name": "Geoffrey E. Hinton", "affiliation": "University of Toronto" }
+    ],
+    "venue": "NIPS 2012 (NeurIPS)",
+    "year": 2012,
+    "doi": "10.5555/2999134.2999257",
+    "pdfUrl": "https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf",
+    "primaryCategory": "Computer Vision / GPU Acceleration Breakthrough",
+    "citationCount": 145000,
+    "associatedModelId": "alexnet",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Ignited the modern deep learning revolution by training a large 8-layer CNN on GPUs to win the ImageNet ILSVRC-2012 competition by a massive 10.8 percentage point margin.",
+    "keyTakeaways": [
+      "Introduced ReLU non-linearities to accelerate SGD training speed by 6x over Sigmoid/Tanh.",
+      "Used Dropout regularization to prevent severe overfitting in high-capacity fully connected layers.",
+      "Pioneered CUDA GPU parallelization across two NVIDIA GTX 580 GPUs."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Computer vision was stuck in a local minimum relying on manually engineered feature descriptors (SIFT, HOG). Deep neural networks were considered untrainable and computationally prohibitive on large-scale datasets.",
+    "previousLimitations": [
+      "Tanh and Sigmoid activations caused severe vanishing gradient problems in multi-layer CNNs.",
+      "CPU computing hardware was too slow to train high-capacity networks on millions of images.",
+      "High-capacity networks overfitted rapidly on large parameter spaces."
+    ],
+    "coreInsight": "Deep CNNs can be trained on massive high-resolution datasets if non-saturating ReLU activations are used to prevent gradient vanishing, combined with custom CUDA GPU kernels for parallel matrix multiplication.",
+    "contributions": [
+      "Designed and trained AlexNet (5 convolutional layers, 3 fully connected layers).",
+      "Introduced ReLU (Rectified Linear Unit) activation to deep vision models.",
+      "Implemented Dropout regularization (p=0.5) in fully connected layers.",
+      "Pioneered dual-GPU cross-channel convolution splitting."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "relu-activation",
+      "title": "Non-Saturating ReLU Activation",
+      "type": "mathematics",
+      "summary": "Replaces saturating Tanh/Sigmoid activations with f(x) = max(0, x), speeding up SGD convergence.",
+      "detailedDescription": "Deep CNNs with saturating non-linearities take much longer to train than non-saturating ones. ReLU preserves constant unit gradient for positive inputs, preventing backpropagation signal decay.",
+      "math": {
+        "latexFormula": "f(x) = \\max(0, x)",
+        "explanation": "Rectified Linear Unit formula outputting zero for negative inputs and linear identity for positive inputs.",
+        "variables": [
+          { "symbol": "x", "description": "Input neuron activation scalar" }
+        ],
+        "significance": "Accelerated SGD convergence time on CIFAR-10 by a factor of 6x compared to Tanh units."
+      }
+    },
+    {
+      "id": "dropout-regularization",
+      "title": "Dropout Regularization",
+      "type": "optimization",
+      "summary": "Randomly zeros out neuron outputs with probability p=0.5 during training passes.",
+      "detailedDescription": "Forces neurons to learn robust co-adapted features rather than relying on specific neighboring activation combinations, effectively ensembling an exponential number of sub-networks.",
+      "math": {
+        "latexFormula": "r_j \\sim \\text{Bernoulli}(p), \\quad \\hat{y}_j = r_j \\cdot y_j",
+        "explanation": "Bernoulli mask r_j applied to hidden layer activations during forward passes.",
+        "variables": [
+          { "symbol": "p", "description": "Dropout retention probability (typically 0.5)" }
+        ],
+        "significance": "Eliminated severe overfitting in FC6 and FC7 dense layers (containing 50M parameters)."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2010/2012"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-5 Error Rate (ILSVRC-2012)",
+        "value": 15.3,
+        "unit": "%",
+        "baselineValue": 26.2,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Impact of ReLU vs Tanh Activations",
+        "description": "Measured epoch count required to reach 25% training error rate on CIFAR-10.",
+        "removedComponent": "ReLU activations (replaced with Tanh)",
+        "performanceDelta": "ReLU reached 25% error in 5 epochs; Tanh required 30 epochs (6x slower convergence)."
+      }
+    ],
+    "reproducibilityNotes": "Trained for ~90 epochs across 5-6 days using two NVIDIA GTX 580 3GB GPUs."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-gpu-breakthrough",
+      "category": "strength",
+      "title": "GPU Parallelization Landmark",
+      "content": "Proved that CUDA GPU hardware is the essential substrate for scaling deep learning models."
+    },
+    {
+      "id": "weakness-coarse-early-kernels",
+      "category": "weakness",
+      "title": "Coarse Initial Convolutions",
+      "content": "11x11 kernel size with stride 4 in Conv1 loses fine-grained low-level visual textures."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "lenet-1998-ieee-lecun",
+        "title": "Gradient-Based Learning Applied to Document Recognition",
+        "year": 1998,
+        "authors": "Yann LeCun et al.",
+        "relationshipType": "predecessor",
+        "description": "Original ConvNet paradigm scaled up by AlexNet using GPUs."
+      },
+      {
+        "paperId": "vgg-2014-arxiv-simonyan",
+        "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+        "year": 2014,
+        "authors": "Simonyan & Zisserman",
+        "relationshipType": "successor",
+        "description": "Replaced AlexNet's coarse 11x11 kernels with small uniform 3x3 stacks."
+      }
+    ],
+    "researchGaps": [
+      "How to avoid large 11x11 filter parameters in early layers?",
+      "How to scale depth past 8 layers without parameter explosion?"
+    ],
+    "futureExtensions": [
+      "ZFNet (2013)",
+      "VGGNet (2014)",
+      "GoogLeNet (2014)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 37.5% and 17.0% which is considerably better than the previous state-of-the-art.",
+    "trainingDetails": {
+      "optimizer": "SGD with momentum 0.9 and weight decay 0.0005",
+      "learningRate": "0.01 initial, reduced by 10 three times",
+      "batchSize": "128",
+      "hardwareUsed": "2x NVIDIA GTX 580 3GB GPUs"
+    },
+    "bibtex": "@inproceedings{krizhevsky2012imagenet,\n  title={Imagenet classification with deep convolutional neural networks},\n  author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},\n  booktitle={Advances in neural information processing systems},\n  pages={1097--1105},\n  year={2012}\n}"
+  }
+}

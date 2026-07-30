@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "paperId": "resnet-2015-cvpr-he",
+    "title": "Deep Residual Learning for Image Recognition",
+    "authors": [
+      { "name": "Kaiming He", "affiliation": "Microsoft Research", "leadAuthor": true },
+      { "name": "Xiangyu Zhang", "affiliation": "Microsoft Research" },
+      { "name": "Shaoqing Ren", "affiliation": "Microsoft Research" },
+      { "name": "Jian Sun", "affiliation": "Microsoft Research" }
+    ],
+    "venue": "CVPR 2016 (Best Paper Award)",
+    "year": 2015,
+    "doi": "10.1109/CVPR.2016.90",
+    "arxivId": "1512.03385",
+    "pdfUrl": "https://arxiv.org/pdf/1512.03385.pdf",
+    "primaryCategory": "Computer Vision / Residual Learning",
+    "citationCount": 195000,
+    "associatedModelId": "resnet",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Introduces shortcut/skip connections to enable training of extremely deep networks (100+ to 1000+ layers) by reformulating layers to learn residual functions rather than unreferenced mappings.",
+    "oneSentenceMemory": "Identity shortcut connections solve the network degradation problem by reformulating layers to learn residual mappings F(x) = H(x) - x.",
+    "keyTakeaways": [
+      "Residual learning addresses the degradation problem where deeper plain networks suffer higher training error.",
+      "Identity shortcut connections introduce zero additional parameters and computational complexity.",
+      "ResNet-152 won 1st place in ILSVRC 2015 classification with 3.57% top-5 error rate."
+    ],
+    "vocabulary": [
+      {
+        "term": "Residual Learning",
+        "definition": "Instead of fitting a target mapping H(x), layers are reformulated to learn the difference (residual) F(x) = H(x) - x.",
+        "formalNotation": "F(x, {W_i}) + x",
+        "significance": "Core insight allowing gradients to flow unimpeded back through identity shortcuts."
+      },
+      {
+        "term": "Degradation Problem",
+        "definition": "The empirical counter-intuitive phenomenon where adding more layers to a deep plain network leads to higher training error.",
+        "significance": "Demonstrated that optimization difficulty, not overfitting, was the primary bottleneck in deep learning."
+      },
+      {
+        "term": "Bottleneck Block",
+        "definition": "A 3-layer residual block using 1x1, 3x3, and 1x1 convolutions to reduce and restore feature dimensions efficiently.",
+        "formalNotation": "1x1 conv -> 3x3 conv -> 1x1 conv",
+        "significance": "Enabled training 100+ layer networks like ResNet-50/101/152 within reasonable FLOP budgets."
+      }
+    ],
+    "visualFigures": [
+      {
+        "figureNumber": "Figure 2",
+        "title": "Residual Learning Building Block",
+        "purpose": "Illustrates the identity shortcut connection adding input x directly to F(x).",
+        "section": "Section 3.1"
+      },
+      {
+        "figureNumber": "Figure 4",
+        "title": "Training Curves on ImageNet",
+        "purpose": "Compares 18-layer vs 34-layer Plain and ResNet models, proving ResNet eliminates degradation.",
+        "section": "Section 4.1"
+      }
+    ],
+    "readingGuide": {
+      "difficultyRating": 2,
+      "difficultyReason": "Intuitive architectural breakthrough with straightforward matrix arithmetic and minimal hyperparameter tricks.",
+      "prerequisites": ["Convolutional Neural Networks (CNNs)", "Batch Normalization", "Stochastic Gradient Descent (SGD)", "Cross-Entropy Loss"],
+      "mustRevisitSection": { "section": "Section 3: Deep Residual Learning", "reason": "Formulation of F(x)+x and identity shortcut connection derivation." },
+      "quickScanSection": { "section": "Section 4.1: ImageNet Experiments", "reason": "Empirical comparison between 18/34/50/101/152-layer networks." },
+      "canSkipSection": { "section": "Appendix B: 1000-Layer CIFAR Analysis", "reason": "Extreme depth exploratory experiments with over-fitting discussion." }
+    }
+  },
+  "motivation": {
+    "problemStatement": "As deep neural networks increase in depth, network accuracy gets saturated and then degrades rapidly. Unexpectedly, this degradation is not caused by overfitting, as adding more layers to a plain model leads to higher training error.",
+    "previousLimitations": [
+      "Plain networks with 20+ layers suffer severe degradation in optimization efficiency.",
+      "Standard feed-forward architectures experience vanishing/exploding gradients when backpropagating through dozens of non-linear layers.",
+      "Highway Networks introduced gated shortcut connections, but their gates require parameters and can close, unlike unconditional identity shortcuts."
+    ],
+    "coreInsight": "If an added layer can be configured as an identity mapping, a deeper model should have training error no higher than its shallower counterpart. Instead of hoping stacked layers fit H(x), we let them fit residual function F(x) = H(x) - x, making identity mappings trivially easy to optimize.",
+    "contributions": [
+      "Formulated the deep residual learning framework to solve the degradation problem.",
+      "Introduced parameter-free identity shortcut connections for deep CNNs.",
+      "Designed the 3-layer Bottleneck building block for computationally efficient deep scaling.",
+      "Successfully trained networks up to 1001 layers deep on CIFAR-10 and 152 layers on ImageNet."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "residual-building-block",
+      "title": "Residual Building Block (Identity Shortcut)",
+      "type": "component",
+      "summary": "Reformulates a block of stacked layers to approximate F(x) = H(x) - x with an additive identity skip connection.",
+      "detailedDescription": "The building block performs element-wise addition of the input x directly to the output of the convolutional layers F(x, {Wi}), followed by a non-linear ReLU activation. Because the shortcut connection carries signals directly, gradient information flows backward unattenuated through the identity path.",
+      "math": {
+        "latexFormula": "y = F(x, \\{W_i\\}) + x",
+        "explanation": "Where x and y are input and output vectors, and F(x, {Wi}) represents the residual mapping to be learned.",
+        "variables": [
+          { "symbol": "x", "description": "Input feature map tensor to the residual block" },
+          { "symbol": "y", "description": "Output feature map tensor after residual addition" },
+          { "symbol": "F", "description": "Residual function comprising weights Wi, biases, and activations" },
+          { "symbol": "W_i", "description": "Weight matrices of the 2 or 3 convolutional layers in the block" }
+        ],
+        "significance": "When the optimal mapping is closer to identity than zero, learning small zero-centered perturbations F(x) is far easier for SGD than fitting an identity function from scratch."
+      },
+      "codeSnippet": {
+        "language": "python",
+        "code": "def residual_block(x, filters):\n    shortcut = x\n    x = Conv2D(filters, (3, 3), padding='same')(x)\n    x = BatchNorm()(x)\n    x = ReLU()(x)\n    x = Conv2D(filters, (3, 3), padding='same')(x)\n    x = BatchNorm()(x)\n    x = Add()([x, shortcut])\n    return ReLU()(x)"
+      }
+    },
+    {
+      "id": "bottleneck-architecture",
+      "title": "3-Layer Bottleneck Design",
+      "type": "architecture",
+      "summary": "Uses 1x1 convolutions to reduce and restore feature dimensions around a 3x3 convolution, enabling deeper networks within FLOP budgets.",
+      "detailedDescription": "For deeper architectures (ResNet-50/101/152), each residual function F uses 3 layers: 1x1, 3x3, and 1x1 convolutions. The 1x1 layers reduce and then restore (expand) dimensions, leaving the 3x3 layer as a bottleneck with smaller input/output dimensions.",
+      "math": {
+        "latexFormula": "F_{bottleneck}(x) = W_3 * \\sigma(W_2 * \\sigma(W_1 * x))",
+        "explanation": "W1 reduces channels (e.g., 256 -> 64), W2 performs 3x3 spatial convolution at 64 channels, and W3 expands channels back (64 -> 256).",
+        "variables": [
+          { "symbol": "W_1", "description": "1x1 conv layer for channel dimension reduction" },
+          { "symbol": "W_2", "description": "3x3 conv layer for spatial feature extraction" },
+          { "symbol": "W_3", "description": "1x1 conv layer for channel dimension restoration" }
+        ],
+        "significance": "Dramatically lowers computation time and memory footprint, allowing ResNet-152 to remain more efficient than VGG-16 despite having 10x more layers."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012", "CIFAR-10", "COCO Object Detection", "Pascal VOC 2007/2012"],
+    "richDatasets": [
+      {
+        "name": "ImageNet (ILSVRC-2012)",
+        "description": "1.28M training images across 1,000 object categories used for primary benchmark evaluation.",
+        "officialUrl": "https://www.image-net.org/",
+        "leaderboardUrl": "https://paperswithcode.com/sota/image-classification-on-imagenet",
+        "codeUrl": "https://pytorch.org/vision/stable/datasets.html#imagenet"
+      },
+      {
+        "name": "COCO Object Detection",
+        "description": "80k train / 40k val images evaluated for downstream detection and instance segmentation transferability.",
+        "officialUrl": "https://cocodataset.org/",
+        "leaderboardUrl": "https://paperswithcode.com/dataset/coco"
+      }
+    ],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-5 Error (ResNet-152 Single Model)",
+        "value": 4.49,
+        "unit": "%",
+        "baselineValue": 8.43,
+        "isSOTA": true
+      },
+      {
+        "metricName": "ImageNet Top-5 Error (Ensemble)",
+        "value": 3.57,
+        "unit": "%",
+        "baselineValue": 6.66,
+        "isSOTA": true
+      },
+      {
+        "metricName": "COCO mAP@[.5, .95] Object Detection",
+        "value": 37.3,
+        "unit": "%",
+        "baselineValue": 29.9,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Identity Shortcuts vs. Projection Shortcuts",
+        "description": "Compared parameter-free identity shortcuts against 1x1 projection shortcuts for all residual connections.",
+        "removedComponent": "Identity shortcuts replaced by projection shortcuts",
+        "performanceDelta": "Projection shortcuts yielded marginal gain (+0.2% accuracy) but added significant memory and FLOP overhead, confirming identity shortcuts are sufficient."
+      },
+      {
+        "title": "34-Layer Plain Net vs. 34-Layer ResNet",
+        "description": "Compared a 34-layer network without shortcuts to a 34-layer network with residual shortcuts.",
+        "removedComponent": "Shortcut connections removed (Plain-34)",
+        "performanceDelta": "Plain-34 exhibited higher training error than Plain-18. Adding residual shortcuts reduced 34-layer top-1 error by 3.5%."
+      }
+    ],
+    "reproducibilityNotes": "Models were trained using standard SGD with momentum 0.9, weight decay 0.0001, and mini-batch size 256 on 8 GPUs. Batch Normalization is adopted immediately after each convolution and before activation."
+  },
+  "criticalNotes": [
+    {
+      "id": "resnet-misconception-1",
+      "category": "misconception",
+      "title": "Residual shortcut connections add extra learnable parameters and computational FLOPs.",
+      "content": "Identity shortcut connections perform parameter-free element-wise addition F(x) + x, requiring zero additional learnable parameters or extra floating-point multiplications."
+    },
+    {
+      "id": "strength-optimization",
+      "category": "strength",
+      "title": "Ease of Optimization",
+      "content": "Extremely deep residual networks are easy to optimize using standard SGD without specialized initializers or warm-up schedules."
+    },
+    {
+      "id": "strength-parameter-efficiency",
+      "category": "strength",
+      "title": "Zero Parameter Overhead",
+      "content": "Identity shortcuts add zero extra trainable parameters or memory overhead to the network."
+    },
+    {
+      "id": "limitation-small-batches",
+      "category": "limitation",
+      "title": "BatchNorm Sensitivity to Batch Size",
+      "content": "Because ResNet relies heavily on Batch Normalization after every convolution, performance degrades significantly if micro-batch sizes per GPU drop below 4 during fine-tuning."
+    },
+    {
+      "id": "tradeoff-representation-reuse",
+      "category": "tradeoff",
+      "title": "Feature Map Redundancy",
+      "content": "Gradient flow through identity paths can cause consecutive layers to learn redundant or marginally different features, addressed later by DenseNet."
+    },
+    {
+      "id": "failure-case-vanishing-width",
+      "category": "failure_case",
+      "title": "Width Bottleneck Degradation",
+      "content": "If residual channels are reduced too aggressively in 1x1 bottleneck layers, information capacity collapses despite deep identity paths."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "vgg-2014-iclr-simonyan",
+        "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG)",
+        "year": 2014,
+        "authors": "Karen Simonyan, Andrew Zisserman",
+        "relationshipType": "predecessor",
+        "description": "Established 3x3 uniform convolution stacks that ResNet built upon while removing computational bottlenecks."
+      },
+      {
+        "paperId": "highway-2015-nips-srivastava",
+        "title": "Highway Networks",
+        "year": 2015,
+        "authors": "Rupesh Kumar Srivastava, Klaus Greff, Jürgen Schmidhuber",
+        "relationshipType": "predecessor",
+        "description": "First proposed shortcut connections with learned parametric data-dependent gates, which ResNet simplified to un-gated identity paths."
+      },
+      {
+        "paperId": "resnext-2017-cvpr-xie",
+        "title": "Aggregated Residual Transformations for Deep Neural Networks (ResNeXt)",
+        "year": 2017,
+        "authors": "Saining Xie, Ross Girshick, Piotr Dollár, Zhuowen Tu, Kaiming He",
+        "relationshipType": "successor",
+        "description": "Extends ResNet by repeating a building block that aggregates a set of transformations with multi-branch cardinality."
+      },
+      {
+        "paperId": "densenet-2017-cvpr-huang",
+        "title": "Densely Connected Convolutional Networks (DenseNet)",
+        "year": 2017,
+        "authors": "Gao Huang, Zhuang Liu, Laurens van der Maaten, Kilian Q. Weinberger",
+        "relationshipType": "successor",
+        "description": "Connects each layer to every other layer in a feed-forward fashion, concatenating feature maps rather than adding them."
+      }
+    ],
+    "researchGaps": [
+      "Why do identity shortcuts prevent degradation mathematically? (Later analyzed by He et al. 2016 Identity Mappings paper).",
+      "Can depth scaling be combined optimally with width scaling and resolution scaling? (Later answered by EfficientNet)."
+    ],
+    "futureExtensions": [
+      "Pre-activation ResNet (He et al., 2016)",
+      "Wide ResNet (Zagoruyko & Komodakis, 2016)",
+      "ResNeXt (Xie et al., 2017)",
+      "ConvNeXt (Liu et al., 2022)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers—8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task.",
+    "originalConclusion": "We have presented deep residual networks for image recognition. Our residual learning framework allows networks to be trained up to 152 layers without degradation, winning ILSVRC 2015 and COCO 2015 competitions across classification, detection, and segmentation tasks.",
+    "trainingDetails": {
+      "optimizer": "SGD with momentum 0.9",
+      "learningRate": "0.1, divided by 10 when validation error plateaus",
+      "batchSize": "256",
+      "hardwareUsed": "8 NVIDIA GPUs",
+      "trainingDuration": "60 x 10^4 iterations on ImageNet",
+      "hyperparameters": {
+        "weightDecay": "0.0001",
+        "dataAugmentation": "Scale jittering [256, 480], random crop 224x224, horizontal flip, color lighting",
+        "initialization": "He (MSRA) Initialization"
+      }
+    },
+    "equationCatalog": [
+      {
+        "id": "eq-1-residual-formulation",
+        "name": "Residual Block Formulation",
+        "latex": "y = F(x, \\{W_i\\}) + x",
+        "context": "Main building block identity formulation in Equation (1) of the paper."
+      },
+      {
+        "id": "eq-2-projection-shortcut",
+        "name": "Projection Shortcut Formulation",
+        "latex": "y = F(x, \\{W_i\\}) + W_s x",
+        "context": "Used when input and output channel dimensions differ, where Ws is a 1x1 convolution matrix."
+      }
+    ],
+    "bibtex": "@inproceedings{he2016deep,\n  title={Deep residual learning for image recognition},\n  author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},\n  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},\n  pages={770--778},\n  year={2016}\n}"
+  }
+}

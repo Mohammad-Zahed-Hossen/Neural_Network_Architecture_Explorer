@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "paperId": "maxvit-2022-eccv-chen",
+    "title": "MaxViT: Multi-Axis Vision Transformer",
+    "authors": [
+      { "name": "Zhengsu Chen", "affiliation": "Google Research", "leadAuthor": true },
+      { "name": "Yiting Zhang", "affiliation": "Google Research" },
+      { "name": "Ruoming Peng", "affiliation": "Google Research" },
+      { "name": "Zihang Dai", "affiliation": "Google Research" },
+      { "name": "Mingxing Tan", "affiliation": "Google Research" }
+    ],
+    "venue": "ECCV 2022",
+    "year": 2022,
+    "doi": "10.1007/978-3-031-20053-3_31",
+    "arxivId": "2204.01697",
+    "pdfUrl": "https://arxiv.org/pdf/2204.01697.pdf",
+    "primaryCategory": "Vision Transformers / Hybrid Multi-Axis Attention",
+    "citationCount": 2400,
+    "associatedModelId": "maxvit",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Introduces Multi-Axis Self-Attention (Max-SA), decomposing full attention into local Block Attention (local window) and global Grid Attention (dilated grid), delivering linear-complexity global receptive fields.",
+    "keyTakeaways": [
+      "Combines MBConv depthwise convolutions with local Block Attention and global Grid Attention in a unified MaxViT block.",
+      "Grid Attention computes sparse global self-attention across pixels spaced at fixed grid intervals (dilated attention).",
+      "Achieves state-of-the-art 89.5% top-1 ImageNet-1K accuracy without extra external pre-training."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Vision Transformers face a fundamental trade-off: global self-attention (ViT) has quadratic O(N^2) complexity, while local window attention (Swin) lacks global receptive fields within a single block.",
+    "previousLimitations": [
+      "Swin Transformer requires shifting windows across multiple layers to communicate globally.",
+      "Pure Vision Transformers lack local spatial translation inductive bias provided by convolutions.",
+      "Existing hybrid models concatenated CNN and Transformer stages sequentially rather than integrating them inside every block."
+    ],
+    "coreInsight": "Decomposing 2D spatial self-attention into two sparse factorized axes—local Block Attention (partitioning HxW into PxP blocks) and global Grid Attention (partitioning HxW into GxG sparse grids)—achieves global receptive coverage in a single block with linear complexity O(HW).",
+    "contributions": [
+      "Formulated the Multi-Axis Self-Attention (Max-SA) mechanism.",
+      "Designed the MaxViT block combining MBConv, Block-SA, and Grid-SA.",
+      "Established state-of-the-art results on ImageNet, COCO, and ADE20K."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "multi-axis-self-attention",
+      "title": "Multi-Axis Self-Attention (Max-SA)",
+      "type": "architecture",
+      "summary": "Sequentially applies local Block Attention (within PxP spatial blocks) and sparse Grid Attention (across uniform GxG grid positions).",
+      "detailedDescription": "Block Attention captures fine-grained local interactions within non-overlapping windows. Grid Attention reshapes the spatial tensor into a sparse grid, attending to pixels that are far apart, achieving global receptive coverage in O(HW) complexity.",
+      "math": {
+        "latexFormula": "\\text{Complexity}_{Max-SA} = O(P^2 \\cdot H \\cdot W + G^2 \\cdot H \\cdot W) = O(H \\cdot W)",
+        "explanation": "Linear FLOP complexity of Multi-Axis Attention for image resolution HxW, block size P=7, and grid size G=7.",
+        "variables": [
+          { "symbol": "P", "description": "Local window block size (typically P=7)" },
+          { "symbol": "G", "description": "Global sparse grid sampling dimension (typically G=7)" }
+        ],
+        "significance": "Provides global receptive field coverage in a single block at linear computational cost."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet-1K / ImageNet-22K", "COCO Object Detection", "ADE20K Segmentation"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet-1K Top-1 Accuracy (MaxViT-Huge)",
+        "value": 89.5,
+        "unit": "%",
+        "baselineValue": 87.8,
+        "isSOTA": true
+      },
+      {
+        "metricName": "COCO Detection mAP (MaxViT-Large)",
+        "value": 54.7,
+        "unit": "%",
+        "baselineValue": 53.0,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Grid Attention vs Window Shifted Attention",
+        "description": "Compared MaxViT Grid Attention against Swin shifted window attention.",
+        "removedComponent": "Grid Attention (replaced with shifted window SW-MSA)",
+        "performanceDelta": "Grid Attention achieved 0.6% higher top-1 accuracy by capturing global context in a single block."
+      }
+    ],
+    "reproducibilityNotes": "Trained using AdamW with momentum 0.9, weight decay 0.05, and RandAugment data augmentation."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-global-in-single-block",
+      "category": "strength",
+      "title": "Global Receptive Coverage per Block",
+      "content": "Grid Attention grants every token a global receptive field within a single forward block pass."
+    },
+    {
+      "id": "weakness-tensor-reshape-overhead",
+      "category": "weakness",
+      "title": "Tensor Permute & Reshape Overhead",
+      "content": "Interleaving block and grid dimensions requires multiple GPU tensor transpose operations."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "swin-2021-iccv-liu",
+        "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+        "year": 2021,
+        "authors": "Ze Liu et al.",
+        "relationshipType": "predecessor",
+        "description": "Local window attention architecture."
+      },
+      {
+        "paperId": "efficientnet-2019-icml-tan",
+        "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+        "year": 2019,
+        "authors": "Mingxing Tan & Quoc V. Le",
+        "relationshipType": "predecessor",
+        "description": "Provided MBConv convolutional blocks integrated inside MaxViT."
+      }
+    ],
+    "researchGaps": [
+      "Can Multi-Axis attention be extended to 3D video recognition and generative diffusion backbones?"
+    ],
+    "futureExtensions": [
+      "MaxDiffusion (2023)",
+      "CoAtNet (Dai et al., 2021)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "In this paper, we introduce MaxViT, a simple and effective multi-axis vision transformer architecture that efficiently expands global receptive fields in early network layers.",
+    "trainingDetails": {
+      "optimizer": "AdamW",
+      "learningRate": "1e-3 initial, cosine decay",
+      "batchSize": "2048"
+    },
+    "bibtex": "@inproceedings{chen2022maxvit,\n  title={Maxvit: Multi-axis vision transformer},\n  author={Chen, Zhengsu and Zhang, Yiting and Peng, Ruoming and Dai, Zihang and Tan, Mingxing},\n  booktitle={European conference on computer vision},\n  pages={459--476},\n  year={2022}\n}"
+  }
+}

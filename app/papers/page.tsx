@@ -453,20 +453,29 @@ export default function PaperKnowledgeCenter() {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 border border-border/30 hover:border-primary/40 rounded-lg text-slate-400 hover:text-white transition-all cursor-pointer bg-slate-950/20"
+                          className="p-1.5 sm:p-2 border border-slate-800 hover:border-cyan-500/40 rounded-full text-slate-400 hover:text-white transition-all cursor-pointer bg-slate-900/60"
                           title="Open original paper PDF"
+                          aria-label="Open original paper PDF"
                         >
-                          <ExternalLink className="h-3.5 w-3.5" />
+                          <ExternalLink className="h-3 sm:h-3.5 w-3 sm:w-3.5" />
                         </a>
+                        <Link
+                          href={`/papers/${paper.id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-[10px] sm:text-xs font-bold text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-full px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase tracking-wider flex items-center gap-1 sm:gap-1.5 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                          title="Open full canonical paper details specification"
+                        >
+                          Full Spec <ArrowRight className="h-3 sm:h-3.5 w-3 sm:w-3.5" />
+                        </Link>
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleSelectPaper(paper.id);
                           }}
-                          className="text-[10px] font-extrabold text-primary bg-primary/10 hover:bg-primary/15 border border-primary/20 rounded-lg px-2.5 py-1 cursor-pointer uppercase tracking-wider"
+                          className="text-[10px] sm:text-xs font-bold text-slate-200 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/80 rounded-full px-2.5 sm:px-3 py-1 sm:py-1.5 cursor-pointer uppercase tracking-wider transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
                         >
-                          {isSelected ? 'Collapse' : 'Details'}
+                          {isSelected ? 'Collapse' : 'Quick Scan'}
                         </button>
                       </div>
                     </div>

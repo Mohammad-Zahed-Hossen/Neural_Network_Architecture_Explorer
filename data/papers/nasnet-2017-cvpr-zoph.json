@@ -1,0 +1,145 @@
+{
+  "metadata": {
+    "paperId": "nasnet-2017-cvpr-zoph",
+    "title": "Learning Transferable Architectures for Scalable Image Recognition",
+    "authors": [
+      { "name": "Barret Zoph", "affiliation": "Google Brain", "leadAuthor": true },
+      { "name": "Vijay Vasudevan", "affiliation": "Google Brain" },
+      { "name": "Jonathon Shlens", "affiliation": "Google Brain" },
+      { "name": "Quoc V. Le", "affiliation": "Google Brain" }
+    ],
+    "venue": "CVPR 2018",
+    "year": 2017,
+    "doi": "10.1109/CVPR.2018.00907",
+    "arxivId": "1707.07012",
+    "pdfUrl": "https://arxiv.org/pdf/1707.07012.pdf",
+    "primaryCategory": "Computer Vision / Automated Neural Architecture Search",
+    "citationCount": 11000,
+    "associatedModelId": "nasnetmobile",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Pioneered Neural Architecture Search (NAS) by training an RNN controller using reinforcement learning to automatically discover optimal convolutional building blocks (Normal & Reduction Cells).",
+    "keyTakeaways": [
+      "Discovered architectural building blocks automatically on CIFAR-10 and scaled them seamlessly to ImageNet.",
+      "Introduced cell-based search space design: Normal Cells (preserve spatial resolution) and Reduction Cells (downsample spatially).",
+      "Achieved 82.7% top-1 ImageNet accuracy, surpassing all manually designed architectures of its era."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Designing neural network architectures relies heavily on human intuition and trial-and-error, which is slow, biased toward simple patterns, and misses highly non-intuitive optimal node combinations.",
+    "previousLimitations": [
+      "Manual architectural engineering was bounded by human cognitive bias.",
+      "Direct neural search on large ImageNet datasets was computationally impossible.",
+      "Searched architectures failed to transfer across different image resolutions and tasks."
+    ],
+    "coreInsight": "Searching for a small modular cell structure (Normal Cell & Reduction Cell) on a smaller dataset (CIFAR-10) enables the searched cell to be stacked repeatedly and transferred to large datasets like ImageNet.",
+    "contributions": [
+      "Formulated the NASNet cell-based search space.",
+      "Introduced ScheduledDropPath regularization for training deep searched networks.",
+      "Demonstrated that automated AI architecture search outperforms human architectural design."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "cell-based-nas-search-space",
+      "title": "Transferable Cell-Based Search Space",
+      "type": "optimization",
+      "summary": "Uses an RNN controller trained with PPO reinforcement learning to construct Normal and Reduction Cells.",
+      "detailedDescription": "The controller selects 2 input nodes, 2 operations (e.g. 3x3 separable conv, 5x5 separable conv, max pool, identity), and 1 combination operation (add or concatenate) per cell node, stacking cells into scalable networks.",
+      "math": {
+        "latexFormula": "J(\\theta) = \\mathbb{E}_{P(a_{1:T}; \\theta)} [R], \\quad \\nabla_{\\theta} J(\\theta) = \\sum_{t=1}^{T} \\mathbb{E} [\\nabla_{\\theta} \\log P(a_t | a_{(1:t-1)}; \\theta) R]",
+        "explanation": "REINFORCE policy gradient objective where RNN controller parameters theta are updated based on validation accuracy reward R.",
+        "variables": [
+          { "symbol": "\\theta", "description": "RNN controller parameters generating network architectures" },
+          { "symbol": "R", "description": "Validation accuracy reward signal on held-out data" }
+        ],
+        "significance": "Automated the architectural discovery process, finding non-intuitive parallel branch combinations."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["CIFAR-10", "ImageNet ILSVRC-2012", "COCO Detection"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Accuracy (NASNet-A Large)",
+        "value": 82.7,
+        "unit": "%",
+        "baselineValue": 80.4,
+        "isSOTA": true
+      },
+      {
+        "metricName": "ImageNet Top-5 Accuracy (NASNet-A Large)",
+        "value": 96.2,
+        "unit": "%",
+        "baselineValue": 95.3,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "ScheduledDropPath Regularization",
+        "description": "Compared NASNet training with standard Dropout vs ScheduledDropPath (linearly increasing drop probability of entire paths).",
+        "removedComponent": "ScheduledDropPath",
+        "performanceDelta": "ScheduledDropPath improved CIFAR-10 accuracy by 0.7% by forcing multi-branch redundancy."
+      }
+    ],
+    "reproducibilityNotes": "Search executed using 500 GPUs for 4 days on CIFAR-10. Final model trained using RMSProp and Cosine LR schedule."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-automl-breakthrough",
+      "category": "strength",
+      "title": "AutoML Paradigm Shift",
+      "content": "Proved that reinforcement learning can design superior architectures compared to top human researchers."
+    },
+    {
+      "id": "weakness-search-compute-cost",
+      "category": "weakness",
+      "title": "Extremely High Search Compute Cost",
+      "content": "Searching required over 2000 GPU-hours on CIFAR-10, making initial search prohibitive without massive cluster infrastructure."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "inceptionv3-2015-cvpr-szegedy",
+        "title": "Rethinking the Inception Architecture for Computer Vision",
+        "year": 2015,
+        "authors": "Christian Szegedy et al.",
+        "relationshipType": "predecessor",
+        "description": "Multi-branch cell structure which NASNet automated."
+      },
+      {
+        "paperId": "mobilenetv3-2019-iccv-howard",
+        "title": "Searching for MobileNetV3",
+        "year": 2019,
+        "authors": "Andrew Howard et al.",
+        "relationshipType": "successor",
+        "description": "Combined hardware-aware NAS with inverted residual blocks."
+      }
+    ],
+    "researchGaps": [
+      "How to reduce NAS compute search costs from 2000 GPU-hours to <1 GPU-hour? (Addressed by DARTS/ProxylessNAS).",
+      "How to incorporate hardware latency directly into the loss reward function?"
+    ],
+    "futureExtensions": [
+      "PNASNet (Liu et al., 2018)",
+      "DARTS (Liu et al., 2018)",
+      "MobileNetV3 (Howard et al., 2019)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "Developing neural network image architectures has often required significant human effort and expertise. In this paper, we present a method to learn transferable architectures for scalable image recognition using reinforcement learning.",
+    "trainingDetails": {
+      "optimizer": "RMSProp with decay 0.9",
+      "learningRate": "0.045 initial with cosine annealing",
+      "batchSize": "32 per GPU"
+    },
+    "bibtex": "@inproceedings{zoph2018learning,\n  title={Learning transferable architectures for scalable image recognition},\n  author={Zoph, Barret and Vasudevan, Vijay and Shlens, Jonathon and Le, Quoc V},\n  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},\n  pages={8697--8710},\n  year={2018}\n}"
+  }
+}

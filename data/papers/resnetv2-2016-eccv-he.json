@@ -1,0 +1,141 @@
+{
+  "metadata": {
+    "paperId": "resnetv2-2016-eccv-he",
+    "title": "Identity Mappings in Deep Residual Networks",
+    "authors": [
+      { "name": "Kaiming He", "affiliation": "Microsoft Research", "leadAuthor": true },
+      { "name": "Xiangyu Zhang", "affiliation": "Microsoft Research" },
+      { "name": "Shaoqing Ren", "affiliation": "Microsoft Research" },
+      { "name": "Jian Sun", "affiliation": "Microsoft Research" }
+    ],
+    "venue": "ECCV 2016",
+    "year": 2016,
+    "doi": "10.1007/978-3-319-46493-0_38",
+    "arxivId": "1603.05027",
+    "pdfUrl": "https://arxiv.org/pdf/1603.05027.pdf",
+    "primaryCategory": "Computer Vision / Pre-activation Residual Design",
+    "citationCount": 16500,
+    "associatedModelId": "resnet50v2",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Analyzes the propagation mathematics behind residual skip connections and proposes pre-activation blocks (BN + ReLU before Conv) to create a completely clean identity path.",
+    "keyTakeaways": [
+      "In original ResNet (post-activation), ReLU and Addition operations modify shortcut signals slightly.",
+      "Pre-activation (moving Batch Normalization and ReLU before weight layers) guarantees unimpeded gradient flow backwards to early layers.",
+      "Successfully trains a 1001-layer ResNet on CIFAR-10 without overfitting or training error degradation."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "In original ResNets, shortcut signals pass through element-wise Addition followed immediately by ReLU activation. This post-activation design corrupts the pure identity shortcut, slightly impeding gradient propagation at extreme depths (1000+ layers).",
+    "previousLimitations": [
+      "Post-activation residual units apply ReLU after addition, forcing shortcut outputs to be strictly non-negative.",
+      "Addition of non-identity elements on shortcut paths degrades signal propagation in 1000-layer networks.",
+      "Batch Normalization placed after convolutions required complex warmup schedules at extreme depths."
+    ],
+    "coreInsight": "If the shortcut connection x_{l+1} = x_l + F(x_l, W_l) is kept completely clean without any activation or normalization modifying x_l directly, signal propagates directly from any deep unit to any shallow unit without attenuation.",
+    "contributions": [
+      "Derived mathematical proof for unimpeded signal propagation in identity shortcuts.",
+      "Proposed Pre-Activation Residual Units (BN -> ReLU -> Conv -> BN -> ReLU -> Conv).",
+      "Demonstrated that Pre-Activation prevents overfitting and improves generalization."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "pre-activation-block",
+      "title": "Pre-Activation Residual Block",
+      "type": "architecture",
+      "summary": "Positions Batch Normalization and ReLU activations before convolution weight layers rather than after.",
+      "detailedDescription": "By placing BN and ReLU before weight layers, the residual function F(x) becomes a pre-activated mapping. The addition operation y = x + F(x) remains completely untouched by subsequent ReLU units, leaving the main identity shortcut clean.",
+      "math": {
+        "latexFormula": "x_L = x_l + \\sum_{i=l}^{L-1} F(x_i, W_i)",
+        "explanation": "Telescoping property showing features at any deeper layer L are a direct sum of shallow features x_l and residual functions, with gradient dL/dx_l = dL/dx_L * (1 + d/dx_l sum F).",
+        "variables": [
+          { "symbol": "x_L", "description": "Output tensor at deep layer L" },
+          { "symbol": "x_l", "description": "Input tensor at shallow layer l" },
+          { "symbol": "F", "description": "Pre-activated residual transformation function" }
+        ],
+        "significance": "Ensures the gradient term contains '1', preventing vanishing gradients regardless of network depth."
+      },
+      "codeSnippet": {
+        "language": "python",
+        "code": "def preact_residual_block(x, filters):\n    shortcut = x\n    # Pre-activation: BN and ReLU before Conv\n    x = BatchNorm()(x)\n    x = ReLU()(x)\n    x = Conv2D(filters, (3, 3), padding='same')(x)\n    x = BatchNorm()(x)\n    x = ReLU()(x)\n    x = Conv2D(filters, (3, 3), padding='same')(x)\n    return Add()([shortcut, x]) # Clean shortcut addition"
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["CIFAR-10", "CIFAR-100", "ImageNet ILSVRC-2012"],
+    "primaryResults": [
+      {
+        "metricName": "CIFAR-10 Test Error Rate (1001-layer ResNet V2)",
+        "value": 4.62,
+        "unit": "%",
+        "baselineValue": 7.61,
+        "isSOTA": true
+      },
+      {
+        "metricName": "ImageNet Top-1 Error Rate (ResNet-200 V2)",
+        "value": 20.1,
+        "unit": "%",
+        "baselineValue": 21.8,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Clean Identity Shortcut vs Gated/Scaled Shortcuts",
+        "description": "Tested scaling shortcut signals by constant factor 0.5 or adding 1x1 convolutions on shortcuts.",
+        "removedComponent": "Pure identity shortcut (replaced with 0.5 scaling or 1x1 conv)",
+        "performanceDelta": "Scaling or gating shortcuts caused severe gradient decay, increasing 1001-layer error from 4.62% to 12.35%."
+      }
+    ],
+    "reproducibilityNotes": "Trained with SGD with momentum 0.9, weight decay 0.0001, and batch size 128 on CIFAR and 256 on ImageNet."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-clean-gradient",
+      "category": "strength",
+      "title": "Uncompromised Gradient Backpropagation",
+      "content": "Pre-activation eliminates gradient obstacles, allowing stable training of 1000+ layer deep models."
+    },
+    {
+      "id": "tradeoff-initial-feature-extraction",
+      "category": "tradeoff",
+      "title": "Requires Pre-activation Before First Convolution",
+      "content": "The very first layer stem requires an extra BatchNorm + ReLU step before splitting into residual branches."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "resnet-2015-cvpr-he",
+        "title": "Deep Residual Learning for Image Recognition",
+        "year": 2015,
+        "authors": "Kaiming He et al.",
+        "relationshipType": "predecessor",
+        "description": "Original post-activation ResNet architecture which ResNet V2 refined."
+      }
+    ],
+    "researchGaps": [
+      "Can pre-activation layouts be applied to Vision Transformers?",
+      "How to scale channel width dynamically in pre-activation blocks?"
+    ],
+    "futureExtensions": [
+      "Pre-activation Transformers (Vaswani et al., 2017)",
+      "ConvNeXt (Liu et al., 2022)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "Deep residual networks have emerged as a family of extremely deep architectures. In this paper, we analyze the propagation mathematics behind residual building blocks and show that identity shortcut connections create clean gradient paths.",
+    "trainingDetails": {
+      "optimizer": "SGD with momentum 0.9",
+      "learningRate": "0.1 initial, divided by 10 at 80k and 120k iterations",
+      "batchSize": "128 (CIFAR) / 256 (ImageNet)"
+    },
+    "bibtex": "@inproceedings{he2016identity,\n  title={Identity mappings in deep residual networks},\n  author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},\n  booktitle={European conference on computer vision},\n  pages={630--645},\n  year={2016}\n}"
+  }
+}

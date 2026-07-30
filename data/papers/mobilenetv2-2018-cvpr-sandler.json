@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "paperId": "mobilenetv2-2018-cvpr-sandler",
+    "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+    "authors": [
+      { "name": "Mark Sandler", "affiliation": "Google Inc.", "leadAuthor": true },
+      { "name": "Andrew Howard", "affiliation": "Google Inc." },
+      { "name": "Menglong Zhu", "affiliation": "Google Inc." },
+      { "name": "Andrey Zhmoginov", "affiliation": "Google Inc." },
+      { "name": "Liang-Chieh Chen", "affiliation": "Google Inc." }
+    ],
+    "venue": "CVPR 2018",
+    "year": 2018,
+    "doi": "10.1109/CVPR.2018.00474",
+    "arxivId": "1801.04381",
+    "pdfUrl": "https://arxiv.org/pdf/1801.04381.pdf",
+    "primaryCategory": "Computer Vision / Mobile & Efficient CNNs",
+    "citationCount": 21000,
+    "associatedModelId": "mobilenetv2",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Introduces the Inverted Residual Block with Linear Bottlenecks, expanding channel dimensions internally before applying depthwise convolutions and retaining linear projections to preserve manifold features.",
+    "keyTakeaways": [
+      "Inverted residual blocks connect low-dimensional bottleneck layers instead of high-dimensional layers (reversing standard ResNet topology).",
+      "Linear Bottlenecks remove non-linear activations from thin output projections to prevent ReLU from destroying manifold information.",
+      "Achieves higher ImageNet classification accuracy than MobileNetV1 while using 30% fewer parameters and 50% fewer FLOPs."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Deep neural networks deployed on edge devices encounter strict latency and memory constraints. Standard residual blocks expand channels first and compress them last, causing severe information collapse when applied to low-channel mobile regimes.",
+    "previousLimitations": [
+      "Standard residual blocks pass high-dimensional tensors between shortcut connections, requiring large memory bandwidth.",
+      "Non-linear activations (ReLU) applied to low-dimensional bottleneck layers destroy feature manifold information.",
+      "MobileNetV1 lacked residual shortcut paths between lightweight blocks."
+    ],
+    "coreInsight": "The region of interest in feature space resides on low-dimensional manifolds within high-dimensional representations. We can expand features to high dimensions internally for depthwise processing, but must project them back to low-dimensional linear bottlenecks without non-linearities to preserve information.",
+    "contributions": [
+      "Designed the Inverted Residual Block architecture.",
+      "Introduced Linear Bottlenecks to preserve manifold features.",
+      "Demonstrated state-of-the-art mobile performance on ImageNet classification, COCO detection, and DeepLabV3 segmentation."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "inverted-residual-block",
+      "title": "Inverted Residual Topology",
+      "type": "architecture",
+      "summary": "Places shortcut connections directly between thin low-dimensional bottlenecks rather than thick feature maps.",
+      "detailedDescription": "The block expands input channels by an expansion factor t (e.g. t=6) using a 1x1 conv, applies 3x3 depthwise convolution, and projects back down to a low-dimensional bottleneck with a 1x1 conv. Shortcuts connect the low-dimensional bottlenecks.",
+      "math": {
+        "latexFormula": "F_{inverted}(x) = W_{proj} * \\text{Depthwise}(W_{expand} * x)",
+        "explanation": "Where W_expand projects x from k to t*k channels, Depthwise operates at t*k channels, and W_proj projects back to k' channels without non-linearity.",
+        "variables": [
+          { "symbol": "x", "description": "Low-dimensional bottleneck input tensor (k channels)" },
+          { "symbol": "W_{expand}", "description": "1x1 convolution expanding channels by factor t (e.g. t=6)" },
+          { "symbol": "W_{proj}", "description": "1x1 linear projection convolution restoring low channel count" }
+        ],
+        "significance": "Drastically reduces memory footprint during inference because the intermediate high-dimensional tensor does not need to be written back to main RAM."
+      },
+      "codeSnippet": {
+        "language": "python",
+        "code": "def inverted_residual_block(x, in_channels, out_channels, expand_ratio, stride):\n    hidden_dim = in_channels * expand_ratio\n    use_shortcut = stride == 1 and in_channels == out_channels\n    layers = []\n    if expand_ratio != 1:\n        layers.extend([Conv2D(hidden_dim, 1), BatchNorm(), ReLU6()])\n    layers.extend([DepthwiseConv2D(3, stride=stride), BatchNorm(), ReLU6()])\n    layers.extend([Conv2D(out_channels, 1), BatchNorm()]) # Linear Bottleneck\n    out = Sequential(layers)(x)\n    return Add()([x, out]) if use_shortcut else out"
+      }
+    },
+    {
+      "id": "linear-bottleneck",
+      "title": "Linear Bottleneck Projection",
+      "type": "component",
+      "summary": "Omits non-linear activation (ReLU6) in the final 1x1 projection layer of each block.",
+      "detailedDescription": "When non-linear activations like ReLU are applied to low-dimensional tensors, they collapse negative values to zero, destroying manifold topology. Keeping the final projection linear preserves linear manifolds.",
+      "math": {
+        "latexFormula": "\\text{ReLU}(W x) \\implies \\text{Manifold Collapse if } \\text{dim}(x) \\ll \\text{dim}(y)",
+        "explanation": "Mathematical property showing ReLU acts as a linear transformation only on a subset of space; in low dimensions, information loss is permanent.",
+        "variables": [
+          { "symbol": "W", "description": "Linear projection weight matrix" }
+        ],
+        "significance": "Experimental evaluation proved that adding ReLU to final bottleneck layers systematically degraded accuracy."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012", "COCO Object Detection", "Pascal VOC 2012"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Accuracy (MobileNetV2 1.0x)",
+        "value": 72.0,
+        "unit": "%",
+        "baselineValue": 70.6,
+        "isSOTA": true
+      },
+      {
+        "metricName": "Parameters (MobileNetV2 1.0x)",
+        "value": 3.4,
+        "unit": "M",
+        "baselineValue": 4.2,
+        "isSOTA": true
+      },
+      {
+        "metricName": "Multiply-Add Operations (FLOPs)",
+        "value": 300,
+        "unit": "M",
+        "baselineValue": 569,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Impact of Linear Bottlenecks vs Non-linear Bottlenecks",
+        "description": "Compared performance when inserting ReLU6 after the final 1x1 bottleneck projection layer vs keeping it linear.",
+        "removedComponent": "Linear output projection (replaced with ReLU6)",
+        "performanceDelta": "Inserting ReLU6 into bottleneck projections caused a 1.2% drop in top-1 ImageNet accuracy."
+      }
+    ],
+    "reproducibilityNotes": "Trained using RMSProp (decay 0.9, momentum 0.9, weight decay 4e-5) with learning rate decay 0.98 per 2.5 epochs on 16 GPUs."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-latency",
+      "category": "strength",
+      "title": "Unrivaled On-Device Latency & Memory",
+      "content": "Low memory footprint allows the entire feature graph to fit into fast GPU/NPU cache without expensive DRAM reads."
+    },
+    {
+      "id": "limitation-hardware-kernel",
+      "category": "limitation",
+      "title": "Requires Optimized Depthwise Kernels",
+      "content": "On hardware targets lacking specialized cuDNN depthwise convolution optimization, execution latency may be memory-bandwidth bound."
+    },
+    {
+      "id": "tradeoff-channel-width",
+      "category": "tradeoff",
+      "title": "Capacity Bound on Ultra-Low Width Multipliers",
+      "content": "At width multipliers below 0.35x, classification capacity drops steeply due to extreme bottleneck compression."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "mobilenetv1-2017-arxiv-howard",
+        "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+        "year": 2017,
+        "authors": "Andrew Howard et al.",
+        "relationshipType": "predecessor",
+        "description": "First generation mobile architecture introducing standard depthwise separable convolutions."
+      },
+      {
+        "paperId": "mobilenetv3-2019-iccv-howard",
+        "title": "Searching for MobileNetV3",
+        "year": 2019,
+        "authors": "Andrew Howard et al.",
+        "relationshipType": "successor",
+        "description": "Combined inverted residuals with Neural Architecture Search (NAS) and Squeeze-and-Excitation attention."
+      }
+    ],
+    "researchGaps": [
+      "Can inverted residual configurations be searched automatically via NAS?",
+      "How to integrate channel-wise attention mechanisms into thin bottlenecks efficiently?"
+    ],
+    "futureExtensions": [
+      "MobileNetV3 (Howard et al., 2019)",
+      "EfficientNet (Tan & Le, 2019)",
+      "ShuffleNetV2 (Ma et al., 2018)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "We present a new mobile architecture, MobileNetV2, that improves state of the art performance of mobile models on multiple tasks. The architecture is based on an inverted residual structure where the shortcut connections are between thin bottleneck layers. The intermediate expansion layer uses lightweight depthwise convolutions to filter features as a source of non-linearity.",
+    "originalConclusion": "MobileNetV2 provides a powerful framework for mobile vision applications.",
+    "trainingDetails": {
+      "optimizer": "RMSProp with decay 0.9 and momentum 0.9",
+      "learningRate": "0.045 initial, decayed by 0.98 per 2.5 epochs",
+      "batchSize": "96 per GPU",
+      "hardwareUsed": "16 GPUs",
+      "hyperparameters": {
+        "weightDecay": "0.00004",
+        "dropoutRate": "0.2"
+      }
+    },
+    "bibtex": "@inproceedings{sandler2018mobilenetv2,\n  title={Mobilenetv2: Inverted residuals and linear bottlenecks},\n  author={Sandler, Mark and Howard, Andrew and Zhu, Menglong and Zhmoginov, Andrey and Chen, Liang-Chieh},\n  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},\n  pages={4510--4520},\n  year={2018}\n}"
+  }
+}

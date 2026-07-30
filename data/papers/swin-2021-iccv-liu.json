@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "paperId": "swin-2021-iccv-liu",
+    "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "authors": [
+      { "name": "Ze Liu", "affiliation": "Microsoft Research Asia", "leadAuthor": true },
+      { "name": "Yutong Lin", "affiliation": "Tsinghua University" },
+      { "name": "Yue Cao", "affiliation": "Microsoft Research Asia" },
+      { "name": "Han Hu", "affiliation": "Microsoft Research Asia" },
+      { "name": "Yixuan Wei", "affiliation": "Tsinghua University" },
+      { "name": "Zheng Zhang", "affiliation": "Microsoft Research Asia" },
+      { "name": "Stephen Lin", "affiliation": "Microsoft Research Asia" },
+      { "name": "Baining Guo", "affiliation": "Microsoft Research Asia" }
+    ],
+    "venue": "ICCV 2021 (Best Paper Award - Marr Prize)",
+    "year": 2021,
+    "doi": "10.1109/ICCV48922.2021.00986",
+    "arxivId": "2103.14030",
+    "pdfUrl": "https://arxiv.org/pdf/2103.14030.pdf",
+    "primaryCategory": "Vision Transformers / Shifted Window Attention",
+    "citationCount": 17500,
+    "associatedModelId": "swin",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Introduces local window self-attention and shifted window partition scheme (Swin), reducing self-attention computational complexity from quadratic to linear with respect to image resolution.",
+    "keyTakeaways": [
+      "Computes self-attention within local non-overlapping 7x7 windows, cutting FLOPs from O(H^2 W^2) to O(H W).",
+      "Shifted Window (SW-MSA) partitioning enables cross-window connections between consecutive Transformer blocks.",
+      "Acts as a general-purpose vision backbone for classification, object detection (COCO), and semantic segmentation (ADE20K)."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Global self-attention in standard ViT has quadratic computational complexity O(N^2) relative to token sequence length N, making high-resolution dense vision tasks (detection, segmentation) computationally prohibitive.",
+    "previousLimitations": [
+      "ViT global attention scales quadratically with pixel resolution, precluding high-resolution inputs.",
+      "ViT outputs single-scale low-resolution feature maps, lacking hierarchical feature pyramids required by FPN/UNet detectors.",
+      "Absence of spatial locality mechanisms in global attention blocks."
+    ],
+    "coreInsight": "Limiting self-attention to local 7x7 windows achieves linear computational complexity O(HW). Alternating window partitioning between standard layout and shifted layout (by [M/2, M/2] pixels) introduces cross-window information flow without computational overhead.",
+    "contributions": [
+      "Formulated the Swin (Shifted Window) Transformer architecture.",
+      "Introduced hierarchical patch merging layers to build multi-scale feature pyramids.",
+      "Achieved state-of-the-art results across ImageNet, COCO detection, and ADE20K segmentation."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "shifted-window-self-attention",
+      "title": "Shifted Window Self-Attention (SW-MSA)",
+      "type": "architecture",
+      "summary": "Shifts window boundaries by floor(M/2) pixels in alternating layers to enable inter-window self-attention.",
+      "detailedDescription": "Layer l uses standard window partitioning (W-MSA). Layer l+1 shifts window configuration by (M/2, M/2) pixels (SW-MSA). Cyclic shift algorithms with masked attention ensure batch computation efficiency without padding.",
+      "math": {
+        "latexFormula": "\\Omega(\\text{W-MSA}) = 4 h w C^2 + 2 M^2 h w C",
+        "explanation": "Linear computational complexity of local window self-attention for image height h, width w, channels C, and window size M=7.",
+        "variables": [
+          { "symbol": "M", "description": "Local window size (fixed at 7x7 patches)" },
+          { "symbol": "h, w", "description": "Height and width of feature map in patch units" }
+        ],
+        "significance": "Reduces self-attention complexity from quadratic O((hw)^2 C) to linear O(M^2 hw C)."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012", "COCO Object Detection", "ADE20K Semantic Segmentation"],
+    "primaryResults": [
+      {
+        "metricName": "COCO Object Detection mAP (Swin-L HTC++)",
+        "value": 58.7,
+        "unit": "%",
+        "baselineValue": 57.1,
+        "isSOTA": true
+      },
+      {
+        "metricName": "ADE20K Semantic Segmentation mIoU (Swin-L)",
+        "value": 53.5,
+        "unit": "%",
+        "baselineValue": 50.3,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Shifted Window Partitioning vs Fixed Window Partitioning",
+        "description": "Compared Swin Transformer with shifted window attention (W-MSA + SW-MSA) against fixed non-shifting window attention (W-MSA only).",
+        "removedComponent": "Shifted window partitioning (SW-MSA)",
+        "performanceDelta": "Fixed non-shifting windows caused a 1.4% drop in top-1 ImageNet accuracy due to lack of cross-window information sharing."
+      }
+    ],
+    "reproducibilityNotes": "Trained using AdamW (beta1 0.9, beta2 0.999, weight decay 0.05) with Stochastic Depth drop rate 0.2."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-hierarchical-pyramid",
+      "category": "strength",
+      "title": "Universal Dense Prediction Backbone",
+      "content": "Hierarchical patch merging enables multi-scale feature pyramids for seamless integration into COCO object detectors and segmentation heads."
+    },
+    {
+      "id": "weakness-custom-cuda-masking",
+      "category": "weakness",
+      "title": "Complex Masked Cyclic Shift Implementation",
+      "content": "Cyclic shift masking logic requires non-trivial custom tensor operations compared to standard global self-attention."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "vit-2020-iclr-dosovitskiy",
+        "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+        "year": 2020,
+        "authors": "Alexey Dosovitskiy et al.",
+        "relationshipType": "predecessor",
+        "description": "Original Vision Transformer architecture which Swin localized and scaled hierarchically."
+      },
+      {
+        "paperId": "convnext-2022-cvpr-liu",
+        "title": "A ConvNet for the 2020s",
+        "year": 2022,
+        "authors": "Zhuang Liu et al.",
+        "relationshipType": "competing",
+        "description": "Pure CNN competitor matching Swin performance using 7x7 depthwise convolutions."
+      }
+    ],
+    "researchGaps": [
+      "Can pure CNN architectures match Swin's performance without local window self-attention overhead?"
+    ],
+    "futureExtensions": [
+      "SwinV2 (Liu et al., 2022)",
+      "MaxViT (Chen et al., 2022)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "This paper presents a new Vision Transformer, called Swin Transformer, that capably serves as a general-purpose backbone for computer vision. Challenges in adapting Transformers from language to vision arise from differences between the two domains, such as large variations in the scale of visual entities and the high resolution of pixels in images compared to words in text.",
+    "trainingDetails": {
+      "optimizer": "AdamW with weight decay 0.05",
+      "learningRate": "1e-3 initial, linear warmup 20 epochs, cosine decay",
+      "batchSize": "1024"
+    },
+    "bibtex": "@inproceedings{liu2021swin,\n  title={Swin transformer: Hierarchical vision transformer using shifted windows},\n  author={Liu, Ze and Lin, Yutong and Cao, Yue and Hu, Han and Wei, Yixuan and Zhang, Zheng and Lin, Stephen and Guo, Baining},\n  booktitle={Proceedings of the IEEE/CVF international conference on computer vision},\n  pages={10012--10022},\n  year={2021}\n}"
+  }
+}

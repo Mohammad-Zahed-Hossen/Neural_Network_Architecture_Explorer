@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "paperId": "mobilenetv3-2019-iccv-howard",
+    "title": "Searching for MobileNetV3",
+    "authors": [
+      { "name": "Andrew Howard", "affiliation": "Google Research", "leadAuthor": true },
+      { "name": "Mark Sandler", "affiliation": "Google Research" },
+      { "name": "Grace Chu", "affiliation": "Google Research" },
+      { "name": "Liang-Chieh Chen", "affiliation": "Google Research" },
+      { "name": "Bo Chen", "affiliation": "Google Research" },
+      { "name": "Mingxing Tan", "affiliation": "Google Research" },
+      { "name": "Weijun Wang", "affiliation": "Google Research" },
+      { "name": "Yukun Zhu", "affiliation": "Google Research" },
+      { "name": "Ruoming Peng", "affiliation": "Google Research" },
+      { "name": "Vijay Vasudevan", "affiliation": "Google Research" },
+      { "name": "Hartwig Adam", "affiliation": "Google Research" }
+    ],
+    "venue": "ICCV 2019",
+    "year": 2019,
+    "doi": "10.1109/ICCV.2019.00140",
+    "arxivId": "1905.21145",
+    "pdfUrl": "https://arxiv.org/pdf/1905.21145.pdf",
+    "primaryCategory": "Computer Vision / Hardware-Aware Mobile NAS",
+    "citationCount": 14000,
+    "associatedModelId": "mobilenetv3small",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Combines hardware-aware Neural Architecture Search (MnasNet) and NetAdapt algorithms with Squeeze-and-Excitation attention and the computationally efficient hard-swish activation function.",
+    "keyTakeaways": [
+      "Hardware-aware NAS optimizes both top-1 accuracy and measured real-device CPU latency.",
+      "Introduced hard-swish h-swish(x) = x * ReLU6(x + 3) / 6 to replace expensive sigmoid exponential activations.",
+      "MobileNetV3 Large is 3.2% more accurate and 20% faster than MobileNetV2."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Manual micro-architectural block tuning is slow, and FLOP count is an imperfect proxy for actual on-device latency because memory access cost varies across layers.",
+    "previousLimitations": [
+      "FLOP-optimized models do not always correlate with low real-world device execution times.",
+      "Standard Swish activation f(x) = x * sigmoid(x) requires expensive exponential calculation on mobile CPUs.",
+      "Last stage classification heads in MobileNetV2 incurred high latency overhead."
+    ],
+    "coreInsight": "We can combine platform-aware NAS (MnasNet) to find coarse block structures, NetAdapt to fine-tune individual layer channel counts, and hard-swish non-linearities to eliminate floating point exponential bottlenecks.",
+    "contributions": [
+      "Formulated MobileNetV3 Large and Small model specifications.",
+      "Designed the hard-swish (h-swish) and hard-sigmoid (h-sigmoid) non-linearities.",
+      "Redesigned the expensive network stem and classification tail for 7% latency reduction."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "hard-swish-activation",
+      "title": "Hard-Swish (h-swish) Non-Linearity",
+      "type": "mathematics",
+      "summary": "Replaces exponential sigmoid calculations in Swish with a computationally efficient piecewise linear ReLU6 approximation.",
+      "detailedDescription": "Swish x * sigmoid(x) improves deep network accuracy but is expensive to compute on mobile hardware. Hard-swish replaces sigmoid with ReLU6(x + 3) / 6, eliminating exponential lookup tables.",
+      "math": {
+        "latexFormula": "\\text{h-swish}(x) = x \\cdot \\frac{\\text{ReLU6}(x + 3)}{6}",
+        "explanation": "Piecewise linear approximation of Swish activation using optimized ReLU6 primitives.",
+        "variables": [
+          { "symbol": "x", "description": "Input feature map activation scalar" }
+        ],
+        "significance": "Eliminates memory and instruction latency overhead of computing e^-x on mobile CPUs."
+      },
+      "codeSnippet": {
+        "language": "python",
+        "code": "def hard_swish(x):\n    return x * ReLU6()(x + 3.0) / 6.0"
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012", "COCO Object Detection", "Cityscapes Segmentation"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Accuracy (MobileNetV3 Large 1.0x)",
+        "value": 75.2,
+        "unit": "%",
+        "baselineValue": 72.0,
+        "isSOTA": true
+      },
+      {
+        "metricName": "Mobile CPU Latency (Pixel 4)",
+        "value": 51,
+        "unit": "ms",
+        "baselineValue": 64,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Impact of h-swish in Deeper vs Shallower Layers",
+        "description": "Tested applying h-swish across all layers vs applying h-swish only in deeper layers (using ReLU in shallow layers).",
+        "removedComponent": "h-swish in shallow layers",
+        "performanceDelta": "Using h-swish only in deeper layers retained accuracy while saving computation, as memory bandwidth dominates early layer runtime."
+      }
+    ],
+    "reproducibilityNotes": "Trained using RMSProp with 0.9 momentum, weight decay 1e-5, and exponential learning rate decay on TPUs."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-mobile-cpu-speed",
+      "category": "strength",
+      "title": "Optimal On-Device Latency/Accuracy Tradeoff",
+      "content": "Delivers state-of-the-art inference throughput on mobile CPU and NPU hardware targets."
+    },
+    {
+      "id": "weakness-custom-layer-tuning",
+      "category": "weakness",
+      "title": "High Micro-Architectural Complexity",
+      "content": "Each layer block contains custom channel width multipliers, kernel sizes, and SE-ratios, making manual edits complex."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "mobilenetv2-2018-cvpr-sandler",
+        "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+        "year": 2018,
+        "authors": "Mark Sandler et al.",
+        "relationshipType": "predecessor",
+        "description": "Predecessor architecture providing inverted residual blocks."
+      },
+      {
+        "paperId": "nasnet-2017-cvpr-zoph",
+        "title": "Learning Transferable Architectures for Scalable Image Recognition",
+        "year": 2017,
+        "authors": "Barret Zoph et al.",
+        "relationshipType": "predecessor",
+        "description": "Provided neural architecture search (NAS) framework."
+      }
+    ],
+    "researchGaps": [
+      "Can MobileNetV3 blocks be adapted to Vision Transformer attention layers?"
+    ],
+    "futureExtensions": [
+      "EfficientNetV2 (Tan & Le, 2021)",
+      "MobileViT (Mehta & Rastegari, 2021)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "We present the next generation of MobileNets based on a combination of complementary search techniques as well as a novel architecture design. MobileNetV3 is tuned to mobile phone CPUs through a combination of hardware-aware neural architecture search (NAS) complemented by the NetAdapt algorithm.",
+    "trainingDetails": {
+      "optimizer": "RMSProp with momentum 0.9",
+      "learningRate": "0.04 initial, 0.96 exponential decay every 3 epochs",
+      "batchSize": "4096 total"
+    },
+    "bibtex": "@inproceedings{howard2019searching,\n  title={Searching for mobilenetv3},\n  author={Howard, Andrew and Sandler, Mark and Chu, Grace and Chen, Liang-Chieh and Chen, Bo and Tan, Mingxing and Wang, Weijun and Zhu, Yukun and Pang, Ruoming and Vasudevan, Vijay and others},\n  booktitle={Proceedings of the IEEE/CVF international conference on computer vision},\n  pages={1314--1324},\n  year={2019}\n}"
+  }
+}

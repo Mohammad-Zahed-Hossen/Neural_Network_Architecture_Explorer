@@ -83,7 +83,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',
-      paperPageAnchor: '/papers#lenet',
+      paperPageAnchor: '/papers/lenet',
       relatedPapers: [
         { title: 'ImageNet Classification with Deep Convolutional Neural Networks', year: 2012, url: 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf', authors: 'Krizhevsky et al.' }
       ]
@@ -122,7 +122,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://proceedings.neurips.cc/paper/2012/file/c3988bc98c4d0decb81cfc15660ba26a-Paper.pdf',
-      paperPageAnchor: '/papers#alexnet',
+      paperPageAnchor: '/papers/alexnet',
       relatedPapers: [
         { title: 'Very Deep Convolutional Networks for Large-Scale Image Recognition', year: 2014, url: 'https://arxiv.org/abs/1409.1556', authors: 'Simonyan & Zisserman' }
       ]
@@ -133,7 +133,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     continueLearning: [
       { title: 'VGG16 (2014)', type: 'model', href: '/models/vgg16', description: 'Discover how VGG replaced 11x11 filters with uniform 3x3 stacks.' },
       { title: 'Training Dynamics Visualizer', type: 'concept', href: '/concepts/training-dynamics?concept=vanishing', description: 'Understand how ReLU prevented gradient degradation.' },
-      { title: 'Original AlexNet Paper', type: 'paper', href: '/papers#alexnet', description: 'Read full analysis of the 2012 NeurIPS landmark paper.' }
+      { title: 'Original AlexNet Paper', type: 'paper', href: '/papers/alexnet', description: 'Read full analysis of the 2012 NeurIPS landmark paper.' }
     ]
   },
 
@@ -160,7 +160,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/1409.1556',
-      paperPageAnchor: '/papers#vgg',
+      paperPageAnchor: '/papers/vgg-2014-arxiv-simonyan',
       relatedPapers: [
         { title: 'Deep Residual Learning for Image Recognition', year: 2015, url: 'https://arxiv.org/abs/1512.03385', authors: 'He et al.' }
       ]
@@ -193,7 +193,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/1409.1556',
-      paperPageAnchor: '/papers#vgg',
+      paperPageAnchor: '/papers/vgg-2014-arxiv-simonyan',
       relatedPapers: []
     },
     compareShortcuts: [
@@ -237,7 +237,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/1512.03385',
-      paperPageAnchor: '/papers#resnet',
+      paperPageAnchor: '/papers/resnet-2015-cvpr-he',
       relatedPapers: [
         { title: 'Identity Mappings in Deep Residual Networks', year: 2016, url: 'https://arxiv.org/abs/1603.05027', authors: 'He et al.' },
         { title: 'Densely Connected Convolutional Networks', year: 2016, url: 'https://arxiv.org/abs/1608.06993', authors: 'Huang et al.' }
@@ -280,7 +280,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/1608.06993',
-      paperPageAnchor: '/papers#densenet',
+      paperPageAnchor: '/papers/densenet',
       relatedPapers: [
         { title: 'Deep Residual Learning for Image Recognition', year: 2015, url: 'https://arxiv.org/abs/1512.03385', authors: 'He et al.' }
       ]
@@ -324,7 +324,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/1704.04861',
-      paperPageAnchor: '/papers#mobilenet',
+      paperPageAnchor: '/papers/mobilenetv2-2018-cvpr-sandler',
       relatedPapers: [
         { title: 'Xception: Deep Learning with Depthwise Separable Convolutions', year: 2016, url: 'https://arxiv.org/abs/1610.02357', authors: 'François Chollet' }
       ]
@@ -374,7 +374,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/1905.11946',
-      paperPageAnchor: '/papers#efficientnet',
+      paperPageAnchor: '/papers/efficientnet',
       relatedPapers: [
         { title: 'MobileNetV2: Inverted Residuals and Linear Bottlenecks', year: 2018, url: 'https://arxiv.org/abs/1801.04381', authors: 'Sandler et al.' }
       ]
@@ -425,7 +425,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/2010.11929',
-      paperPageAnchor: '/papers#vit',
+      paperPageAnchor: '/papers/vit-2020-iclr-dosovitskiy',
       relatedPapers: [
         { title: 'Swin Transformer: Hierarchical Vision Transformer using Shifted Windows', year: 2021, url: 'https://arxiv.org/abs/2103.14030', authors: 'Liu et al.' },
         { title: 'A ConvNet for the 2020s', year: 2022, url: 'https://arxiv.org/abs/2201.03545', authors: 'Liu et al.' }
@@ -463,7 +463,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     concepts: [],
     papers: {
       originalUrl: 'https://arxiv.org/abs/2103.14030',
-      paperPageAnchor: '/papers#swin',
+      paperPageAnchor: '/papers/swin',
       relatedPapers: []
     },
     compareShortcuts: [
@@ -504,7 +504,7 @@ const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
     ],
     papers: {
       originalUrl: 'https://arxiv.org/abs/2201.03545',
-      paperPageAnchor: '/papers#convnext',
+      paperPageAnchor: '/papers/convnext',
       relatedPapers: [
         { title: 'Deep Residual Learning for Image Recognition', year: 2015, url: 'https://arxiv.org/abs/1512.03385', authors: 'He et al.' }
       ]
@@ -579,7 +579,7 @@ export function getModelRelationships(modelId: string, modelMeta?: { name?: stri
   }
 
   const paperUrl = specific?.papers?.originalUrl || `https://arxiv.org`;
-  const paperAnchor = specific?.papers?.paperPageAnchor || `/papers#${modelId}`;
+  const paperAnchor = specific?.papers?.paperPageAnchor || `/papers/${modelId}`;
 
   const resolved: ModelRelationships = {
     modelId,

@@ -197,15 +197,24 @@ export default function ResearchMap() {
                   </div>
                 </div>
 
-                <a 
-                  href={activePaper.paperUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border/30 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-900/40 hover:border-[#22d3ee]/45 transition-all cursor-pointer uppercase tracking-wider"
-                >
-                  <Link2 className="h-3.5 w-3.5 text-[#22d3ee]" />
-                  Open official PDF / arXiv
-                </a>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <Link 
+                    href={`/papers/${activePaper.id}`} 
+                    className="flex items-center justify-center gap-1.5 px-3 py-2.5 border border-[#22d3ee]/30 bg-[#22d3ee]/10 hover:bg-[#22d3ee]/20 rounded-xl text-xs font-bold text-[#22d3ee] transition-all cursor-pointer uppercase tracking-wider"
+                  >
+                    Full Paper Spec
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                  <a 
+                    href={activePaper.paperUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center justify-center gap-1.5 px-3 py-2.5 border border-border/30 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-900/40 hover:border-[#22d3ee]/45 transition-all cursor-pointer uppercase tracking-wider"
+                  >
+                    <Link2 className="h-3.5 w-3.5 text-[#22d3ee]" />
+                    Original PDF
+                  </a>
+                </div>
               </div>
 
             </div>

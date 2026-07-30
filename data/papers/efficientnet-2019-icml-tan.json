@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "paperId": "efficientnet-2019-icml-tan",
+    "title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+    "authors": [
+      { "name": "Mingxing Tan", "affiliation": "Google Research, Brain Team", "leadAuthor": true },
+      { "name": "Quoc V. Le", "affiliation": "Google Research, Brain Team" }
+    ],
+    "venue": "ICML 2019",
+    "year": 2019,
+    "doi": "10.48550/arXiv.1905.11946",
+    "arxivId": "1905.11946",
+    "pdfUrl": "https://arxiv.org/pdf/1905.11946.pdf",
+    "primaryCategory": "Computer Vision / Compound Network Scaling",
+    "citationCount": 26000,
+    "associatedModelId": "efficientnetb0",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Formulates Compound Scaling to scale network depth, width, and input image resolution simultaneously using a fixed mathematical ratio, producing the EfficientNet-B0 to B7 model family.",
+    "keyTakeaways": [
+      "Arbitrary single-dimension scaling (e.g. only adding depth) suffers diminishing returns.",
+      "Compound scaling balances depth (d = alpha^phi), width (w = beta^phi), and resolution (r = gamma^phi) under FLOPS constraint alpha * beta^2 * gamma^2 approx 2.",
+      "EfficientNet-B7 achieves 84.3% top-1 ImageNet accuracy while being 8.4x smaller and 6.1x faster than GPipe."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Previous CNN scaling methods relied on ad-hoc adjustments—scaling either depth (ResNet-50 to 152), width (Wide-ResNet), or resolution independently, wasting compute and hitting accuracy saturation.",
+    "previousLimitations": [
+      "Scaling depth alone suffers vanishing gradients and layer redundancy.",
+      "Scaling width alone causes shallow networks to miss complex high-level features.",
+      "Scaling image resolution alone increases FLOPs quadratically without proportional gain."
+    ],
+    "coreInsight": "Network depth, width, and resolution are interdependent. Higher resolution images require deeper receptive fields to capture larger spatial features and wider channel dimensions to extract fine-grained patterns.",
+    "contributions": [
+      "Formulated the mathematical Compound Scaling method.",
+      "Developed baseline EfficientNet-B0 using AutoML NAS.",
+      "Produced EfficientNet-B0 through B7, establishing new accuracy/FLOP benchmarks."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "compound-scaling-method",
+      "title": "Compound Scaling Coefficient Formula",
+      "type": "mathematics",
+      "summary": "Scales depth d, width w, and resolution r uniformly with a user-defined compound coefficient phi.",
+      "detailedDescription": "Fixes d = alpha^phi, w = beta^phi, r = gamma^phi subject to alpha * beta^2 * gamma^2 approx 2. A small grid search determines alpha=1.2, beta=1.1, gamma=1.15, after which phi is increased to scale up model size.",
+      "math": {
+        "latexFormula": "\\text{depth}: d = \\alpha^\\phi, \\quad \\text{width}: w = \\beta^\\phi, \\quad \\text{resolution}: r = \\gamma^\\phi, \\quad s.t. \\; \\alpha \\cdot \\beta^2 \\cdot \\gamma^2 \\approx 2",
+        "explanation": "Mathematical constraint ensuring total FLOPs scale predictably by 2^phi as compound coefficient phi increases.",
+        "variables": [
+          { "symbol": "\\phi", "description": "User-defined global scaling coefficient (e.g. phi=0 for B0, phi=7 for B7)" },
+          { "symbol": "\\alpha, \\beta, \\gamma", "description": "Constants determined by small grid search (alpha=1.2, beta=1.1, gamma=1.15)" }
+        ],
+        "significance": "Replaced ad-hoc model scaling with a principled, mathematically optimal scaling law."
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012", "CIFAR-100", "Flowers-102"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Accuracy (EfficientNet-B7)",
+        "value": 84.3,
+        "unit": "%",
+        "baselineValue": 84.3,
+        "isSOTA": true
+      },
+      {
+        "metricName": "Parameters (EfficientNet-B7 vs GPipe)",
+        "value": 66,
+        "unit": "M",
+        "baselineValue": 557,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Compound Scaling vs Single-Dimension Scaling",
+        "description": "Compared scaling EfficientNet-B0 to 8x FLOPs using compound scaling vs depth-only, width-only, or resolution-only scaling.",
+        "removedComponent": "Compound multi-dimension scaling",
+        "performanceDelta": "Compound scaling achieved 2.5% higher top-1 accuracy at identical 8x FLOP budget compared to single-dimension scaling."
+      }
+    ],
+    "reproducibilityNotes": "Trained using RMSProp with decay 0.9, momentum 0.9, AutoAugment data augmentation, and Stochastic Depth drop rate 0.2."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-sota-efficiency",
+      "category": "strength",
+      "title": "Unmatched Accuracy-to-FLOP Efficiency",
+      "content": "Delivers superior ImageNet classification accuracy while using up to 8.4x fewer parameters than legacy CNNs."
+    },
+    {
+      "id": "tradeoff-high-res-memory",
+      "category": "tradeoff",
+      "title": "High Resolution Training VRAM Requirements",
+      "content": "Larger variants (B6/B7) require huge GPU VRAM due to high input resolutions (528x528/600x600)."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "mobilenetv2-2018-cvpr-sandler",
+        "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+        "year": 2018,
+        "authors": "Mark Sandler et al.",
+        "relationshipType": "predecessor",
+        "description": "Provided MBConv building blocks used in EfficientNet-B0."
+      }
+    ],
+    "researchGaps": [
+      "How to reduce training time of deep compound scaled networks on GPUs? (Addressed by EfficientNetV2)."
+    ],
+    "futureExtensions": [
+      "EfficientNetV2 (Tan & Le, 2021)",
+      "ConvNeXt (Liu et al., 2022)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "Convolutional Neural Networks (CNNs) are commonly developed at a fixed resource budget, and then scaled up for better accuracy if more resources are available. In this paper, we systematically study model scaling and identify that carefully balancing network depth, width, and resolution can lead to better performance.",
+    "trainingDetails": {
+      "optimizer": "RMSProp with decay 0.9 and momentum 0.9",
+      "learningRate": "0.016 initial, decayed by 0.97 every 2.4 epochs",
+      "batchSize": "2048"
+    },
+    "bibtex": "@inproceedings{tan2019efficientnet,\n  title={Efficientnet: Rethinking model scaling for convolutional neural networks},\n  author={Tan, Mingxing and Le, Quoc},\n  booktitle={International conference on machine learning},\n  pages={6105--6114},\n  year={2019}\n}"
+  }
+}

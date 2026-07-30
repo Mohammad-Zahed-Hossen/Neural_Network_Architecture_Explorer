@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "paperId": "mobilenetv1-2017-arxiv-howard",
+    "title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+    "authors": [
+      { "name": "Andrew G. Howard", "affiliation": "Google Inc.", "leadAuthor": true },
+      { "name": "Menglong Zhu", "affiliation": "Google Inc." },
+      { "name": "Bo Chen", "affiliation": "Google Inc." },
+      { "name": "Dmitry Kalenichenko", "affiliation": "Google Inc." },
+      { "name": "Weijun Wang", "affiliation": "Google Inc." },
+      { "name": "Tobias Weyand", "affiliation": "Google Inc." },
+      { "name": "Marco Andreetto", "affiliation": "Google Inc." },
+      { "name": "Hartwig Adam", "affiliation": "Google Inc." }
+    ],
+    "venue": "arXiv preprint / CVPR 2017 Workshop",
+    "year": 2017,
+    "doi": "10.48550/arXiv.1704.04861",
+    "arxivId": "1704.04861",
+    "pdfUrl": "https://arxiv.org/pdf/1704.04861.pdf",
+    "primaryCategory": "Computer Vision / Mobile & Edge Architectures",
+    "citationCount": 19000,
+    "associatedModelId": "mobilenet",
+    "status": {
+      "peerReviewed": true,
+      "hasPretrainedModel": true,
+      "reproducibilityTier": "empirical_verified"
+    }
+  },
+  "summary": {
+    "tldr": "Introduces MobileNets for edge devices, using depthwise separable convolutions to reduce computation (FLOPs) and parameters by up to 9x with minimal accuracy trade-off.",
+    "keyTakeaways": [
+      "Depthwise separable convolutions split standard 3x3 convolutions into 3x3 depthwise (spatial) and 1x1 pointwise (channel) convolutions.",
+      "Introduced Width Multiplier (alpha) and Resolution Multiplier (rho) for flexible latency-accuracy tuning.",
+      "Requires only 4.2 million parameters and 569 million MAdds for ImageNet classification."
+    ]
+  },
+  "motivation": {
+    "problemStatement": "Standard 2D convolutional networks require huge memory and computational budgets, making real-time deployment on mobile phones, embedded hardware, and robotics impossible.",
+    "previousLimitations": [
+      "Standard convolutions jointly compute spatial features and cross-channel combinations, creating quadratic FLOP costs.",
+      "Ad-hoc network shrinking methods (like pruning or quantization) were difficult to tune.",
+      "Lack of standardized scaling parameters for edge resource budgets."
+    ],
+    "coreInsight": "Spatial filtering and cross-channel combination can be factorized into two separate steps: a 3x3 depthwise convolution (applying a single filter per input channel) followed by a 1x1 pointwise convolution (combining channels linearly).",
+    "contributions": [
+      "Pioneered depthwise separable convolutions as the standard mobile CNN block.",
+      "Introduced Width Multiplier (alpha) and Resolution Multiplier (rho) hyperparameters.",
+      "Demonstrated real-time mobile performance for classification, object detection, and face embedding."
+    ]
+  },
+  "innovations": [
+    {
+      "id": "depthwise-separable-factorization",
+      "title": "Depthwise Separable Convolution Factorization",
+      "type": "component",
+      "summary": "Splits a standard 3x3 convolution into 3x3 depthwise and 1x1 pointwise convolutions.",
+      "detailedDescription": "A standard conv layer takes D_F x D_F x M feature maps and applies N kernels of size D_K x D_K x M. Depthwise separable conv applies 1 kernel of D_K x D_K x 1 per channel, followed by N 1x1xM pointwise kernels.",
+      "math": {
+        "latexFormula": "\\text{Reduction} = \\frac{D_K \\cdot D_K \\cdot M \\cdot D_F^2 + M \\cdot N \\cdot D_F^2}{D_K \\cdot D_K \\cdot M \\cdot N \\cdot D_F^2} = \\frac{1}{N} + \\frac{1}{D_K^2}",
+        "explanation": "Ratio of depthwise separable computation vs standard convolution. For 3x3 filters (D_K=3), computation is reduced by ~8 to 9 times.",
+        "variables": [
+          { "symbol": "D_K", "description": "Kernel spatial dimension (3 for 3x3 filter)" },
+          { "symbol": "N", "description": "Number of output feature map channels" }
+        ],
+        "significance": "Achieves 8x to 9x computational reduction with only a 1% drop in ImageNet accuracy."
+      },
+      "codeSnippet": {
+        "language": "python",
+        "code": "def depthwise_separable_block(x, out_channels, stride=1):\n    # 1. Depthwise 3x3 spatial filter (1 filter per input channel)\n    x = DepthwiseConv2D((3, 3), strides=stride, padding='same')(x)\n    x = BatchNorm()(x)\n    x = ReLU()(x)\n    # 2. Pointwise 1x1 channel projection\n    x = Conv2D(out_channels, (1, 1), padding='same')(x)\n    x = BatchNorm()(x)\n    return ReLU()(x)"
+      }
+    }
+  ],
+  "evidence": {
+    "datasets": ["ImageNet ILSVRC-2012", "COCO Object Detection", "Stanford Dogs"],
+    "primaryResults": [
+      {
+        "metricName": "ImageNet Top-1 Accuracy (1.0 MobileNet-224)",
+        "value": 70.6,
+        "unit": "%",
+        "baselineValue": 71.5,
+        "isSOTA": false
+      },
+      {
+        "metricName": "MAdds Computation Reduction vs VGG-16",
+        "value": 27,
+        "unit": "x lower FLOPs",
+        "baselineValue": 1,
+        "isSOTA": true
+      }
+    ],
+    "ablationStudies": [
+      {
+        "title": "Depthwise Separable vs Standard 3x3 Convolutions",
+        "description": "Compared full MobileNet against a network using identical topology with standard 3x3 convolutions.",
+        "removedComponent": "Depthwise separable factorization (replaced with standard 3x3 convs)",
+        "performanceDelta": "Standard 3x3 conv model gained only 1% top-1 accuracy while requiring 9x more MAdds and 7x more parameters."
+      }
+    ],
+    "reproducibilityNotes": "Trained using RMSProp with asynchronous gradient descent on TensorFlow across mobile-scale settings."
+  },
+  "criticalNotes": [
+    {
+      "id": "strength-efficiency",
+      "category": "strength",
+      "title": "Unmatched Computational Efficiency",
+      "content": "Pioneered real-time mobile vision capabilities on low-power smartphone processors."
+    },
+    {
+      "id": "weakness-no-skip-connection",
+      "category": "weakness",
+      "title": "Absence of Residual Skip Connections",
+      "content": "MobileNetV1 lacked shortcut connections between blocks, which was later fixed in MobileNetV2."
+    }
+  ],
+  "connections": {
+    "lineage": [
+      {
+        "paperId": "xception-2016-cvpr-chollet",
+        "title": "Xception: Deep Learning with Depthwise Separable Convolutions",
+        "year": 2016,
+        "authors": "François Chollet",
+        "relationshipType": "predecessor",
+        "description": "Pioneered depthwise separable convolutions in high-capacity server networks."
+      },
+      {
+        "paperId": "mobilenetv2-2018-cvpr-sandler",
+        "title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+        "year": 2018,
+        "authors": "Mark Sandler et al.",
+        "relationshipType": "successor",
+        "description": "Added inverted residual shortcuts and linear bottlenecks."
+      }
+    ],
+    "researchGaps": [
+      "How to prevent information loss when passing feature maps through thin depthwise layers?",
+      "How to incorporate residual skip connections into mobile blocks?"
+    ],
+    "futureExtensions": [
+      "MobileNetV2 (2018)",
+      "MobileNetV3 (2019)"
+    ]
+  },
+  "reference": {
+    "originalAbstract": "We present a class of efficient models called MobileNets for mobile and embedded vision applications. MobileNets are based on a streamlined architecture that uses depthwise separable convolutions to build light weight deep neural networks.",
+    "trainingDetails": {
+      "optimizer": "RMSProp",
+      "learningRate": "0.045 with decay",
+      "batchSize": "32 per worker"
+    },
+    "bibtex": "@article{howard2017mobilenets,\n  title={Mobilenets: Efficient convolutional neural networks for mobile vision applications},\n  author={Howard, Andrew G and Zhu, Menglong and Chen, Bo and Kalenichenko, Dmitry and Wang, Weijun and Weyand, Tobias and Andreetto, Marco and Adam, Hartwig},\n  journal={arXiv preprint arXiv:1704.04861},\n  year={2017}\n}"
+  }
+}
