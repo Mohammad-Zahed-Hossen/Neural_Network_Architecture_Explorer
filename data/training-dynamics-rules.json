@@ -1,0 +1,102 @@
+{
+  "rules": [
+    {
+      "id": "rule-sigmoid-deep",
+      "condition": {
+        "activationFunction": "sigmoid",
+        "minDepth": 8
+      },
+      "explanation": {
+        "title": "Sigmoid Derivative Attenuation",
+        "outcomes": [
+          "Max derivative of Sigmoid is 0.25",
+          "Backpropagation over 8+ layers causes 0.25^8 derivative decay",
+          "Early layer weights stall almost completely"
+        ]
+      },
+      "warning": {
+        "title": "High Vanishing Gradient Risk",
+        "message": "Sigmoid activation saturates easily at extreme values, restricting derivatives to <= 0.25. Switch to ReLU or GELU to maintain healthier gradient magnitude."
+      }
+    },
+    {
+      "id": "rule-high-lr-no-clip",
+      "condition": {
+        "minLearningRate": 0.2,
+        "gradientClipping": false
+      },
+      "explanation": {
+        "title": "High Learning Rate Instability",
+        "outcomes": [
+          "Large gradient steps overshoot local minima",
+          "Weight updates oscillate wildly",
+          "Risk of loss explosion or NaN values"
+        ]
+      },
+      "warning": {
+        "title": "Unstable Training Prediction",
+        "message": "Learning rate > 0.2 without gradient clipping is prone to divergence. Enable gradient clipping or lower the learning rate."
+      }
+    },
+    {
+      "id": "rule-batchnorm-enabled",
+      "condition": {
+        "normalizationType": "batchnorm"
+      },
+      "explanation": {
+        "title": "Batch Normalization Active",
+        "outcomes": [
+          "Zero mean & unit variance enforced per mini-batch",
+          "Internal Covariate Shift is suppressed",
+          "Allows higher learning rates and smoother optimization"
+        ]
+      }
+    },
+    {
+      "id": "rule-resnet-skip",
+      "condition": {
+        "connectionType": "residual"
+      },
+      "explanation": {
+        "title": "Identity Skip Connection Superhighway",
+        "outcomes": [
+          "Additive derivative term (+1) allows gradients to bypass weight layers",
+          "Protects early layers from vanishing gradients even at depth > 50",
+          "Deeper networks achieve lower training error"
+        ]
+      }
+    },
+    {
+      "id": "rule-densenet-concat",
+      "condition": {
+        "connectionType": "dense"
+      },
+      "explanation": {
+        "title": "Dense Feature Concatenation",
+        "outcomes": [
+          "Direct connections transmit gradients to all preceding layers simultaneously",
+          "Feature maps are reused rather than overwritten",
+          "High parameter efficiency and multi-channel backprop"
+        ]
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "key": "resnet-vs-vgg",
+      "summary": "ResNet maintains strong, non-vanishing gradient flow across deep stacks because identity shortcuts provide direct additive gradient pathways. Standard feedforward VGG stacks decay exponentially as depth increases."
+    },
+    {
+      "key": "densenet-vs-resnet",
+      "summary": "DenseNet connects every layer directly to all subsequent layers via feature concatenation, resulting in multi-channel gradient propagation. ResNet combines features via elementwise addition."
+    },
+    {
+      "key": "batchnorm-on-vs-off",
+      "summary": "Batch Normalization stabilizes internal layer activation distributions to zero mean and unit variance. Without BatchNorm, internal covariate shift requires tiny learning rates and precise initialization."
+    },
+    {
+      "key": "clipping-on-vs-off",
+      "summary": "Gradient Clipping caps backpropagated derivative norms to a safe threshold, preventing exploding gradients from causing weight oscillations or NaN loss spikes."
+    }
+  ]
+}

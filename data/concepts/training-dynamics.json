@@ -1,0 +1,423 @@
+[
+  {
+    "id": "vanishing",
+    "title": "Vanishing Gradient",
+    "difficulty": "intermediate",
+    "category": "optimization",
+    "summary": "In deep networks, backpropagated gradients shrink exponentially layer-by-layer, leaving early layers with virtually zero parameter updates.",
+    "problem": "In deep feedforward networks, during backpropagation, gradients are multiplied by small weights/derivatives layer-by-layer. As depth increases, the gradient shrinks exponentially, leaving early layers with virtually zero updates.",
+    "intuition": "Signals decay by a factor < 1 at each layer. By the time backpropagation reaches layer 0, the derivative signal has attenuated into numerical insignificance.",
+    "analogy": "Passing a whisper down a line of 50 people — by the time it reaches the first person, the original message is completely lost.",
+    "visualExplanation": "Gradient particles decrease in size, transparency, and speed as they propagate backward from output to input layers.",
+    "mathematics": {
+      "formula": "g_i = g_{i+1} \\times W_i \\times \\sigma'(z_i) \\quad (\\text{where } \\sigma'(z) \\le 0.25 \\text{ for Sigmoid})",
+      "description": "Chain rule multiplication of layer Jacobians. When derivative values are strictly smaller than 1, repeated multiplication over L layers causes exponential decay: \\mathcal{O}(\\gamma^L) \\to 0.",
+      "variables": {
+        "g_i": "Gradient vector at layer i",
+        "W_i": "Weight matrix at layer i",
+        "\\sigma'(z_i)": "Derivative of activation function at layer i"
+      }
+    },
+    "causes": [
+      "Deep architectures without shortcut connections",
+      "Saturating activation functions (Sigmoid, Tanh)",
+      "Small weight initializations causing magnitude reduction at each layer"
+    ],
+    "symptoms": [
+      "Early layer weights remain unchanged during training",
+      "Training loss plateaus early despite high capacity",
+      "Gradients near input approach zero (e.g. < 1e-7)"
+    ],
+    "solutions": [
+      "Use ReLU, LeakyReLU, or GELU activations",
+      "He or Xavier initialization",
+      "Residual identity skip connections (ResNet)",
+      "Batch Normalization across layers"
+    ],
+    "realWorldArchitectures": [
+      "VGG-16 / VGG-19",
+      "Standard Deep MLPs",
+      "Early Vanilla RNNs"
+    ],
+    "relatedConcepts": [
+      "exploding",
+      "residual",
+      "batchnorm"
+    ],
+    "references": [
+      {
+        "title": "Gradient Flow in Recurrent Neural Networks",
+        "author": "Sepp Hochreiter",
+        "year": 1991,
+        "type": "paper"
+      },
+      {
+        "title": "Understanding the difficulty of training deep feedforward neural networks",
+        "author": "Xavier Glorot, Yoshua Bengio",
+        "year": 2010,
+        "type": "paper"
+      }
+    ],
+    "tags": [
+      "optimization",
+      "backpropagation",
+      "gradients",
+      "vgg"
+    ],
+    "simulationPreset": {
+      "id": "preset-vanishing",
+      "name": "Vanishing Gradient",
+      "particleSpeed": 2.0,
+      "particleDecay": 0.15,
+      "growthRate": 0.0,
+      "shake": 0.0,
+      "skipConnectionProbability": 0.0,
+      "parallelGradient": false,
+      "normalization": false,
+      "gradientColor": "#3B82F6",
+      "connectionStyle": "weak",
+      "nodeStyle": "faded-input",
+      "gradientDecayRate": 0.4,
+      "gradientGrowthRate": 0.0,
+      "noiseLevel": 0.02,
+      "nodeShake": 0.0,
+      "skipProbability": 0.0,
+      "parallelConnections": false,
+      "normalizationStrength": 0.0,
+      "gradientClipping": 10.0,
+      "learningRateMultiplier": 1.0,
+      "activationSensitivity": 0.25,
+      "weightInitialization": "random_small",
+      "visualTheme": "blue-fade",
+      "connectionType": "sequential"
+    }
+  },
+  {
+    "id": "exploding",
+    "title": "Exploding Gradient",
+    "difficulty": "intermediate",
+    "category": "optimization",
+    "summary": "If weights are initialized too large or gradients unclipped, derivative products explode exponentially, creating numerical overflow and training instability.",
+    "problem": "If weights are initialized too large (or gradients are scaled poorly), backpropagated derivatives are repeatedly multiplied by factors > 1, growing exponentially.",
+    "intuition": "The gradients balloon to infinity (NaN), causing the network weights to oscillate wildly and completely destabilize learning.",
+    "analogy": "An audio feedback loop where a microphone picks up its own speaker output, causing the volume to scream louder and louder until clipping.",
+    "visualExplanation": "Gradient particles balloon rapidly in size, violently shaking nodes, turning bright crimson red, and causing chaotic trajectory spikes.",
+    "mathematics": {
+      "formula": "g_i = g_{i+1} \\times W_i \\times \\sigma'(z_i) \\quad (\\text{where } \\|W_i\\| > 1)",
+      "description": "Repeated matrix multiplication with eigenvalues greater than 1 results in exponential growth: \\mathcal{O}(\\lambda^L) \\to \\infty.",
+      "variables": {
+        "g_i": "Gradient vector at layer i",
+        "W_i": "Weight matrix at layer i with spectral radius > 1",
+        "\\sigma'(z_i)": "Activation derivative"
+      }
+    },
+    "causes": [
+      "Excessively large weight initializations",
+      "Unclipped learning rates or step sizes",
+      "Deep un-normalized recurrent loops"
+    ],
+    "symptoms": [
+      "Loss rapidly becomes NaN or Infinity",
+      "Weights oscillate wildly between extreme positive and negative values",
+      "Gradient norm spikes exponentially"
+    ],
+    "solutions": [
+      "Gradient Clipping (norm/value capping)",
+      "Proper He/Xavier initializations",
+      "Weight Decay / L2 Regularization",
+      "Batch/Layer Normalization"
+    ],
+    "realWorldArchitectures": [
+      "Unclipped RNNs",
+      "Deep Feedforward Networks without Norm",
+      "Early Transformer Prototypes"
+    ],
+    "relatedConcepts": [
+      "vanishing",
+      "batchnorm"
+    ],
+    "references": [
+      {
+        "title": "On the difficulty of training Recurrent Neural Networks",
+        "author": "Razvan Pascanu, Tomas Mikolov, Yoshua Bengio",
+        "year": 2013,
+        "type": "paper"
+      }
+    ],
+    "tags": [
+      "optimization",
+      "instability",
+      "gradients",
+      "clipping"
+    ],
+    "simulationPreset": {
+      "id": "preset-exploding",
+      "name": "Exploding Gradient",
+      "particleSpeed": 3.5,
+      "particleDecay": 0.0,
+      "growthRate": 1.5,
+      "shake": 3.0,
+      "skipConnectionProbability": 0.0,
+      "parallelGradient": false,
+      "normalization": false,
+      "gradientColor": "#EF4444",
+      "connectionStyle": "unstable",
+      "nodeStyle": "glowing-red",
+      "gradientDecayRate": 0.0,
+      "gradientGrowthRate": 0.6,
+      "noiseLevel": 0.25,
+      "nodeShake": 4.0,
+      "skipProbability": 0.0,
+      "parallelConnections": false,
+      "normalizationStrength": 0.0,
+      "gradientClipping": 100.0,
+      "learningRateMultiplier": 2.5,
+      "activationSensitivity": 1.5,
+      "weightInitialization": "random_large",
+      "visualTheme": "red-unstable",
+      "connectionType": "sequential"
+    }
+  },
+  {
+    "id": "residual",
+    "title": "Residual Connections (ResNet)",
+    "difficulty": "advanced",
+    "category": "architecture",
+    "summary": "Identity skip connections bypass weight paths, allowing gradient derivatives to flow backwards directly through constant addition.",
+    "problem": "Standard deep networks suffer from optimization degradation. Skip connections bypass the weights, allowing gradients to flow backwards directly.",
+    "intuition": "Identity skip connections act as gradient superhighways. Even if weights inside the main path vanish, the gradient flows unimpeded through the shortcut path (+ 1 term in derivative).",
+    "analogy": "An express highway bypass alongside local city streets. Drivers can skip traffic lights and travel across the city without stopping.",
+    "visualExplanation": "Green particles travel smoothly across curved arc bypass lines directly between non-adjacent layers, keeping backpropagation alive.",
+    "mathematics": {
+      "formula": "H(x) = F(x) + x \\implies \\frac{\\partial H}{\\partial x} = \\frac{\\partial F}{\\partial x} + 1",
+      "description": "Adding the identity term guarantees that the Jacobian matrix derivative has an additive constant term of 1.0, preserving gradient magnitude.",
+      "variables": {
+        "H(x)": "Output representation of residual block",
+        "F(x)": "Learned non-linear transformation",
+        "x": "Input identity shortcut feature"
+      }
+    },
+    "causes": [
+      "Optimization degradation in ultra-deep networks (50+ layers)"
+    ],
+    "symptoms": [
+      "Deeper networks having higher training error than shallow counterparts"
+    ],
+    "solutions": [
+      "Identity mapping skip connections F(x) + x",
+      "Pre-activation ResNet blocks"
+    ],
+    "realWorldArchitectures": [
+      "ResNet-18 / 50 / 152",
+      "Transformer Residual Blocks",
+      "ConvNeXt",
+      "U-Net Skip Connections"
+    ],
+    "relatedConcepts": [
+      "vanishing",
+      "dense"
+    ],
+    "references": [
+      {
+        "title": "Deep Residual Learning for Image Recognition",
+        "author": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun",
+        "year": 2016,
+        "type": "paper"
+      }
+    ],
+    "tags": [
+      "architecture",
+      "resnet",
+      "skip-connection",
+      "identity"
+    ],
+    "simulationPreset": {
+      "id": "preset-residual",
+      "name": "Residual Connections",
+      "particleSpeed": 2.5,
+      "particleDecay": 0.02,
+      "growthRate": 0.0,
+      "shake": 0.0,
+      "skipConnectionProbability": 0.5,
+      "parallelGradient": false,
+      "normalization": false,
+      "gradientColor": "#10B981",
+      "connectionStyle": "residual",
+      "nodeStyle": "emerald-node",
+      "gradientDecayRate": 0.05,
+      "gradientGrowthRate": 0.0,
+      "noiseLevel": 0.01,
+      "nodeShake": 0.0,
+      "skipProbability": 0.5,
+      "parallelConnections": false,
+      "normalizationStrength": 0.0,
+      "gradientClipping": 10.0,
+      "learningRateMultiplier": 1.0,
+      "activationSensitivity": 1.0,
+      "weightInitialization": "he",
+      "visualTheme": "emerald-highway",
+      "connectionType": "residual"
+    }
+  },
+  {
+    "id": "dense",
+    "title": "Dense Connections (DenseNet)",
+    "difficulty": "advanced",
+    "category": "architecture",
+    "summary": "Every layer connects directly to all subsequent layers in a block, establishing direct multi-channel gradient propagation paths.",
+    "problem": "Traditional residual additions merge features together, diluting distinct layer representations. Concatenation keeps features separate and directly accessible.",
+    "intuition": "Every layer is connected directly to every other layer in a block. Grad signals flow backwards from the output to every single intermediate layer via multiple parallel channels.",
+    "analogy": "A conference room where every single participant has a direct private telephone link to all other participants rather than passing notes down a row.",
+    "visualExplanation": "Multiple purple bezier arc pathways transmit gradient particles simultaneously from the output layer to all preceding hidden layers.",
+    "mathematics": {
+      "formula": "x_l = H_l([x_0, x_1, \\dots, x_{l-1}])",
+      "description": "Feature maps from all preceding layers are concatenated along the channel dimension, giving direct derivative access to all earlier representations.",
+      "variables": {
+        "x_l": "Output feature maps at layer l",
+        "H_l": "Composite non-linear function (BatchNorm + ReLU + Conv)",
+        "[x_0, \\dots]": "Concatenation of preceding layer outputs"
+      }
+    },
+    "causes": [
+      "Feature dilution and bottlenecking in standard sequential networks"
+    ],
+    "symptoms": [
+      "In-efficient parameter usage and redundant feature learning"
+    ],
+    "solutions": [
+      "Dense block cross-layer feature concatenation"
+    ],
+    "realWorldArchitectures": [
+      "DenseNet-121 / 169 / 201",
+      "Hypercolumns in Object Detection"
+    ],
+    "relatedConcepts": [
+      "residual",
+      "vanishing"
+    ],
+    "references": [
+      {
+        "title": "Densely Connected Convolutional Networks",
+        "author": "Gao Huang, Zhuang Liu, Laurens van der Maaten, Kilian Q. Weinberger",
+        "year": 2017,
+        "type": "paper"
+      }
+    ],
+    "tags": [
+      "architecture",
+      "densenet",
+      "concatenation",
+      "feature-reuse"
+    ],
+    "simulationPreset": {
+      "id": "preset-dense",
+      "name": "Dense Connections",
+      "particleSpeed": 2.8,
+      "particleDecay": 0.01,
+      "growthRate": 0.0,
+      "shake": 0.0,
+      "skipConnectionProbability": 1.0,
+      "parallelGradient": true,
+      "normalization": false,
+      "gradientColor": "#8B5CF6",
+      "connectionStyle": "dense",
+      "nodeStyle": "purple-node",
+      "gradientDecayRate": 0.02,
+      "gradientGrowthRate": 0.0,
+      "noiseLevel": 0.01,
+      "nodeShake": 0.0,
+      "skipProbability": 1.0,
+      "parallelConnections": true,
+      "normalizationStrength": 0.0,
+      "gradientClipping": 10.0,
+      "learningRateMultiplier": 1.0,
+      "activationSensitivity": 1.0,
+      "weightInitialization": "he",
+      "visualTheme": "purple-mesh",
+      "connectionType": "dense"
+    }
+  },
+  {
+    "id": "batchnorm",
+    "title": "Batch Normalization",
+    "difficulty": "intermediate",
+    "category": "normalization",
+    "summary": "Normalizes layer input distributions across mini-batches to zero mean and unit variance, preventing internal covariate shift and stabilizing backprop.",
+    "problem": "As weights update, the distribution of inputs to internal layers shifts constantly (Internal Covariate Shift), forcing subsequent layers to continuously adapt to changing scales.",
+    "intuition": "Calculates the mean and variance of activations across a mini-batch, normalizing them to zero mean and unit variance before scaling/shifting them with learnable parameters.",
+    "analogy": "Standardizing test scores to a zero-mean bell curve before grading so that easy or hard exams maintain consistent grading scales.",
+    "visualExplanation": "Cyan normalization barriers at each layer resettle and equalize gradient particle size, speed, and alpha to healthy baseline levels.",
+    "mathematics": {
+      "formula": "\\hat{x} = \\frac{x - \\mu_B}{\\sqrt{\\sigma_B^2 + \\epsilon}} \\quad ; \\quad y = \\gamma \\hat{x} + \\beta",
+      "description": "Subtract mini-batch mean, divide by standard deviation, and apply learnable scale gamma and shift beta parameters.",
+      "variables": {
+        "\\mu_B": "Mini-batch mean",
+        "\\sigma_B^2": "Mini-batch variance",
+        "\\epsilon": "Numerical stability constant (e.g. 1e-5)",
+        "\\gamma, \\beta": "Learnable scale and shift parameters"
+      }
+    },
+    "causes": [
+      "Internal Covariate Shift during gradient updates"
+    ],
+    "symptoms": [
+      "Sensitivity to weight initialization",
+      "Necessity for extremely small learning rates",
+      "Slow convergence rates"
+    ],
+    "solutions": [
+      "Insert Batch Normalization layers prior to activation functions"
+    ],
+    "realWorldArchitectures": [
+      "ResNet",
+      "Inception-v3 / v4",
+      "EfficientNet",
+      "ConvNeXt"
+    ],
+    "relatedConcepts": [
+      "vanishing",
+      "exploding"
+    ],
+    "references": [
+      {
+        "title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+        "author": "Sergey Ioffe, Christian Szegedy",
+        "year": 2015,
+        "type": "paper"
+      }
+    ],
+    "tags": [
+      "normalization",
+      "batchnorm",
+      "stabilization",
+      "regularization"
+    ],
+    "simulationPreset": {
+      "id": "preset-batchnorm",
+      "name": "Batch Normalization",
+      "particleSpeed": 2.2,
+      "particleDecay": 0.0,
+      "growthRate": 0.0,
+      "shake": 0.0,
+      "skipConnectionProbability": 0.0,
+      "parallelGradient": false,
+      "normalization": true,
+      "gradientColor": "#06B6D4",
+      "connectionStyle": "batchnorm",
+      "nodeStyle": "cyan-barrier",
+      "gradientDecayRate": 0.0,
+      "gradientGrowthRate": 0.0,
+      "noiseLevel": 0.01,
+      "nodeShake": 0.0,
+      "skipProbability": 0.0,
+      "parallelConnections": false,
+      "normalizationStrength": 1.0,
+      "gradientClipping": 10.0,
+      "learningRateMultiplier": 1.2,
+      "activationSensitivity": 1.0,
+      "weightInitialization": "xavier",
+      "visualTheme": "cyan-shield",
+      "connectionType": "batchnorm"
+    }
+  }
+]
