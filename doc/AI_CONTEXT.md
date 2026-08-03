@@ -1,7 +1,7 @@
 # Neural Network Architecture Explorer — AI Context
 
 **Purpose:** 5-10 minute AI-readable summary for quick project understanding  
-**Last Updated:** August 2, 2026  
+**Last Updated:** August 4, 2026  
 **Full Specification:** See [CANONICAL_SPECIFICATION.md](./CANONICAL_SPECIFICATION.md)
 
 ---
@@ -14,6 +14,8 @@
 **Build:** Static Next.js export (48 pages)  
 **Tech:** Next.js 16, React 19, TypeScript 6.0.3, Tailwind CSS 4, Zod, React Flow, Framer Motion, KaTeX, Shiki  
 **Latest work:** 
+- Phase 6.1 - Phase 6.2 Platform Expansion Validation (Introduced 2 pilot domains: `Transformer` with 13 objects & `Graph Algorithms` with 9 objects via `TransformerAdapter` & `GraphAlgorithmAdapter` in `lib/knowledge/adapters/`, proving 100% architectural extensibility across Repository, Graph, Navigation, Comparison Studio, and Guided Learning with 0 core framework changes. Comprehensive developer manual in `doc/platform-expansion-guide.md`)
+- Phase 5.1 - Phase 5.2 Advanced Experience (Comparison Studio in `lib/comparison/` & `components/comparison/` enabling domain-independent side-by-side comparison across architectures, training concepts, papers, models, and telemetry; Guided Learning in `lib/learning/` & `components/learning/` providing 7-stage deterministic graph walkthroughs and prediction exercises with zero AI dependencies)
 - Phase 4.1 - Phase 4.2 Knowledge Navigation & Cross Linking (Automated graph-derived educational navigation, `RelationshipResolver` in `lib/knowledge/graph/`, `NavigationService` in `lib/knowledge/navigation/`, repository query APIs in `lib/knowledge/repository/`, reusable navigation components in `components/navigation/`, and 5-domain cross-domain connection matrix)
 - Phase 3.1 - Phase 3.5 Training Dynamics Simulation & Visualization Platform (Generic DAG topology model in `lib/training/topology/`, standalone `TrainingEngine` in `lib/training/engine/`, plugin-driven Visualizer Framework in `lib/visualization/`, `GradientFlowPlugin` Canvas 2D simulator migration, 6 host-selectable visualizer plugins, and `VisualizerHost` React component)
 - Phase 2.3 Interactive Architecture Explorer (Introduced domain-independent reusable Explorer Framework in `components/explorer/` with structured blueprint models, interactive canvas, hover highlights, selection focus, Layer Explorer, and Component Inspector)
@@ -722,6 +724,23 @@ interface ModelRelationships {
 - `lib/schema/training-dynamics.schema.ts` — Simulation preset + concept schema
 - `lib/schema/implementation.schema.ts` — Implementation guide schema
 
+### Canonical Knowledge Layer (Phases 0.1-1.5)
+- `lib/knowledge/schema/knowledge-object.schema.ts` — Canonical Knowledge Object (CKO) schema
+- `lib/knowledge/perspectives/` — Educational perspective contracts (Architecture, Training, Implementation, Evolution, Research, Mathematics)
+- `lib/knowledge/repository/repository.ts` — Unified data access interface (`IKnowledgeRepository`)
+- `lib/knowledge/adapters/` — Migration adapters (Model, Paper, Pattern, Training)
+- `lib/engine/contracts/` — Domain-independent engine API contracts
+
+### Platform Foundation (Phases 0.1-0.4)
+- `lib/registry/domain-registry.ts` — Domain capability declarations
+- `lib/registry/perspective-registry.ts` — Educational viewpoint definitions
+- `lib/registry/visualizer-registry.ts` — Visualization plugin metadata
+- `lib/registry/graph-behavior-registry.ts` — Graph interaction paradigms
+- `lib/validation/` — Build-time validation gatekeeper
+- `doc/platform-principles.md` — Canonical engineering rules
+- `doc/platform-audit.md` — Repository architecture audit
+- `doc/platform-expansion-guide.md` — Developer manual for platform expansion
+
 ### Data Layer
 - `lib/data-access/models.ts` / `models.server.ts` — Model data access
 - `lib/data-access/papers.ts` — Paper registry (18 canonical + aliases)
@@ -731,12 +750,33 @@ interface ModelRelationships {
 - `lib/data/relationships.ts` — Knowledge graph
 - `data/models.json` — Model summaries
 
-### Training Dynamics Engine
+### Training Dynamics Engine (Phases 3.1-3.5)
+- `lib/training/topology/` — Generic DAG topology model
+- `lib/training/engine/` — Standalone execution engine
+- `lib/visualization/` — Plugin-driven visualizer framework
 - `lib/training-dynamics/simulation-engine.ts` — Main simulation class
 - `lib/training-dynamics/telemetry.ts` — Telemetry snapshot + derived helpers
 - `lib/training-dynamics/loss-models.ts` — Pluggable loss strategy factory
 - `lib/training-dynamics/renderer.ts` — Canvas 2D rendering
 - `lib/training-dynamics/particle-engine.ts` — Particle lifecycle
+
+### Knowledge Graph & Navigation (Phases 4.1-4.2)
+- `lib/knowledge/graph/relationship-resolver.ts` — Relationship resolution algorithms
+- `lib/knowledge/navigation/navigation-service.ts` — Graph-derived navigation routing
+- `components/navigation/` — Generic navigation components
+
+### Advanced Experience (Phases 5.1-5.2)
+- `lib/comparison/` — Domain-independent comparison framework
+- `components/comparison/` — Comparison Studio UI components
+- `lib/learning/` — Deterministic walkthrough engine
+- `components/learning/` — Guided Learning UI components
+
+### Architecture Pattern Library (Phases 2.1-2.5)
+- `data/patterns.json` — Architecture pattern data
+- `lib/knowledge/adapters/pattern-adapter.ts` — Pattern to Knowledge Object adapter
+- `components/architecture/` — Modular presentation components
+- `components/explorer/` — Domain-independent interactive explorer framework
+- `doc/architecture/architecture-pattern-library.md` — Pattern library canonical specification
 
 ### Papers & Research
 - `app/papers/page.tsx` — Knowledge center (local-first)
@@ -769,6 +809,15 @@ interface ModelRelationships {
 
 ## Adding New Content
 
+### Platform Expansion (New Domains)
+1. Register domain in `lib/registry/domain-registry.ts`
+2. Create canonical JSON data file
+3. Implement adapter extending `BaseKnowledgeAdapter` in `lib/knowledge/adapters/`
+4. Register adapter in `AdapterRegistry`
+5. Include JSON file in `StaticFileRawDataLoader`
+6. Run `npm run validate:platform` and `npx tsc --noEmit`
+7. Knowledge Repository, Graph, Navigation, Comparison, and Guided Learning automatically support the new domain
+
 ### New Model
 1. Create model JSON in `data/models/` (follow schema)
 2. Add summary to `data/models.json`
@@ -793,17 +842,74 @@ interface ModelRelationships {
 
 ---
 
+## Documentation Map
+
+### Canonical Documentation
+- `doc/CANONICAL_SPECIFICATION.md` — Single source of truth for platform architecture
+- `doc/AI_CONTEXT.md` — This file (5-10 minute AI-readable summary)
+
+### Platform Foundation
+- `doc/platform-principles.md` — Canonical Engineering Rules & Platform Principles
+- `doc/platform-audit.md` — Repository architecture audit
+- `doc/platform-expansion-guide.md` — Developer manual for platform expansion
+
+### Architecture Documentation (`doc/architecture/`)
+- `shared-registries.md` — Domain, Perspective, Visualizer, and Graph Behavior registries
+- `validation-pipeline.md` — Build-time validation gatekeeper
+- `knowledge-object-schema.md` — Canonical Knowledge Object (CKO) schema
+- `perspective-schemas.md` — Educational perspective contracts
+- `engine-state-contracts.md` — Domain-independent engine API contracts
+- `knowledge-repository.md` — Unified data access interface
+- `migration-adapters.md` — Legacy data transformation framework
+- `architecture-pattern-library.md` — Pattern library canonical specification
+- `architecture-components.md` — Component presentation architecture
+- `architecture-pattern-migration.md` — Data migration to knowledge layer
+- `architecture-relationships.md` — Pattern relationship integration
+- `interactive-explorer.md` — Domain-independent explorer framework
+
+### Knowledge Graph Documentation (`doc/knowledge-graph/`)
+- `knowledge-navigation.md` — Graph-derived educational navigation
+- `cross-linking.md` — Cross-domain navigation specification
+
+### Training Dynamics Documentation (`doc/training-dynamics/`)
+- `training-dynamics-architecture.md` — Data-driven simulation platform architecture
+- `training-topology.md` — Generic DAG topology model
+- `training-engine.md` — Training engine architecture
+- `visualizer-framework.md` — Plugin-driven visualization framework
+- `gradient-flow-plugin.md` — Gradient Flow visualizer plugin
+- `training-visualizers.md` — Training dynamics visualizer plugins
+
+### Advanced Experience Documentation
+- `doc/comparison-framework.md` — Comparison Studio architecture
+- `doc/guided-learning.md` — Guided Learning architecture
+
+---
+
 ## Known Constraints
 
+### Architectural Constraints
+- **10-Layer Stack:** Strict unidirectional data flow (Data → Schema → Validation → Data Access → Business Logic → Engine → Visualizer → Adapters → Components → Pages)
+- **Registry-Driven:** All capabilities must be registered in canonical registries (Domain, Perspective, Visualizer, Graph Behavior)
+- **Knowledge Layer:** All entities must be Knowledge Objects or adapted to Knowledge Objects
+- **Build-Time Validation:** All validation must pass build-time gatekeeper
+
+### Platform Constraints
 - **Static Export Only:** No API routes or SSR at runtime
-- **No Database:** All data in JSON files
+- **No Database:** All data in JSON files accessed through Knowledge Repository
 - **No Authentication:** No user accounts
 - **Bundle Size:** Heavy dependencies (React Flow ~200KB, Framer Motion ~40KB)
-- **Scalability:** Current architecture scales to 1000+ models
+- **Scalability:** Current architecture scales to 1000+ models via API backend migration
 - **Dark Mode Only:** Hardcoded, no toggle
 - **No Export:** No PDF/image export
 - **localStorage State:** Paper knowledge base doesn't sync across devices
 - **Single Implementation:** Only `resnet50.json` implementation guide currently ships
+
+### Extension Constraints
+- **Forbidden:** Direct JSON imports in pages or components
+- **Forbidden:** Hardcoded domain-specific logic in core infrastructure
+- **Forbidden:** Circular dependencies between layers
+- **Forbidden:** UI framework imports in engine or logic layers
+- **Forbidden:** Runtime schema validation bypassing
 
 ---
 
@@ -839,6 +945,22 @@ interface ModelRelationships {
 - Transformer: ViT, Swin, ConvNeXt, MaxViT
 
 **Total:** 8,388 layers, ~1.23B parameters
+
+---
+
+## Phase History
+
+The platform has evolved through a systematic phased approach:
+
+**Phase 0 — Foundation:** Repository Audit, Platform Principles, Shared Registries, Validation Pipeline
+**Phase 1 — Knowledge Layer:** Knowledge Object Schema, Perspective Contracts, Engine State Contracts, Migration Adapters, Knowledge Repository
+**Phase 2 — Architecture Pattern Library:** Data Migration, Components Refactor, Interactive Explorer Framework, Relationships, Library Freeze
+**Phase 3 — Training Dynamics:** Generic Topology Model, Training Engine, Visualizer Framework, Gradient Flow Plugin, Additional Visualizers
+**Phase 4 — Navigation:** Knowledge Navigation, Cross Linking
+**Phase 5 — Advanced Experience:** Comparison Studio, Guided Learning
+**Phase 6 — Expansion:** New Domain Pilot (Transformer, Graph Algorithms), Platform Expansion Validation
+
+See `doc/CANONICAL_SPECIFICATION.md` Section 32 for complete phase history.
 
 ---
 

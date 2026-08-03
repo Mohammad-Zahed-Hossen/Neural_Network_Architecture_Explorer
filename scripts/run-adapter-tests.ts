@@ -25,6 +25,8 @@ import {
   getPatternResearch,
   knowledgeRepository,
 } from '../lib/knowledge';
+import { comparisonService } from '../lib/comparison';
+import { defaultLearningEngine, learningService } from '../lib/learning';
 
 const root = process.cwd();
 
@@ -150,6 +152,46 @@ function runAdapterTests(): void {
     return new Set(rels).size === rels.length;
   });
   assert(hasDuplicatesInSamePattern, 'No duplicate relationship definitions inside individual pattern Knowledge Objects');
+
+  // Test 10: Phase 5.1 Comparison Studio Framework
+  const compResult = comparisonService.compareObjects(['model:resnet50', 'model:vgg16']);
+  assert(compResult !== undefined, 'ComparisonService generates valid ComparisonResult');
+  assert(compResult.objects.length >= 2, 'ComparisonResult contains normalized ComparisonObjects');
+  assert(Array.isArray(compResult.metrics), 'ComparisonResult contains quantitative ComparisonMetric list');
+  assert(compResult.metricMatrix !== undefined, 'ComparisonResult builds metric matrix');
+
+  // Test 11: Phase 5.2 Guided Learning Framework
+  const session = learningService.startSession('resnet50');
+  assert(session !== undefined, 'LearningService initializes deterministic LearningSession');
+  assert(session.steps.length === 7, 'Guided Learning walkthrough contains all 7 deterministic stages');
+  assert(session.progress.percentage > 0, 'LearningSession computes initial progress');
+  
+  const step2Session = defaultLearningEngine.nextStep(session);
+  assert(step2Session.currentStepIndex === 1, 'LearningEngine advances session to next step');
+
+  // Test 12: Phase 6.1 Pilot Domain 1 — Transformer & Self-Attention
+  const transformerObjects = knowledgeRepository.getObjectsByDomain('transformer');
+  assert(transformerObjects.length >= 13, 'KnowledgeRepository queries all Transformer domain objects');
+  assert(knowledgeRepository.getKnowledgeObject('transformer:encoder') !== undefined, 'Repository queries transformer encoder by ID');
+  assert(knowledgeRepository.getKnowledgeObject('transformer:multi-head-attention') !== undefined, 'Repository queries multi-head attention');
+  
+  const tfComp = comparisonService.compareObjects(['transformer:encoder', 'transformer:decoder']);
+  assert(tfComp.objects.length === 2, 'ComparisonStudio supports Transformer entity comparison');
+
+  const tfSession = learningService.startSession('transformer:encoder');
+  assert(tfSession.steps.length === 7, 'Guided Learning supports Transformer walkthroughs');
+
+  // Test 13: Phase 6.1 Pilot Domain 2 — Classical Graph Algorithms
+  const graphAlgObjects = knowledgeRepository.getObjectsByDomain('graph-algorithms');
+  assert(graphAlgObjects.length === 9, 'KnowledgeRepository queries all 9 Graph Algorithm domain objects');
+  assert(knowledgeRepository.getKnowledgeObject('graph:bfs') !== undefined, 'Repository queries BFS algorithm by ID');
+  assert(knowledgeRepository.getKnowledgeObject('graph:dijkstra') !== undefined, 'Repository queries Dijkstra algorithm by ID');
+
+  const graphComp = comparisonService.compareObjects(['graph:bfs', 'graph:dijkstra']);
+  assert(graphComp.objects.length === 2, 'ComparisonStudio supports Graph Algorithm entity comparison');
+
+  const graphSession = learningService.startSession('graph:bfs');
+  assert(graphSession.steps.length === 7, 'Guided Learning supports Graph Algorithm walkthroughs');
 
   console.log(`\nAdapter & Repository Test Summary: ${passed}/${total} tests passed.\n`);
 

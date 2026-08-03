@@ -1,8 +1,8 @@
 # Neural Network Architecture Explorer — Canonical Project Specification
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Status:** Production Ready  
-**Last Updated:** August 2, 2026  
+**Last Updated:** August 4, 2026  
 **Documentation Type:** Single Source of Truth
 
 ---
@@ -38,9 +38,12 @@
 27. [Coding Standards](#27-coding-standards)
 28. [Performance Optimizations](#28-performance-optimizations)
 29. [Known Constraints](#29-known-constraints)
-30. [Future Extension Guidelines](#30-future-extension-guidelines)
-31. [Production Readiness Status](#31-production-readiness-status)
-32. [Appendix](#32-appendix)
+30. [Platform Architecture Layers](#30-platform-architecture-layers)
+31. [Documentation Map](#31-documentation-map)
+32. [Phase History](#32-phase-history)
+33. [Future Extension Guidelines](#33-future-extension-guidelines)
+34. [Production Readiness Status](#34-production-readiness-status)
+35. [Appendix](#35-appendix)
 
 ---
 
@@ -211,6 +214,8 @@ The implementation phase introduced a more professional, developer-tool-like exp
 - **Paper Details Specification:** static papers transformed into interactive, structured knowledge objects with 7 cognitive information zones, deep linking anchors, and a persistent utility panel.
 - **Research knowledge base:** the papers experience now supports reading status, bookmarks, personal notes, and instant publication search in a local-first workflow (`localStorage`).
 - **Research-Grade Canonical Audit:** dedicated Python harness in `nn-audit/` verifying all 34 models against torch, timm, keras, tensorflow, and transformers with pinned versions.
+- **Phase 5 — Advanced Experience:** complete implementation of Phase 5.1 Comparison Studio (`lib/comparison`, `components/comparison/`) and Phase 5.2 Guided Learning (`lib/learning`, `components/learning/`), providing domain-independent side-by-side comparisons and 7-stage deterministic graph walkthroughs.
+- **Phase 6 — Platform Expansion Validation:** successful architectural validation through the introduction of two complete pilot domains (`Transformer` with 13 knowledge objects and `Classical Graph Algorithms` with 9 knowledge objects), proving 100% extensibility across Repository, Graph, Navigation, Comparison Studio, and Guided Learning with zero core framework modifications. Comprehensive developer manual in `doc/platform-expansion-guide.md`.
 
 ---
 
@@ -2620,9 +2625,141 @@ export function Component({ prop }: ComponentProps) {
 
 ---
 
-## 31. Production Readiness Status
+## 33. Future Extension Guidelines
 
-### 31.1 Overall Assessment
+### 33.1 Platform Expansion Strategy
+
+The platform is designed to scale across diverse AI and Computer Science domains without requiring structural architectural rewrites. The extension strategy follows these principles:
+
+**Registry-Driven Architecture:**
+- All capabilities are declared in canonical registries (Domain, Perspective, Visualizer, Graph Behavior)
+- New domains are registered declaratively without modifying core infrastructure
+- Capability discovery is automatic and type-safe
+
+**Knowledge Layer Abstraction:**
+- Canonical Knowledge Objects provide unified semantic model
+- Migration adapters handle legacy data transformation
+- Knowledge Repository provides single data access interface
+
+**Plugin-Based Visualization:**
+- Visualizer plugins are modular and discoverable
+- New visualizers register automatically
+- Framework-independent rendering contracts
+
+**Graph-Derived Navigation:**
+- Relationship resolution is automatic
+- Cross-domain connections are inferred
+- Learning paths are generated dynamically
+
+### 33.2 Adding New Domains
+
+To add a new domain (e.g., `diffusion-models`, `reinforcement-learning`):
+
+1. **Register Domain:** Add entry to `lib/registry/domain-registry.ts`
+2. **Create Data:** Create canonical JSON data file
+3. **Implement Adapter:** Create adapter extending `BaseKnowledgeAdapter`
+4. **Register Adapter:** Add to `AdapterRegistry` in `lib/knowledge/adapters/registry.ts`
+5. **Update Loader:** Include JSON file in `StaticFileRawDataLoader`
+6. **Verify:** Run `npm run validate:platform` and `npx tsc --noEmit`
+
+The Knowledge Repository, Knowledge Graph, Navigation, Comparison Studio, and Guided Learning will automatically support the new domain.
+
+### 33.3 Adding New Perspectives
+
+1. **Define Contract:** Add Zod schema contract in `lib/knowledge/perspectives/`
+2. **Register:** Add perspective entry in `lib/registry/perspective-registry.ts`
+3. **Update Repository:** Extend `IKnowledgeRepository.getPerspective()` method
+4. **Integrate UI:** `PerspectiveSwitcher` automatically discovers registered perspectives
+
+### 33.4 Adding New Visualizer Plugins
+
+1. **Implement Plugin:** Create plugin class implementing `VisualizerPlugin` interface
+2. **Register:** Add to `visualizerRegistry` in `lib/visualization/registry/`
+3. **Define Capabilities:** Specify supported engine states, perspectives, and render modes
+4. **Test:** Verify plugin appears in `VisualizerSwitcher` and renders correctly
+
+### 33.5 Adding New Architectural Patterns
+
+**Process:**
+
+1. Add pattern metadata to `data/patterns.json`
+2. The Pattern Adapter automatically converts to Knowledge Object
+3. Register relationships in `relationships.relatedObjects`
+4. Update architecture blueprint in `ArchitectureBlueprint.tsx` if needed
+
+**Guidelines:**
+- Follow existing pattern structure
+- Include mathematical formulation
+- Specify tradeoffs (pros/cons)
+- Link to related models and papers
+
+### 33.6 Adding New Training Concepts
+
+**Process:**
+
+1. Add concept to `data/concepts/training-dynamics.json`
+2. Define simulation preset parameters
+3. The Training Adapter automatically converts to Knowledge Object
+4. Optionally add comparison rules to `data/training-dynamics-rules.json`
+
+**Guidelines:**
+- Include educational explanation (intuition, math, analogy)
+- Specify simulation parameters (particle behavior, layer effects)
+- Add visual preset colors and styling
+- Link to related architectures and papers
+
+### 33.7 Adding New Models
+
+**Process:**
+
+1. Create `data/models/{slug}.json` following `lib/schema/model.schema.ts`
+2. Verify layer parameter sums (Σ layer.params == totalParams)
+3. Add to `data/models.json` catalog
+4. Run Python audit harness for verification
+5. Add paper reference if applicable
+
+**Guidelines:**
+- Follow existing model structure
+- Include detailed layer breakdown
+- Specify input/output shapes
+- Add benchmark results if available
+- Link to papers and implementation guides
+
+### 33.8 Adding New Papers
+
+**Process:**
+
+1. Add to `data/papers.json` following `lib/schema/paper.schema.ts`
+2. Create canonical paper detail JSON in `data/papers/{paperId}.json`
+3. Add to paper catalog in homepage
+4. Update paper knowledge base UI
+
+**Guidelines:**
+- Include structured metadata (authors, venue, year, citations)
+- Add 7-zone detailed content (abstract, methodology, results, etc.)
+- Link to related models and patterns
+- Add implementation references if available
+
+### 33.9 Architectural Constraints
+
+**Mandatory:**
+- All data must flow through Knowledge Repository
+- All entities must be Knowledge Objects or adapted to Knowledge Objects
+- All capabilities must be registered in canonical registries
+- All validation must pass build-time gatekeeper
+
+**Forbidden:**
+- Direct JSON imports in pages or components
+- Hardcoded domain-specific logic in core infrastructure
+- Circular dependencies between layers
+- UI framework imports in engine or logic layers
+- Runtime schema validation bypassing
+
+---
+
+## 34. Production Readiness Status
+
+### 34.1 Overall Assessment
 
 **Status:** 100% Production Ready
 
@@ -2635,7 +2772,7 @@ export function Component({ prop }: ComponentProps) {
 - Maintainability: 9/10
 - Educational Value: 9/10
 
-### 31.2 Verification Checklist
+### 34.2 Verification Checklist
 
 - ✅ **Build:** Static export successful (48/48 pages)
 - ✅ **TypeScript:** 0 errors
@@ -2650,7 +2787,7 @@ export function Component({ prop }: ComponentProps) {
 - ✅ **Research:** Paper knowledge center + 7-zone paper details + canonical audit
 - ✅ **Documentation:** Comprehensive
 
-### 31.3 Deployment Readiness
+### 34.3 Deployment Readiness
 
 **Deployment Options:**
 - Vercel (recommended)
@@ -2664,7 +2801,7 @@ export function Component({ prop }: ComponentProps) {
 
 **Output Directory:** `out/`
 
-### 31.4 Monitoring Recommendations
+### 34.4 Monitoring Recommendations
 
 **Future Enhancements:**
 - Add analytics (e.g., Vercel Analytics)
@@ -2674,9 +2811,9 @@ export function Component({ prop }: ComponentProps) {
 
 ---
 
-## 32. Appendix
+## 35. Appendix
 
-### 32.1 Model Coverage (34 Complete Models)
+### 35.1 Model Coverage (34 Complete Models)
 
 | Family | Models | Total Layers | Parameters |
 |--------|--------|--------------|------------|
@@ -2694,7 +2831,7 @@ export function Component({ prop }: ComponentProps) {
 **Total layers across all models:** 8,388  
 **Total parameters across all models:** ~1.23B
 
-### 32.2 Paper Coverage (18 Research Papers)
+### 35.2 Paper Coverage (18 Research Papers)
 
 **Canonical Paper Files (`data/papers/*.json`):**
 
@@ -2719,7 +2856,7 @@ export function Component({ prop }: ComponentProps) {
 | `convnext-2022-cvpr-liu` | A ConvNet for the 2020s | 2022 |
 | `maxvit-2022-eccv-chen` | MaxViT: Multi-Axis Vision Transformer | 2022 |
 
-### 32.3 Evolution Timeline (9 Milestones)
+### 35.3 Evolution Timeline (9 Milestones)
 
 **Timeline Nodes:**
 1. LeNet (1998) - Foundational CNN
@@ -2732,7 +2869,7 @@ export function Component({ prop }: ComponentProps) {
 8. ViT (2020) - Vision Transformers
 9. ConvNeXt (2022) - Modern ConvNets
 
-### 32.4 Architecture Patterns (6 Patterns)
+### 35.4 Architecture Patterns (6 Patterns)
 
 1. **Residual** - Skip connections
 2. **Dense** - Dense connectivity
@@ -2741,7 +2878,7 @@ export function Component({ prop }: ComponentProps) {
 5. **Compound** - Compound scaling
 6. **NAS** - Neural Architecture Search
 
-### 32.5 Training Dynamics Concepts (5 Concepts)
+### 35.5 Training Dynamics Concepts (5 Concepts)
 
 1. **Vanishing Gradient** — `preset-vanishing` (sequential, decay)
 2. **Exploding Gradient** — `preset-exploding` (sequential, growth)
@@ -2751,7 +2888,7 @@ export function Component({ prop }: ComponentProps) {
 
 Each concept includes: title, difficulty, category, summary, problem, intuition, analogy, visualExplanation, mathematics (KaTeX), causes, symptoms, solutions, realWorldArchitectures, relatedConcepts, references, tags, and a full `simulationPreset`.
 
-### 32.6 Audit Harness Details (`nn-audit/`)
+### 35.6 Audit Harness Details (`nn-audit/`)
 
 **Pinned Framework Versions:**
 - torch: 2.13.0+cpu
@@ -2768,7 +2905,7 @@ Each concept includes: title, difficulty, category, summary, problem, intuition,
 - Link validation: HTTP checks across `link_registry.json`, `papers.json`, model files, docs
 - Benchmark provenance: per-model attribution matrix (paper vs torchvision vs keras vs timm)
 
-### 32.7 Performance Optimization History
+### 35.7 Performance Optimization History
 
 **Phase 1 (Performance):**
 - Lazy-loaded heavy components
@@ -2812,7 +2949,7 @@ Each concept includes: title, difficulty, category, summary, problem, intuition,
 - Research-Grade Canonical Audit harness (`nn-audit/`)
 - Implementation code reference architecture (Shiki)
 
-### 32.8 Technical Debt
+### 35.8 Technical Debt
 
 **Identified Issues:**
 - No test infrastructure in web app (Medium priority) — partially mitigated by `nn-audit/` Python suite
@@ -2826,7 +2963,7 @@ Each concept includes: title, difficulty, category, summary, problem, intuition,
 
 ---
 
-**Document Version:** 1.2  
-**Last Updated:** August 2, 2026  
+**Document Version:** 1.3  
+**Last Updated:** August 4, 2026  
 **Maintained By:** Development Team  
 **Next Review:** As needed for major changes

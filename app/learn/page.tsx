@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Layers, Zap, Network, Award, GraduationCap } from 'lucide-react';
+import { ArrowRight, BookOpen, Layers, Zap, Network, Award, GraduationCap, Compass } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import PageBackground from '@/components/layout/page-background';
 import { useReducedMotionPreference } from '@/lib/hooks/use-reduced-motion';
 import ContinueLearning from '@/components/ui/continue-learning';
+import { GuidedLearning } from '@/components/learning/GuidedLearning';
 
 // Lazy load Model Advisor for performance
 const ModelAdvisor = dynamic(() => import('@/components/learn/model-advisor'), {
@@ -31,16 +32,16 @@ const ModelAdvisor = dynamic(() => import('@/components/learn/model-advisor'), {
 export default function Learn() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'paths' | 'advisor'>(() => {
+  const [activeTab, setActiveTab] = useState<'paths' | 'guided' | 'advisor'>(() => {
     const tabParam = searchParams.get('tab');
-    if (tabParam === 'advisor' || tabParam === 'paths') {
+    if (tabParam === 'advisor' || tabParam === 'paths' || tabParam === 'guided') {
       return tabParam;
     }
     return 'paths';
   });
   const shouldReduceMotion = useReducedMotionPreference();
 
-  const handleTabChange = (tab: 'paths' | 'advisor') => {
+  const handleTabChange = (tab: 'paths' | 'guided' | 'advisor') => {
     setActiveTab(tab);
     router.replace(`/learn?tab=${tab}`);
   };
@@ -94,15 +95,15 @@ export default function Learn() {
         <div className="flex flex-col gap-1 border-b border-border/10 pb-4 sm:pb-5 mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
             <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
-            Study Paths & Advisor
+            Educational Experience & Guided Learning
           </h1>
           <p className="text-[11px] sm:text-xs text-slate-400 font-medium leading-snug">
-            Learn standard deep learning design paradigms or find the perfect architecture matching your hardware.
+            Explore deterministic guided walkthroughs, learning roadmaps, or find the perfect architecture matching your hardware.
           </p>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1.5 sm:gap-2 bg-[#020617] border border-[#1f2937] rounded-2xl p-1 select-none max-w-md mb-10 shadow-lg w-full">
+        <div className="flex items-center gap-1.5 sm:gap-2 bg-[#020617] border border-[#1f2937] rounded-2xl p-1 select-none max-w-lg mb-10 shadow-lg w-full">
           <button
             onClick={() => handleTabChange('paths')}
             className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
@@ -112,9 +113,21 @@ export default function Learn() {
             }`}
           >
             <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
-            <span className="inline min-[380px]:hidden">Roadmaps</span>
-            <span className="hidden min-[380px]:inline">Learning Roadmaps</span>
+            <span>Roadmaps</span>
           </button>
+
+          <button
+            onClick={() => handleTabChange('guided')}
+            className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
+              activeTab === 'guided'
+                ? "bg-primary text-slate-950 border-primary font-black shadow-md shadow-primary/10"
+                : "bg-transparent text-slate-400 border-transparent hover:text-white"
+            }`}
+          >
+            <Compass className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+            <span>Guided Walkthrough</span>
+          </button>
+
           <button
             onClick={() => handleTabChange('advisor')}
             className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl cursor-pointer transition-all duration-300 border ${
@@ -124,13 +137,12 @@ export default function Learn() {
             }`}
           >
             <Award className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
-            <span className="inline min-[380px]:hidden">Advisor</span>
-            <span className="hidden min-[380px]:inline">Model Advisor</span>
+            <span>Advisor</span>
           </button>
         </div>
 
         {/* Tab Content */}
-        {activeTab === 'paths' ? (
+        {activeTab === 'paths' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {learningPaths.map((path, idx) => {
               const PathIcon = path.icon;
@@ -149,7 +161,6 @@ export default function Learn() {
                   />
 
                   <div className="flex flex-col h-full justify-between gap-6 pt-2 flex-1">
-                    {/* Left Column: Path Info */}
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-3">
                         <div className={`flex h-10 w-10 items-center justify-center rounded-xl border ${path.color}`}>
@@ -165,7 +176,6 @@ export default function Learn() {
                       </p>
                     </div>
 
-                    {/* Recommended Models */}
                     <div className="w-full bg-slate-900/10 border border-border/20 rounded-xl p-4 flex flex-col gap-2 mt-auto">
                       <span className="text-[10px] text-slate-500 uppercase tracking-widest font-extrabold block mb-1">
                         Recommended Models:
@@ -193,7 +203,19 @@ export default function Learn() {
               );
             })}
           </div>
-        ) : (
+        )}
+
+        {activeTab === 'guided' && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.4 }}
+          >
+            <GuidedLearning objectId="resnet50" />
+          </motion.div>
+        )}
+
+        {activeTab === 'advisor' && (
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -206,9 +228,9 @@ export default function Learn() {
         {/* Continue Learning section */}
         <ContinueLearning
           items={[
+            { title: 'Comparison Studio', type: 'pattern', href: '/compare', description: 'Side-by-side architecture & telemetry studio.' },
             { title: 'Architecture Patterns Library', type: 'pattern', href: '/architecture-patterns', description: 'Master residual, dense, depthwise, and attention blocks.' },
             { title: 'Training Dynamics Simulator', type: 'concept', href: '/concepts/training-dynamics', description: 'Simulate backpropagation gradient stability.' },
-            { title: 'Receptive Field Explorer', type: 'concept', href: '/concepts/receptive-field', description: 'Inspect spatial coverage calculations.' },
             { title: 'Evolution Timeline', type: 'evolution', href: '/evolution', description: 'Follow chronological breakthroughs from 1998 to present.' },
             { title: 'Research Map', type: 'paper', href: '/research-map', description: 'Explore landmark paper DAG lineage.' }
           ]}

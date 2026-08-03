@@ -4,12 +4,16 @@ import { ModelAdapter } from './model-adapter';
 import { PaperAdapter } from './paper-adapter';
 import { PatternAdapter } from './pattern-adapter';
 import { TrainingAdapter } from './training-adapter';
+import { TransformerAdapter } from './transformer-adapter';
+import { GraphAlgorithmAdapter } from './graph-algorithm-adapter';
 
 export class AdapterRegistry {
   private readonly adapters: IKnowledgeAdapter[] = [];
 
   constructor() {
     // Register canonical adapters in priority order
+    this.registerAdapter(new TransformerAdapter());
+    this.registerAdapter(new GraphAlgorithmAdapter());
     this.registerAdapter(new ModelAdapter());
     this.registerAdapter(new PaperAdapter());
     this.registerAdapter(new PatternAdapter());

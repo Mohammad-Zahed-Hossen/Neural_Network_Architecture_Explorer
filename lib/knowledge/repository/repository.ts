@@ -6,6 +6,8 @@ import { filterByDifficulty, filterByDomain, filterByLearningStage, filterByType
 import { IRawDataLoader, StaticFileRawDataLoader } from './loader';
 import { RelationshipResolver, CrossDomainConnections } from '../graph/relationship-resolver';
 import { NavigationService, PerspectiveLink, LearningPathStep } from '../navigation/navigation-service';
+import { defaultComparisonEngine } from '../../comparison/comparison-engine';
+import type { ComparisonMetric, ComparisonResult } from '../../comparison/types';
 
 /**
  * Interface contract for unified read-only Knowledge Repository.
@@ -29,6 +31,12 @@ export interface IKnowledgeRepository {
   findResearchConnections(id: string): readonly KnowledgeObject[];
   findImplementationExamples(id: string): readonly KnowledgeObject[];
   findShortestLearningPath(startId: string, endId: string): readonly KnowledgeObject[];
+
+  // Phase 5 Comparison Repository Integration APIs
+  compare(ids: string[], category?: string): import('../../comparison/types').ComparisonResult;
+  getComparisonData(ids: string[]): import('../../comparison/types').ComparisonResult;
+  getComparableObjects(category?: string): readonly KnowledgeObject[];
+  getComparisonMetrics(category?: string): import('../../comparison/types').ComparisonMetric[];
 }
 
 /**
@@ -167,6 +175,36 @@ export class StaticKnowledgeRepository implements IKnowledgeRepository {
 
   public findShortestLearningPath(startId: string, endId: string): readonly KnowledgeObject[] {
     return NavigationService.findShortestLearningPath(this, startId, endId);
+  }
+
+  // Phase 5 Comparison Repository Integration APIs
+  public compare(ids: string[], category: string = 'architecture'): ComparisonResult {
+    const objects = ids
+      .map((id) => this.getKnowledgeObject(id))
+      .filter((obj): obj is KnowledgeObject => obj !== undefined);
+    const validObjects = objects.length > 0 ? objects : this.getObjects().slice(0, 2);
+    return defaultComparisonEngine.generateComparisonModel(validObjects, category, this);
+  }
+
+  public getComparisonData(ids: string[]): ComparisonResult {
+    return this.compare(ids);
+  }
+
+  public getComparableObjects(category?: string): readonly KnowledgeObject[] {
+    const all = this.getObjects();
+    if (!category || category === 'all' || category === 'architecture') return all;
+    if (category === 'models') return this.getObjectsByType('model');
+    if (category === 'patterns') return this.getObjectsByType('pattern');
+    if (category === 'training' || category === 'concepts') return this.getObjectsByType('concept');
+    if (category === 'papers' || category === 'research') return this.getObjectsByType('paper');
+    return all;
+  }
+
+  public getComparisonMetrics(category?: string): ComparisonMetric[] {
+    const sampleObjects = this.getComparableObjects(category).slice(0, 2);
+    if (sampleObjects.length === 0) return [];
+    const compObjects = defaultComparisonEngine.normalizeObjects(sampleObjects, this);
+    return defaultComparisonEngine.compareMetrics(compObjects).metrics;
   }
 }
 
