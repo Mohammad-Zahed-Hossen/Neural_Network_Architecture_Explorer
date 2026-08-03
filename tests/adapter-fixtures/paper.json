@@ -1,0 +1,20 @@
+{
+  "paperId": "he-2015-resnet",
+  "title": "Deep Residual Learning for Image Recognition",
+  "summary": {
+    "tldr": "Introduces residual connections allowing networks to train up to 152 layers deep.",
+    "keyTakeaways": ["Residual mapping simplifies optimization.", "Residual links prevent vanishing gradients."]
+  },
+  "metadata": {
+    "paperId": "he-2015-resnet",
+    "title": "Deep Residual Learning for Image Recognition",
+    "venue": "CVPR",
+    "year": 2015,
+    "authors": [{ "name": "Kaiming He" }, { "name": "Xiangyu Zhang" }],
+    "tags": ["resnet", "deep-learning"]
+  },
+  "connections": {
+    "lineage": ["alexnet", "vgg"]
+  },
+  "extraUnusedProperty": 12345
+}

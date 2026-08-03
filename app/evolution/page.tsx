@@ -8,7 +8,7 @@ import {
   Compass, ChevronDown, ChevronUp
 } from 'lucide-react';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import evolutionData from '@/data/evolution.json';
 import PageBackground from '@/components/layout/page-background';
 import ContinueLearning from '@/components/ui/continue-learning';
@@ -28,7 +28,6 @@ interface EvolutionNode {
 
 export default function EvolutionTimeline() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   
   // Initialize expanded node from URL
   const [expandedNode, setExpandedNode] = useState<string | null>(() => {

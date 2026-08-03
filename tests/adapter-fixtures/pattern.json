@@ -1,0 +1,11 @@
+{
+  "id": "skip-connection",
+  "slug": "skip-connection",
+  "name": "Skip Connection",
+  "summary": "Shortcuts that bypass one or more layers to allow unimpeded gradient flow.",
+  "blueprint": "y = F(x) + x",
+  "designRationale": "Reduces degradation problem in deep architectures.",
+  "tradeoffs": ["Requires feature map dimension matching."],
+  "prerequisites": ["feedforward-layer"],
+  "relatedPatterns": ["dense-connection"]
+}

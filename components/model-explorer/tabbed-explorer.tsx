@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   ArrowLeft, ArrowRight, BookOpen, 
   ExternalLink, ListFilter, Network, Compass,
-  Layers, Info, Sparkles, X, Activity, HelpCircle, Code2
+  Layers, Sparkles, X, Activity, HelpCircle, Code2
 } from 'lucide-react';
 import { NeuralNetworkModel, GroupedNode, GroupedEdge, LayerGroup, Layer } from '@/lib/schema/model.schema';
 import { ModelImplementationData } from '@/lib/schema/implementation.schema';

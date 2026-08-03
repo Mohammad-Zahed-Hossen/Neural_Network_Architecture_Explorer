@@ -1,0 +1,163 @@
+[
+  {
+    "id": "residual",
+    "slug": "residual",
+    "name": "Residual Connections (Skip Mappings)",
+    "icon": "GitCommit",
+    "color": "#10b981",
+    "bgColor": "bg-emerald-500/10",
+    "borderColor": "border-emerald-500/30",
+    "math": "H(x) = F(x) + x \\implies \\frac{dH}{dx} = \\frac{dF}{dx} + 1",
+    "problem": "As sequential network depth exceeds 20 layers, training accuracy degrades rapidly. This is not caused by overfitting, but by optimization degradation: backpropagated gradients shrink exponentially (vanish) as they pass through dozens of weight layers, leaving early features untrained.",
+    "solution": "By adding an identity skip connection that bypasses convolutional weight blocks, the inputs are added directly to outputs. Mathematically, the gradient derivative of \"x\" is a constant \"1\". Even if the weight block derivative (dF/dx) vanishes to 0, the overall gradient remains at least 1, allowing gradients to flow back unimpeded to early layers.",
+    "tradeoffs": {
+      "pros": [
+        "Enables training networks containing hundreds of layers (e.g. ResNet152) without gradient blockages.",
+        "Improves training convergence rates and training stability.",
+        "Acts as an ensemble of shallow sub-networks, improving feature learning."
+      ],
+      "cons": [
+        "The addition operation requires the output channel size of the weight path to exactly match the input channel size of the skip path.",
+        "Requires 1x1 projection convolutions to scale dimensions when downsampling, increasing parameters."
+      ]
+    },
+    "models": ["resnet50", "resnet50v2", "resnet101", "resnet101v2", "resnet152", "resnet152v2", "inceptionresnetv2", "mobilenetv2", "convnext"],
+    "prerequisiteObjects": [],
+    "successorObjects": ["pattern:dense", "pattern:attention"],
+    "relatedObjects": ["model:resnet50", "paper:resnet", "pattern:dense"]
+  },
+  {
+    "id": "dense",
+    "slug": "dense",
+    "name": "Dense Connectivity (Feature Concatenation)",
+    "icon": "Network",
+    "color": "#8b5cf6",
+    "bgColor": "bg-violet-500/10",
+    "borderColor": "border-violet-500/30",
+    "math": "x_l = H_l([x_0, x_1, \\dots, x_{l-1}])",
+    "problem": "In traditional residual structures, feature maps are added together. This summation merges and dilutes distinct layer representations, occasionally bottlenecking information flow and forcing redundant parameter learning in deeper layers.",
+    "solution": "Instead of summing features, DenseNet concatenates the output feature maps of ALL preceding layers. Every layer receives direct connections from all previous layers. This creates direct, parallel channels of information flow from the input to all deeper layers, maximizing feature reuse.",
+    "tradeoffs": {
+      "pros": [
+        "Highly parameter efficient: achieves similar accuracy to ResNet with 50-60% fewer parameters.",
+        "Maintains distinct feature representations at all levels, eliminating redundant feature mappings.",
+        "Deep supervision: every layer has direct access to the gradient loss, stabilizing updates."
+      ],
+      "cons": [
+        "Extremely memory intensive during training: concatenation generates wide activation maps that must be cached, leading to high GPU memory footprints.",
+        "Prone to high latency on standard hardware due to constant concatenation allocations."
+      ]
+    },
+    "models": ["densenet121", "densenet169", "densenet201"],
+    "prerequisiteObjects": ["pattern:residual"],
+    "successorObjects": ["pattern:attention"],
+    "relatedObjects": ["model:densenet121", "paper:densenet", "pattern:residual"]
+  },
+  {
+    "id": "depthwise",
+    "slug": "depthwise",
+    "name": "Depthwise Separable Convolutions",
+    "icon": "Split",
+    "color": "#06b6d4",
+    "bgColor": "bg-cyan-500/10",
+    "borderColor": "border-cyan-500/30",
+    "math": "\\text{Cost Ratio} = \\frac{1}{N} + \\frac{1}{D^2} \\quad (D: \\text{kernel size}, N: \\text{channels})",
+    "problem": "Standard convolutions perform spatial filtering and channel mixing simultaneously (sweeping a 3D kernel over 3D tensors). This is computationally expensive, making deep CNNs impractical for mobile, embedded, and real-time vision applications.",
+    "solution": "Splits standard convolution into two independent steps: (1) A spatial-only Depthwise Convolution (applies a single 2D kernel to each input channel separately) followed by (2) A channel-mixing Pointwise Convolution (applies 1x1 convolutions across all channels). This reduces floating-point calculations (FLOPs) by 80-90%.",
+    "tradeoffs": {
+      "pros": [
+        "Drastically reduces parameters and computational FLOPs (e.g. MobileNet runs at only 4.2M params).",
+        "Enables local inference on low-power CPUs, edge devices, and smartphones.",
+        "Separates spatial and channel relationship learning, which can act as a regularizer."
+      ],
+      "cons": [
+        "Slightly lower representational capacity compared to standard convolutions of equal widths.",
+        "Often requires wider channel configurations to match standard CNN accuracy."
+      ]
+    },
+    "models": ["mobilenet", "mobilenetv2", "mobilenetv3small", "mobilenetv3large", "xception", "maxvit"],
+    "prerequisiteObjects": [],
+    "successorObjects": ["pattern:compound"],
+    "relatedObjects": ["model:mobilenet", "paper:mobilenet", "paper:xception"]
+  },
+  {
+    "id": "compound",
+    "slug": "compound",
+    "name": "Compound Scaling",
+    "icon": "Scaling",
+    "color": "#f97316",
+    "bgColor": "bg-orange-500/10",
+    "borderColor": "border-orange-500/30",
+    "math": "d = \\alpha^\\phi, \\quad w = \\beta^\\phi, \\quad r = \\gamma^\\phi \\quad \\text{s.t.} \\quad \\alpha \\cdot \\beta^2 \\cdot \\gamma^2 \\approx 2",
+    "problem": "Traditionally, models are scaled up along a single arbitrary dimension to improve accuracy: either depth (more layers), width (more channels), or resolution (larger images). However, scaling one dimension alone soon reaches diminishing returns.",
+    "solution": "EfficientNet introduced Compound Scaling, proving that scaling depth, width, and resolution together in fixed, balanced proportions yields optimal performance. A baseline model (B0) is scaled using a unified compound coefficient (phi) determined through a grid search.",
+    "tradeoffs": {
+      "pros": [
+        "Exceptional parameter efficiency: achieves state-of-the-art accuracy with up to 10x fewer parameters.",
+        "Provides a predictable, mathematically optimal scaling path across different computing budgets.",
+        "Maintains balanced receptive fields, feature counts, and input resolution scales."
+      ],
+      "cons": [
+        "Requires finding a high-quality baseline model first (usually via NAS) for compound scaling to be effective.",
+        "Larger resolutions (e.g., B7 at 600x600) require substantial GPU memory during inference."
+      ]
+    },
+    "models": ["efficientnetb0", "efficientnetb1", "efficientnetb2", "efficientnetb3", "efficientnetb4", "efficientnetb5", "efficientnetb6", "efficientnetb7"],
+    "prerequisiteObjects": ["pattern:depthwise", "pattern:nas"],
+    "successorObjects": [],
+    "relatedObjects": ["model:efficientnetb0", "paper:efficientnet", "pattern:depthwise"]
+  },
+  {
+    "id": "nas",
+    "slug": "nas",
+    "name": "Neural Architecture Search (NAS)",
+    "icon": "Cpu",
+    "color": "#00d9ff",
+    "bgColor": "bg-cyan-500/10",
+    "borderColor": "border-cyan-500/30",
+    "math": "J(\\theta) = \\mathbb{E}_{a \\sim p_\\theta}[R(a)]",
+    "problem": "Designing neural network architectures requires immense human expertise and months of trial-and-error. Designing optimal block connectivity manually is highly limited by human intuition.",
+    "solution": "Instead of manual engineering, an algorithmic controller (usually Reinforcement Learning or Evolutionary algorithms) searches a predefined space of operations to discover optimal sub-blocks (Normal and Reduction cells). These discovered cells are then stacked sequentially to build the final model.",
+    "tradeoffs": {
+      "pros": [
+        "Discovers highly non-intuitive connectivity layouts that outperform human-engineered models.",
+        "Can be customized to search for hardware-aware constraints (optimizing both accuracy and latency)."
+      ],
+      "cons": [
+        "Extreme computational search cost: original NAS searches required thousands of GPU-hours.",
+        "Resulting cells are often highly irregular, disjointed, and difficult to optimize on custom hardware chips."
+      ]
+    },
+    "models": ["nasnetmobile", "nasnetlarge", "mobilenetv3small", "mobilenetv3large"],
+    "prerequisiteObjects": ["pattern:residual"],
+    "successorObjects": ["pattern:compound"],
+    "relatedObjects": ["model:nasnetlarge", "paper:nasnet"]
+  },
+  {
+    "id": "attention",
+    "slug": "attention",
+    "name": "Self-Attention & Window Blocks",
+    "icon": "Sparkles",
+    "color": "#d946ef",
+    "bgColor": "bg-fuchsia-500/10",
+    "borderColor": "border-fuchsia-500/30",
+    "math": "\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{Q K^T}{\\sqrt{d_k}}\\right) V",
+    "problem": "Convolutions are restricted to local receptive fields (e.g. 3x3 grids), requiring many stacked layers to share context between distant pixels. This local constraint makes capturing long-range spatial correlations difficult.",
+    "solution": "Replaces convolutions with Self-Attention. Images are projected to tokens (patches). Each token queries all other tokens globally to compute similarity weights, capturing global dependencies in a single step. Local Window (Swin) and sparse Grid attention limit this computation to linear complexity.",
+    "tradeoffs": {
+      "pros": [
+        "Captures global semantic relationships in the very first layers.",
+        "Bypasses spatial constraints, making the representation highly flexible.",
+        "Scales exceptionally well with massive datasets, outperforming traditional CNNs."
+      ],
+      "cons": [
+        "Lacks convolution's spatial inductive bias (translation invariance, locality), requiring large-scale pretraining to perform well.",
+        "Standard global attention scales quadratically with image size ($O(H^2 W^2)$)."
+      ]
+    },
+    "models": ["vit", "swin", "maxvit"],
+    "prerequisiteObjects": ["pattern:residual"],
+    "successorObjects": [],
+    "relatedObjects": ["model:vit", "paper:vit", "paper:swin"]
+  }
+]

@@ -20,6 +20,7 @@ import { calculateNodeLayout } from './physics';
 import { SimulationRenderer } from './renderer';
 import { createTelemetrySnapshot } from './telemetry';
 import { LossModelFactory } from './loss-models';
+import { TrainingEngine, createSequentialTopology, TopologyGraph, EngineState } from '../training';
 
 export class SimulationEngine {
   private state: SimulationState;
@@ -30,6 +31,8 @@ export class SimulationEngine {
   private listeners: Map<SimulationEventType, Set<SimulationEventHandler>>;
   private lossHistory: LossHistoryEntry[] = [];
   private timelineEvents: PlaybackEvent[] = [];
+  private underlyingEngine!: TrainingEngine;
+  private dagTopology!: TopologyGraph;
 
   constructor(initialPreset: SimulationPreset, initialDepth: number = 6) {
     this.preset = initialPreset;
@@ -88,6 +91,13 @@ export class SimulationEngine {
 
   public initialize(width: number = 600, height: number = 320): void {
     const health = this.calculateLayerHealth();
+    this.dagTopology = createSequentialTopology({
+      depth: this.state.networkDepth,
+      connectionType: this.preset.connectionType,
+      normalization: this.preset.normalization,
+    });
+    this.underlyingEngine.initialize({ topology: this.dagTopology, learningRate: this.state.learningRate });
+
     this.graph = calculateNodeLayout(
       this.state.networkDepth,
       width,
@@ -452,6 +462,10 @@ export class SimulationEngine {
 
   public getState(): SimulationState {
     return { ...this.state };
+  }
+
+  public getEngineState(): EngineState {
+    return this.underlyingEngine.getState();
   }
 
   public getPreset(): SimulationPreset {

@@ -61,7 +61,7 @@ export interface ModelRelationships {
 }
 
 // Master map of deterministic relationships across model families and specific models
-const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
+export const RELATIONSHIPS_MAP: Record<string, Partial<ModelRelationships>> = {
   lenet: {
     family: 'Foundational',
     era: 'Pioneering Era (1998)',

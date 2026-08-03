@@ -1,0 +1,18 @@
+{
+  "id": "resnet50",
+  "slug": "resnet50",
+  "name": "ResNet-50",
+  "summary": "Deep Residual Network with 50 layers using bottleneck residual blocks.",
+  "description": "ResNet-50 introduced residual learning to train extremely deep neural networks.",
+  "category": "Residual Networks",
+  "year": 2015,
+  "authors": ["Kaiming He", "Xiangyu Zhang", "Shaoqing Ren", "Jian Sun"],
+  "tags": ["cnn", "residual", "vision", "classification"],
+  "readingTime": 15,
+  "difficulty": "intermediate",
+  "prerequisites": ["convolutional-neural-networks"],
+  "relatedModels": ["alexnet", "vgg16"],
+  "layerCount": 50,
+  "parameterCount": 25500000,
+  "unknownLegacyField": "This field should be ignored by the adapter gracefully"
+}

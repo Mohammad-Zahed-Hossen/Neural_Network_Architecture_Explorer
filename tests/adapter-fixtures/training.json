@@ -1,0 +1,12 @@
+{
+  "id": "vanishing-gradient",
+  "slug": "vanishing-gradient",
+  "title": "Vanishing Gradient Problem",
+  "category": "optimization",
+  "problem": "Gradients exponentially decay as backpropagation travels to early layers.",
+  "intuition": "Multiplication of small numbers (<1) repeatedly shrinks the update signal.",
+  "causes": ["Deep network without residual links", "Sigmoid or Tanh activation saturation"],
+  "symptoms": ["Early layers fail to learn", "Loss stalls prematurely"],
+  "solutions": ["ReLU activations", "Residual connections", "Batch Normalization"],
+  "relatedConcepts": ["exploding-gradient", "residual-link"]
+}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TechnicalMetadata } from './code-block.types';
-import { Cpu, Database, Image, Zap, Clock, Flame, Sliders, ChevronDown, ChevronUp } from 'lucide-react';
+import { Cpu, Database, Image as ImageIcon, Zap, Clock, Flame, Sliders, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 
 interface CodeBlockMetadataProps {
@@ -61,7 +61,7 @@ export const CodeBlockMetadata: React.FC<CodeBlockMetadataProps> = ({
         {/* Input Resolution */}
         {metadata?.inputResolution && (
           <div className="flex items-center gap-1.5 rounded-full bg-slate-900/90 border border-slate-700/60 px-2.5 py-1 text-xs font-mono text-slate-200">
-            <Image className="h-3.5 w-3.5 text-blue-400" />
+            <ImageIcon className="h-3.5 w-3.5 text-blue-400" />
             <span>{metadata.inputResolution}</span>
           </div>
         )}

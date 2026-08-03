@@ -10,6 +10,21 @@ import {
 } from '../types/training-dynamics';
 
 /**
+ * Deterministic Pseudo-Random Number Generator (PRNG) using Mulberry32.
+ * Ensures server-side rendering (SSR) and client hydration generate 100% identical outputs,
+ * eliminating React hydration mismatch warnings.
+ */
+export function createDeterministicRNG(seed: number): () => number {
+  let s = seed | 0;
+  return function () {
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
  * Pure utility function to derive layer health status from raw gradient magnitude and activation variance.
  * Never stored redundantly in state — computed on demand.
  */
@@ -65,15 +80,20 @@ export function getHealthBadgeStyle(status: LayerHealthStatus): { bg: string; te
 
 /**
  * Generates a 5-bin activation histogram centered around the layer mean.
+ * Supports optional deterministic PRNG for SSR hydration consistency.
  */
-export function calculateActivationHistogram(mean: number, variance: number): number[] {
+export function calculateActivationHistogram(
+  mean: number,
+  variance: number,
+  rng: () => number = Math.random
+): number[] {
   const std = Math.sqrt(Math.max(0.01, variance));
   const bins = [0, 0, 0, 0, 0];
   const totalSamples = 100;
 
   for (let i = 0; i < totalSamples; i++) {
-    const u1 = Math.random();
-    const u2 = Math.random();
+    const u1 = rng();
+    const u2 = rng();
     const z = Math.sqrt(-2.0 * Math.log(u1 || 1e-6)) * Math.cos(2.0 * Math.PI * u2);
     const val = mean + z * std;
 
@@ -89,18 +109,24 @@ export function calculateActivationHistogram(mean: number, variance: number): nu
 
 /**
  * Calculates raw per-layer telemetry snapshots (Educational Approximation Layer).
+ * Uses deterministic PRNG to guarantee 100% server/client HTML hydration alignment.
  */
 export function generateLayerTelemetryRaw(
   state: SimulationState,
   preset: SimulationPreset,
-  _nodes: SimulationNode[]
+  nodes: SimulationNode[]
 ): LayerTelemetryRaw[] {
+  void nodes;
   const depth = state.networkDepth;
   const layers: LayerTelemetryRaw[] = [];
 
   for (let i = 0; i < depth; i++) {
     const layerName = i === 0 ? 'Input L1' : i === depth - 1 ? `Output L${depth}` : `Layer L${i + 1}`;
     
+    // Deterministic seed based on layer index, iteration, epoch, and preset ID
+    const seed = (i + 1) * 997 + state.currentIteration * 31 + state.currentEpoch * 1009 + (preset?.id ? preset.id.length * 17 : 42);
+    const rng = createDeterministicRNG(seed);
+
     let g = 1.0;
     const actSensitivity = state.activationFunction === 'sigmoid' ? 0.25 : state.activationFunction === 'tanh' ? 0.5 : 1.0;
     
@@ -109,7 +135,7 @@ export function generateLayerTelemetryRaw(
     } else if (preset.connectionType === 'dense') {
       g = 1.0 + (i / depth) * 0.35;
     } else if (preset.connectionType === 'batchnorm' || state.normalizationType === 'batchnorm') {
-      g = 0.95 + (Math.random() - 0.5) * 0.06;
+      g = 0.95 + (rng() - 0.5) * 0.06;
     } else if (preset.gradientDecayRate > 0.1 || state.activationFunction === 'sigmoid') {
       const decayFactor = 1.0 - (preset.gradientDecayRate || 0.35) * (1.1 - actSensitivity);
       g = Math.pow(Math.max(0.1, decayFactor), depth - 1 - i);
@@ -123,7 +149,7 @@ export function generateLayerTelemetryRaw(
     }
 
     const incomingGradient = Number(g.toFixed(4));
-    const outgoingGradient = Number((g * (0.95 + Math.random() * 0.1)).toFixed(4));
+    const outgoingGradient = Number((g * (0.95 + rng() * 0.1)).toFixed(4));
 
     let optMultiplier = 1.0;
     if (state.optimizer === 'adam' || state.optimizer === 'adamw') optMultiplier = 1.4;
@@ -134,18 +160,18 @@ export function generateLayerTelemetryRaw(
     let activationVariance = 1.0;
 
     if (preset.connectionType === 'batchnorm' || state.normalizationType === 'batchnorm') {
-      activationMean = Number(((Math.random() - 0.5) * 0.04).toFixed(3));
-      activationVariance = Number((0.95 + Math.random() * 0.1).toFixed(3));
+      activationMean = Number(((rng() - 0.5) * 0.04).toFixed(3));
+      activationVariance = Number((0.95 + rng() * 0.1).toFixed(3));
     } else if (state.normalizationType === 'layernorm') {
-      activationMean = Number(((Math.random() - 0.5) * 0.02).toFixed(3));
-      activationVariance = Number((1.0 + (Math.random() - 0.5) * 0.05).toFixed(3));
+      activationMean = Number(((rng() - 0.5) * 0.02).toFixed(3));
+      activationVariance = Number((1.0 + (rng() - 0.5) * 0.05).toFixed(3));
     } else {
       activationMean = Number((0.2 * (i + 1) * (state.weightInitialization === 'random_large' ? 2.5 : 1.0)).toFixed(2));
       activationVariance = Number((0.8 * Math.pow(1.3, i) * (state.weightInitialization === 'random_large' ? 4.0 : 0.5)).toFixed(2));
     }
 
     const activationStd = Number(Math.sqrt(Math.max(0.001, activationVariance)).toFixed(3));
-    const histogram = calculateActivationHistogram(activationMean, activationVariance);
+    const histogram = calculateActivationHistogram(activationMean, activationVariance, rng);
 
     layers.push({
       layerIndex: i,

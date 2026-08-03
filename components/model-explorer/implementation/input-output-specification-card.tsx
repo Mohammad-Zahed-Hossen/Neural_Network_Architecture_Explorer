@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowRightLeft, ArrowDownRight, ArrowUpRight, Binary } from 'lucide-react';
+import { ArrowRightLeft, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { ModelImplementationData } from '@/lib/schema/implementation.schema';
 
 interface InputOutputSpecificationCardProps {

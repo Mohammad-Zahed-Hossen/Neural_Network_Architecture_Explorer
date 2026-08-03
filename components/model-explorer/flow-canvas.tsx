@@ -12,7 +12,7 @@ import { Connection, GroupedEdge, GroupedNode, Layer, LayerType, NeuralNetworkMo
 import CustomNode from './custom-node';
 
 import { 
-  Maximize2, RotateCcw, Map as MapIcon, ArrowDown, Layers, Activity
+  Maximize2, RotateCcw, Map as MapIcon, ArrowDown, Activity
 } from 'lucide-react';
 
 interface FlowCanvasProps {

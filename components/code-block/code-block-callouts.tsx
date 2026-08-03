@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { EducationalCallout, CalloutType } from './code-block.types';
-import { Lightbulb, AlertTriangle, Rocket, Pin, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Lightbulb, AlertTriangle, Rocket, Pin, HelpCircle, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CodeBlockCalloutsProps {

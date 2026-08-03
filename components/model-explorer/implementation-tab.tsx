@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   Code2, Sparkles, CheckCircle2, AlertTriangle, 
   Activity, Server, ArrowRight, Network, BookOpen, 
-  BarChart3, Cpu, Clock, HardDrive, Layers
+  BarChart3, Cpu, Clock, Layers
 } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
 import { ModelImplementationData } from '@/lib/schema/implementation.schema';
@@ -34,6 +34,7 @@ export default function ImplementationTab({
   implementation,
   onNavigateToTopology,
 }: ImplementationTabProps) {
+  void modelId;
   const shouldReduceMotion = useReducedMotionPreference();
 
   // Handle Empty State when model implementation JSON does not exist yet

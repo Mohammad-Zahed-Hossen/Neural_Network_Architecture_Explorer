@@ -4,8 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { highlightCode } from '../../lib/shiki-highlighter';
 import { CodeBlockCopyButton } from './code-block-copy-button';
 import { CodeSection } from './code-block.types';
-import { ChevronDown, ChevronUp, Eye } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface CodeBlockHighlighterProps {
   code: string;
