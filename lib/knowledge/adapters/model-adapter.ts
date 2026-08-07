@@ -88,9 +88,17 @@ export class ModelAdapter extends BaseKnowledgeAdapter<Record<string, unknown>> 
       },
       extensibility: {
         domainMetadata: {
-          category: data.category || 'vision',
-          layerCount: typeof data.layerCount === 'number' ? data.layerCount : undefined,
-          parameterCount: typeof data.parameterCount === 'number' ? data.parameterCount : undefined,
+          category: data.category || data.family || 'vision',
+          family: data.family || data.category || 'vision',
+          totalParameters: typeof data.totalParameters === 'number' ? data.totalParameters : (typeof data.parameterCount === 'number' ? data.parameterCount : (typeof data.params === 'number' ? data.params : undefined)),
+          trainableParameters: typeof data.trainableParameters === 'number' ? data.trainableParameters : undefined,
+          totalFLOPs: typeof data.totalFLOPs === 'number' ? data.totalFLOPs : (typeof data.flops === 'number' ? data.flops : undefined),
+          top1Accuracy: typeof data.top1Accuracy === 'number' ? data.top1Accuracy : (typeof data.accuracy === 'number' ? data.accuracy : undefined),
+          top5Accuracy: typeof data.top5Accuracy === 'number' ? data.top5Accuracy : undefined,
+          memoryUsage: typeof data.memoryUsage === 'number' ? data.memoryUsage : (typeof data.memory === 'number' ? data.memory : undefined),
+          depth: typeof data.depth === 'number' ? data.depth : (typeof data.layerCount === 'number' ? data.layerCount : (typeof data.layers === 'number' ? data.layers : undefined)),
+          year: typeof data.year === 'number' ? data.year : (typeof data.paperYear === 'number' ? data.paperYear : undefined),
+          paperUrl: typeof data.paperUrl === 'string' ? data.paperUrl : undefined,
         },
       },
     };

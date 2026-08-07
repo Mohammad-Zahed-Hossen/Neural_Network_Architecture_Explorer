@@ -10,6 +10,8 @@ export interface IComparisonAdapter {
   getComparableMetrics(obj: KnowledgeObject): ComparisonMetric[];
 }
 
+import { metricRegistry } from '../metric-registry';
+
 /**
  * Base Helper to extract standard metrics from domain metadata
  */
@@ -19,16 +21,28 @@ function extractStandardMetrics(obj: KnowledgeObject): Record<string, number | s
 
   if (typeof meta.params === 'number') metrics.parameters = meta.params;
   if (typeof meta.parameters === 'number') metrics.parameters = meta.parameters;
+  if (typeof meta.totalParameters === 'number') metrics.parameters = meta.totalParameters;
+
   if (typeof meta.flops === 'number') metrics.flops = meta.flops;
+  if (typeof meta.totalFLOPs === 'number') metrics.flops = meta.totalFLOPs;
+
   if (typeof meta.accuracy === 'number') metrics.accuracy = meta.accuracy;
   if (typeof meta.top1Accuracy === 'number') metrics.accuracy = meta.top1Accuracy;
+
   if (typeof meta.top5Accuracy === 'number') metrics.top5Accuracy = meta.top5Accuracy;
+
   if (typeof meta.depth === 'number') metrics.depth = meta.depth;
   if (typeof meta.layers === 'number') metrics.depth = meta.layers;
+  if (typeof meta.layerCount === 'number') metrics.depth = meta.layerCount;
+
   if (typeof meta.memory === 'number') metrics.memory = meta.memory;
+  if (typeof meta.memoryUsage === 'number') metrics.memory = meta.memoryUsage;
+
   if (typeof meta.speed === 'number') metrics.speed = meta.speed;
   if (typeof meta.speedFps === 'number') metrics.speed = meta.speedFps;
+
   if (typeof meta.year === 'number') metrics.year = meta.year;
+  if (typeof meta.paperYear === 'number') metrics.year = meta.paperYear;
 
   return metrics;
 }
@@ -89,14 +103,19 @@ export class ModelComparisonAdapter implements IComparisonAdapter {
   }
 
   public getComparableMetrics(): ComparisonMetric[] {
-    return [
-      { id: 'parameters', label: 'Parameters', category: 'Architecture', unit: 'M', format: 'number', description: 'Total trainable parameters in millions', higherIsBetter: false },
-      { id: 'flops', label: 'FLOPs', category: 'Architecture', unit: 'GFLOPs', format: 'number', description: 'Floating point operations per forward pass', higherIsBetter: false },
-      { id: 'accuracy', label: 'Top-1 Accuracy', category: 'Performance', unit: '%', format: 'percentage', description: 'Top-1 classification accuracy', higherIsBetter: true },
-      { id: 'depth', label: 'Network Depth', category: 'Architecture', unit: 'layers', format: 'count', description: 'Total sequential layer count', higherIsBetter: false },
-      { id: 'memory', label: 'Memory Footprint', category: 'Resources', unit: 'MB', format: 'bytes', description: 'Peak GPU memory during inference', higherIsBetter: false },
-      { id: 'speed', label: 'Inference Speed', category: 'Performance', unit: 'FPS', format: 'number', description: 'Frames processed per second', higherIsBetter: true },
-    ];
+    const ids = ['parameters', 'flops', 'accuracy', 'top5Accuracy', 'depth', 'memory', 'year'];
+    return ids
+      .map((id) => metricRegistry.get(id))
+      .filter((def): def is NonNullable<typeof def> => def !== undefined)
+      .map((def) => ({
+        id: def.id,
+        label: def.label,
+        category: def.category,
+        unit: def.unit,
+        format: 'number',
+        description: def.description,
+        higherIsBetter: def.higherIsBetter,
+      }));
   }
 }
 

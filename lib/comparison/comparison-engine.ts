@@ -1,6 +1,7 @@
 import type { IKnowledgeRepository } from '../knowledge/repository/repository';
 import type { KnowledgeObject } from '../knowledge/schema/knowledge-object.types';
 import { ComparisonAdapterRegistry, defaultComparisonAdapterRegistry } from './adapters/comparison-adapter';
+import { metricRegistry } from './metric-registry';
 import type {
   ComparisonCategoryType,
   ComparisonDifference,
@@ -69,19 +70,28 @@ export class ComparisonEngine {
     for (const metric of metrics) {
       metricMatrix[metric.id] = {};
       const numericValues: { objectId: string; val: number }[] = [];
+      const metricDef = metricRegistry.get(metric.id);
 
       for (const compObj of objects) {
         const rawVal = compObj.metrics[metric.id];
         let formatted = 'N/A';
         let val: number | string = 'N/A';
 
-        if (typeof rawVal === 'number') {
-          val = rawVal;
-          formatted = `${rawVal} ${metric.unit}`.trim();
-          numericValues.push({ objectId: compObj.id, val: rawVal });
-        } else if (typeof rawVal === 'string') {
-          val = rawVal;
-          formatted = rawVal;
+        if (rawVal !== undefined && rawVal !== null && rawVal !== 'N/A') {
+          if (metricDef) {
+            formatted = metricDef.format(rawVal);
+            val = metricDef.getRawNumber ? metricDef.getRawNumber(rawVal) : (typeof rawVal === 'number' ? rawVal : parseFloat(String(rawVal)) || rawVal);
+            if (typeof val === 'number' && !isNaN(val)) {
+              numericValues.push({ objectId: compObj.id, val });
+            }
+          } else if (typeof rawVal === 'number') {
+            val = rawVal;
+            formatted = `${rawVal} ${metric.unit}`.trim();
+            numericValues.push({ objectId: compObj.id, val: rawVal });
+          } else if (typeof rawVal === 'string') {
+            val = rawVal;
+            formatted = rawVal;
+          }
         }
 
         metricMatrix[metric.id][compObj.id] = {
@@ -90,11 +100,14 @@ export class ComparisonEngine {
         };
       }
 
-      // Compute relative status ('better' | 'worse' | 'neutral') for numeric metrics
-      if (numericValues.length > 1 && metric.higherIsBetter !== undefined) {
+      // Compute relative status ('better' | 'worse' | 'neutral') for competitive metrics only
+      const mode = metricDef ? metricDef.comparisonMode : (metric.higherIsBetter !== undefined ? (metric.higherIsBetter ? 'higher' : 'lower') : 'informational');
+
+      if (numericValues.length > 1 && (mode === 'higher' || mode === 'lower')) {
+        const higherIsBetter = mode === 'higher';
         const sorted = [...numericValues].sort((a, b) => a.val - b.val);
-        const bestVal = metric.higherIsBetter ? sorted[sorted.length - 1].val : sorted[0].val;
-        const worstVal = metric.higherIsBetter ? sorted[0].val : sorted[sorted.length - 1].val;
+        const bestVal = higherIsBetter ? sorted[sorted.length - 1].val : sorted[0].val;
+        const worstVal = higherIsBetter ? sorted[0].val : sorted[sorted.length - 1].val;
 
         for (const compObj of objects) {
           const entry = metricMatrix[metric.id][compObj.id];

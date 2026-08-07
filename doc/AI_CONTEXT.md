@@ -1,7 +1,7 @@
 # Neural Network Architecture Explorer — AI Context
 
 **Purpose:** 5-10 minute AI-readable summary for quick project understanding  
-**Last Updated:** August 4, 2026  
+**Last Updated:** August 6, 2026  
 **Full Specification:** See [CANONICAL_SPECIFICATION.md](./CANONICAL_SPECIFICATION.md)
 
 ---
@@ -100,6 +100,76 @@ python nn-audit/generate_audit_report.py
 
 ---
 
+## Supported Capabilities
+
+### Supported Domains (`lib/registry/domain-registry.ts`)
+
+| Domain | Data Source | Adapter | Status |
+|--------|-------------|---------|--------|
+| **Vision (CNN)** | `data/models/*.json`, `data/patterns.json` | `ModelAdapter`, `PatternAdapter` | Active |
+| **Transformer** | `data/transformers.json` (13 objects) | `TransformerAdapter` | Active (Phase 6.1 pilot) |
+| **Classical Graph Algorithms** | `data/graph-algorithms.json` (9 objects) | `GraphAlgorithmAdapter` | Active (Phase 6.1 pilot) |
+| **Training Dynamics** | `data/concepts/training-dynamics.json` | `TrainingAdapter` | Active |
+| **Research / Papers** | `data/papers/*.json` | `PaperAdapter` | Active |
+| **Evolution** | `data/evolution.json` | (via repository) | Active |
+| **Implementation** | `data/implementations/*.json` | (via repository) | Active |
+
+New domains are added declaratively via the Domain Registry + a `BaseKnowledgeAdapter` — no core framework changes required (see `doc/platform-expansion-guide.md`).
+
+### Supported Perspectives (`lib/registry/perspective-registry.ts`)
+
+The platform exposes **6 canonical educational perspectives**:
+
+1. **Architecture** — structural layer-by-layer view
+2. **Training** — training dynamics, optimization, gradient behavior
+3. **Implementation** — production code, frameworks, deployment
+4. **Evolution** — historical lineage and architecture progression
+5. **Research** — papers, evidence, innovations, critical notes
+6. **Mathematics** — formal equations, variable glossaries, derivations
+
+Perspectives are declared as typed contracts in `lib/knowledge/perspectives/` and surfaced dynamically via `PerspectiveSwitcher`.
+
+### Supported Visualizers (`lib/visualization/`)
+
+The **Visualizer Framework** hosts **6 registered plugins** (declared in `lib/registry/visualizer-registry.ts` and implemented in `lib/visualization/plugins/`):
+
+1. **`gradient-flow`** — Canvas 2D particle dynamics & signal flow (migrated legacy simulator)
+2. **`learning-curve`** — Loss, accuracy, and learning-rate trajectories
+3. **`layer-health`** — Activation health, gradient norm, and stability heatmap
+4. **`distribution`** — Activation/weight/gradient distribution histograms and stats
+5. **`execution-timeline`** — Step execution history and timeline markers
+6. **`node-inspector`** — Node parameters, shapes, weights, and educational notes
+
+Plugins are rendered through `VisualizerHost` (`components/visualizers/`) and reused by Comparison Studio and Training Dynamics.
+
+### Supported Graph Behaviors (`lib/registry/graph-behavior-registry.ts`)
+
+Declared graph interaction models include **topology-navigation**, **relationship-explorer**, and **knowledge-graph** traversal behaviors, wired through `RelationshipResolver` and `IKnowledgeRepository` query APIs.
+
+### Supported Engine States (`lib/registry/registry-types.ts`)
+
+Canonical engine states include `idle`, `running`, `paused`, `active`, `completed` (and domain-specific states), enforced by the `TrainingEngine` state machine and validated at build time.
+
+---
+</replace_in_file>
+<task_progress>
+- [x] Read CANONICAL_SPECIFICATION.md v1.2 + v1.3
+- [x] Read AI_CONTEXT.md current state
+- [x] Identify CANONICAL v1.3 structural defects: missing sections 30/31/32, duplicate old section 30
+- [x] Verify app routes and source structure
+- [x] Fix CANONICAL: replace old dup section 30 with new 30/31/32
+- [x] Verify section structure of CANONICAL (29-35 sequential)
+- [x] Update AI_CONTEXT.md directory structure
+- [x] Add Comparison Studio & Guided Learning sections to AI_CONTEXT
+- [x] Add Comparison Studio & Guided Learning architecture subsections to CANONICAL §30
+- [x] Fix CANONICAL §10.1 legacy vs graph-derived clarification
+- [x] Update CANONICAL header + footer version to 1.4 / Aug 6
+- [x] Update AI_CONTEXT.md date stamp to Aug 6
+- [x] Add engine-state + graph-behavior registration to CANONICAL §33 (renumbered 33.5-33.11)
+- [ ] Add Supported Capabilities (domains/perspectives/visualizers) to AI_CONTEXT
+- [ ] Re-verify both documents
+</task_progress>
+
 ## Directory Structure
 
 ```
@@ -120,7 +190,13 @@ components/             # UI components
 ├── code-block/         # Shiki-based code display (header, copy, callouts, footer, line numbers)
 ├── model-catalog/      # Catalog components
 ├── model-explorer/     # Explorer components (tabbed, flow, inspector, custom-node, implementation-tab)
-├── model-comparison/   # Comparison components
+├── model-comparison/   # Legacy model comparison components
+├── comparison/         # Comparison Studio UI (ComparisonStudio, ComparisonSelector, ComparisonMetrics, ComparisonSummary, ComparisonTable, ComparisonTimeline, ComparisonRelationships, ComparisonReferences, ComparisonVisualizer, ComparisonPanel)
+├── learning/           # Guided Learning UI (GuidedLearning, LearningNavigator, LearningSidebar, LearningProgress, LearningCheckpoint, PredictionPanel, WalkthroughPanel, LearningSummary)
+├── navigation/         # Knowledge Navigation UI (KnowledgeNavigation, PerspectiveSwitcher, LearningPath, RelatedKnowledge, PrerequisiteList, SuccessorList, ResearchConnections, EvolutionTimelineLinks, ImplementationExamples, RelationshipGraph, CrossDomainExplorer)
+├── explorer/           # Domain-independent Interactive Explorer Framework (ArchitectureExplorer, ExplorerCanvas, ExplorerNode, ExplorerEdge, LayerExplorer, ComponentInspector, blueprints/)
+├── architecture/       # Architecture Pattern presentation components (Layout, Header, Navigation, Math, History, Blueprint, Tradeoffs, Relationships, References)
+├── visualizers/        # Visualizer Host components (VisualizerHost, VisualizerContainer, VisualizerSwitcher, VisualizerToolbar, EmptyState)
 ├── educational/        # Generic educational (concept-explanation, math-section, intuition-section, analogy-section, reference-section)
 ├── training-dynamics/  # Training Dynamics UI (14 core + 5 comparison sub-components)
 ├── paper-details/      # Paper Details zones (7 zones + shared + utility-panel)
@@ -135,6 +211,9 @@ data/                   # Static data
 ├── papers/*.json       # 18 canonical paper detail JSONs (7-zone schema)
 ├── evolution.json      # 9 timeline nodes
 ├── advisor.json        # 3 advisor questions
+├── patterns.json       # Architecture patterns (PatternAdapter → Knowledge Objects)
+├── transformers.json   # Transformer domain pilot (13 objects, Phase 6.1)
+├── graph-algorithms.json # Graph Algorithms domain pilot (9 objects, Phase 6.1)
 ├── concepts/training-dynamics.json  # 5 training concepts + simulation presets
 ├── training-dynamics-rules.json     # Educational rule catalog
 ├── training-dynamics-scenarios.json # Categorized presets (Architecture/Training/Research)
@@ -142,24 +221,61 @@ data/                   # Static data
 └── link_registry.json  # Static link mapping
 
 doc/                    # Platform Architectural Documentation & Specifications
-└── architecture/       # Technical design specifications (Phase 0.3 - Phase 1.5)
-    ├── shared-registries.md        # Canonical Domain, Perspective, Visualizer & Graph registries
-    ├── validation-pipeline.md      # Build-time gatekeeper, reference, capability & graph rules
-    ├── knowledge-object-schema.md  # KnowledgeObject Zod schema & canonical vocabulary
-    ├── perspective-schemas.md      # 6 Educational Perspective contracts
-    ├── engine-state-contracts.md   # Frozen engine API & state contracts (CNN, RL, Graph, Opt)
-    ├── migration-adapters.md       # Shared adapter framework (Model, Paper, Pattern, Training)
-    └── knowledge-repository.md     # Read-only unified IKnowledgeRepository API
+├── CANONICAL_SPECIFICATION.md      # Platform map: index + architecture specification (single source of truth)
+├── AI_CONTEXT.md                   # This file (concise AI-readable summary)
+├── platform-principles.md          # Canonical engineering rules & platform principles
+├── platform-audit.md               # Repository architecture audit (Phase 0.1)
+├── platform-expansion-guide.md     # Developer manual for platform expansion (Phase 6.2)
+├── comparison-framework.md         # Comparison Studio architecture (Phase 5.1)
+├── guided-learning.md              # Guided Learning architecture (Phase 5.2)
+├── RESEARCH_GRADE_CANONICAL_AUDIT_REPORT.md # nn-audit Python verification results
+├── architecture/                   # Phase 0.3 – Phase 2.5 Architecture Specifications
+│   ├── shared-registries.md        # Domain, Perspective, Visualizer & Graph registries (Phase 0.3)
+│   ├── validation-pipeline.md      # Build-time validation gatekeeper (Phase 0.4)
+│   ├── knowledge-object-schema.md  # KnowledgeObject Zod schema (Phase 1.1)
+│   ├── perspective-schemas.md      # 6 Educational Perspective contracts (Phase 1.2)
+│   ├── engine-state-contracts.md   # Frozen engine API & state contracts (Phase 1.3)
+│   ├── migration-adapters.md       # Shared adapter framework (Phase 1.4)
+│   ├── knowledge-repository.md     # IKnowledgeRepository API (Phase 1.5)
+│   ├── architecture-pattern-migration.md # Phase 2.1 Pattern data migration
+│   ├── architecture-components.md  # Phase 2.2 Architecture presentation components
+│   ├── interactive-explorer.md     # Phase 2.3 Interactive Explorer Framework
+│   ├── architecture-relationships.md # Phase 2.4 Relationship graph integration
+│   └── architecture-pattern-library.md # Phase 2.5 Pattern Library frozen spec
+├── knowledge-graph/                # Knowledge Navigation specifications
+│   ├── knowledge-navigation.md     # Phase 4.1 Graph-derived educational navigation
+│   └── cross-linking.md            # Phase 4.2 Cross-domain navigation
+└── training-dynamics/              # Simulation & Visualization platform specs
+    ├── training-dynamics-architecture.md # Training Dynamics platform overview
+    ├── training-topology.md        # Phase 3.1 Generic DAG topology model
+    ├── training-engine.md          # Phase 3.2 Standalone training engine
+    ├── visualizer-framework.md     # Phase 3.3 Plugin-driven visualizer framework
+    ├── gradient-flow-plugin.md     # Phase 3.4 GradientFlowPlugin migration
+    └── training-visualizers.md     # Phase 3.5 Visualizer plugins
 
 lib/                    # Utilities & Core Platform Subsystems
 ├── registry/           # Canonical Shared Registries (Phase 0.3: Domain, Perspective, Visualizer, GraphBehavior)
 ├── validation/         # Platform Validation Framework (Phase 0.4: validatePlatform() & validators/)
-├── knowledge/          # Canonical Knowledge Layer (Phase 1.1-1.5: schema, perspectives, adapters, repository)
+├── knowledge/          # Canonical Knowledge Layer (Phase 1.1-1.5, 2.1, 4.1-4.2, 6.1)
 │   ├── schema/         # KnowledgeObject Zod schema & constants
 │   ├── perspectives/   # 6 Perspective contracts extending BasePerspective
-│   ├── adapters/       # BaseKnowledgeAdapter & 4 concrete adapters (Model, Paper, Pattern, Training)
-│   └── repository/     # IKnowledgeRepository & StaticKnowledgeRepository
+│   ├── adapters/       # BaseKnowledgeAdapter + 6 concrete adapters (Model, Paper, Pattern, Training, Transformer, GraphAlgorithm)
+│   ├── repository/     # IKnowledgeRepository & StaticKnowledgeRepository
+│   ├── graph/          # RelationshipResolver (cross-domain resolution)
+│   └── navigation/     # NavigationService (graph-derived navigation & learning paths)
 ├── engine/             # Engine API Contracts (Phase 1.3: BaseEngineState, CNN, RL, Graph, Opt, Visualizer)
+├── training/           # Training Engine & Topology (Phases 3.1-3.2)
+│   ├── topology/       # Generic DAG topology model (TopologyGraph, TopologyScheduler, validators)
+│   ├── engine/         # Standalone TrainingEngine, EngineStateMachine, EngineState
+│   └── adapters/       # SequentialTopologyAdapter, ArchitectureTopologyAdapter
+├── visualization/      # Visualizer Framework (Phases 3.3-3.5)
+│   ├── contracts/      # VisualizerPlugin, VisualizerContext, VisualizerSnapshot
+│   ├── registry/       # visualizerRegistry, loader, manager
+│   ├── plugins/        # 6 plugins (gradient-flow, learning-curve, layer-health, distribution, execution-timeline, node-inspector)
+│   ├── state/          # VisualizerStore, hover, selection, timeline
+│   └── utils/          # color-mapping, graph-highlighting, heatmaps, metric-scaling, tooltip-formatting
+├── comparison/         # Comparison Studio (Phase 5.1: ComparisonEngine, ComparisonService, ComparisonAdapter)
+├── learning/           # Guided Learning (Phase 5.2: LearningEngine, LearningService)
 ├── schema/             # Zod schemas (model.schema.ts, paper.schema.ts, training-dynamics.schema.ts, implementation.schema.ts)
 ├── data-access/        # Legacy data loading (models.ts, models.server.ts, papers.ts, training-dynamics.ts, learning-engine.ts, implementations.server.ts)
 ├── data/               # Relationships, categories
@@ -183,6 +299,9 @@ nn-audit/               # Python audit harness (Python 3.12.9, pinned frameworks
 scripts/                # Build and validation scripts
 ├── validate-model-data.ts        # Data validation script
 ├── validate-links.ts             # Link validation script
+├── validate-platform.ts          # Platform registry validation (npm run validate:platform)
+├── run-validation-tests.ts       # Validation regression tests (npm run validate:tests)
+├── run-adapter-tests.ts          # Adapter regression tests (npm run validate:adapters)
 ├── data-validation-report.md     # Data validation report
 ├── data-merge-changelog.md       # Schema update changelog
 ├── extract_keras_models.py       # Keras model extraction
@@ -194,8 +313,19 @@ scripts/                # Build and validation scripts
 └── README.md                     # Scripts documentation
 
 tools/                  # Archived legacy data pipeline
-doc/                    # Documentation (CANONICAL_SPECIFICATION, AI_CONTEXT, training-dynamics-architecture, RESEARCH_GRADE_CANONICAL_AUDIT_REPORT, platform-audit, platform-principles)
+tests/                  # Validation & adapter test fixtures
 ```
+</replace_in_file>
+<task_progress>
+- [x] Read CANONICAL_SPECIFICATION.md v1.2 + v1.3
+- [x] Read AI_CONTEXT.md current state (980 lines)
+- [x] Identify CANONICAL v1.3 structural defects: missing sections 30/31/32, duplicate old section 30
+- [x] Verify app routes and source structure
+- [x] Fix CANONICAL: replace old dup section 30 with new 30/31/32
+- [x] Verify section structure of CANONICAL (29-35 sequential)
+- [ ] Update AI_CONTEXT.md directory structure
+- [ ] Final verification of both documents
+</task_progress>
 
 ---
 
@@ -530,6 +660,95 @@ Features:
 
 ---
 
+## Knowledge Graph & Navigation (Phases 4.1–4.2)
+
+### Relationship Resolver
+
+**Location:** `lib/knowledge/graph/relationship-resolver.ts`
+
+The `RelationshipResolver` derives all educational navigation dynamically from the canonical graph — related entities, prerequisites, successors, perspective links, and learning paths. `resolveCrossDomain(target, allObjects)` produces a unified `CrossDomainConnections` graph linking the 5 core domains (Architecture, Training, Research, Evolution, Implementation).
+
+### Navigation Service
+
+**Location:** `lib/knowledge/navigation/navigation-service.ts`
+
+`NavigationService` computes automatic educational navigation through `IKnowledgeRepository` query APIs: Related Knowledge, Prerequisites, Successors, Perspective Links, and Learning Paths. No manual navigation arrays exist in UI code — everything is graph-derived.
+
+### Navigation UI Components (`components/navigation/`)
+
+- **KnowledgeNavigation:** Main container orchestrating perspective links, learning paths, and cross-domain links.
+- **PerspectiveSwitcher:** Dynamic route links across Architecture, Training, Research, Evolution, Implementation.
+- **LearningPath:** Graph-traversed Previous ← Current → Next learning path bar.
+- **CrossDomainExplorer:** Interactive tabbed network connecting all domains.
+- **RelatedKnowledge / PrerequisiteList / SuccessorList / ResearchConnections / EvolutionTimelineLinks / ImplementationExamples / RelationshipGraph:** Specialized graph-derived panels.
+
+### Legacy Model Relationships
+
+`lib/data/relationships.ts` still provides deterministic per-model relationship metadata (predecessors, successors, influencedBy, patterns, papers, compareShortcuts, continueLearning) for the Model Explorer's `ModelRelationshipsView`. All new navigation is graph-derived via the Knowledge Repository.
+
+---
+
+## Comparison Studio (Phase 5.1)
+
+### Overview
+
+Domain-independent side-by-side comparison across architectures, training concepts, papers, models, and telemetry. Reuses the same visualizer framework and repository-backed data.
+
+### Engine & Service
+
+- **`lib/comparison/comparison-engine.ts`** — Computes comparison metrics and score differences between arbitrary entities.
+- **`lib/comparison/comparison-service.ts`** — Orchestrates comparison sessions; maps entities via comparison adapters.
+- **`lib/comparison/adapters/comparison-adapter.ts`** — Converts arbitrary knowledge entities into comparable metric matrices.
+- **`lib/comparison/types.ts`** — Comparison metric & session type contracts.
+
+### UI Components (`components/comparison/`)
+
+- **ComparisonStudio:** Main container orchestrating selectors, panels, metrics, and visualizers.
+- **ComparisonSelector:** Entity selection (models, papers, concepts, domains).
+- **ComparisonMetrics / ComparisonSummary:** Side-by-side metric cards & narratives.
+- **ComparisonTable / ComparisonTimeline:** Structured comparison tables and time-based trajectories.
+- **ComparisonRelationships / ComparisonReferences:** Graph-derived relationship and reference panels.
+- **ComparisonPanel / ComparisonVisualizer:** Layout panels and reused visualizer-plugin rendering.
+
+### Repository Integration & Reuse
+
+- All comparison data flows through `IKnowledgeRepository` — no direct JSON imports.
+- Comparison visualizations reuse the `lib/visualization/` visualizer plugins (learning-curve, layer-health, topology, etc.).
+- Fully domain-independent: works for any registered domain without core framework changes.
+
+---
+
+## Guided Learning (Phase 5.2)
+
+### Overview
+
+Deterministic 7-stage graph walkthroughs and prediction exercises with zero AI dependencies — every session is reproducible from the same repository state.
+
+### Engine & Service
+
+- **`lib/learning/learning-engine.ts`** — Generates 7-stage walkthrough sessions from graph relationships (Stage 1 Introduction → Stage 7 Summary/Assessment).
+- **`lib/learning/learning-service.ts`** — Orchestrates session lifecycle, checkpoint evaluation, and progress tracking.
+- **`lib/learning/types.ts`** — Walkthrough, checkpoint, and progress contracts.
+
+### UI Components (`components/learning/`)
+
+- **GuidedLearning:** Main session container.
+- **LearningNavigator / LearningSidebar:** Stage navigation and session outline.
+- **LearningProgress:** Progress tracking bar.
+- **LearningCheckpoint:** Stage checkpoint validation.
+- **PredictionPanel:** Prediction exercises with deterministic evaluation (no AI).
+- **WalkthroughPanel:** Stage content rendering.
+- **LearningSummary:** Session wrap-up and next steps.
+
+### Deterministic Behavior
+
+- Walkthroughs are derived from graph relationships — same object always produces the same session.
+- Prediction exercises evaluate against canonical knowledge, not learned models.
+- Checkpoints gate progression deterministically.
+- Full repository integration: works for any new domain automatically.
+
+---
+
 ## Educational Architecture
 
 ### Knowledge Graph
@@ -555,7 +774,7 @@ interface ModelRelationships {
 }
 ```
 
-**Coverage:** All 34 models with deterministic relationship metadata
+**Coverage:** All 34 models with deterministic relationship metadata (legacy static relationships; new navigation is graph-derived via RelationshipResolver — see Knowledge Graph & Navigation above)
 
 ### Educational Components
 
@@ -576,6 +795,18 @@ interface ModelRelationships {
 - **Training Dynamics:** `/concepts/training-dynamics` — full simulator (see above), `?concept=`
 
 ---
+</replace_in_file>
+<task_progress>
+- [x] Read CANONICAL_SPECIFICATION.md v1.2 + v1.3
+- [x] Read AI_CONTEXT.md current state (980 lines)
+- [x] Identify CANONICAL v1.3 structural defects: missing sections 30/31/32, duplicate old section 30
+- [x] Verify app routes and source structure
+- [x] Fix CANONICAL: replace old dup section 30 with new 30/31/32
+- [x] Verify section structure of CANONICAL (29-35 sequential)
+- [x] Update AI_CONTEXT.md directory structure
+- [ ] Add Comparison Studio & Guided Learning sections to AI_CONTEXT
+- [ ] Final verification of both documents
+</task_progress>
 
 ## Research-Grade Canonical Audit (`nn-audit/`)
 
